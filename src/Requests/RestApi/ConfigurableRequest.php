@@ -1,8 +1,7 @@
 <?php
 
-namespace spkm\IsamsApi\Requests;
+namespace spkm\IsamsApi\Requests\RestApi;
 
-use Saloon\Contracts\ArrayStore as ArrayStoreContract;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -10,13 +9,11 @@ class ConfigurableRequest extends Request
 {
     protected Method $method = Method::GET;
     protected string $endpoint;
-    protected ArrayStoreContract $query;
 
-    public function __construct(Method $method, string $endpoint, ArrayStoreContract $query)
+    public function __construct(Method $method, string $endpoint)
     {
         $this->method = $method;
         $this->endpoint = $endpoint;
-        $this->query = $query;
     }
 
 

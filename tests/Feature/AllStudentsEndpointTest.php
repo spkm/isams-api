@@ -1,7 +1,7 @@
 <?php
 
 use spkm\IsamsApi\IsamsConnector;
-use spkm\IsamsApi\Requests\Students\GetAllStudentsRequest;
+use spkm\IsamsApi\Requests\RestApi\Students\GetAllStudentsRequest;
 
 
 test('It successfully retrieves all pages of the students endpoint', function () {

@@ -1,12 +1,11 @@
 <?php
 
-namespace spkm\IsamsApi\Requests;
+namespace spkm\IsamsApi\Requests\BatchApi;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\PaginationPlugin\Contracts\Paginatable;
 
-class BatchEndpointRequest extends Request
+class GetEndpointRequest extends Request
 {
     protected Method $method = Method::GET;
     protected string $batchKey;
@@ -16,6 +15,7 @@ class BatchEndpointRequest extends Request
     {
         $this->batchKey = $batchKey;
         $this->contentType = $contentType;
+
     }
 
     public function resolveEndpoint(): string
