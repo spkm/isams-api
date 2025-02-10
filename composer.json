@@ -1,0 +1,56 @@
+{
+    "name": "spkm/isams-api",
+    "description": "Integrate with the iSAMS API using SaloonPHP",
+    "license": "MIT",
+    "keywords": [
+        "iSAMS",
+        "REST API",
+        "Laravel"
+    ],
+    "authors": [
+        {
+            "name": "Simon Mitchell",
+            "email": "hello@spkmitchell.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "saloonphp/saloon": "^3.0",
+        "saloonphp/laravel-plugin": "^3.0",
+        "saloonphp/cache-plugin": "^3.0",
+        "saloonphp/pagination-plugin": "^2.0",
+        "illuminate/contracts": "^11.41",
+        "illuminate/support": "^11.41",
+        "illuminate/cache": "^11.41",
+        "illuminate/collections": "^11.41",
+        "spatie/laravel-package-tools": "^1.19"
+    },
+    "autoload": {
+        "psr-4": {
+            "spkm\\IsamsApi\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "spkm\\IsamsApi\\IsamsApiServiceProvider"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "spkm\\IsamsApi\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^3.7",
+        "symfony/var-dumper": "^7.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    }
+}
