@@ -7,8 +7,6 @@ use Saloon\Http\Request;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
- * GetAllStudents
- *
  * The 'students' property is an array of Student objects.
  */
 class GetAllStudentsRequest extends Request implements Paginatable

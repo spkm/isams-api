@@ -19,7 +19,7 @@ use Saloon\Http\Request;
  * The 'languageIsoMappings' and
  * 'nationalityIsoMappings' properties are arrays of IsoMapping objects.
  */
-class GetBySchoolIdRequest extends Request
+class GetStudentBySchoolidRequest extends Request
 {
 	protected Method $method = Method::GET;
 
@@ -31,7 +31,7 @@ class GetBySchoolIdRequest extends Request
 
 
 	/**
-	 * @param mixed $schoolId The unique identifier of a student to retrieve.
+	 * @param string $schoolId The unique identifier of a student to retrieve.
 	 * @param null|mixed $expand Possible values:
 	 *
 	 * `customFields` - include student's custom fields.
@@ -41,7 +41,7 @@ class GetBySchoolIdRequest extends Request
 	 * `nationalityIsoMappings` - include iso mappings for nationalities.
 	 */
 	public function __construct(
-		protected mixed $schoolId,
+		protected string $schoolId,
 		protected mixed $expand = null,
 	) {
 	}
