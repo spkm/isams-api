@@ -5,10 +5,25 @@ See the [iSAMS documentation](https://developerdemo.isams.cloud/Main/swagger/ui/
 ## Installation and usage
 This package requires PHP 8.3 & Laravel 11.0 or higher. See the `tests/` folder for documentation.
 
-### Basic Installation:
+### Basic Installation
 You can install this package via composer using:
 ```
 composer require spkm/isams-api
+```
+
+### Usage
+
+```php
+use spkm\IsamsApi\IsamsConnector;
+use spkm\IsamsApi\Requests\RestApi\Students\GetAllStudentsRequest;
+
+$connector = new IsamsConnector($clientId, $clientSecret, $baseUrl);
+$request = new GetAllStudentsRequest();
+$paginator = $connector->paginate($request);
+
+foreach ($paginator as $response) {
+    $response->json();
+}
 ```
 
 ### Security
