@@ -8,6 +8,7 @@ use Saloon\Http\Request;
 class ConfigurableRequest extends Request
 {
     protected Method $method = Method::GET;
+
     protected string $endpoint;
 
     public function __construct(Method $method, string $endpoint)
@@ -15,7 +16,6 @@ class ConfigurableRequest extends Request
         $this->method = $method;
         $this->endpoint = $endpoint;
     }
-
 
     public function resolveEndpoint(): string
     {

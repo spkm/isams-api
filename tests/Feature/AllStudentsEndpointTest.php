@@ -1,18 +1,17 @@
 <?php
 
 use spkm\IsamsApi\IsamsConnector;
-use spkm\IsamsApi\Requests\RestApi\Students\GetAllStudentsRequest;
-
+use spkm\IsamsApi\Requests\RestApi\Students\GetStudentsRequest;
 
 test('It successfully retrieves all pages of the students endpoint', function () {
 
-    //TODO env / config!
-    $clientId = "";
-    $clientSecret = "";
-    $baseUrl = "";
+    // TODO env / config!
+    $clientId = '';
+    $clientSecret = '';
+    $baseUrl = '';
 
     $connector = new IsamsConnector($clientId, $clientSecret, $baseUrl);
-    $request = new GetAllStudentsRequest();
+    $request = new GetStudentsRequest;
     $paginator = $connector->paginate($request);
 
     $data = $paginator->collect(throughItems: false);

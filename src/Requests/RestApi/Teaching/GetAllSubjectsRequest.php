@@ -1,8 +1,7 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\RestApi\Teaching;;
+namespace spkm\IsamsApi\Requests\RestApi\Teaching;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,11 +10,10 @@ use Saloon\Http\Request;
  */
 class GetAllSubjectsRequest extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
-
-	public function resolveEndpoint(): string
-	{
-		return "/api/teaching/subjects";
-	}
+    public function resolveEndpoint(): string
+    {
+        return '/api/teaching/subjects';
+    }
 }

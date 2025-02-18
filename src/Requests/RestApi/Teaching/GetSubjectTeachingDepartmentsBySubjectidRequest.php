@@ -2,7 +2,6 @@
 
 namespace spkm\IsamsApi\Requests\RestApi\Teaching;
 
-use DateTime;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
@@ -11,20 +10,17 @@ use Saloon\Http\Request;
  */
 class GetSubjectTeachingDepartmentsBySubjectidRequest extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/api/teaching/subjects/{$this->subjectId}/departments";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/api/teaching/subjects/{$this->subjectId}/departments";
-	}
-
-
-	/**
-	 * @param int $subjectId The unique identifier of a subject to retrieve the teaching departments for.
-	 */
-	public function __construct(
-		protected int $subjectId,
-	) {
-	}
+    /**
+     * @param  int  $subjectId  The unique identifier of a subject to retrieve the teaching departments for.
+     */
+    public function __construct(
+        protected int $subjectId,
+    ) {}
 }

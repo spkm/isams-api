@@ -12,10 +12,9 @@ class IsamsApiServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('isams-api')
-            ->hasConfigFile()
-            ->hasInstallCommand(function(InstallCommand $command){
-               $command
-               ->publishConfigFile();
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    ->publishConfigFile();
             });
     }
 }

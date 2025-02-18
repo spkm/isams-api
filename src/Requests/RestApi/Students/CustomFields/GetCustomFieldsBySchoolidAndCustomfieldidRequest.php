@@ -18,22 +18,19 @@ use Saloon\Http\Request;
  */
 class GetCustomFieldsBySchoolidAndCustomfieldidRequest extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
+    public function resolveEndpoint(): string
+    {
+        return "/api/students/{$this->schoolId}/customFields/{$this->customFieldId}";
+    }
 
-	public function resolveEndpoint(): string
-	{
-		return "/api/students/{$this->schoolId}/customFields/{$this->customFieldId}";
-	}
-
-
-	/**
-	 * @param string $schoolId The unique identifier of a student to retrieve the custom fields for.
-	 * @param int $customFieldId The identifier of a custom field associated with a student.
-	 */
-	public function __construct(
-		protected string $schoolId,
-		protected int $customFieldId,
-	) {
-	}
+    /**
+     * @param  string  $schoolId  The unique identifier of a student to retrieve the custom fields for.
+     * @param  int  $customFieldId  The identifier of a custom field associated with a student.
+     */
+    public function __construct(
+        protected string $schoolId,
+        protected int $customFieldId,
+    ) {}
 }

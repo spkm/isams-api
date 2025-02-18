@@ -15,10 +15,10 @@ composer require spkm/isams-api
 
 ```php
 use spkm\IsamsApi\IsamsConnector;
-use spkm\IsamsApi\Requests\RestApi\Students\GetAllStudentsRequest;
+use spkm\IsamsApi\Requests\RestApi\Students\GetStudentsRequest;
 
 $connector = new IsamsConnector($clientId, $clientSecret, $baseUrl);
-$request = new GetAllStudentsRequest();
+$request = new GetStudentsRequest();
 $paginator = $connector->paginate($request);
 
 foreach ($paginator as $response) {
