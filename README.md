@@ -15,7 +15,7 @@ composer require spkm/isams-api
 
 ```php
 use spkm\IsamsApi\IsamsConnector;
-use spkm\IsamsApi\Requests\RestApi\Students\GetStudentsRequest;
+use spkm\IsamsApi\Requests\Rest\Students\GetStudentsRequest;
 
 $connector = new IsamsConnector($clientId, $clientSecret, $baseUrl);
 $request = new GetStudentsRequest();

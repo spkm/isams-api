@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\RestApi\Students;
+namespace spkm\IsamsApi\Requests\Rest\Students;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

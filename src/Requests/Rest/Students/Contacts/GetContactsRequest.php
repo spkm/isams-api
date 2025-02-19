@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\RestApi\Students\Contacts;
+namespace spkm\IsamsApi\Requests\Rest\Students\Contacts;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -9,7 +9,7 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 /**
  * The 'contacts' property is an array of StudentsContact objects.
  */
-class GetAllContactsRequest extends Request implements Paginatable
+class GetContactsRequest extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 

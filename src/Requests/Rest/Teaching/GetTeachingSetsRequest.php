@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\RestApi\Teaching;
+namespace spkm\IsamsApi\Requests\Rest\Teaching;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -8,7 +8,7 @@ use Saloon\Http\Request;
 /**
  * The 'sets' property is an array of TeachingSet objects.
  */
-class GetAllTeachingSetsRequest extends Request
+class GetTeachingSetsRequest extends Request
 {
     protected Method $method = Method::GET;
 

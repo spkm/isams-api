@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\RestApi\Teaching;
+namespace spkm\IsamsApi\Requests\Rest\Teaching;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -8,7 +8,7 @@ use Saloon\Http\Request;
 /**
  * The 'subjects' property is an array of Subject objects.
  */
-class GetAllSubjectsRequest extends Request
+class GetSubjectsRequest extends Request
 {
     protected Method $method = Method::GET;
 
