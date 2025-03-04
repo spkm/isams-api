@@ -10,50 +10,38 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch to calculate changelog
-        uses: actions/checkout@v2
+      - name: Checkout main branch
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Calculate version
         id: tag_version
-        uses: miguelfito/github-bump-and-tag-action@v1
+        uses: mathieudutour/github-tag-action@v6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: patch
-          create_annotated_tag: true
           tag_prefix: v
           dry_run: true
 
-      #      - name: Set npm package version
-      #        uses: reedyuk/npm-version@1.0.1
-      #        with:
-      #          version: ${{ steps.tag_version.outputs.new_version }}
-      #
-      #      - name: Commit & push version bumping on package*.json
-      #        uses: stefanzweifel/git-auto-commit-action@v4
-      #        with:
-      #          branch: master
-      #          file_pattern: package*.json
-      #          commit_message: 'chore(release): Automated version bumping to ${{ steps.tag_version.outputs.new_tag }}'
-      #          commit_user_name: GitHub Actions
-      #          commit_user_email: actions@github.com
-
-      - name: Get updated commit SHA
-        run: |
-          echo "##[set-output name=commit_id;]$(git rev-parse HEAD)"
-        id: updated_sha
+      - name: Commit & push version bump
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: main
+          file_pattern: package*.json
+          commit_message: 'chore(release): Bump version to ${{ steps.tag_version.outputs.new_tag }}'
+          commit_user_name: GitHub Actions
+          commit_user_email: actions@github.com
 
       - name: Bump version and push tag
-        uses: miguelfito/github-bump-and-tag-action@v1
+        uses: mathieudutour/github-tag-action@v6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_sha: ${{ steps.updated_sha.outputs.commit_id }}
           default_bump: patch
-          create_annotated_tag: true
           tag_prefix: v
 
-      - uses: fregante/release-with-changelog@v3
+      - name: Create GitHub Release
+        uses: fregante/release-with-changelog@v3
         with:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -63,5 +51,3 @@ jobs:
             {commits}
 
             Compare: {range}
-
-            ❤
