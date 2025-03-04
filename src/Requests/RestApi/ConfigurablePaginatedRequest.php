@@ -8,19 +8,19 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 class ConfigurablePaginatedRequest extends Request implements Paginatable
 {
-    protected Method $method = Method::GET;
     protected string $endpoint;
+    protected Method $method;
 
     public function __construct(
-        Method $method,
         string $endpoint,
+        ?Method $method = Method::GET,
         protected mixed $page = null,
         protected mixed $pageSize = null,
         protected mixed $expand = null,
         protected mixed $filter = null,
     ) {
-        $this->method = $method;
         $this->endpoint = $endpoint;
+        $this->method = $method;
     }
 
 

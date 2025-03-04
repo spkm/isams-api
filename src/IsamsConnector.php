@@ -59,7 +59,7 @@ class IsamsConnector extends Connector implements HasPagination
 
             protected function isLastPage(Response $response): bool
             {
-                return is_null($response->json('next_page_url'));
+                return $response->json('totalPages') === $this->currentPage;
             }
 
             protected function getPageItems(Response $response, Request $request): array
