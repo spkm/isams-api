@@ -23,7 +23,7 @@ class IsamsConnector extends Connector implements HasPagination
         $this->oauthConfig()->setDefaultScopes($scopes);
         $this->baseUrl = $baseUrl;
 
-        //TODO securely cache the access token
+        // TODO securely cache the access token
         $authenticator = $this->getAccessToken();
         $this->authenticate($authenticator);
     }
@@ -38,9 +38,9 @@ class IsamsConnector extends Connector implements HasPagination
     }
 
     public function resolveBaseUrl(): string
-	{
-		return $this->baseUrl;
-	}
+    {
+        return $this->baseUrl;
+    }
 
     protected function defaultHeaders(): array
     {
@@ -71,7 +71,7 @@ class IsamsConnector extends Connector implements HasPagination
             {
                 $request->query()->add('page', $this->currentPage);
 
-                if(isset($this->perPageLimit)) {
+                if (isset($this->perPageLimit)) {
                     $request->query()->add('pageSize', $this->perPageLimit);
                 }
 

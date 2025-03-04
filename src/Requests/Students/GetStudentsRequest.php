@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\RestApi\Students;
+namespace spkm\IsamsApi\Requests\Students;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -9,16 +9,14 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 /**
  * The 'students' property is an array of Student objects.
  */
-class GetAllStudentsRequest extends Request implements Paginatable
+class GetStudentsRequest extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 
-
     public function resolveEndpoint(): string
     {
-        return "/api/students";
+        return '/api/students';
     }
-
 
     /**
      * @param  null|mixed  $page  Page number.
@@ -37,14 +35,12 @@ class GetAllStudentsRequest extends Request implements Paginatable
         protected mixed $pageSize = null,
         protected mixed $expand = null,
         protected mixed $filter = null,
-    ) {
-    }
-
+    ) {}
 
     public function defaultQuery(): array
     {
         return array_filter([
-            'page' => $this->page, 'pageSize' => $this->pageSize, 'expand' => $this->expand, '$filter' => $this->filter
+            'page' => $this->page, 'pageSize' => $this->pageSize, 'expand' => $this->expand, '$filter' => $this->filter,
         ]);
     }
 }

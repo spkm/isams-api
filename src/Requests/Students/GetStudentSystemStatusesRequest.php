@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\RestApi\Students;
+namespace spkm\IsamsApi\Requests\Students;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -10,11 +10,10 @@ use Saloon\Http\Request;
  */
 class GetStudentSystemStatusesRequest extends Request
 {
-	protected Method $method = Method::GET;
+    protected Method $method = Method::GET;
 
-
-	public function resolveEndpoint(): string
-	{
-		return "/api/students/systemstatuses";
-	}
+    public function resolveEndpoint(): string
+    {
+        return '/api/students/systemstatuses';
+    }
 }

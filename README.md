@@ -14,11 +14,10 @@ composer require spkm/isams-api
 ### Usage
 
 ```php
-use spkm\IsamsApi\IsamsConnector;
-use spkm\IsamsApi\Requests\RestApi\Students\GetAllStudentsRequest;
+use spkm\IsamsApi\IsamsConnector;use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 
 $connector = new IsamsConnector($clientId, $clientSecret, $baseUrl);
-$request = new GetAllStudentsRequest();
+$request = new GetStudentsRequest();
 $paginator = $connector->paginate($request);
 
 foreach ($paginator as $response) {
