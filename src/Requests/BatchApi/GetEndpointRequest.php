@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\Batch;
+namespace spkm\IsamsApi\Requests\BatchApi;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

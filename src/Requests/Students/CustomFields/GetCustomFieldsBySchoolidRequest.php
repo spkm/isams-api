@@ -1,6 +1,6 @@
 <?php
 
-namespace spkm\IsamsApi\Requests\Rest\Students\CustomFields;
+namespace spkm\IsamsApi\Requests\Students\CustomFields;
 
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
