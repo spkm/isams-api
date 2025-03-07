@@ -2,10 +2,8 @@
 
 namespace spkm\IsamsApi;
 
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use Saloon\Contracts\OAuthAuthenticator;
 use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Connector;
@@ -98,6 +96,13 @@ class IsamsConnector extends Connector implements HasPagination
 
             protected function getPageItems(Response $response, Request $request): array
             {
+                if (property_exists($request, 'resultKey')
+                    && !empty($request->resultKey)
+                    && is_array($data = $response->json())
+                    && array_key_exists($request->resultKey, $data)) {
+                    return $response->json($request->resultKey) ?? [];
+                }
+
                 return $response->json();
             }
 

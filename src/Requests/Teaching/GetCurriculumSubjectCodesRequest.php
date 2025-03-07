@@ -11,6 +11,8 @@ use Saloon\Http\Request;
 class GetCurriculumSubjectCodesRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'items';
+
 
     public function resolveEndpoint(): string
     {

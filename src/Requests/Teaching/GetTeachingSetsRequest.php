@@ -11,6 +11,7 @@ use Saloon\Http\Request;
 class GetTeachingSetsRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'sets';
 
     public function resolveEndpoint(): string
     {

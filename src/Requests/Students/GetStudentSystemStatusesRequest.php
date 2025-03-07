@@ -11,6 +11,7 @@ use Saloon\Http\Request;
 class GetStudentSystemStatusesRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'systemStatuses';
 
     public function resolveEndpoint(): string
     {

@@ -11,6 +11,8 @@ use Saloon\Http\Request;
 class GetSubjectsRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'subjects';
+
 
     public function resolveEndpoint(): string
     {

@@ -12,6 +12,7 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 class GetStudentsRequest extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'students';
 
     public function resolveEndpoint(): string
     {

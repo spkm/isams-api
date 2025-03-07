@@ -11,6 +11,7 @@ use Saloon\Http\Request;
 class GetSubjectTeachingDepartmentsBySubjectidRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'teachingDepartments';
 
     public function resolveEndpoint(): string
     {

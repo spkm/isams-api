@@ -11,6 +11,8 @@ use Saloon\Http\Request;
 class GetCustomFieldsBySchoolidRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'customFields';
+
 
     public function resolveEndpoint(): string
     {

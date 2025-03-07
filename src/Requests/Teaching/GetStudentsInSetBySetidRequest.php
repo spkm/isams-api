@@ -11,6 +11,7 @@ use Saloon\Http\Request;
 class GetStudentsInSetBySetidRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'students';
 
     public function resolveEndpoint(): string
     {

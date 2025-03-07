@@ -11,6 +11,8 @@ use Saloon\Http\Request;
 class GetContactsBySchoolidRequest extends Request
 {
     protected Method $method = Method::GET;
+    public string $resultKey = 'contacts';
+
 
     public function resolveEndpoint(): string
     {
