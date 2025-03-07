@@ -10,6 +10,8 @@ class ConfigurablePaginatedRequest extends Request implements Paginatable
 {
     protected string $endpoint;
     protected Method $method;
+    public string $resultKey;
+
 
     public function __construct(
         string $endpoint,
@@ -18,9 +20,11 @@ class ConfigurablePaginatedRequest extends Request implements Paginatable
         protected mixed $pageSize = null,
         protected mixed $expand = null,
         protected mixed $filter = null,
+        ?string $resultKey = null,
     ) {
         $this->endpoint = $endpoint;
         $this->method = $method;
+        $this->resultKey = $resultKey;
     }
 
 
