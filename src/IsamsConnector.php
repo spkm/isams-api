@@ -2,6 +2,11 @@
 
 namespace spkm\IsamsApi;
 
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use Saloon\Contracts\OAuthAuthenticator;
 use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
@@ -23,9 +28,39 @@ class IsamsConnector extends Connector implements HasPagination
         $this->oauthConfig()->setDefaultScopes($scopes);
         $this->baseUrl = $baseUrl;
 
-        // TODO securely cache the access token
-        $authenticator = $this->getAccessToken();
+        $authenticator = $this->getCachedAccessToken();
         $this->authenticate($authenticator);
+    }
+
+    public function getCachedAccessToken(): OAuthAuthenticator|Response
+    {
+        $authenticator = null;
+        if (Cache::has($this->getCacheKey())) {
+            $encryptedKey = Cache::get($this->getCacheKey());
+            $authenticator = decrypt($encryptedKey);
+        }
+
+        if($authenticator == null){
+            $this->cacheAccessToken();
+            $encryptedKey = Cache::get($this->getCacheKey());
+            $authenticator = decrypt($encryptedKey);
+        }
+
+        return $authenticator;
+    }
+
+    private function getCacheKey(): string
+    {
+        return 'bearer_token'.$this->oauthConfig()->getClientId();
+    }
+
+    private function cacheAccessToken(): void
+    {
+        $authenticator = $this->getAccessToken();
+        $tokenExpiry = Carbon::instance($authenticator->expiresAt);
+        $cacheExpires = $tokenExpiry->subMinute();
+        Cache::forget($this->getCacheKey());
+        Cache::put($this->getCacheKey(),encrypt($authenticator),$cacheExpires);
     }
 
     protected function defaultOauthConfig(): OAuthConfig
@@ -53,8 +88,7 @@ class IsamsConnector extends Connector implements HasPagination
 
     public function paginate(Request $request): PagedPaginator
     {
-        return new class(connector: $this, request: $request) extends PagedPaginator
-        {
+        return new class(connector: $this, request: $request) extends PagedPaginator {
             protected ?int $perPageLimit = 100;
 
             protected function isLastPage(Response $response): bool
