@@ -12,9 +12,26 @@ class IsamsApiServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('isams-api')
+            ->hasConfigFile('isams-api')
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile();
             });
+
+        $this->app->singleton('isams', function ($app) {
+            return new IsamsService;
+        });
+    }
+
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/../config/isams-api.php' => config_path('isams-api.php'),
+        ], 'isams-api');
+    }
+
+    public function provides()
+    {
+        return ['isams'];
     }
 }
