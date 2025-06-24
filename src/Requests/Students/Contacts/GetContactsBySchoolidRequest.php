@@ -3,17 +3,19 @@
 namespace spkm\IsamsApi\Requests\Students\Contacts;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use spkm\IsamsApi\DTOs\StudentContact;
+use spkm\IsamsApi\Traits\ApiErrorHandling;
 
 /**
  * The 'contacts' property is an array of StudentContact objects.
  */
 class GetContactsBySchoolidRequest extends Request
 {
+    use ApiErrorHandling;
+
     protected Method $method = Method::GET;
 
     public string $resultKey = 'contacts';
@@ -40,15 +42,17 @@ class GetContactsBySchoolidRequest extends Request
 
     public function defaultQuery(): array
     {
-        return array_filter(['includeDeceased' => $this->includeDeceased, 'expand' => $this->expand, '$filter' => $this->filter]);
+        return array_filter([
+            'includeDeceased' => $this->includeDeceased, 'expand' => $this->expand, '$filter' => $this->filter,
+        ]);
     }
 
     public function createDtoFromResponse(Response $response): Collection
     {
         $contacts = collect();
         $json = $response->json();
-        if ($this->isMissingStudentError($json)) {
-            $this->logApiError($json);
+        if ($this->responseIsAnError($json)) {
+            $this->logApiError($json, ['school_id' => $this->schoolId]);
 
             return $contacts;
         }
@@ -107,16 +111,5 @@ class GetContactsBySchoolidRequest extends Request
         }
 
         return $contacts;
-    }
-
-    protected function isMissingStudentError(array $json): bool
-    {
-        return isset($json['message'])
-            && $json['message'] === 'Failed to read student contacts - Student does not exist.';
-    }
-
-    protected function logApiError(array $json): void
-    {
-        Log::error($json['message'], ['school_id' => $this->schoolId]);
     }
 }
