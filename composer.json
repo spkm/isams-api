@@ -20,7 +20,7 @@
         "saloonphp/laravel-plugin": "^3.0",
         "saloonphp/cache-plugin": "^3.0",
         "saloonphp/pagination-plugin": "^2.0",
-        "illuminate/contracts": "^11.41||^12.0",
+        "illuminate/contracts": "^11.41||^12.0||^13.0",
         "illuminate/support": "^11.41||^12.0",
         "illuminate/cache": "^11.41||^12.0",
         "illuminate/collections": "^11.41||^12.0",
