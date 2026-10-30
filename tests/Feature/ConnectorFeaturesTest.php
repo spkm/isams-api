@@ -7,7 +7,6 @@ use spkm\IsamsApi\Facades\Isams;
 use spkm\IsamsApi\IsamsPaginator;
 use spkm\IsamsApi\Requests\AdhocRequest;
 use spkm\IsamsApi\Requests\ConfigurablePaginatedRequest;
-use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 use spkm\IsamsApi\Support\JsonPatch;
 use spkm\IsamsApi\Tests\Fixtures\ExampleAddress;
 use spkm\IsamsApi\Tests\Fixtures\ExamplePagedRequest;
@@ -23,11 +22,11 @@ it('pages through a request as models with dtos()', function () {
         ->and($paginator->dtos()->all())->toEqual([new ExampleStudent(id: 1), new ExampleStudent(id: 2)]);
 });
 
-it('refuses dtos() for a request that has no model', function () {
+it('refuses dtos() for a request that has no model, such as an endpoint named by its path', function () {
     FakeIsams::respondWith();
 
-    FakeIsams::connector()->paginate(new GetStudentsRequest)->dtos();
-})->throws(LogicException::class, 'GetStudentsRequest has no model; use collect() for its items as arrays.');
+    FakeIsams::connector()->paginateEndpoint('/api/students/customgroups', 'customGroups')->dtos();
+})->throws(LogicException::class, 'ConfigurablePaginatedRequest has no model; use collect() for its items as arrays.');
 
 it('sends requests to another configured school through a named connection', function () {
     config(['isams-api.connections.prep' => ['client_id' => 'prep-client', 'client_secret' => 'prep-secret', 'base_url' => 'https://prep.example.test']]);

@@ -47,6 +47,8 @@ Code written for version 1 keeps working, apart from the PHP and Laravel minimum
   | `Teaching\GetCurriculumSubjectCodesRequest` | `Teaching\CurriculumSubjectCodes\GetCurriculumSubjectCodesRequest` |
   | `BatchApi\GetEndpointRequest`, `BatchApi\FilterEndpointRequest` | `Isams::batch()` with `Batch\BatchRequest` (see [Batch API](#batch-api)) |
 
+- `Students\GetStudentsRequest` and `Students\GetStudentRequest` keep their names and now return `Student` models
+  from `dto()` (it returned `null` before), and `dto()` throws an `IsamsApiException` when iSAMS returned an error.
 - From 2 November 2026 iSAMS rejects Batch API requests that send only the key; the deprecated batch requests do
   that, `Isams::batch()` does not.
 - The config file is published with `php artisan isams-api:install`, or `vendor:publish --tag=isams-api-config`.
@@ -153,6 +155,9 @@ foreach ($isams->paginate(new GetStudentsRequest)->collect() as $student) {
 ```
 
 Use `dtos()` instead of `collect()` to get models, for requests that have one.
+
+Each page is fetched only when the loop reaches it, so the loop holds about one page (100 records) at a time however
+large the school. Calling `all()` or `toArray()` on the collection holds every record at once instead.
 
 ### Filtering and updating
 
