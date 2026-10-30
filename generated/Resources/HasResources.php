@@ -13,6 +13,26 @@ trait HasResources
         return new AdmissionsResource($this);
     }
 
+    public function agent(): AgentResource
+    {
+        return new AgentResource($this);
+    }
+
+    public function billing(): BillingResource
+    {
+        return new BillingResource($this);
+    }
+
+    public function bulletin(): BulletinResource
+    {
+        return new BulletinResource($this);
+    }
+
+    public function curriculum(): CurriculumResource
+    {
+        return new CurriculumResource($this);
+    }
+
     public function discipline(): DisciplineResource
     {
         return new DisciplineResource($this);
@@ -38,6 +58,16 @@ trait HasResources
         return new MedicalCentreResource($this);
     }
 
+    public function news(): NewsResource
+    {
+        return new NewsResource($this);
+    }
+
+    public function otherSchools(): OtherSchoolsResource
+    {
+        return new OtherSchoolsResource($this);
+    }
+
     public function registration(): RegistrationResource
     {
         return new RegistrationResource($this);
@@ -51,6 +81,11 @@ trait HasResources
     public function school(): SchoolResource
     {
         return new SchoolResource($this);
+    }
+
+    public function storage(): StorageResource
+    {
+        return new StorageResource($this);
     }
 
     public function studentRegisters(): StudentRegistersResource

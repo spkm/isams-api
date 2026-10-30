@@ -52,7 +52,20 @@ it('publishes its config file to the app under the isams-api-config tag', functi
 });
 
 it('offers an isams-api:install command that publishes the config', function () {
-    $this->artisan('isams-api:install')->assertSuccessful();
+    $appConfigPath = config_path();
+    $configPath = sys_get_temp_dir().'/isams-api-config-'.getmypid();
+    @mkdir($configPath);
+    $this->app->useConfigPath($configPath);
+    tap(new IsamsApiServiceProvider($this->app))->register()->boot();
 
-    expect(config_path('isams-api.php'))->toBeFile();
-})->after(fn () => @unlink(config_path('isams-api.php')));
+    try {
+        $this->artisan('isams-api:install')->assertSuccessful();
+
+        expect($configPath.'/isams-api.php')->toBeFile();
+    } finally {
+        @unlink($configPath.'/isams-api.php');
+        @rmdir($configPath);
+        $this->app->useConfigPath($appConfigPath);
+        tap(new IsamsApiServiceProvider($this->app))->register()->boot();
+    }
+});
