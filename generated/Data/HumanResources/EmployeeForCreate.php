@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\HumanResources;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeForCreateGender;
+use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeGender;
 
 readonly class EmployeeForCreate extends Data
 {
@@ -54,8 +54,8 @@ readonly class EmployeeForCreate extends Data
     ) {
     }
 
-    public function genderEnum(): ?EmployeeForCreateGender
+    public function genderEnum(): ?EmployeeGender
     {
-        return EmployeeForCreateGender::tryFrom((string) $this->gender);
+        return EmployeeGender::tryFrom((string) $this->gender);
     }
 }

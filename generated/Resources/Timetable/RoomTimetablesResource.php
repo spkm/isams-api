@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Timetable\RoomTimetables\GetRoomTimetableRequest;
 
 class RoomTimetablesResource extends BaseResource
 {
-    public function getRoomTimetable(int $roomId): Response
+    public function get(int $roomId): Response
     {
         return $this->connector->send(new GetRoomTimetableRequest($roomId));
     }

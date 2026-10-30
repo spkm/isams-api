@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Timetable\SetTimetables\GetSetTimetableRequest;
 
 class SetTimetablesResource extends BaseResource
 {
-    public function getSetTimetable(int $setId): Response
+    public function get(int $setId): Response
     {
         return $this->connector->send(new GetSetTimetableRequest($setId));
     }

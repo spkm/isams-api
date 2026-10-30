@@ -7,8 +7,8 @@
 namespace spkm\IsamsApi\Data\Admissions;
 
 use Carbon\CarbonImmutable;
-use spkm\IsamsApi\Data\Admissions\Enums\ApplicantGender;
-use spkm\IsamsApi\Data\Admissions\Enums\ApplicantSystemStatus;
+use spkm\IsamsApi\Data\Admissions\Enums\Gender;
+use spkm\IsamsApi\Data\Admissions\Enums\SystemStatus;
 use spkm\IsamsApi\Data\Data;
 
 readonly class Applicant extends Data
@@ -71,13 +71,13 @@ readonly class Applicant extends Data
     ) {
     }
 
-    public function genderEnum(): ?ApplicantGender
+    public function genderEnum(): ?Gender
     {
-        return ApplicantGender::tryFrom((string) $this->gender);
+        return Gender::tryFrom((string) $this->gender);
     }
 
-    public function systemStatusEnum(): ?ApplicantSystemStatus
+    public function systemStatusEnum(): ?SystemStatus
     {
-        return ApplicantSystemStatus::tryFrom((string) $this->systemStatus);
+        return SystemStatus::tryFrom((string) $this->systemStatus);
     }
 }

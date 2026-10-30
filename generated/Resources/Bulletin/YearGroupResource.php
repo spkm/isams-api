@@ -16,10 +16,8 @@ class YearGroupResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\Bulletin\BulletinYearGroupsForCreate|array<string, mixed>  $bulletinYearGroups
      */
-    public function createBulletinYearGroups(
-        int $bulletinId,
-        BulletinYearGroupsForCreate|array $bulletinYearGroups,
-    ): Response {
+    public function createMany(int $bulletinId, BulletinYearGroupsForCreate|array $bulletinYearGroups): Response
+    {
         return $this->connector->send(new CreateBulletinYearGroupsRequest($bulletinId, $bulletinYearGroups));
     }
 }

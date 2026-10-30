@@ -18,35 +18,33 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\UpdateEmployee
 
 class EmployeeReferenceChecksResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheckForCreate|array<string, mixed>  $employeeReferenceCheck
-     */
-    public function createEmployeeReferenceCheck(
-        int $employeeId,
-        EmployeeReferenceCheckForCreate|array $employeeReferenceCheck,
-    ): Response {
-        return $this->connector->send(new CreateEmployeeReferenceCheckRequest($employeeId, $employeeReferenceCheck));
-    }
-
-    public function deleteEmployeeReferenceCheck(int $employeeId, int $referenceCheckId): Response
-    {
-        return $this->connector->send(new DeleteEmployeeReferenceCheckRequest($employeeId, $referenceCheckId));
-    }
-
-    public function getEmployeeReferenceCheck(int $employeeId, int $referenceCheckId): Response
-    {
-        return $this->connector->send(new GetEmployeeReferenceCheckRequest($employeeId, $referenceCheckId));
-    }
-
-    public function getEmployeeReferenceChecks(int $employeeId): Response
+    public function all(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeReferenceChecksRequest($employeeId));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheckForCreate|array<string, mixed>  $employeeReferenceCheck
+     */
+    public function create(int $employeeId, EmployeeReferenceCheckForCreate|array $employeeReferenceCheck): Response
+    {
+        return $this->connector->send(new CreateEmployeeReferenceCheckRequest($employeeId, $employeeReferenceCheck));
+    }
+
+    public function delete(int $employeeId, int $referenceCheckId): Response
+    {
+        return $this->connector->send(new DeleteEmployeeReferenceCheckRequest($employeeId, $referenceCheckId));
+    }
+
+    public function get(int $employeeId, int $referenceCheckId): Response
+    {
+        return $this->connector->send(new GetEmployeeReferenceCheckRequest($employeeId, $referenceCheckId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheckForUpdate|array<string, mixed>  $employeeReferenceCheck
      */
-    public function updateEmployeeReferenceCheck(
+    public function update(
         int $employeeId,
         int $referenceCheckId,
         EmployeeReferenceCheckForUpdate|array $employeeReferenceCheck,

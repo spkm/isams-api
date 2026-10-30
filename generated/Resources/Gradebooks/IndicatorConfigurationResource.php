@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\Gradebooks\IndicatorConfiguration\GetIndicatorConfigu
 
 class IndicatorConfigurationResource extends BaseResource
 {
-    public function getIndicatorConfiguration(int $indicatorId): Response
-    {
-        return $this->connector->send(new GetIndicatorConfigurationRequest($indicatorId));
-    }
-
-    public function getIndicatorConfigurations(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetIndicatorConfigurationsRequest());
+    }
+
+    public function get(int $indicatorId): Response
+    {
+        return $this->connector->send(new GetIndicatorConfigurationRequest($indicatorId));
     }
 }

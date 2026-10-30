@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\StudentRegisters\Metadata\GetMetadataRequest;
 
 class MetadataResource extends BaseResource
 {
-    public function getMetadata(int $registerId, ?string $expand = null): Response
+    public function get(int $registerId, ?string $expand = null): Response
     {
         return $this->connector->send(new GetMetadataRequest($registerId, $expand));
     }

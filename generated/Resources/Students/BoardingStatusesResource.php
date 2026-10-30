@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\Students\BoardingStatuses\UpdateBoardingStatusRequest
 
 class BoardingStatusesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Students\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createBoardingStatus(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateBoardingStatusRequest($globalListItem));
-    }
-
-    public function deleteBoardingStatus(int $id): Response
-    {
-        return $this->connector->send(new DeleteBoardingStatusRequest($id));
-    }
-
-    public function getBoardingStatuses(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetBoardingStatusesRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\Students\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\Students\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateBoardingStatus(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateBoardingStatusRequest($id, $globalListItem));
+        return $this->connector->send(new CreateBoardingStatusRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteBoardingStatusRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\Students\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateBoardingStatusRequest($id, $listItem));
     }
 }

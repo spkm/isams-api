@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\School\YearGroupDivisions\GetYearGroupDivisionsReques
 
 class YearGroupDivisionsResource extends BaseResource
 {
-    public function getYearGroupDivisions(int $id): Response
+    public function all(int $id): Response
     {
         return $this->connector->send(new GetYearGroupDivisionsRequest($id));
     }

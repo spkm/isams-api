@@ -24,11 +24,11 @@ class SaveInteractiveElectronicFormResponseRequest extends IsamsRequest implemen
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\CloudPortals\ElectronicFormResponseForCreate|array<string, mixed>  $formResponse
+     * @param  \spkm\IsamsApi\Data\CloudPortals\ElectronicFormResponseForCreate|array<string, mixed>  $electronicFormResponse
      */
     public function __construct(
         protected int $formId,
-        protected ElectronicFormResponseForCreate|array $formResponse,
+        protected ElectronicFormResponseForCreate|array $electronicFormResponse,
     ) {
     }
 
@@ -42,6 +42,6 @@ class SaveInteractiveElectronicFormResponseRequest extends IsamsRequest implemen
      */
     protected function defaultBody(): array
     {
-        return $this->formResponse instanceof Data ? $this->formResponse->toArray() : $this->formResponse;
+        return $this->electronicFormResponse instanceof Data ? $this->electronicFormResponse->toArray() : $this->electronicFormResponse;
     }
 }

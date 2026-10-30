@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernActionOutcomesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ActionOutcomeForCreate|array<string, mixed>  $concernActionOutcome
-     */
-    public function createConcernActionOutcome(ActionOutcomeForCreate|array $concernActionOutcome): Response
-    {
-        return $this->connector->send(new CreateConcernActionOutcomeRequest($concernActionOutcome));
-    }
-
-    public function deleteConcernActionOutcome(int $id): Response
-    {
-        return $this->connector->send(new DeleteConcernActionOutcomeRequest($id));
-    }
-
-    public function getConcernActionOutcome(int $id): Response
-    {
-        return $this->connector->send(new GetConcernActionOutcomeRequest($id));
-    }
-
-    public function getConcernActionOutcomes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernActionOutcomesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ActionOutcomeForCreate|array<string, mixed>  $actionOutcome
+     */
+    public function create(ActionOutcomeForCreate|array $actionOutcome): Response
+    {
+        return $this->connector->send(new CreateConcernActionOutcomeRequest($actionOutcome));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteConcernActionOutcomeRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetConcernActionOutcomeRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernActionOutcome(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernActionOutcomeRequest($id, $patch));
     }

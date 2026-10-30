@@ -19,14 +19,14 @@ class EmployeeDisclosureBarringServiceChecksResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\DisclosureBarringServiceCheckForCreate|array<string, mixed>  $disclosureBarringServiceCheck
      */
-    public function createEmployeeDisclosureBarringServiceCheck(
+    public function create(
         int $employeeId,
         DisclosureBarringServiceCheckForCreate|array $disclosureBarringServiceCheck,
     ): Response {
         return $this->connector->send(new CreateEmployeeDisclosureBarringServiceCheckRequest($employeeId, $disclosureBarringServiceCheck));
     }
 
-    public function getEmployeeDisclosureBarringServiceCheck(int $employeeId): Response
+    public function get(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeDisclosureBarringServiceCheckRequest($employeeId));
     }
@@ -34,7 +34,7 @@ class EmployeeDisclosureBarringServiceChecksResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\DisclosureBarringServiceCheckForUpdate|array<string, mixed>  $disclosureBarringServiceCheck
      */
-    public function updateEmployeeDisclosureBarringServiceCheck(
+    public function update(
         int $employeeId,
         DisclosureBarringServiceCheckForUpdate|array $disclosureBarringServiceCheck,
     ): Response {

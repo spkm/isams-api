@@ -15,18 +15,18 @@ use spkm\IsamsApi\Requests\Students\Photos\GetStudentPhotoRequest;
 
 class PhotosResource extends BaseResource
 {
-    public function createStudentPhoto(string $schoolId, MultipartValue $photo): Response
+    public function create(string $schoolId, MultipartValue $photo): Response
     {
         return $this->connector->send(new CreateStudentPhotoRequest($schoolId, $photo));
     }
 
-    public function getCurrentStudentPhoto(string $schoolId): Response
-    {
-        return $this->connector->send(new GetCurrentStudentPhotoRequest($schoolId));
-    }
-
-    public function getStudentPhoto(string $schoolId, int $photoId): Response
+    public function get(string $schoolId, int $photoId): Response
     {
         return $this->connector->send(new GetStudentPhotoRequest($schoolId, $photoId));
+    }
+
+    public function getCurrent(string $schoolId): Response
+    {
+        return $this->connector->send(new GetCurrentStudentPhotoRequest($schoolId));
     }
 }

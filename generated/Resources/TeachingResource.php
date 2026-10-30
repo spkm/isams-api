@@ -7,17 +7,21 @@
 namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Resources\Teaching\CurriculumSubjectCodesResource;
+use spkm\IsamsApi\Resources\Teaching\SetsResource;
 use spkm\IsamsApi\Resources\Teaching\SubjectTeachingDepartmentsResource;
 use spkm\IsamsApi\Resources\Teaching\SubjectsResource;
-use spkm\IsamsApi\Resources\Teaching\TeachingSetsResource;
 
 class TeachingResource extends BaseResource
 {
     public function curriculumSubjectCodes(): CurriculumSubjectCodesResource
     {
         return new CurriculumSubjectCodesResource($this->connector);
+    }
+
+    public function sets(): SetsResource
+    {
+        return new SetsResource($this->connector);
     }
 
     public function subjectTeachingDepartments(): SubjectTeachingDepartmentsResource
@@ -28,10 +32,5 @@ class TeachingResource extends BaseResource
     public function subjects(): SubjectsResource
     {
         return new SubjectsResource($this->connector);
-    }
-
-    public function teachingSets(): TeachingSetsResource
-    {
-        return new TeachingSetsResource($this->connector);
     }
 }

@@ -17,30 +17,30 @@ use spkm\IsamsApi\Requests\Timetable\Import\GetTimetableImportResultRequest;
 
 class ImportResource extends BaseResource
 {
-    public function completeTimetableImport(): Response
+    public function complete(): Response
     {
         return $this->connector->send(new CompleteTimetableImportRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\Timetable\TimetableImportRequestForCreate|array<string, mixed>  $request
+     * @param  \spkm\IsamsApi\Data\Timetable\TimetableImportRequestForCreate|array<string, mixed>  $timetableImportRequest
      */
-    public function createTimetableImport(TimetableImportRequestForCreate|array $request): Response
+    public function create(TimetableImportRequestForCreate|array $timetableImportRequest): Response
     {
-        return $this->connector->send(new CreateTimetableImportRequest($request));
+        return $this->connector->send(new CreateTimetableImportRequest($timetableImportRequest));
     }
 
-    public function deleteActiveTimetableImport(): Response
+    public function deleteActive(): Response
     {
         return $this->connector->send(new DeleteActiveTimetableImportRequest());
     }
 
-    public function getActiveTimetableImport(): Response
+    public function getActive(): Response
     {
         return $this->connector->send(new GetActiveTimetableImportRequest());
     }
 
-    public function getTimetableImportResult(int $id): Response
+    public function getResult(int $id): Response
     {
         return $this->connector->send(new GetTimetableImportResultRequest($id));
     }

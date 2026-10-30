@@ -17,18 +17,18 @@ class StudentAssignmentsResource extends BaseResource
     /**
      * @param  array<mixed>  $schoolIds
      */
-    public function addGradebookStudentAssignments(int $gradebookId, array $schoolIds): Response
+    public function add(int $gradebookId, array $schoolIds): Response
     {
         return $this->connector->send(new AddGradebookStudentAssignmentsRequest($gradebookId, $schoolIds));
     }
 
-    public function deleteGradebookStudentAssignment(int $gradebookId, string $schoolId): Response
-    {
-        return $this->connector->send(new DeleteGradebookStudentAssignmentRequest($gradebookId, $schoolId));
-    }
-
-    public function getGradebookStudentAssignments(int $gradebookId): Response
+    public function all(int $gradebookId): Response
     {
         return $this->connector->send(new GetGradebookStudentAssignmentsRequest($gradebookId));
+    }
+
+    public function delete(int $gradebookId, string $schoolId): Response
+    {
+        return $this->connector->send(new DeleteGradebookStudentAssignmentRequest($gradebookId, $schoolId));
     }
 }

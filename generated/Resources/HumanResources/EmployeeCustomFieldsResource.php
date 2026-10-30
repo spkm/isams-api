@@ -17,31 +17,28 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCust
 
 class EmployeeCustomFieldsResource extends BaseResource
 {
-    public function getEmployeeCustomField(int $employeeId, int $customFieldId): Response
-    {
-        return $this->connector->send(new GetEmployeeCustomFieldRequest($employeeId, $customFieldId));
-    }
-
-    public function getEmployeeCustomFields(int $employeeId, string|Stringable|null $filter = null): Response
+    public function all(int $employeeId, string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetEmployeeCustomFieldsRequest($employeeId, $filter));
+    }
+
+    public function get(int $employeeId, int $customFieldId): Response
+    {
+        return $this->connector->send(new GetEmployeeCustomFieldRequest($employeeId, $customFieldId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>  $customField
      */
-    public function patchEmployeeCustomField(
-        int $employeeId,
-        int $customFieldId,
-        CustomFieldForPatch|array $customField,
-    ): Response {
+    public function patch(int $employeeId, int $customFieldId, CustomFieldForPatch|array $customField): Response
+    {
         return $this->connector->send(new PatchEmployeeCustomFieldRequest($employeeId, $customFieldId, $customField));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>>  $customFields
      */
-    public function patchEmployeeCustomFields(int $employeeId, array $customFields): Response
+    public function patchMany(int $employeeId, array $customFields): Response
     {
         return $this->connector->send(new PatchEmployeeCustomFieldsRequest($employeeId, $customFields));
     }

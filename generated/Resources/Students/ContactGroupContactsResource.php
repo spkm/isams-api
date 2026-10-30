@@ -13,7 +13,7 @@ use spkm\IsamsApi\Requests\Students\ContactGroupContacts\GetContactGroupContacts
 
 class ContactGroupContactsResource extends BaseResource
 {
-    public function getContactGroupContacts(
+    public function all(
         int $contactGroupId,
         ?bool $includeDeceased = null,
         string|Stringable|null $filter = null,

@@ -18,23 +18,7 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ReasonForChangeResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Registration\AttendanceCodeReasonForChangeForCreate|array<string, mixed>  $reasonForChange
-     */
-    public function createRegistrationReasonForChange(
-        int $periodId,
-        string $schoolId,
-        AttendanceCodeReasonForChangeForCreate|array $reasonForChange,
-    ): Response {
-        return $this->connector->send(new CreateRegistrationReasonForChangeRequest($periodId, $schoolId, $reasonForChange));
-    }
-
-    public function deleteRegistrationReasonForChange(int $periodId, string $schoolId, int $codeChangeId): Response
-    {
-        return $this->connector->send(new DeleteRegistrationReasonForChangeRequest($periodId, $schoolId, $codeChangeId));
-    }
-
-    public function getRegistrationReasonForChanges(
+    public function all(
         DateTimeInterface|string|null $changeDateStart = null,
         DateTimeInterface|string|null $changeDateEnd = null,
         ?int $page = null,
@@ -46,14 +30,26 @@ class ReasonForChangeResource extends BaseResource
     }
 
     /**
-     * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @param  \spkm\IsamsApi\Data\Registration\AttendanceCodeReasonForChangeForCreate|array<string, mixed>  $attendanceCodeReasonForChange
      */
-    public function patchRegistrationReasonForChange(
+    public function create(
         int $periodId,
         string $schoolId,
-        int $codeChangeId,
-        JsonPatch|array $patch,
+        AttendanceCodeReasonForChangeForCreate|array $attendanceCodeReasonForChange,
     ): Response {
+        return $this->connector->send(new CreateRegistrationReasonForChangeRequest($periodId, $schoolId, $attendanceCodeReasonForChange));
+    }
+
+    public function delete(int $periodId, string $schoolId, int $codeChangeId): Response
+    {
+        return $this->connector->send(new DeleteRegistrationReasonForChangeRequest($periodId, $schoolId, $codeChangeId));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     */
+    public function patch(int $periodId, string $schoolId, int $codeChangeId, JsonPatch|array $patch): Response
+    {
         return $this->connector->send(new PatchRegistrationReasonForChangeRequest($periodId, $schoolId, $codeChangeId, $patch));
     }
 }

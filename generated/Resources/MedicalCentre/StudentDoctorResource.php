@@ -20,19 +20,17 @@ class StudentDoctorResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\PersonDoctorAndSurgeryForCreate|array<string, mixed>  $personDoctorAndSurgery
      */
-    public function createStudentDoctor(
-        string $schoolId,
-        PersonDoctorAndSurgeryForCreate|array $personDoctorAndSurgery,
-    ): Response {
+    public function create(string $schoolId, PersonDoctorAndSurgeryForCreate|array $personDoctorAndSurgery): Response
+    {
         return $this->connector->send(new CreateStudentDoctorRequest($schoolId, $personDoctorAndSurgery));
     }
 
-    public function deleteStudentDoctor(string $schoolId): Response
+    public function delete(string $schoolId): Response
     {
         return $this->connector->send(new DeleteStudentDoctorRequest($schoolId));
     }
 
-    public function getStudentDoctor(string $schoolId): Response
+    public function get(string $schoolId): Response
     {
         return $this->connector->send(new GetStudentDoctorRequest($schoolId));
     }
@@ -40,7 +38,7 @@ class StudentDoctorResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentDoctor(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentDoctorRequest($schoolId, $patch));
     }

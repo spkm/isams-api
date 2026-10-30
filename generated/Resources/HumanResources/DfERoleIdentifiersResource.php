@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\HumanResources\DfERoleIdentifiers\GetDfERoleIdentifie
 
 class DfERoleIdentifiersResource extends BaseResource
 {
-    public function getDfERoleIdentifiers(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetDfERoleIdentifiersRequest());
     }

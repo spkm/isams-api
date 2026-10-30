@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\UpdateEmploymentTypeRe
 
 class EmploymentTypesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createEmploymentType(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateEmploymentTypeRequest($globalListItem));
-    }
-
-    public function deleteEmploymentType(int $id): Response
-    {
-        return $this->connector->send(new DeleteEmploymentTypeRequest($id));
-    }
-
-    public function getEmploymentTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetEmploymentTypesRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateEmploymentType(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateEmploymentTypeRequest($id, $globalListItem));
+        return $this->connector->send(new CreateEmploymentTypeRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteEmploymentTypeRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateEmploymentTypeRequest($id, $listItem));
     }
 }

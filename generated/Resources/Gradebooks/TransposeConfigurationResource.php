@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\Gradebooks\TransposeConfiguration\GetTransposeConfigu
 
 class TransposeConfigurationResource extends BaseResource
 {
-    public function getTransposeConfiguration(int $transposeId): Response
-    {
-        return $this->connector->send(new GetTransposeConfigurationRequest($transposeId));
-    }
-
-    public function getTransposeConfigurations(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetTransposeConfigurationsRequest());
+    }
+
+    public function get(int $transposeId): Response
+    {
+        return $this->connector->send(new GetTransposeConfigurationRequest($transposeId));
     }
 }

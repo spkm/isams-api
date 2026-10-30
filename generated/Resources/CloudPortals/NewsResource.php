@@ -16,26 +16,23 @@ use spkm\IsamsApi\Requests\CloudPortals\News\GetPortalNewsRequest;
 
 class NewsResource extends BaseResource
 {
-    public function getNewsArticle(int $id): Response
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    {
+        return $this->connector->send(new GetPortalNewsRequest($page, $pageSize, $filter));
+    }
+
+    public function getArticle(int $id): Response
     {
         return $this->connector->send(new GetNewsArticleRequest($id));
     }
 
-    public function getNewsCategories(): Response
+    public function getCategories(): Response
     {
         return $this->connector->send(new GetNewsCategoriesRequest());
     }
 
-    public function getNewsOptions(): Response
+    public function getOptions(): Response
     {
         return $this->connector->send(new GetNewsOptionsRequest());
-    }
-
-    public function getPortalNews(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetPortalNewsRequest($page, $pageSize, $filter));
     }
 }

@@ -18,30 +18,28 @@ use spkm\IsamsApi\Requests\SystemConfiguration\ListGroup\GetCustomListGroupsRequ
 class ListGroupResource extends BaseResource
 {
     /**
-     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListRuleForCreate|array<string, mixed>  $globalListGroup
+     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListRuleForCreate|array<string, mixed>  $listRule
      */
-    public function createCustomListGroup(GlobalListRuleForCreate|array $globalListGroup): Response
+    public function createCustom(GlobalListRuleForCreate|array $listRule): Response
     {
-        return $this->connector->send(new CreateCustomListGroupRequest($globalListGroup));
+        return $this->connector->send(new CreateCustomListGroupRequest($listRule));
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function createCustomListGroupItem(
-        string $listType,
-        GlobalListItemForCreate|array $globalListItem,
-    ): Response {
-        return $this->connector->send(new CreateCustomListGroupItemRequest($listType, $globalListItem));
-    }
-
-    public function getCustomListGroupItems(string $listType): Response
+    public function createItem(string $listType, GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new GetCustomListGroupItemsRequest($listType));
+        return $this->connector->send(new CreateCustomListGroupItemRequest($listType, $listItem));
     }
 
-    public function getCustomListGroups(): Response
+    public function getCustom(): Response
     {
         return $this->connector->send(new GetCustomListGroupsRequest());
+    }
+
+    public function getItems(string $listType): Response
+    {
+        return $this->connector->send(new GetCustomListGroupItemsRequest($listType));
     }
 }

@@ -23,8 +23,8 @@ class GetConcernStudentsRequest extends IsamsRequest
     public string $resultKey = 'students';
 
     public function __construct(
-        protected int $concernId,
         protected string $schoolId,
+        protected int $concernId,
     ) {
     }
 

@@ -14,33 +14,36 @@ use spkm\IsamsApi\Requests\CloudPortals\Homework\GetHomeworkByIdRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Homework\GetHomeworkInitialFeedbackRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Homework\GetHomeworkPagedRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Homework\GetHomeworkResourcesByHomeworkIdRequest;
+use spkm\IsamsApi\Resources\CloudPortals\Homework\SubmissionResource;
 
 class HomeworkResource extends BaseResource
 {
-    public function downloadHomework(int $homeworkId, int $resourceId): Response
+    public function submission(): SubmissionResource
+    {
+        return new SubmissionResource($this->connector);
+    }
+
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    {
+        return $this->connector->send(new GetHomeworkPagedRequest($page, $pageSize, $filter));
+    }
+
+    public function download(int $homeworkId, int $resourceId): Response
     {
         return $this->connector->send(new DownloadHomeworkRequest($homeworkId, $resourceId));
     }
 
-    public function getHomeworkById(int $id): Response
+    public function get(int $id): Response
     {
         return $this->connector->send(new GetHomeworkByIdRequest($id));
     }
 
-    public function getHomeworkInitialFeedback(int $homeworkId, string $schoolId): Response
+    public function getInitialFeedback(int $homeworkId, string $schoolId): Response
     {
         return $this->connector->send(new GetHomeworkInitialFeedbackRequest($homeworkId, $schoolId));
     }
 
-    public function getHomeworkPaged(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetHomeworkPagedRequest($page, $pageSize, $filter));
-    }
-
-    public function getHomeworkResourcesByHomeworkId(int $homeworkId): Response
+    public function getResources(int $homeworkId): Response
     {
         return $this->connector->send(new GetHomeworkResourcesByHomeworkIdRequest($homeworkId));
     }

@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Curriculum\Cycles\GetCurriculumCyclesRequest;
 
 class CyclesResource extends BaseResource
 {
-    public function getCurriculumCycles(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetCurriculumCyclesRequest());
     }

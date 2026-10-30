@@ -45,14 +45,14 @@ class AdmissionsResource extends BaseResource
         return new AgencyBranchesResource($this->connector);
     }
 
-    public function alumniCustomFields(): AlumniCustomFieldsResource
-    {
-        return new AlumniCustomFieldsResource($this->connector);
-    }
-
     public function alumni(): AlumniResource
     {
         return new AlumniResource($this->connector);
+    }
+
+    public function alumniCustomFields(): AlumniCustomFieldsResource
+    {
+        return new AlumniCustomFieldsResource($this->connector);
     }
 
     public function contacts(): ContactsResource
@@ -65,14 +65,14 @@ class AdmissionsResource extends BaseResource
         return new CustomFieldsResource($this->connector);
     }
 
-    public function documentCategory(): DocumentCategoryResource
-    {
-        return new DocumentCategoryResource($this->connector);
-    }
-
     public function document(): DocumentResource
     {
         return new DocumentResource($this->connector);
+    }
+
+    public function documentCategory(): DocumentCategoryResource
+    {
+        return new DocumentCategoryResource($this->connector);
     }
 
     public function enquiryReasons(): EnquiryReasonsResource
@@ -135,20 +135,7 @@ class AdmissionsResource extends BaseResource
         return new VisitsResource($this->connector);
     }
 
-    /**
-     * @param  \spkm\IsamsApi\Data\Admissions\ApplicantForCreate|array<string, mixed>  $applicant
-     */
-    public function createApplicant(ApplicantForCreate|array $applicant): Response
-    {
-        return $this->connector->send(new CreateApplicantRequest($applicant));
-    }
-
-    public function getApplicant(string $schoolId, ?string $expand = null): Response
-    {
-        return $this->connector->send(new GetApplicantRequest($schoolId, $expand));
-    }
-
-    public function getApplicants(
+    public function all(
         ?int $page = null,
         ?int $pageSize = null,
         ?string $expand = null,
@@ -157,7 +144,20 @@ class AdmissionsResource extends BaseResource
         return $this->connector->send(new GetApplicantsRequest($page, $pageSize, $expand, $filter));
     }
 
-    public function moveApplicantToCurrent(string $schoolId): Response
+    /**
+     * @param  \spkm\IsamsApi\Data\Admissions\ApplicantForCreate|array<string, mixed>  $applicant
+     */
+    public function create(ApplicantForCreate|array $applicant): Response
+    {
+        return $this->connector->send(new CreateApplicantRequest($applicant));
+    }
+
+    public function get(string $schoolId, ?string $expand = null): Response
+    {
+        return $this->connector->send(new GetApplicantRequest($schoolId, $expand));
+    }
+
+    public function moveToCurrent(string $schoolId): Response
     {
         return $this->connector->send(new MoveApplicantToCurrentRequest($schoolId));
     }
@@ -165,7 +165,7 @@ class AdmissionsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchApplicant(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchApplicantRequest($schoolId, $patch));
     }
@@ -173,7 +173,7 @@ class AdmissionsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantForUpdate|array<string, mixed>  $applicant
      */
-    public function updateApplicant(string $schoolId, ApplicantForUpdate|array $applicant): Response
+    public function update(string $schoolId, ApplicantForUpdate|array $applicant): Response
     {
         return $this->connector->send(new UpdateApplicantRequest($schoolId, $applicant));
     }

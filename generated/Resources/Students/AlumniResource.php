@@ -18,7 +18,7 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class AlumniResource extends BaseResource
 {
-    public function getAlumni(
+    public function all(
         ?int $page = null,
         ?int $pageSize = null,
         ?string $expand = null,
@@ -27,17 +27,17 @@ class AlumniResource extends BaseResource
         return $this->connector->send(new GetAlumniRequest($page, $pageSize, $expand, $filter));
     }
 
-    public function getAlumniBySchoolId(string $schoolId, ?string $expand = null): Response
+    public function get(string $schoolId, ?string $expand = null): Response
     {
         return $this->connector->send(new GetAlumniBySchoolIdRequest($schoolId, $expand));
     }
 
-    public function moveAlumniToApplicant(string $schoolId): Response
+    public function moveToApplicant(string $schoolId): Response
     {
         return $this->connector->send(new MoveAlumniToApplicantRequest($schoolId));
     }
 
-    public function moveAlumniToCurrent(string $schoolId): Response
+    public function moveToCurrent(string $schoolId): Response
     {
         return $this->connector->send(new MoveAlumniToCurrentRequest($schoolId));
     }
@@ -45,7 +45,7 @@ class AlumniResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchAlumni(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchAlumniRequest($schoolId, $patch));
     }

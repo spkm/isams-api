@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\HumanResources;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeReferenceCheckForUpdateStatus;
+use spkm\IsamsApi\Data\HumanResources\Enums\CheckStatus;
 
 readonly class EmployeeReferenceCheckForUpdate extends Data
 {
@@ -22,8 +22,8 @@ readonly class EmployeeReferenceCheckForUpdate extends Data
     ) {
     }
 
-    public function statusEnum(): ?EmployeeReferenceCheckForUpdateStatus
+    public function statusEnum(): ?CheckStatus
     {
-        return EmployeeReferenceCheckForUpdateStatus::tryFrom((string) $this->status);
+        return CheckStatus::tryFrom((string) $this->status);
     }
 }

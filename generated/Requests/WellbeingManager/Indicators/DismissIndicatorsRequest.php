@@ -26,10 +26,10 @@ class DismissIndicatorsRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\DismissIndicatorsCollectionForUpdate|array<string, mixed>  $indicators
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\DismissIndicatorsCollectionForUpdate|array<string, mixed>  $dismissIndicatorsCollection
      */
     public function __construct(
-        protected DismissIndicatorsCollectionForUpdate|array $indicators,
+        protected DismissIndicatorsCollectionForUpdate|array $dismissIndicatorsCollection,
     ) {
     }
 
@@ -43,6 +43,6 @@ class DismissIndicatorsRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->indicators instanceof Data ? $this->indicators->toArray() : $this->indicators;
+        return $this->dismissIndicatorsCollection instanceof Data ? $this->dismissIndicatorsCollection->toArray() : $this->dismissIndicatorsCollection;
     }
 }

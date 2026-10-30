@@ -10,13 +10,13 @@ use spkm\IsamsApi\Facades\Isams;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\CreateCurriculumSubjectCodeRequest;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\DeleteCurriculumSubjectCodeRequest;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\UpdateCurriculumSubjectCodeRequest;
+use spkm\IsamsApi\Requests\Teaching\Sets\AddStudentToTeachingSetRequest;
+use spkm\IsamsApi\Requests\Teaching\Sets\RemoveStudentFromTeachingSetRequest;
 use spkm\IsamsApi\Requests\Teaching\Subjects\CreateSubjectRequest;
 use spkm\IsamsApi\Requests\Teaching\Subjects\GetSubjectsRequest;
 use spkm\IsamsApi\Requests\Teaching\Subjects\UpdateSubjectRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\AddSubjectTeachingDepartmentRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\RemoveSubjectTeachingDepartmentRequest;
-use spkm\IsamsApi\Requests\Teaching\TeachingSets\AddStudentToTeachingSetRequest;
-use spkm\IsamsApi\Requests\Teaching\TeachingSets\RemoveStudentFromTeachingSetRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 it('sends each teaching write to its iSAMS endpoint with its JSON body', function (Request $request, string $method, string $uri, ?array $body) {
@@ -52,8 +52,8 @@ it('reaches teaching requests through resources', function () {
     ]);
     $connector = FakeIsams::connector();
 
-    $connector->teaching()->subjects()->createSubject(new SubjectForCreate(name: 'Latin'));
-    $connector->teaching()->subjects()->getSubjects();
+    $connector->teaching()->subjects()->create(new SubjectForCreate(name: 'Latin'));
+    $connector->teaching()->subjects()->all();
 
     $isams->assertSent(CreateSubjectRequest::class);
     $isams->assertSent(GetSubjectsRequest::class);
@@ -63,7 +63,7 @@ it('reaches resources through the Isams facade', function () {
     config(['isams-api.client_id' => 'client-id', 'isams-api.client_secret' => 'client-secret', 'isams-api.base_url' => FakeIsams::BASE_URL]);
     $isams = FakeIsams::respondWith([AddStudentToTeachingSetRequest::class => MockResponse::make(status: 201)]);
 
-    Isams::teaching()->teachingSets()->addStudentToTeachingSet(34, '100001');
+    Isams::teaching()->sets()->addStudent(34, '100001');
 
     $isams->assertSent(AddStudentToTeachingSetRequest::class);
 });

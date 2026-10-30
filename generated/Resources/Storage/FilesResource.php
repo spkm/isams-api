@@ -15,17 +15,17 @@ use spkm\IsamsApi\Requests\Storage\Files\UploadFileRequest;
 
 class FilesResource extends BaseResource
 {
-    public function deleteFile(string $path, string $filename): Response
+    public function delete(string $path, string $filename): Response
     {
         return $this->connector->send(new DeleteFileRequest($path, $filename));
     }
 
-    public function downloadFile(string $path, string $fileName): Response
+    public function download(string $path, string $fileName): Response
     {
         return $this->connector->send(new DownloadFileRequest($path, $fileName));
     }
 
-    public function uploadFile(
+    public function upload(
         string $key,
         MultipartValue $file,
         string $filename,

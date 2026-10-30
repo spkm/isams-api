@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\Admissions\EnquiryReasons\UpdateEnquiryReasonRequest;
 
 class EnquiryReasonsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createEnquiryReason(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateEnquiryReasonRequest($globalListItem));
-    }
-
-    public function deleteEnquiryReason(int $id): Response
-    {
-        return $this->connector->send(new DeleteEnquiryReasonRequest($id));
-    }
-
-    public function getEnquiryReasons(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetEnquiryReasonsRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateEnquiryReason(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateEnquiryReasonRequest($id, $globalListItem));
+        return $this->connector->send(new CreateEnquiryReasonRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteEnquiryReasonRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateEnquiryReasonRequest($id, $listItem));
     }
 }

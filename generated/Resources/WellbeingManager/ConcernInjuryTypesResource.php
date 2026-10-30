@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernInjuryTypesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernInjuryTypeForCreate|array<string, mixed>  $concernInjuryType
-     */
-    public function createConcernInjuryType(ConcernInjuryTypeForCreate|array $concernInjuryType): Response
-    {
-        return $this->connector->send(new CreateConcernInjuryTypeRequest($concernInjuryType));
-    }
-
-    public function deleteConcernInjuryType(int $id): Response
-    {
-        return $this->connector->send(new DeleteConcernInjuryTypeRequest($id));
-    }
-
-    public function getConcernInjuryType(int $id): Response
-    {
-        return $this->connector->send(new GetConcernInjuryTypeRequest($id));
-    }
-
-    public function getConcernInjuryTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernInjuryTypesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernInjuryTypeForCreate|array<string, mixed>  $concernInjuryType
+     */
+    public function create(ConcernInjuryTypeForCreate|array $concernInjuryType): Response
+    {
+        return $this->connector->send(new CreateConcernInjuryTypeRequest($concernInjuryType));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteConcernInjuryTypeRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetConcernInjuryTypeRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernInjuryType(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernInjuryTypeRequest($id, $patch));
     }

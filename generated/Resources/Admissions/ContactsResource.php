@@ -15,7 +15,12 @@ use spkm\IsamsApi\Requests\Admissions\Contacts\GetApplicantsContactsRequest;
 
 class ContactsResource extends BaseResource
 {
-    public function getApplicantContacts(
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    {
+        return $this->connector->send(new GetApplicantsContactsRequest($page, $pageSize, $filter));
+    }
+
+    public function forApplicant(
         string $schoolId,
         ?bool $includeDeceased = null,
         string|Stringable|null $filter = null,
@@ -23,19 +28,11 @@ class ContactsResource extends BaseResource
         return $this->connector->send(new GetApplicantContactsRequest($schoolId, $includeDeceased, $filter));
     }
 
-    public function getApplicantStudentContacts(
+    public function studentContacts(
         string $schoolId,
         ?bool $includeDeceased = null,
         string|Stringable|null $filter = null,
     ): Response {
         return $this->connector->send(new GetApplicantStudentContactsRequest($schoolId, $includeDeceased, $filter));
-    }
-
-    public function getApplicantsContacts(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetApplicantsContactsRequest($page, $pageSize, $filter));
     }
 }

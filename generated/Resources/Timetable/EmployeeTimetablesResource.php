@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Timetable\EmployeeTimetables\GetEmployeeTimetableRequ
 
 class EmployeeTimetablesResource extends BaseResource
 {
-    public function getEmployeeTimetable(int $employeeId): Response
+    public function get(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeTimetableRequest($employeeId));
     }

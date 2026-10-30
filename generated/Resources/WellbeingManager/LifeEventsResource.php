@@ -20,17 +20,17 @@ class LifeEventsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\LifeEventForCreate|array<string, mixed>  $lifeEvent
      */
-    public function createLifeEvent(string $schoolId, LifeEventForCreate|array $lifeEvent): Response
+    public function create(string $schoolId, LifeEventForCreate|array $lifeEvent): Response
     {
         return $this->connector->send(new CreateLifeEventRequest($schoolId, $lifeEvent));
     }
 
-    public function deleteLifeEvent(string $schoolId, int $id): Response
+    public function delete(string $schoolId, int $id): Response
     {
         return $this->connector->send(new DeleteLifeEventRequest($schoolId, $id));
     }
 
-    public function getLifeEvent(string $schoolId, int $id): Response
+    public function get(string $schoolId, int $id): Response
     {
         return $this->connector->send(new GetLifeEventRequest($schoolId, $id));
     }
@@ -38,7 +38,7 @@ class LifeEventsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchLifeEvent(string $schoolId, int $id, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchLifeEventRequest($schoolId, $id, $patch));
     }

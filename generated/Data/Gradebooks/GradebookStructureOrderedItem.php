@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\Gradebooks;
 
 use Illuminate\Support\Collection;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookStructureOrderedItemStructureItemType;
+use spkm\IsamsApi\Data\Gradebooks\Enums\StructureItemType;
 use spkm\IsamsApi\Data\Gradebooks\GradebookStructureOrderedItem as GradebookStructureOrderedItem1;
 
 readonly class GradebookStructureOrderedItem extends Data
@@ -26,8 +26,8 @@ readonly class GradebookStructureOrderedItem extends Data
     ) {
     }
 
-    public function structureItemTypeEnum(): ?GradebookStructureOrderedItemStructureItemType
+    public function structureItemTypeEnum(): ?StructureItemType
     {
-        return GradebookStructureOrderedItemStructureItemType::tryFrom((string) $this->structureItemType);
+        return StructureItemType::tryFrom((string) $this->structureItemType);
     }
 }

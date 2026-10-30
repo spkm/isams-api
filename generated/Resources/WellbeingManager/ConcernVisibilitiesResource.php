@@ -17,35 +17,35 @@ use spkm\IsamsApi\Requests\WellbeingManager\ConcernVisibilities\SetConcernVisibi
 
 class ConcernVisibilitiesResource extends BaseResource
 {
-    public function getConcernVisibilities(int $concernId, string $schoolId): Response
+    public function all(string $schoolId, int $concernId): Response
     {
-        return $this->connector->send(new GetConcernVisibilitiesRequest($concernId, $schoolId));
+        return $this->connector->send(new GetConcernVisibilitiesRequest($schoolId, $concernId));
     }
 
-    public function resetConcernVisibilities(string $schoolId, int $concernId): Response
+    public function reset(string $schoolId, int $concernId): Response
     {
         return $this->connector->send(new ResetConcernVisibilitiesRequest($schoolId, $concernId));
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityForCreate|array<string, mixed>  $visibility
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityForCreate|array<string, mixed>  $concernVisibility
      */
-    public function setConcernVisibility(
+    public function set(
         string $schoolId,
         int $concernId,
-        ConcernVisibilityForCreate|array $visibility,
+        ConcernVisibilityForCreate|array $concernVisibility,
     ): Response {
-        return $this->connector->send(new SetConcernVisibilityRequest($schoolId, $concernId, $visibility));
+        return $this->connector->send(new SetConcernVisibilityRequest($schoolId, $concernId, $concernVisibility));
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityGroupsForPatch|array<string, mixed>  $visibilityGroups
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityGroupsForPatch|array<string, mixed>  $concernVisibilityGroups
      */
-    public function setConcernVisibilityGroups(
+    public function setGroups(
         string $schoolId,
         int $concernId,
-        ConcernVisibilityGroupsForPatch|array $visibilityGroups,
+        ConcernVisibilityGroupsForPatch|array $concernVisibilityGroups,
     ): Response {
-        return $this->connector->send(new SetConcernVisibilityGroupsRequest($schoolId, $concernId, $visibilityGroups));
+        return $this->connector->send(new SetConcernVisibilityGroupsRequest($schoolId, $concernId, $concernVisibilityGroups));
     }
 }

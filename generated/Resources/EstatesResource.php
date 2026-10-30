@@ -7,7 +7,6 @@
 namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Resources\Estates\BuildingDivisionsResource;
 use spkm\IsamsApi\Resources\Estates\BuildingRoomsResource;
 use spkm\IsamsApi\Resources\Estates\BuildingsResource;

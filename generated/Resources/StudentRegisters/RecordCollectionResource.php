@@ -16,28 +16,7 @@ use spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\PatchRecordCollecti
 
 class RecordCollectionResource extends BaseResource
 {
-    /**
-     * @param  array<mixed>  $values
-     */
-    public function createRecordCollectionRecord(
-        int $registerId,
-        string $schoolId,
-        int $recordCollectionId,
-        array $values,
-    ): Response {
-        return $this->connector->send(new CreateRecordCollectionRecordRequest($registerId, $schoolId, $recordCollectionId, $values));
-    }
-
-    public function deleteRecordCollectionRecord(
-        int $registerId,
-        string $schoolId,
-        int $recordCollectionId,
-        int $recordId,
-    ): Response {
-        return $this->connector->send(new DeleteRecordCollectionRecordRequest($registerId, $schoolId, $recordCollectionId, $recordId));
-    }
-
-    public function getRecordCollectionRecords(
+    public function all(
         int $registerId,
         int $recordCollectionId,
         ?string $systemStatus = null,
@@ -47,18 +26,28 @@ class RecordCollectionResource extends BaseResource
         return $this->connector->send(new GetRecordCollectionRecordsRequest($registerId, $recordCollectionId, $systemStatus, $page, $pageSize));
     }
 
-    public function getStudentRecordCollectionRecords(
-        int $registerId,
-        string $schoolId,
-        int $recordCollectionId,
-    ): Response {
+    /**
+     * @param  array<mixed>  $values
+     */
+    public function create(int $registerId, string $schoolId, int $recordCollectionId, array $values): Response
+    {
+        return $this->connector->send(new CreateRecordCollectionRecordRequest($registerId, $schoolId, $recordCollectionId, $values));
+    }
+
+    public function delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId): Response
+    {
+        return $this->connector->send(new DeleteRecordCollectionRecordRequest($registerId, $schoolId, $recordCollectionId, $recordId));
+    }
+
+    public function forStudent(int $registerId, string $schoolId, int $recordCollectionId): Response
+    {
         return $this->connector->send(new GetStudentRecordCollectionRecordsRequest($registerId, $schoolId, $recordCollectionId));
     }
 
     /**
      * @param  array<mixed>  $values
      */
-    public function patchRecordCollectionRecord(
+    public function patch(
         int $registerId,
         string $schoolId,
         int $recordCollectionId,

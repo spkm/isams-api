@@ -23,8 +23,8 @@ class GetMedicalDoctorRequest extends IsamsRequest
     protected bool $cacheable = true;
 
     public function __construct(
-        protected int $doctorId,
         protected string $surgeryId,
+        protected int $doctorId,
     ) {
     }
 

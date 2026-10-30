@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\HumanResources\QualificationLevels\UpdateQualificatio
 
 class QualificationLevelsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createQualificationLevel(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateQualificationLevelRequest($globalListItem));
-    }
-
-    public function deleteQualificationLevel(int $id): Response
-    {
-        return $this->connector->send(new DeleteQualificationLevelRequest($id));
-    }
-
-    public function getQualificationLevels(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetQualificationLevelsRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateQualificationLevel(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateQualificationLevelRequest($id, $globalListItem));
+        return $this->connector->send(new CreateQualificationLevelRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteQualificationLevelRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateQualificationLevelRequest($id, $listItem));
     }
 }

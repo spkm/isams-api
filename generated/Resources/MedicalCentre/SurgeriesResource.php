@@ -18,25 +18,25 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class SurgeriesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\MedicalCentre\SurgeryForCreate|array<string, mixed>  $surgery
-     */
-    public function createMedicalSurgery(SurgeryForCreate|array $surgery): Response
-    {
-        return $this->connector->send(new CreateMedicalSurgeryRequest($surgery));
-    }
-
-    public function deleteMedicalSurgery(int $surgeryId): Response
-    {
-        return $this->connector->send(new DeleteMedicalSurgeryRequest($surgeryId));
-    }
-
-    public function getMedicalSurgeries(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetMedicalSurgeriesRequest());
     }
 
-    public function getMedicalSurgery(int $surgeryId): Response
+    /**
+     * @param  \spkm\IsamsApi\Data\MedicalCentre\SurgeryForCreate|array<string, mixed>  $surgery
+     */
+    public function create(SurgeryForCreate|array $surgery): Response
+    {
+        return $this->connector->send(new CreateMedicalSurgeryRequest($surgery));
+    }
+
+    public function delete(int $surgeryId): Response
+    {
+        return $this->connector->send(new DeleteMedicalSurgeryRequest($surgeryId));
+    }
+
+    public function get(int $surgeryId): Response
     {
         return $this->connector->send(new GetMedicalSurgeryRequest($surgeryId));
     }
@@ -44,7 +44,7 @@ class SurgeriesResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchMedicalSurgery(int $surgeryId, JsonPatch|array $patch): Response
+    public function patch(int $surgeryId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchMedicalSurgeryRequest($surgeryId, $patch));
     }

@@ -28,11 +28,11 @@ class CreateStudentVisaRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentVisaForCreate|array<string, mixed>  $visa
+     * @param  \spkm\IsamsApi\Data\Students\StudentVisaForCreate|array<string, mixed>  $studentVisa
      */
     public function __construct(
         protected string $schoolId,
-        protected StudentVisaForCreate|array $visa,
+        protected StudentVisaForCreate|array $studentVisa,
     ) {
     }
 
@@ -46,6 +46,6 @@ class CreateStudentVisaRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->visa instanceof Data ? $this->visa->toArray() : $this->visa;
+        return $this->studentVisa instanceof Data ? $this->studentVisa->toArray() : $this->studentVisa;
     }
 }

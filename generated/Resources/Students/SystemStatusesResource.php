@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Students\SystemStatuses\GetStudentSystemStatusesReque
 
 class SystemStatusesResource extends BaseResource
 {
-    public function getStudentSystemStatuses(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetStudentSystemStatusesRequest());
     }

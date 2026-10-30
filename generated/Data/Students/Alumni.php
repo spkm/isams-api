@@ -8,8 +8,8 @@ namespace spkm\IsamsApi\Data\Students;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Students\Enums\AlumniGender;
-use spkm\IsamsApi\Data\Students\Enums\AlumniSystemStatus;
+use spkm\IsamsApi\Data\Students\Enums\Gender;
+use spkm\IsamsApi\Data\Students\Enums\SystemStatus;
 
 readonly class Alumni extends Data
 {
@@ -56,13 +56,13 @@ readonly class Alumni extends Data
     ) {
     }
 
-    public function genderEnum(): ?AlumniGender
+    public function genderEnum(): ?Gender
     {
-        return AlumniGender::tryFrom((string) $this->gender);
+        return Gender::tryFrom((string) $this->gender);
     }
 
-    public function systemStatusEnum(): ?AlumniSystemStatus
+    public function systemStatusEnum(): ?SystemStatus
     {
-        return AlumniSystemStatus::tryFrom((string) $this->systemStatus);
+        return SystemStatus::tryFrom((string) $this->systemStatus);
     }
 }

@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\Gradebooks\GradesetConfiguration\GetGradesetConfigura
 
 class GradesetConfigurationResource extends BaseResource
 {
-    public function getGradesetConfiguration(int $gradesetId): Response
-    {
-        return $this->connector->send(new GetGradesetConfigurationRequest($gradesetId));
-    }
-
-    public function getGradesetConfigurations(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetGradesetConfigurationsRequest());
+    }
+
+    public function get(int $gradesetId): Response
+    {
+        return $this->connector->send(new GetGradesetConfigurationRequest($gradesetId));
     }
 }

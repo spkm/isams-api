@@ -14,13 +14,13 @@ use spkm\IsamsApi\Requests\RewardsAndConduct\FieldTypes\GetFieldTypesRequest;
 
 class FieldTypesResource extends BaseResource
 {
-    public function getFieldType(int $moduleTypeId, int $categoryId, int $fieldTypeId): Response
-    {
-        return $this->connector->send(new GetFieldTypeRequest($moduleTypeId, $categoryId, $fieldTypeId));
-    }
-
-    public function getFieldTypes(int $moduleTypeId, int $categoryId, string|Stringable|null $filter = null): Response
+    public function all(int $moduleTypeId, int $categoryId, string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetFieldTypesRequest($moduleTypeId, $categoryId, $filter));
+    }
+
+    public function get(int $moduleTypeId, int $categoryId, int $fieldTypeId): Response
+    {
+        return $this->connector->send(new GetFieldTypeRequest($moduleTypeId, $categoryId, $fieldTypeId));
     }
 }

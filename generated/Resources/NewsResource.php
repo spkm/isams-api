@@ -16,7 +16,7 @@ class NewsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\News\NewsForCreate|array<string, mixed>  $news
      */
-    public function createNews(NewsForCreate|array $news): Response
+    public function create(NewsForCreate|array $news): Response
     {
         return $this->connector->send(new CreateNewsRequest($news));
     }

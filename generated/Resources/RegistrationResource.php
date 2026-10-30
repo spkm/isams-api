@@ -7,7 +7,6 @@
 namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Resources\Registration\AbsenceCodesResource;
 use spkm\IsamsApi\Resources\Registration\NatureOfAbsenceResource;
 use spkm\IsamsApi\Resources\Registration\OffGamesResource;

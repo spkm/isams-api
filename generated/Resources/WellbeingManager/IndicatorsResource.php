@@ -23,33 +23,33 @@ class IndicatorsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\IndicatorForCreate|array<string, mixed>  $indicator
      */
-    public function createIndicator(string $schoolId, IndicatorForCreate|array $indicator): Response
+    public function create(string $schoolId, IndicatorForCreate|array $indicator): Response
     {
         return $this->connector->send(new CreateIndicatorRequest($schoolId, $indicator));
     }
 
-    public function deleteIndicator(int $id, string $schoolId): Response
+    public function delete(string $schoolId, int $id): Response
     {
-        return $this->connector->send(new DeleteIndicatorRequest($id, $schoolId));
+        return $this->connector->send(new DeleteIndicatorRequest($schoolId, $id));
     }
 
     /**
      * @param  array<mixed>  $ids
      */
-    public function deleteIndicators(array $ids): Response
+    public function deleteMany(array $ids): Response
     {
         return $this->connector->send(new DeleteIndicatorsRequest($ids));
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\DismissIndicatorsCollectionForUpdate|array<string, mixed>  $indicators
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\DismissIndicatorsCollectionForUpdate|array<string, mixed>  $dismissIndicatorsCollection
      */
-    public function dismissIndicators(DismissIndicatorsCollectionForUpdate|array $indicators): Response
+    public function dismiss(DismissIndicatorsCollectionForUpdate|array $dismissIndicatorsCollection): Response
     {
-        return $this->connector->send(new DismissIndicatorsRequest($indicators));
+        return $this->connector->send(new DismissIndicatorsRequest($dismissIndicatorsCollection));
     }
 
-    public function getIndicator(string $schoolId, int $id): Response
+    public function get(string $schoolId, int $id): Response
     {
         return $this->connector->send(new GetIndicatorRequest($schoolId, $id));
     }
@@ -57,7 +57,7 @@ class IndicatorsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchIndicator(string $schoolId, int $id, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchIndicatorRequest($schoolId, $id, $patch));
     }

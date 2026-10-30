@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\UpdateCurriculumSubje
 
 class CurriculumSubjectCodesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Teaching\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createCurriculumSubjectCode(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateCurriculumSubjectCodeRequest($globalListItem));
-    }
-
-    public function deleteCurriculumSubjectCode(int $id): Response
-    {
-        return $this->connector->send(new DeleteCurriculumSubjectCodeRequest($id));
-    }
-
-    public function getCurriculumSubjectCodes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetCurriculumSubjectCodesRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\Teaching\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\Teaching\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateCurriculumSubjectCode(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateCurriculumSubjectCodeRequest($id, $globalListItem));
+        return $this->connector->send(new CreateCurriculumSubjectCodeRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteCurriculumSubjectCodeRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\Teaching\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateCurriculumSubjectCodeRequest($id, $listItem));
     }
 }

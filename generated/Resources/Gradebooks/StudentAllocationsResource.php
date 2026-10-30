@@ -14,24 +14,21 @@ use spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\GetGradebookStudentAllo
 
 class StudentAllocationsResource extends BaseResource
 {
+    public function all(int $gradebookId, string $criteria): Response
+    {
+        return $this->connector->send(new GetGradebookStudentAllocationsRequest($gradebookId, $criteria));
+    }
+
     /**
      * @param  array<mixed>  $studentAllocations
      */
-    public function createGradebookStudentAllocations(
-        int $gradebookId,
-        string $criteria,
-        array $studentAllocations,
-    ): Response {
+    public function createMany(int $gradebookId, string $criteria, array $studentAllocations): Response
+    {
         return $this->connector->send(new CreateGradebookStudentAllocationsRequest($gradebookId, $criteria, $studentAllocations));
     }
 
-    public function deleteGradebookStudentAllocation(int $gradebookId, string $criteria, int $allocationId): Response
+    public function delete(int $gradebookId, string $criteria, int $allocationId): Response
     {
         return $this->connector->send(new DeleteGradebookStudentAllocationRequest($gradebookId, $criteria, $allocationId));
-    }
-
-    public function getGradebookStudentAllocations(int $gradebookId, string $criteria): Response
-    {
-        return $this->connector->send(new GetGradebookStudentAllocationsRequest($gradebookId, $criteria));
     }
 }

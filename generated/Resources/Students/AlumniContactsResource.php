@@ -13,11 +13,8 @@ use spkm\IsamsApi\Requests\Students\AlumniContacts\GetAlumniContactsRequest;
 
 class AlumniContactsResource extends BaseResource
 {
-    public function getAlumniContacts(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    {
         return $this->connector->send(new GetAlumniContactsRequest($page, $pageSize, $filter));
     }
 }

@@ -13,7 +13,7 @@ use spkm\IsamsApi\Requests\RewardsAndConduct\ModuleTypes\GetModuleTypesRequest;
 
 class ModuleTypesResource extends BaseResource
 {
-    public function getModuleTypes(string|Stringable|null $filter = null): Response
+    public function all(string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetModuleTypesRequest($filter));
     }

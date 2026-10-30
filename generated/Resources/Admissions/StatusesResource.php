@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\Admissions\Statuses\UpdateStatusRequest;
 
 class StatusesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createStatus(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateStatusRequest($globalListItem));
-    }
-
-    public function deleteStatus(int $id): Response
-    {
-        return $this->connector->send(new DeleteStatusRequest($id));
-    }
-
-    public function getStatuses(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetStatusesRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateStatus(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateStatusRequest($id, $globalListItem));
+        return $this->connector->send(new CreateStatusRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteStatusRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateStatusRequest($id, $listItem));
     }
 }

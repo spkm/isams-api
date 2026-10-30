@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class StudentBmiResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\MedicalCentre\BmiForCreate|array<string, mixed>  $bmi
-     */
-    public function createStudentBmi(string $schoolId, BmiForCreate|array $bmi): Response
-    {
-        return $this->connector->send(new CreateStudentBmiRequest($schoolId, $bmi));
-    }
-
-    public function deleteStudentBmi(string $schoolId, string $bmiId): Response
-    {
-        return $this->connector->send(new DeleteStudentBmiRequest($schoolId, $bmiId));
-    }
-
-    public function getStudentBmi(string $schoolId, string $bmiId): Response
-    {
-        return $this->connector->send(new GetStudentBmiRequest($schoolId, $bmiId));
-    }
-
-    public function getStudentBmis(string $schoolId, ?bool $includeArchive = null): Response
+    public function all(string $schoolId, ?bool $includeArchive = null): Response
     {
         return $this->connector->send(new GetStudentBmisRequest($schoolId, $includeArchive));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\MedicalCentre\BmiForCreate|array<string, mixed>  $bmi
+     */
+    public function create(string $schoolId, BmiForCreate|array $bmi): Response
+    {
+        return $this->connector->send(new CreateStudentBmiRequest($schoolId, $bmi));
+    }
+
+    public function delete(string $schoolId, string $bmiId): Response
+    {
+        return $this->connector->send(new DeleteStudentBmiRequest($schoolId, $bmiId));
+    }
+
+    public function get(string $schoolId, string $bmiId): Response
+    {
+        return $this->connector->send(new GetStudentBmiRequest($schoolId, $bmiId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentBmi(string $schoolId, string $bmiId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $bmiId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentBmiRequest($schoolId, $bmiId, $patch));
     }

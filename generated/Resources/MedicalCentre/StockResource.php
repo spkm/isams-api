@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\MedicalCentre\Stock\GetMedicalStockReasonsRequest;
 
 class StockResource extends BaseResource
 {
-    public function getMedicalStockReasons(): Response
+    public function getReasons(): Response
     {
         return $this->connector->send(new GetMedicalStockReasonsRequest());
     }

@@ -26,10 +26,10 @@ class CreateTimetableImportRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Timetable\TimetableImportRequestForCreate|array<string, mixed>  $request
+     * @param  \spkm\IsamsApi\Data\Timetable\TimetableImportRequestForCreate|array<string, mixed>  $timetableImportRequest
      */
     public function __construct(
-        protected TimetableImportRequestForCreate|array $request,
+        protected TimetableImportRequestForCreate|array $timetableImportRequest,
     ) {
     }
 
@@ -43,6 +43,6 @@ class CreateTimetableImportRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->request instanceof Data ? $this->request->toArray() : $this->request;
+        return $this->timetableImportRequest instanceof Data ? $this->timetableImportRequest->toArray() : $this->timetableImportRequest;
     }
 }

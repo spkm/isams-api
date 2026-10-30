@@ -10,7 +10,7 @@ use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Registration\UpdateStudentAttendanceSelfRegistrationRegisterCollectionForUpdate;
+use spkm\IsamsApi\Data\Registration\SelfRegistrationRegistersForUpdate;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -24,10 +24,10 @@ class UpdateSelfRegistrationRegisterPeriodsRequest extends IsamsRequest implemen
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Registration\UpdateStudentAttendanceSelfRegistrationRegisterCollectionForUpdate|array<string, mixed>  $updateStudentRegistersDto
+     * @param  \spkm\IsamsApi\Data\Registration\SelfRegistrationRegistersForUpdate|array<string, mixed>  $selfRegistrationRegisters
      */
     public function __construct(
-        protected UpdateStudentAttendanceSelfRegistrationRegisterCollectionForUpdate|array $updateStudentRegistersDto,
+        protected SelfRegistrationRegistersForUpdate|array $selfRegistrationRegisters,
     ) {
     }
 
@@ -41,6 +41,6 @@ class UpdateSelfRegistrationRegisterPeriodsRequest extends IsamsRequest implemen
      */
     protected function defaultBody(): array
     {
-        return $this->updateStudentRegistersDto instanceof Data ? $this->updateStudentRegistersDto->toArray() : $this->updateStudentRegistersDto;
+        return $this->selfRegistrationRegisters instanceof Data ? $this->selfRegistrationRegisters->toArray() : $this->selfRegistrationRegisters;
     }
 }

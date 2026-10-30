@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\OtherSchools\Professions\GetProfessionsRequest;
 
 class ProfessionsResource extends BaseResource
 {
-    public function getProfessions(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetProfessionsRequest());
     }

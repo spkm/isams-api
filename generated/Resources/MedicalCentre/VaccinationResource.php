@@ -15,22 +15,22 @@ use spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationTypesR
 
 class VaccinationResource extends BaseResource
 {
-    public function getMedicalVaccinationCompleteTo(): Response
+    public function getCompleteTo(): Response
     {
         return $this->connector->send(new GetMedicalVaccinationCompleteToRequest());
     }
 
-    public function getMedicalVaccinationSchedules(): Response
+    public function getSchedules(): Response
     {
         return $this->connector->send(new GetMedicalVaccinationSchedulesRequest());
     }
 
-    public function getMedicalVaccinationStatuses(): Response
+    public function getStatuses(): Response
     {
         return $this->connector->send(new GetMedicalVaccinationStatusesRequest());
     }
 
-    public function getMedicalVaccinationTypes(): Response
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetMedicalVaccinationTypesRequest());
     }

@@ -17,7 +17,7 @@ use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 it('updates a student\'s register fields as a JSON object keyed by field name', function () {
     $isams = FakeIsams::respondWith([PatchStudentFieldsRequest::class => MockResponse::make()]);
 
-    FakeIsams::connector()->studentRegisters()->fields()->patchStudentFields(5, '100001', ['dietaryNeeds' => 'None', 'consentGiven' => true]);
+    FakeIsams::connector()->studentRegisters()->fields()->patchMany(5, '100001', ['dietaryNeeds' => 'None', 'consentGiven' => true]);
 
     $sent = FakeIsams::received($isams, PatchStudentFieldsRequest::class)->createPsrRequest();
     expect($sent->getMethod())->toBe('PATCH')
@@ -27,7 +27,7 @@ it('updates a student\'s register fields as a JSON object keyed by field name', 
 it('records the nature of an absence as a bare JSON string', function () {
     $isams = FakeIsams::respondWith([CreateRegistrationNatureOfAbsenceRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/registration/natureofabsence/88'])]);
 
-    $created = FakeIsams::connector()->registration()->natureOfAbsence()->createRegistrationNatureOfAbsence(88, 'Medical appointment')->dto();
+    $created = FakeIsams::connector()->registration()->natureOfAbsence()->create(88, 'Medical appointment')->dto();
 
     $sent = FakeIsams::received($isams, CreateRegistrationNatureOfAbsenceRequest::class)->createPsrRequest();
     expect($created->id)->toBe('88')
@@ -69,10 +69,10 @@ it('serves conduct and register reference lists from the cache once caching is o
     $connector = FakeIsams::connector();
 
     foreach ([1, 2] as $time) {
-        $connector->rewardsAndConduct()->moduleTypes()->getModuleTypes();
-        $connector->studentRegisters()->getStudentRegisters();
-        $connector->exclusions()->getExclusionCancellationReasons();
-        $connector->rewardsAndConduct()->rewards()->getRewards('100001');
+        $connector->rewardsAndConduct()->moduleTypes()->all();
+        $connector->studentRegisters()->all();
+        $connector->exclusions()->getCancellationReasons();
+        $connector->rewardsAndConduct()->rewards()->all('100001');
     }
 
     expect(FakeIsams::queriesReceived($isams, GetModuleTypesRequest::class))->toHaveCount(1)

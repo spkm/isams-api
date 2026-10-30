@@ -13,7 +13,7 @@ use spkm\IsamsApi\Requests\Timetable\Structures\GetTimetableStructuresRequest;
 
 class StructuresResource extends BaseResource
 {
-    public function getTimetableStructures(
+    public function all(
         ?int $academicYear = null,
         DateTimeInterface|string|null $calendarEndDate = null,
         DateTimeInterface|string|null $calendarStartDate = null,

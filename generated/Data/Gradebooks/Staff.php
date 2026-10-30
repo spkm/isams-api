@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Data\Gradebooks;
 
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Gradebooks\Enums\StaffType;
+use spkm\IsamsApi\Data\Gradebooks\Enums\MembershipType;
 
 readonly class Staff extends Data
 {
@@ -17,8 +17,8 @@ readonly class Staff extends Data
     ) {
     }
 
-    public function typeEnum(): ?StaffType
+    public function typeEnum(): ?MembershipType
     {
-        return StaffType::tryFrom((string) $this->type);
+        return MembershipType::tryFrom((string) $this->type);
     }
 }

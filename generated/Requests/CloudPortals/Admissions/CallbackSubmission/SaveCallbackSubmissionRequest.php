@@ -26,10 +26,10 @@ class SaveCallbackSubmissionRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Admissions\CallbackSubmissionForCreate|array<string, mixed>  $submission
+     * @param  \spkm\IsamsApi\Data\Admissions\CallbackSubmissionForCreate|array<string, mixed>  $callbackSubmission
      */
     public function __construct(
-        protected CallbackSubmissionForCreate|array $submission,
+        protected CallbackSubmissionForCreate|array $callbackSubmission,
     ) {
     }
 
@@ -43,6 +43,6 @@ class SaveCallbackSubmissionRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->submission instanceof Data ? $this->submission->toArray() : $this->submission;
+        return $this->callbackSubmission instanceof Data ? $this->callbackSubmission->toArray() : $this->callbackSubmission;
     }
 }

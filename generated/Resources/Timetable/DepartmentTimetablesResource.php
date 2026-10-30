@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Timetable\DepartmentTimetables\GetDepartmentTimetable
 
 class DepartmentTimetablesResource extends BaseResource
 {
-    public function getDepartmentTimetable(int $departmentId): Response
+    public function get(int $departmentId): Response
     {
         return $this->connector->send(new GetDepartmentTimetableRequest($departmentId));
     }

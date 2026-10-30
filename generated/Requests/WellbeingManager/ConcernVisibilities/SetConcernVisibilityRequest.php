@@ -26,12 +26,12 @@ class SetConcernVisibilityRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityForCreate|array<string, mixed>  $visibility
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityForCreate|array<string, mixed>  $concernVisibility
      */
     public function __construct(
         protected string $schoolId,
         protected int $concernId,
-        protected ConcernVisibilityForCreate|array $visibility,
+        protected ConcernVisibilityForCreate|array $concernVisibility,
     ) {
     }
 
@@ -45,6 +45,6 @@ class SetConcernVisibilityRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->visibility instanceof Data ? $this->visibility->toArray() : $this->visibility;
+        return $this->concernVisibility instanceof Data ? $this->concernVisibility->toArray() : $this->concernVisibility;
     }
 }

@@ -14,7 +14,7 @@ use spkm\IsamsApi\Requests\Registration\StatusStudents\UpdateStudentRegistration
 
 class StatusStudentsResource extends BaseResource
 {
-    public function getStudentRegistrationStatus(int $registrationPeriodId, string $schoolId): Response
+    public function get(int $registrationPeriodId, string $schoolId): Response
     {
         return $this->connector->send(new GetStudentRegistrationStatusRequest($registrationPeriodId, $schoolId));
     }
@@ -22,7 +22,7 @@ class StatusStudentsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\Registration\UpdateRegistrationStatusCommand|array<string, mixed>  $updateRegistrationStatus
      */
-    public function updateStudentRegistrationStatus(
+    public function update(
         int $registrationPeriodId,
         string $schoolId,
         UpdateRegistrationStatusCommand|array $updateRegistrationStatus,

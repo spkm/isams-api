@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\School\Houses\GetHousesRequest;
 
 class HousesResource extends BaseResource
 {
-    public function getHouse(int $id): Response
-    {
-        return $this->connector->send(new GetHouseRequest($id));
-    }
-
-    public function getHouses(?string $houseType = null): Response
+    public function all(?string $houseType = null): Response
     {
         return $this->connector->send(new GetHousesRequest($houseType));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetHouseRequest($id));
     }
 }

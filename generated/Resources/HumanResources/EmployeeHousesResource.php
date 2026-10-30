@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\RemoveEmployeeHouseRequ
 
 class EmployeeHousesResource extends BaseResource
 {
-    public function addEmployeeHouse(int $employeeId, int $houseId): Response
+    public function add(int $employeeId, int $houseId): Response
     {
         return $this->connector->send(new AddEmployeeHouseRequest($employeeId, $houseId));
     }
 
-    public function getEmployeeHouses(int $employeeId): Response
+    public function all(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeHousesRequest($employeeId));
     }
 
-    public function removeEmployeeHouse(int $employeeId, int $houseId): Response
+    public function remove(int $employeeId, int $houseId): Response
     {
         return $this->connector->send(new RemoveEmployeeHouseRequest($employeeId, $houseId));
     }

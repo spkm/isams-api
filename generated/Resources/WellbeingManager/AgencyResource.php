@@ -18,25 +18,25 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class AgencyResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\AgencyForCreate|array<string, mixed>  $agency
-     */
-    public function createAgency(AgencyForCreate|array $agency): Response
-    {
-        return $this->connector->send(new CreateAgencyRequest($agency));
-    }
-
-    public function deleteAgency(int $id): Response
-    {
-        return $this->connector->send(new DeleteAgencyRequest($id));
-    }
-
-    public function getAgencies(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetAgenciesRequest());
     }
 
-    public function getAgency(int $id): Response
+    /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\AgencyForCreate|array<string, mixed>  $agency
+     */
+    public function create(AgencyForCreate|array $agency): Response
+    {
+        return $this->connector->send(new CreateAgencyRequest($agency));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteAgencyRequest($id));
+    }
+
+    public function get(int $id): Response
     {
         return $this->connector->send(new GetAgencyRequest($id));
     }
@@ -44,7 +44,7 @@ class AgencyResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchAgency(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchAgencyRequest($id, $patch));
     }

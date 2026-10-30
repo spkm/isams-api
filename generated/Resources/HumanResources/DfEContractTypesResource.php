@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\HumanResources\DfEContractTypes\GetDfEContractTypesRe
 
 class DfEContractTypesResource extends BaseResource
 {
-    public function getDfEContractTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetDfEContractTypesRequest());
     }

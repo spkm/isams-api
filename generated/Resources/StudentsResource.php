@@ -44,6 +44,11 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class StudentsResource extends BaseResource
 {
+    public function alumni(): AlumniResource
+    {
+        return new AlumniResource($this->connector);
+    }
+
     public function alumniContacts(): AlumniContactsResource
     {
         return new AlumniContactsResource($this->connector);
@@ -52,11 +57,6 @@ class StudentsResource extends BaseResource
     public function alumniCustomFields(): AlumniCustomFieldsResource
     {
         return new AlumniCustomFieldsResource($this->connector);
-    }
-
-    public function alumni(): AlumniResource
-    {
-        return new AlumniResource($this->connector);
     }
 
     public function alumniStudents(): AlumniStudentsResource
@@ -109,14 +109,14 @@ class StudentsResource extends BaseResource
         return new CustomStudentGroupsResource($this->connector);
     }
 
-    public function documentCategory(): DocumentCategoryResource
-    {
-        return new DocumentCategoryResource($this->connector);
-    }
-
     public function document(): DocumentResource
     {
         return new DocumentResource($this->connector);
+    }
+
+    public function documentCategory(): DocumentCategoryResource
+    {
+        return new DocumentCategoryResource($this->connector);
     }
 
     public function passportCustomFields(): PassportCustomFieldsResource
@@ -159,20 +159,7 @@ class StudentsResource extends BaseResource
         return new VisasResource($this->connector);
     }
 
-    /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentForCreate|array<string, mixed>  $student
-     */
-    public function createStudent(StudentForCreate|array $student): Response
-    {
-        return $this->connector->send(new CreateStudentRequest($student));
-    }
-
-    public function getStudent(string $schoolId, mixed $expand = null): Response
-    {
-        return $this->connector->send(new GetStudentRequest($schoolId, $expand));
-    }
-
-    public function getStudents(
+    public function all(
         mixed $page = null,
         mixed $pageSize = null,
         mixed $expand = null,
@@ -181,12 +168,25 @@ class StudentsResource extends BaseResource
         return $this->connector->send(new GetStudentsRequest($page, $pageSize, $expand, $filter));
     }
 
-    public function moveStudentToAlumni(string $schoolId): Response
+    /**
+     * @param  \spkm\IsamsApi\Data\Students\StudentForCreate|array<string, mixed>  $student
+     */
+    public function create(StudentForCreate|array $student): Response
+    {
+        return $this->connector->send(new CreateStudentRequest($student));
+    }
+
+    public function get(string $schoolId, mixed $expand = null): Response
+    {
+        return $this->connector->send(new GetStudentRequest($schoolId, $expand));
+    }
+
+    public function moveToAlumni(string $schoolId): Response
     {
         return $this->connector->send(new MoveStudentToAlumniRequest($schoolId));
     }
 
-    public function moveStudentToApplicant(string $schoolId): Response
+    public function moveToApplicant(string $schoolId): Response
     {
         return $this->connector->send(new MoveStudentToApplicantRequest($schoolId));
     }
@@ -194,7 +194,7 @@ class StudentsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudent(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentRequest($schoolId, $patch));
     }
@@ -202,7 +202,7 @@ class StudentsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentForUpdate|array<string, mixed>  $student
      */
-    public function updateStudent(string $schoolId, StudentForUpdate|array $student): Response
+    public function update(string $schoolId, StudentForUpdate|array $student): Response
     {
         return $this->connector->send(new UpdateStudentRequest($schoolId, $student));
     }

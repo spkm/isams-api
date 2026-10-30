@@ -13,7 +13,7 @@ use spkm\IsamsApi\Requests\SystemConfiguration\Sms\GetSmsBatchMessagesRequest;
 
 class SmsResource extends BaseResource
 {
-    public function getSmsBatchMessages(
+    public function getBatchMessages(
         ?int $page = null,
         ?int $pageSize = null,
         string|Stringable|null $filter = null,

@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\Registration\Rules\GetRegistrationRulesRequest;
 
 class RulesResource extends BaseResource
 {
-    public function getRegistrationRule(int $id): Response
-    {
-        return $this->connector->send(new GetRegistrationRuleRequest($id));
-    }
-
-    public function getRegistrationRules(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetRegistrationRulesRequest());
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetRegistrationRuleRequest($id));
     }
 }

@@ -100,7 +100,13 @@ it('deprecates every hand-written request the generator has replaced', function 
         $class = 'spkm\\IsamsApi\\Requests\\'.str_replace(['/', '.php'], ['\\', ''], substr($file->getPathname(), strlen($root)));
 
         if (! $current->contains($class)) {
-            expect(str_contains((string) (new ReflectionClass($class))->getDocComment(), '@deprecated'))->toBeTrue("$class is neither current nor deprecated");
+            $docComment = (string) (new ReflectionClass($class))->getDocComment();
+
+            expect(str_contains($docComment, '@deprecated'))->toBeTrue("$class is neither current nor deprecated");
+
+            if (preg_match('/@deprecated Use \\\\([\\w\\\\]+)/', $docComment, $replacement) === 1) {
+                expect(class_exists($replacement[1]))->toBeTrue("$class names {$replacement[1]} as its replacement, which does not exist");
+            }
         }
     }
 })->group('spec');

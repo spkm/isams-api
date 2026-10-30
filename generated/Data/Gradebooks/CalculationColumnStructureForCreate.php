@@ -7,8 +7,8 @@
 namespace spkm\IsamsApi\Data\Gradebooks;
 
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Gradebooks\Enums\CalculationColumnStructureForCreateCalculationRoundingType;
-use spkm\IsamsApi\Data\Gradebooks\Enums\CalculationColumnStructureForCreateShareable;
+use spkm\IsamsApi\Data\Gradebooks\Enums\CalculationColumnStructureCalculationRoundingType;
+use spkm\IsamsApi\Data\Gradebooks\Enums\CalculationColumnStructureShareable;
 
 readonly class CalculationColumnStructureForCreate extends Data
 {
@@ -31,13 +31,13 @@ readonly class CalculationColumnStructureForCreate extends Data
     ) {
     }
 
-    public function calculationRoundingTypeEnum(): ?CalculationColumnStructureForCreateCalculationRoundingType
+    public function calculationRoundingTypeEnum(): ?CalculationColumnStructureCalculationRoundingType
     {
-        return CalculationColumnStructureForCreateCalculationRoundingType::tryFrom((string) $this->calculationRoundingType);
+        return CalculationColumnStructureCalculationRoundingType::tryFrom((string) $this->calculationRoundingType);
     }
 
-    public function shareableEnum(): ?CalculationColumnStructureForCreateShareable
+    public function shareableEnum(): ?CalculationColumnStructureShareable
     {
-        return CalculationColumnStructureForCreateShareable::tryFrom((string) $this->shareable);
+        return CalculationColumnStructureShareable::tryFrom((string) $this->shareable);
     }
 }

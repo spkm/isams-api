@@ -18,25 +18,25 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernSeveritiesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernSeverityForCreate|array<string, mixed>  $concernSeverity
-     */
-    public function createConcernSeverity(ConcernSeverityForCreate|array $concernSeverity): Response
-    {
-        return $this->connector->send(new CreateConcernSeverityRequest($concernSeverity));
-    }
-
-    public function deleteConcernSeverity(int $id): Response
-    {
-        return $this->connector->send(new DeleteConcernSeverityRequest($id));
-    }
-
-    public function getConcernSeverities(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernSeveritiesRequest());
     }
 
-    public function getConcernSeverity(int $id): Response
+    /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernSeverityForCreate|array<string, mixed>  $concernSeverity
+     */
+    public function create(ConcernSeverityForCreate|array $concernSeverity): Response
+    {
+        return $this->connector->send(new CreateConcernSeverityRequest($concernSeverity));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteConcernSeverityRequest($id));
+    }
+
+    public function get(int $id): Response
     {
         return $this->connector->send(new GetConcernSeverityRequest($id));
     }
@@ -44,7 +44,7 @@ class ConcernSeveritiesResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernSeverity(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernSeverityRequest($id, $patch));
     }

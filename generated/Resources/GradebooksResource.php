@@ -13,28 +13,28 @@ use spkm\IsamsApi\Data\Gradebooks\GradebookForCreate;
 use spkm\IsamsApi\Requests\Gradebooks\CreateGradebookRequest;
 use spkm\IsamsApi\Requests\Gradebooks\DeleteGradebookRequest;
 use spkm\IsamsApi\Requests\Gradebooks\GetGradebookRequest;
+use spkm\IsamsApi\Requests\Gradebooks\GetGradebookStructureRequest;
 use spkm\IsamsApi\Requests\Gradebooks\GetGradebooksRequest;
 use spkm\IsamsApi\Requests\Gradebooks\PatchGradebookRequest;
 use spkm\IsamsApi\Resources\Gradebooks\AssessmentColumnIndicatorsResource;
-use spkm\IsamsApi\Resources\Gradebooks\AssessmentColumnStructureResource;
+use spkm\IsamsApi\Resources\Gradebooks\AssessmentColumnResource;
 use spkm\IsamsApi\Resources\Gradebooks\AssessmentColumnTransposeResource;
 use spkm\IsamsApi\Resources\Gradebooks\AssessmentColumnWeightingsResource;
-use spkm\IsamsApi\Resources\Gradebooks\CalculationColumnStructureResource;
+use spkm\IsamsApi\Resources\Gradebooks\CalculationColumnResource;
 use spkm\IsamsApi\Resources\Gradebooks\CalculationColumnTransposeResource;
 use spkm\IsamsApi\Resources\Gradebooks\CalculationColumnWeightingsResource;
 use spkm\IsamsApi\Resources\Gradebooks\CharacteristicsResource;
 use spkm\IsamsApi\Resources\Gradebooks\ColumnMarksResource;
-use spkm\IsamsApi\Resources\Gradebooks\ColumnStructureReportMappingsResource;
+use spkm\IsamsApi\Resources\Gradebooks\ColumnReportMappingsResource;
 use spkm\IsamsApi\Resources\Gradebooks\DisassociatedStudentResource;
 use spkm\IsamsApi\Resources\Gradebooks\GradesetConfigurationResource;
-use spkm\IsamsApi\Resources\Gradebooks\GroupStructureResource;
+use spkm\IsamsApi\Resources\Gradebooks\GroupResource;
 use spkm\IsamsApi\Resources\Gradebooks\IndicatorConfigurationResource;
 use spkm\IsamsApi\Resources\Gradebooks\MarkCommentsResource;
 use spkm\IsamsApi\Resources\Gradebooks\MarksResource;
 use spkm\IsamsApi\Resources\Gradebooks\StaffAllocationsResource;
 use spkm\IsamsApi\Resources\Gradebooks\StaffAssignmentsResource;
 use spkm\IsamsApi\Resources\Gradebooks\StaffResource;
-use spkm\IsamsApi\Resources\Gradebooks\StructureResource;
 use spkm\IsamsApi\Resources\Gradebooks\StudentAllocationsResource;
 use spkm\IsamsApi\Resources\Gradebooks\StudentAssignmentsResource;
 use spkm\IsamsApi\Resources\Gradebooks\StudentExclusionsResource;
@@ -48,14 +48,14 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class GradebooksResource extends BaseResource
 {
+    public function assessmentColumn(): AssessmentColumnResource
+    {
+        return new AssessmentColumnResource($this->connector);
+    }
+
     public function assessmentColumnIndicators(): AssessmentColumnIndicatorsResource
     {
         return new AssessmentColumnIndicatorsResource($this->connector);
-    }
-
-    public function assessmentColumnStructure(): AssessmentColumnStructureResource
-    {
-        return new AssessmentColumnStructureResource($this->connector);
     }
 
     public function assessmentColumnTranspose(): AssessmentColumnTransposeResource
@@ -68,9 +68,9 @@ class GradebooksResource extends BaseResource
         return new AssessmentColumnWeightingsResource($this->connector);
     }
 
-    public function calculationColumnStructure(): CalculationColumnStructureResource
+    public function calculationColumn(): CalculationColumnResource
     {
-        return new CalculationColumnStructureResource($this->connector);
+        return new CalculationColumnResource($this->connector);
     }
 
     public function calculationColumnTranspose(): CalculationColumnTransposeResource
@@ -93,9 +93,9 @@ class GradebooksResource extends BaseResource
         return new ColumnMarksResource($this->connector);
     }
 
-    public function columnStructureReportMappings(): ColumnStructureReportMappingsResource
+    public function columnReportMappings(): ColumnReportMappingsResource
     {
-        return new ColumnStructureReportMappingsResource($this->connector);
+        return new ColumnReportMappingsResource($this->connector);
     }
 
     public function disassociatedStudent(): DisassociatedStudentResource
@@ -108,9 +108,9 @@ class GradebooksResource extends BaseResource
         return new GradesetConfigurationResource($this->connector);
     }
 
-    public function groupStructure(): GroupStructureResource
+    public function group(): GroupResource
     {
-        return new GroupStructureResource($this->connector);
+        return new GroupResource($this->connector);
     }
 
     public function indicatorConfiguration(): IndicatorConfigurationResource
@@ -128,6 +128,11 @@ class GradebooksResource extends BaseResource
         return new MarksResource($this->connector);
     }
 
+    public function staff(): StaffResource
+    {
+        return new StaffResource($this->connector);
+    }
+
     public function staffAllocations(): StaffAllocationsResource
     {
         return new StaffAllocationsResource($this->connector);
@@ -138,14 +143,9 @@ class GradebooksResource extends BaseResource
         return new StaffAssignmentsResource($this->connector);
     }
 
-    public function staff(): StaffResource
+    public function student(): StudentResource
     {
-        return new StaffResource($this->connector);
-    }
-
-    public function structure(): StructureResource
-    {
-        return new StructureResource($this->connector);
+        return new StudentResource($this->connector);
     }
 
     public function studentAllocations(): StudentAllocationsResource
@@ -161,11 +161,6 @@ class GradebooksResource extends BaseResource
     public function studentExclusions(): StudentExclusionsResource
     {
         return new StudentExclusionsResource($this->connector);
-    }
-
-    public function student(): StudentResource
-    {
-        return new StudentResource($this->connector);
     }
 
     public function stylingDesignConfiguration(): StylingDesignConfigurationResource
@@ -193,33 +188,38 @@ class GradebooksResource extends BaseResource
         return new WeightingConfigurationResource($this->connector);
     }
 
-    /**
-     * @param  \spkm\IsamsApi\Data\Gradebooks\GradebookForCreate|array<string, mixed>  $gradebook
-     */
-    public function createGradebook(GradebookForCreate|array $gradebook): Response
-    {
-        return $this->connector->send(new CreateGradebookRequest($gradebook));
-    }
-
-    public function deleteGradebook(int $id): Response
-    {
-        return $this->connector->send(new DeleteGradebookRequest($id));
-    }
-
-    public function getGradebook(int $gradebookId): Response
-    {
-        return $this->connector->send(new GetGradebookRequest($gradebookId));
-    }
-
-    public function getGradebooks(string|Stringable|null $filter = null): Response
+    public function all(string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetGradebooksRequest($filter));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\Gradebooks\GradebookForCreate|array<string, mixed>  $gradebook
+     */
+    public function create(GradebookForCreate|array $gradebook): Response
+    {
+        return $this->connector->send(new CreateGradebookRequest($gradebook));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteGradebookRequest($id));
+    }
+
+    public function get(int $gradebookId): Response
+    {
+        return $this->connector->send(new GetGradebookRequest($gradebookId));
+    }
+
+    public function getStructure(int $gradebookId): Response
+    {
+        return $this->connector->send(new GetGradebookStructureRequest($gradebookId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchGradebook(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchGradebookRequest($id, $patch));
     }

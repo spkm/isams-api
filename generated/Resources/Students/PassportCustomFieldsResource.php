@@ -14,24 +14,21 @@ use spkm\IsamsApi\Requests\Students\PassportCustomFields\PatchStudentPassportCus
 
 class PassportCustomFieldsResource extends BaseResource
 {
-    public function getStudentPassportCustomField(string $schoolId, int $passportId, int $customFieldId): Response
-    {
-        return $this->connector->send(new GetStudentPassportCustomFieldRequest($schoolId, $passportId, $customFieldId));
-    }
-
-    public function getStudentPassportCustomFields(string $schoolId, int $passportId): Response
+    public function all(string $schoolId, int $passportId): Response
     {
         return $this->connector->send(new GetStudentPassportCustomFieldsRequest($schoolId, $passportId));
     }
 
+    public function get(string $schoolId, int $passportId, int $customFieldId): Response
+    {
+        return $this->connector->send(new GetStudentPassportCustomFieldRequest($schoolId, $passportId, $customFieldId));
+    }
+
     /**
-     * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $lstCustomFields
+     * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
      */
-    public function patchStudentPassportCustomFields(
-        string $schoolId,
-        int $passportId,
-        array $lstCustomFields,
-    ): Response {
-        return $this->connector->send(new PatchStudentPassportCustomFieldsRequest($schoolId, $passportId, $lstCustomFields));
+    public function patchMany(string $schoolId, int $passportId, array $customFields): Response
+    {
+        return $this->connector->send(new PatchStudentPassportCustomFieldsRequest($schoolId, $passportId, $customFields));
     }
 }

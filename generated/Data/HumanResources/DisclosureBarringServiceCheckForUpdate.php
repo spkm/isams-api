@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\HumanResources;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\DisclosureBarringServiceCheckForUpdateStatus;
+use spkm\IsamsApi\Data\HumanResources\Enums\CheckStatus;
 
 readonly class DisclosureBarringServiceCheckForUpdate extends Data
 {
@@ -26,8 +26,8 @@ readonly class DisclosureBarringServiceCheckForUpdate extends Data
     ) {
     }
 
-    public function statusEnum(): ?DisclosureBarringServiceCheckForUpdateStatus
+    public function statusEnum(): ?CheckStatus
     {
-        return DisclosureBarringServiceCheckForUpdateStatus::tryFrom((string) $this->status);
+        return CheckStatus::tryFrom((string) $this->status);
     }
 }

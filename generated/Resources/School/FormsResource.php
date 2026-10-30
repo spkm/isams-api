@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\School\Forms\GetFormsRequest;
 
 class FormsResource extends BaseResource
 {
-    public function getForms(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetFormsRequest());
     }

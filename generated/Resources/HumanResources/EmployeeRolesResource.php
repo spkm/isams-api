@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\RemoveEmployeeRoleReques
 
 class EmployeeRolesResource extends BaseResource
 {
-    public function addEmployeeRole(int $employeeId, int $roleId): Response
+    public function add(int $employeeId, int $roleId): Response
     {
         return $this->connector->send(new AddEmployeeRoleRequest($employeeId, $roleId));
     }
 
-    public function getEmployeeRoles(int $employeeId): Response
+    public function all(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeRolesRequest($employeeId));
     }
 
-    public function removeEmployeeRole(int $employeeId, int $roleId): Response
+    public function remove(int $employeeId, int $roleId): Response
     {
         return $this->connector->send(new RemoveEmployeeRoleRequest($employeeId, $roleId));
     }

@@ -17,31 +17,28 @@ use spkm\IsamsApi\Requests\Students\CustomFields\PatchStudentCustomFieldsRequest
 
 class CustomFieldsResource extends BaseResource
 {
-    public function getStudentCustomField(string $schoolId, int $customFieldId): Response
-    {
-        return $this->connector->send(new GetStudentCustomFieldRequest($schoolId, $customFieldId));
-    }
-
-    public function getStudentCustomFields(string $schoolId, string|Stringable|null $filter = null): Response
+    public function all(string $schoolId, string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetStudentCustomFieldsRequest($schoolId, $filter));
+    }
+
+    public function get(string $schoolId, int $customFieldId): Response
+    {
+        return $this->connector->send(new GetStudentCustomFieldRequest($schoolId, $customFieldId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>  $customField
      */
-    public function patchStudentCustomField(
-        string $schoolId,
-        int $customFieldId,
-        CustomFieldForPatch|array $customField,
-    ): Response {
+    public function patch(string $schoolId, int $customFieldId, CustomFieldForPatch|array $customField): Response
+    {
         return $this->connector->send(new PatchStudentCustomFieldRequest($schoolId, $customFieldId, $customField));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
      */
-    public function patchStudentCustomFields(string $schoolId, array $customFields): Response
+    public function patchMany(string $schoolId, array $customFields): Response
     {
         return $this->connector->send(new PatchStudentCustomFieldsRequest($schoolId, $customFields));
     }

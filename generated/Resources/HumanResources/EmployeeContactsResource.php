@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeContacts\GetEmployeeContactsRe
 
 class EmployeeContactsResource extends BaseResource
 {
-    public function getEmployeeContacts(int $employeeId): Response
+    public function all(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeContactsRequest($employeeId));
     }

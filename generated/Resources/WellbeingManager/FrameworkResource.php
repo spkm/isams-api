@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\WellbeingManager\Framework\GetWellbeingFrameworkModul
 
 class FrameworkResource extends BaseResource
 {
-    public function getWellbeingFrameworkModules(): Response
+    public function getModules(): Response
     {
         return $this->connector->send(new GetWellbeingFrameworkModulesRequest());
     }

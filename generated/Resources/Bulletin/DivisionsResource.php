@@ -16,10 +16,8 @@ class DivisionsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\Bulletin\BulletinDivisionsForCreate|array<string, mixed>  $bulletinDivisions
      */
-    public function createBulletinDivisions(
-        int $bulletinId,
-        BulletinDivisionsForCreate|array $bulletinDivisions,
-    ): Response {
+    public function createMany(int $bulletinId, BulletinDivisionsForCreate|array $bulletinDivisions): Response
+    {
         return $this->connector->send(new CreateBulletinDivisionsRequest($bulletinId, $bulletinDivisions));
     }
 }

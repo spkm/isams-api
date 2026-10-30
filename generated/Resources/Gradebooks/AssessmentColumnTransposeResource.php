@@ -16,12 +16,12 @@ class AssessmentColumnTransposeResource extends BaseResource
     /**
      * @param  array<mixed>  $transposeIds
      */
-    public function createAssessmentColumnTransposes(int $gradebookId, int $columnId, array $transposeIds): Response
+    public function createMany(int $gradebookId, int $columnId, array $transposeIds): Response
     {
         return $this->connector->send(new CreateAssessmentColumnTransposesRequest($gradebookId, $columnId, $transposeIds));
     }
 
-    public function deleteAssessmentColumnTranspose(int $gradebookId, int $columnId, int $transposeId): Response
+    public function delete(int $gradebookId, int $columnId, int $transposeId): Response
     {
         return $this->connector->send(new DeleteAssessmentColumnTransposeRequest($gradebookId, $columnId, $transposeId));
     }

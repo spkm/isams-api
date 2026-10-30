@@ -27,12 +27,12 @@ class PatchApplicantVisaCustomFieldsRequest extends IsamsRequest implements HasB
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $listCustomField
+     * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
      */
     public function __construct(
         protected string $schoolId,
         protected int $visaId,
-        protected array $listCustomField,
+        protected array $customFields,
     ) {
     }
 
@@ -46,6 +46,6 @@ class PatchApplicantVisaCustomFieldsRequest extends IsamsRequest implements HasB
      */
     protected function defaultBody(): array
     {
-        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->listCustomField);
+        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->customFields);
     }
 }

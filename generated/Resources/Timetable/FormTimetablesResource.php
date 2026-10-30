@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Timetable\FormTimetables\GetFormTimetableRequest;
 
 class FormTimetablesResource extends BaseResource
 {
-    public function getFormTimetable(string $formCode): Response
+    public function get(string $formCode): Response
     {
         return $this->connector->send(new GetFormTimetableRequest($formCode));
     }

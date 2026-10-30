@@ -17,30 +17,28 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeQualifications\UpdateEmployeeQ
 
 class EmployeeQualificationsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\QualificationForCreate|array<string, mixed>  $qualification
-     */
-    public function createEmployeeQualification(
-        int $employeeId,
-        QualificationForCreate|array $qualification,
-    ): Response {
-        return $this->connector->send(new CreateEmployeeQualificationRequest($employeeId, $qualification));
-    }
-
-    public function deleteEmployeeQualification(int $employeeId, int $qualificationId): Response
-    {
-        return $this->connector->send(new DeleteEmployeeQualificationRequest($employeeId, $qualificationId));
-    }
-
-    public function getEmployeeQualifications(int $employeeId): Response
+    public function all(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeQualificationsRequest($employeeId));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\QualificationForCreate|array<string, mixed>  $qualification
+     */
+    public function create(int $employeeId, QualificationForCreate|array $qualification): Response
+    {
+        return $this->connector->send(new CreateEmployeeQualificationRequest($employeeId, $qualification));
+    }
+
+    public function delete(int $employeeId, int $qualificationId): Response
+    {
+        return $this->connector->send(new DeleteEmployeeQualificationRequest($employeeId, $qualificationId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\HumanResources\QualificationForUpdate|array<string, mixed>  $qualification
      */
-    public function updateEmployeeQualification(
+    public function update(
         int $employeeId,
         int $qualificationId,
         QualificationForUpdate|array $qualification,

@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\HumanResources\LeavingReasons\UpdateLeavingReasonRequ
 
 class LeavingReasonsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createLeavingReason(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateLeavingReasonRequest($globalListItem));
-    }
-
-    public function deleteLeavingReason(int $id): Response
-    {
-        return $this->connector->send(new DeleteLeavingReasonRequest($id));
-    }
-
-    public function getLeavingReasons(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetLeavingReasonsRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateLeavingReason(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateLeavingReasonRequest($id, $globalListItem));
+        return $this->connector->send(new CreateLeavingReasonRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteLeavingReasonRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateLeavingReasonRequest($id, $listItem));
     }
 }

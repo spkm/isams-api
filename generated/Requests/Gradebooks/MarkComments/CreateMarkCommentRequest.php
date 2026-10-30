@@ -32,8 +32,8 @@ class CreateMarkCommentRequest extends IsamsRequest implements HasBody
      */
     public function __construct(
         protected int $gradebookId,
-        protected string $schoolId,
         protected int $columnId,
+        protected string $schoolId,
         protected CommentForCreate|array $comment,
     ) {
     }

@@ -26,11 +26,11 @@ class CreateStudentPassportRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentPassportForCreate|array<string, mixed>  $passport
+     * @param  \spkm\IsamsApi\Data\Students\StudentPassportForCreate|array<string, mixed>  $studentPassport
      */
     public function __construct(
         protected string $schoolId,
-        protected StudentPassportForCreate|array $passport,
+        protected StudentPassportForCreate|array $studentPassport,
     ) {
     }
 
@@ -44,6 +44,6 @@ class CreateStudentPassportRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->passport instanceof Data ? $this->passport->toArray() : $this->passport;
+        return $this->studentPassport instanceof Data ? $this->studentPassport->toArray() : $this->studentPassport;
     }
 }

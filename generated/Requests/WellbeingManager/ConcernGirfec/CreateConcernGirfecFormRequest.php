@@ -26,12 +26,12 @@ class CreateConcernGirfecFormRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernGirfecFormForCreate|array<string, mixed>  $form
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernGirfecFormForCreate|array<string, mixed>  $concernGirfecForm
      */
     public function __construct(
         protected string $schoolId,
         protected int $concernId,
-        protected ConcernGirfecFormForCreate|array $form,
+        protected ConcernGirfecFormForCreate|array $concernGirfecForm,
     ) {
     }
 
@@ -45,6 +45,6 @@ class CreateConcernGirfecFormRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->form instanceof Data ? $this->form->toArray() : $this->form;
+        return $this->concernGirfecForm instanceof Data ? $this->concernGirfecForm->toArray() : $this->concernGirfecForm;
     }
 }

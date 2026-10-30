@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\Admissions\AgencyBranches\RemoveApplicantAgencyBranch
 
 class AgencyBranchesResource extends BaseResource
 {
-    public function addApplicantAgencyBranch(string $schoolId, int $agencyBranchId): Response
+    public function add(string $schoolId, int $agencyBranchId): Response
     {
         return $this->connector->send(new AddApplicantAgencyBranchRequest($schoolId, $agencyBranchId));
     }
 
-    public function getApplicantAgencyBranches(string $schoolId): Response
+    public function all(string $schoolId): Response
     {
         return $this->connector->send(new GetApplicantAgencyBranchesRequest($schoolId));
     }
 
-    public function removeApplicantAgencyBranch(string $schoolId, int $agencyBranchId): Response
+    public function remove(string $schoolId, int $agencyBranchId): Response
     {
         return $this->connector->send(new RemoveApplicantAgencyBranchRequest($schoolId, $agencyBranchId));
     }

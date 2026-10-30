@@ -17,28 +17,28 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\UpdateEmployeeAbsence
 
 class EmployeeAbsencesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForCreate|array<string, mixed>  $absence
-     */
-    public function createEmployeeAbsence(int $employeeId, AbsenceForCreate|array $absence): Response
-    {
-        return $this->connector->send(new CreateEmployeeAbsenceRequest($employeeId, $absence));
-    }
-
-    public function getEmployeeAbsence(int $employeeId, int $absenceId): Response
-    {
-        return $this->connector->send(new GetEmployeeAbsenceRequest($employeeId, $absenceId));
-    }
-
-    public function getEmployeeAbsences(int $employeeId): Response
+    public function all(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeAbsencesRequest($employeeId));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForCreate|array<string, mixed>  $absence
+     */
+    public function create(int $employeeId, AbsenceForCreate|array $absence): Response
+    {
+        return $this->connector->send(new CreateEmployeeAbsenceRequest($employeeId, $absence));
+    }
+
+    public function get(int $employeeId, int $absenceId): Response
+    {
+        return $this->connector->send(new GetEmployeeAbsenceRequest($employeeId, $absenceId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForUpdate|array<string, mixed>  $absence
      */
-    public function updateEmployeeAbsence(int $employeeId, int $id, AbsenceForUpdate|array $absence): Response
+    public function update(int $employeeId, int $id, AbsenceForUpdate|array $absence): Response
     {
         return $this->connector->send(new UpdateEmployeeAbsenceRequest($employeeId, $id, $absence));
     }

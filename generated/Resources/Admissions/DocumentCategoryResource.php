@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Admissions\DocumentCategory\GetApplicantDocumentCateg
 
 class DocumentCategoryResource extends BaseResource
 {
-    public function getApplicantDocumentCategories(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetApplicantDocumentCategoriesRequest());
     }

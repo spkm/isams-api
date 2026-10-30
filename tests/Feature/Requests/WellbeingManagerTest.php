@@ -23,7 +23,7 @@ it('takes a concern out of every visibility group by sending an empty list', fun
     $isams = FakeIsams::respondWith([SetConcernVisibilityGroupsRequest::class => MockResponse::make()]);
 
     FakeIsams::connector()->wellbeingManager()->concernVisibilities()
-        ->setConcernVisibilityGroups('100001', 7, new ConcernVisibilityGroupsForPatch(concernVisibilityGroupIds: []));
+        ->setGroups('100001', 7, new ConcernVisibilityGroupsForPatch(concernVisibilityGroupIds: []));
 
     $sent = FakeIsams::received($isams, SetConcernVisibilityGroupsRequest::class)->createPsrRequest();
     expect($sent->getMethod())->toBe('PATCH')
@@ -89,8 +89,8 @@ it('serves wellbeing reference lists from the cache once caching is on, but neve
     $wellbeing = FakeIsams::connector()->wellbeingManager();
 
     foreach ([1, 2] as $time) {
-        $wellbeing->concernTypes()->getConcernTypes();
-        $wellbeing->studentConcerns()->getStudentConcern('100001', 21);
+        $wellbeing->concernTypes()->all();
+        $wellbeing->studentConcerns()->get('100001', 21);
     }
 
     expect(FakeIsams::queriesReceived($isams, GetConcernTypesRequest::class))->toHaveCount(1)

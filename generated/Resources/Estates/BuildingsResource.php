@@ -17,28 +17,28 @@ use spkm\IsamsApi\Requests\Estates\Buildings\UpdateBuildingRequest;
 
 class BuildingsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Estates\BuildingForCreate|array<string, mixed>  $building
-     */
-    public function createBuilding(BuildingForCreate|array $building): Response
-    {
-        return $this->connector->send(new CreateBuildingRequest($building));
-    }
-
-    public function getBuilding(int $id): Response
-    {
-        return $this->connector->send(new GetBuildingRequest($id));
-    }
-
-    public function getBuildings(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetBuildingsRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\Estates\BuildingForCreate|array<string, mixed>  $building
+     */
+    public function create(BuildingForCreate|array $building): Response
+    {
+        return $this->connector->send(new CreateBuildingRequest($building));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetBuildingRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\Estates\BuildingForUpdate|array<string, mixed>  $building
      */
-    public function updateBuilding(int $id, BuildingForUpdate|array $building): Response
+    public function update(int $id, BuildingForUpdate|array $building): Response
     {
         return $this->connector->send(new UpdateBuildingRequest($id, $building));
     }

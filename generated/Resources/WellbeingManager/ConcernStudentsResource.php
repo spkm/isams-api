@@ -17,10 +17,15 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernStudentsResource extends BaseResource
 {
+    public function all(string $schoolId, int $concernId): Response
+    {
+        return $this->connector->send(new GetConcernStudentsRequest($schoolId, $concernId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernStudentForCreate|array<string, mixed>  $concernStudent
      */
-    public function associateConcernStudent(
+    public function associate(
         string $schoolId,
         int $concernId,
         ConcernStudentForCreate|array $concernStudent,
@@ -28,25 +33,16 @@ class ConcernStudentsResource extends BaseResource
         return $this->connector->send(new AssociateConcernStudentRequest($schoolId, $concernId, $concernStudent));
     }
 
-    public function disassociateConcernStudent(int $id, int $concernId, string $schoolId): Response
+    public function disassociate(string $schoolId, int $concernId, int $id): Response
     {
-        return $this->connector->send(new DisassociateConcernStudentRequest($id, $concernId, $schoolId));
-    }
-
-    public function getConcernStudents(int $concernId, string $schoolId): Response
-    {
-        return $this->connector->send(new GetConcernStudentsRequest($concernId, $schoolId));
+        return $this->connector->send(new DisassociateConcernStudentRequest($schoolId, $concernId, $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernStudentRole(
-        string $schoolId,
-        int $id,
-        int $concernId,
-        JsonPatch|array $patch,
-    ): Response {
-        return $this->connector->send(new PatchConcernStudentRoleRequest($schoolId, $id, $concernId, $patch));
+    public function patchRole(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): Response
+    {
+        return $this->connector->send(new PatchConcernStudentRoleRequest($schoolId, $concernId, $id, $patch));
     }
 }

@@ -14,7 +14,7 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeTeachingProhibitionChecks\Upda
 
 class EmployeeTeachingProhibitionChecksResource extends BaseResource
 {
-    public function getEmployeeTeachingProhibitionCheck(int $employeeId): Response
+    public function get(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeTeachingProhibitionCheckRequest($employeeId));
     }
@@ -22,7 +22,7 @@ class EmployeeTeachingProhibitionChecksResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeTeachingProhibitionCheckForUpdate|array<string, mixed>  $employeeTeachingProhibitionCheck
      */
-    public function updateEmployeeTeachingProhibitionCheck(
+    public function update(
         int $employeeId,
         EmployeeTeachingProhibitionCheckForUpdate|array $employeeTeachingProhibitionCheck,
     ): Response {

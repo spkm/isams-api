@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\Registration\Periods\GetRegistrationPeriodsRequest;
 
 class PeriodsResource extends BaseResource
 {
-    public function getRegistrationPeriod(int $id): Response
-    {
-        return $this->connector->send(new GetRegistrationPeriodRequest($id));
-    }
-
-    public function getRegistrationPeriods(
+    public function all(
         DateTimeInterface|string|null $endDate = null,
         DateTimeInterface|string|null $startDate = null,
         ?int $divisionId = null,
         ?string $userCode = null,
     ): Response {
         return $this->connector->send(new GetRegistrationPeriodsRequest($endDate, $startDate, $divisionId, $userCode));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetRegistrationPeriodRequest($id));
     }
 }

@@ -11,7 +11,7 @@ use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 use spkm\IsamsApi\Attributes\Beta;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\CreateTeachingSkillCommandForCreate;
+use spkm\IsamsApi\Data\HumanResources\TeachingSkillForCreate;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -28,10 +28,10 @@ class CreateTeachingSkillRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\CreateTeachingSkillCommandForCreate|array<string, mixed>  $command
+     * @param  \spkm\IsamsApi\Data\HumanResources\TeachingSkillForCreate|array<string, mixed>  $teachingSkill
      */
     public function __construct(
-        protected CreateTeachingSkillCommandForCreate|array $command,
+        protected TeachingSkillForCreate|array $teachingSkill,
     ) {
     }
 
@@ -45,6 +45,6 @@ class CreateTeachingSkillRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->command instanceof Data ? $this->command->toArray() : $this->command;
+        return $this->teachingSkill instanceof Data ? $this->teachingSkill->toArray() : $this->teachingSkill;
     }
 }

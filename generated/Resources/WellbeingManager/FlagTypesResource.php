@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class FlagTypesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\FlagTypeForCreate|array<string, mixed>  $flagType
-     */
-    public function createFlagType(FlagTypeForCreate|array $flagType): Response
-    {
-        return $this->connector->send(new CreateFlagTypeRequest($flagType));
-    }
-
-    public function deleteFlagType(int $id): Response
-    {
-        return $this->connector->send(new DeleteFlagTypeRequest($id));
-    }
-
-    public function getFlagType(int $id): Response
-    {
-        return $this->connector->send(new GetFlagTypeRequest($id));
-    }
-
-    public function getFlagTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetFlagTypesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\FlagTypeForCreate|array<string, mixed>  $flagType
+     */
+    public function create(FlagTypeForCreate|array $flagType): Response
+    {
+        return $this->connector->send(new CreateFlagTypeRequest($flagType));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteFlagTypeRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetFlagTypeRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchFlagType(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchFlagTypeRequest($id, $patch));
     }

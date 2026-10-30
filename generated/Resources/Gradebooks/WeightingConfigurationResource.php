@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\Gradebooks\WeightingConfiguration\GetWeightingConfigu
 
 class WeightingConfigurationResource extends BaseResource
 {
-    public function getWeightingConfiguration(int $weightingId): Response
-    {
-        return $this->connector->send(new GetWeightingConfigurationRequest($weightingId));
-    }
-
-    public function getWeightingConfigurations(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetWeightingConfigurationsRequest());
+    }
+
+    public function get(int $weightingId): Response
+    {
+        return $this->connector->send(new GetWeightingConfigurationRequest($weightingId));
     }
 }

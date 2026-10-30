@@ -9,7 +9,7 @@ namespace spkm\IsamsApi\Data\HumanResources;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\AbsenceAbsenceCategoryCode;
+use spkm\IsamsApi\Data\HumanResources\Enums\AbsenceCategoryCode;
 
 readonly class Absence extends Data
 {
@@ -32,8 +32,8 @@ readonly class Absence extends Data
     ) {
     }
 
-    public function absenceCategoryCodeEnum(): ?AbsenceAbsenceCategoryCode
+    public function absenceCategoryCodeEnum(): ?AbsenceCategoryCode
     {
-        return AbsenceAbsenceCategoryCode::tryFrom((string) $this->absenceCategoryCode);
+        return AbsenceCategoryCode::tryFrom((string) $this->absenceCategoryCode);
     }
 }

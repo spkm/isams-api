@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\Admissions\EnquiryTypes\UpdateEnquiryTypeRequest;
 
 class EnquiryTypesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createEnquiryType(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateEnquiryTypeRequest($globalListItem));
-    }
-
-    public function deleteEnquiryType(int $id): Response
-    {
-        return $this->connector->send(new DeleteEnquiryTypeRequest($id));
-    }
-
-    public function getEnquiryTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetEnquiryTypesRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateEnquiryType(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateEnquiryTypeRequest($id, $globalListItem));
+        return $this->connector->send(new CreateEnquiryTypeRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteEnquiryTypeRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateEnquiryTypeRequest($id, $listItem));
     }
 }

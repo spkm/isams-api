@@ -20,8 +20,8 @@ class DeleteIndicatorRequest extends IsamsRequest
     protected string $responseShape = self::NONE;
 
     public function __construct(
-        protected int $id,
         protected string $schoolId,
+        protected int $id,
     ) {
     }
 

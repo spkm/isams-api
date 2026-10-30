@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Bulletin\Category\UpdateBulletinCategoryRequest;
 
 class CategoryResource extends BaseResource
 {
-    public function updateBulletinCategory(int $bulletinId, int $categoryId): Response
+    public function update(int $bulletinId, int $categoryId): Response
     {
         return $this->connector->send(new UpdateBulletinCategoryRequest($bulletinId, $categoryId));
     }

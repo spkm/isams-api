@@ -20,9 +20,9 @@ class DisassociateConcernStudentRequest extends IsamsRequest
     protected string $responseShape = self::NONE;
 
     public function __construct(
-        protected int $id,
-        protected int $concernId,
         protected string $schoolId,
+        protected int $concernId,
+        protected int $id,
     ) {
     }
 

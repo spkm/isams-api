@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class LifeEventTypesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\LifeEventTypeForCreate|array<string, mixed>  $lifeEventType
-     */
-    public function createLifeEventType(LifeEventTypeForCreate|array $lifeEventType): Response
-    {
-        return $this->connector->send(new CreateLifeEventTypeRequest($lifeEventType));
-    }
-
-    public function deleteLifeEventType(int $id): Response
-    {
-        return $this->connector->send(new DeleteLifeEventTypeRequest($id));
-    }
-
-    public function getLifeEventType(int $id): Response
-    {
-        return $this->connector->send(new GetLifeEventTypeRequest($id));
-    }
-
-    public function getLifeEventTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetLifeEventTypesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\LifeEventTypeForCreate|array<string, mixed>  $lifeEventType
+     */
+    public function create(LifeEventTypeForCreate|array $lifeEventType): Response
+    {
+        return $this->connector->send(new CreateLifeEventTypeRequest($lifeEventType));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteLifeEventTypeRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetLifeEventTypeRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchLifeEventType(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchLifeEventTypeRequest($id, $patch));
     }

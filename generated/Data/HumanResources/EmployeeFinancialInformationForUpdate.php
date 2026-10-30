@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\HumanResources;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeFinancialInformationForUpdateStarterDeclaration;
+use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeFinancialInformationStarterDeclaration;
 
 readonly class EmployeeFinancialInformationForUpdate extends Data
 {
@@ -21,8 +21,8 @@ readonly class EmployeeFinancialInformationForUpdate extends Data
     ) {
     }
 
-    public function starterDeclarationEnum(): ?EmployeeFinancialInformationForUpdateStarterDeclaration
+    public function starterDeclarationEnum(): ?EmployeeFinancialInformationStarterDeclaration
     {
-        return EmployeeFinancialInformationForUpdateStarterDeclaration::tryFrom((string) $this->starterDeclaration);
+        return EmployeeFinancialInformationStarterDeclaration::tryFrom((string) $this->starterDeclaration);
     }
 }

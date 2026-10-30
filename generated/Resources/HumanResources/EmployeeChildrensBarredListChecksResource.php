@@ -19,14 +19,14 @@ class EmployeeChildrensBarredListChecksResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\ChildrensBarredListCheckForCreate|array<string, mixed>  $childrensBarredListCheck
      */
-    public function createEmployeeChildrensBarredListCheck(
+    public function create(
         int $employeeId,
         ChildrensBarredListCheckForCreate|array $childrensBarredListCheck,
     ): Response {
         return $this->connector->send(new CreateEmployeeChildrensBarredListCheckRequest($employeeId, $childrensBarredListCheck));
     }
 
-    public function getEmployeeChildrensBarredListCheck(int $employeeId): Response
+    public function get(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeChildrensBarredListCheckRequest($employeeId));
     }
@@ -34,7 +34,7 @@ class EmployeeChildrensBarredListChecksResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\ChildrensBarredListCheckForUpdate|array<string, mixed>  $childrensBarredListCheck
      */
-    public function updateEmployeeChildrensBarredListCheck(
+    public function update(
         int $employeeId,
         ChildrensBarredListCheckForUpdate|array $childrensBarredListCheck,
     ): Response {

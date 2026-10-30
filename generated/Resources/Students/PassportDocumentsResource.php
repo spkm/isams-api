@@ -20,10 +20,15 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class PassportDocumentsResource extends BaseResource
 {
+    public function all(string $schoolId, int $passportId): Response
+    {
+        return $this->connector->send(new GetStudentPassportDocumentsRequest($schoolId, $passportId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentPassportDocumentForCreate|array<string, mixed>  $data
      */
-    public function createStudentPassportDocument(
+    public function create(
         string $schoolId,
         int $passportId,
         MultipartValue $binary,
@@ -32,35 +37,26 @@ class PassportDocumentsResource extends BaseResource
         return $this->connector->send(new CreateStudentPassportDocumentRequest($schoolId, $passportId, $binary, $data));
     }
 
-    public function deleteStudentPassportDocument(string $schoolId, int $passportId, int $documentId): Response
+    public function delete(string $schoolId, int $passportId, int $documentId): Response
     {
         return $this->connector->send(new DeleteStudentPassportDocumentRequest($schoolId, $passportId, $documentId));
     }
 
-    public function downloadStudentPassportDocument(string $schoolId, int $passportId, int $documentId): Response
+    public function download(string $schoolId, int $passportId, int $documentId): Response
     {
         return $this->connector->send(new DownloadStudentPassportDocumentRequest($schoolId, $passportId, $documentId));
     }
 
-    public function getStudentPassportDocument(string $schoolId, int $passportId, int $documentId): Response
+    public function get(string $schoolId, int $passportId, int $documentId): Response
     {
         return $this->connector->send(new GetStudentPassportDocumentRequest($schoolId, $passportId, $documentId));
-    }
-
-    public function getStudentPassportDocuments(string $schoolId, int $passportId): Response
-    {
-        return $this->connector->send(new GetStudentPassportDocumentsRequest($schoolId, $passportId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentPassportDocument(
-        string $schoolId,
-        int $passportId,
-        int $documentId,
-        JsonPatch|array $patch,
-    ): Response {
+    public function patch(string $schoolId, int $passportId, int $documentId, JsonPatch|array $patch): Response
+    {
         return $this->connector->send(new PatchStudentPassportDocumentRequest($schoolId, $passportId, $documentId, $patch));
     }
 }

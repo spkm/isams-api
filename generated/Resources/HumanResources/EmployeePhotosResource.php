@@ -15,18 +15,18 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\GetEmployeePhotoRequest
 
 class EmployeePhotosResource extends BaseResource
 {
-    public function createEmployeePhoto(int $employeeId, MultipartValue $photo): Response
+    public function create(int $employeeId, MultipartValue $photo): Response
     {
         return $this->connector->send(new CreateEmployeePhotoRequest($employeeId, $photo));
     }
 
-    public function getCurrentEmployeePhoto(int $employeeId): Response
-    {
-        return $this->connector->send(new GetCurrentEmployeePhotoRequest($employeeId));
-    }
-
-    public function getEmployeePhoto(int $employeeId, int $photoId): Response
+    public function get(int $employeeId, int $photoId): Response
     {
         return $this->connector->send(new GetEmployeePhotoRequest($employeeId, $photoId));
+    }
+
+    public function getCurrent(int $employeeId): Response
+    {
+        return $this->connector->send(new GetCurrentEmployeePhotoRequest($employeeId));
     }
 }

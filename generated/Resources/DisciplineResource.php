@@ -7,7 +7,6 @@
 namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Resources\Discipline\DetentionSessionsResource;
 
 class DisciplineResource extends BaseResource

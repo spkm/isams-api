@@ -17,28 +17,28 @@ use spkm\IsamsApi\Requests\HumanResources\Roles\UpdateRoleRequest;
 
 class RolesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\RoleForCreate|array<string, mixed>  $role
-     */
-    public function createRole(RoleForCreate|array $role): Response
-    {
-        return $this->connector->send(new CreateRoleRequest($role));
-    }
-
-    public function getRole(int $id): Response
-    {
-        return $this->connector->send(new GetRoleRequest($id));
-    }
-
-    public function getRoles(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetRolesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\RoleForCreate|array<string, mixed>  $role
+     */
+    public function create(RoleForCreate|array $role): Response
+    {
+        return $this->connector->send(new CreateRoleRequest($role));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetRoleRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\HumanResources\RoleForUpdate|array<string, mixed>  $role
      */
-    public function updateRole(int $id, RoleForUpdate|array $role): Response
+    public function update(int $id, RoleForUpdate|array $role): Response
     {
         return $this->connector->send(new UpdateRoleRequest($id, $role));
     }

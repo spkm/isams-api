@@ -17,10 +17,15 @@ use spkm\IsamsApi\Requests\WellbeingManager\ConcernDocuments\GetConcernDocuments
 
 class ConcernDocumentsResource extends BaseResource
 {
+    public function all(string $schoolId, int $concernId): Response
+    {
+        return $this->connector->send(new GetConcernDocumentsRequest($schoolId, $concernId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernDocumentForCreate|array<string, mixed>  $data
      */
-    public function createConcernDocument(
+    public function create(
         string $schoolId,
         int $concernId,
         MultipartValue $document,
@@ -29,18 +34,13 @@ class ConcernDocumentsResource extends BaseResource
         return $this->connector->send(new CreateConcernDocumentRequest($schoolId, $concernId, $document, $data));
     }
 
-    public function deleteConcernDocument(int $id, int $concernId, string $schoolId): Response
+    public function delete(string $schoolId, int $concernId, int $id): Response
     {
-        return $this->connector->send(new DeleteConcernDocumentRequest($id, $concernId, $schoolId));
+        return $this->connector->send(new DeleteConcernDocumentRequest($schoolId, $concernId, $id));
     }
 
-    public function downloadConcernDocument(string $schoolId, int $concernId, int $documentId): Response
+    public function download(string $schoolId, int $concernId, int $documentId): Response
     {
         return $this->connector->send(new DownloadConcernDocumentRequest($schoolId, $concernId, $documentId));
-    }
-
-    public function getConcernDocuments(string $schoolId, int $concernId): Response
-    {
-        return $this->connector->send(new GetConcernDocumentsRequest($schoolId, $concernId));
     }
 }

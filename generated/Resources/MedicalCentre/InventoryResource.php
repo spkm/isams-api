@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\MedicalCentre\Inventory\GetMedicalInventoryTypesReque
 
 class InventoryResource extends BaseResource
 {
-    public function getMedicalInventoryTypes(): Response
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetMedicalInventoryTypesRequest());
     }

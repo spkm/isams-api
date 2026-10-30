@@ -16,12 +16,12 @@ class TagsResource extends BaseResource
     /**
      * @param  list<\spkm\IsamsApi\Data\Gradebooks\TagForCreate|array<string, mixed>>  $tags
      */
-    public function createGradebookTags(int $gradebookId, array $tags): Response
+    public function createMany(int $gradebookId, array $tags): Response
     {
         return $this->connector->send(new CreateGradebookTagsRequest($gradebookId, $tags));
     }
 
-    public function deleteGradebookTag(int $gradebookId, int $categoryId, int $categoryEntityId): Response
+    public function delete(int $gradebookId, int $categoryId, int $categoryEntityId): Response
     {
         return $this->connector->send(new DeleteGradebookTagRequest($gradebookId, $categoryId, $categoryEntityId));
     }
