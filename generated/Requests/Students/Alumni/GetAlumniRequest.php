@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead.
+ */
+
+namespace spkm\IsamsApi\Requests\Students\Alumni;
+
+use Saloon\Enums\Method;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
+use spkm\IsamsApi\Data\Students\Alumni;
+use spkm\IsamsApi\Requests\IsamsRequest;
+
+/**
+ * Retrieves all alumni.
+ *
+ * GET /api/alumni
+ */
+class GetAlumniRequest extends IsamsRequest implements Paginatable
+{
+    protected Method $method = Method::GET;
+    protected string $responseShape = self::LIST;
+    protected ?string $dto = Alumni::class;
+    public string $resultKey = 'alumni';
+
+    public function __construct(
+        protected ?int $page = null,
+        protected ?int $pageSize = null,
+        protected ?string $expand = null,
+        protected string|\Stringable|null $filter = null,
+    ) {
+    }
+
+    public function resolveEndpoint(): string
+    {
+        return '/api/alumni';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaultQuery(): array
+    {
+        return array_filter([
+            'page' => $this->page,
+            'pageSize' => $this->pageSize,
+            'expand' => $this->expand,
+            '$filter' => $this->filter === null ? null : (string) $this->filter,
+        ], fn (mixed $value) => $value !== null);
+    }
+}

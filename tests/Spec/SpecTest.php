@@ -53,10 +53,15 @@ it('builds each generated request with the method, path, query names and body th
 it('turns each generated request\'s documented response into the right kind of result', function (string $id, string $method, string $path) {
     $class = Spec::manifest()['operations'][$id]['class'];
     $spec = Spec::operation($method, $path);
+    $correction = Spec::override($id)['response'] ?? null;
     $codes = array_filter(array_keys($spec['responses']), fn ($code) => $code >= 200 && $code < 300);
     sort($codes);
-    $code = (int) $codes[0];
-    $schema = $spec['responses'][$code]['schema'] ?? null;
+    $code = (int) ($codes[0] ?? 200);
+    $schema = match (true) {
+        isset($correction['definition']) => ['$ref' => '#/definitions/'.$correction['definition']],
+        $correction === 'file' => ['type' => 'file'],
+        default => $spec['responses'][$code]['schema'] ?? null,
+    };
     $body = $schema === null ? '' : Spec::value($schema);
     $request = new $class(...Spec::arguments($class));
 
@@ -81,6 +86,11 @@ it('builds each generated model from made-up data matching its definition and tu
     $parameters = collect((new ReflectionClass($class))->getConstructor()?->getParameters() ?? [])->map->getName();
     $expected = collect($sample)->only($parameters)->reject(fn (mixed $value) => $value === null || $value === [])->all();
 
-    expect($model->toArray())->toEqual($expected)
-        ->and($class::from([]))->toBeInstanceOf($class);
+    $required = collect((new ReflectionClass($class))->getConstructor()?->getParameters() ?? [])->reject->isDefaultValueAvailable()->map->getName();
+
+    expect($model->toArray())->toEqual($expected);
+
+    $required->isEmpty()
+        ? expect($class::from([]))->toBeInstanceOf($class)
+        : expect(fn () => $class::from([]))->toThrow(InvalidArgumentException::class, 'needs a value for "'.$required->first().'"');
 })->with(fn () => collect(Spec::manifest()['models'])->mapWithKeys(fn (string $class, string $definition) => [class_basename($class) => [$definition, $class]])->all())->group('spec');
