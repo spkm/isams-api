@@ -387,7 +387,7 @@ The tests never contact a real iSAMS: every response is faked.
 
 iSAMS's documentation isn't always what its API does. The separate `Sandbox` test suite calls your own iSAMS sandbox,
 reads every list it can without arguments (and every root node a Batch API key returns), and prints the field names
-that differ from the package's models. It never prints values, and nothing it reads is saved.
+that differ from the package's models.
 
 ```dotenv
 ISAMS_SANDBOX_BASE_URL=https://your-sandbox.example
