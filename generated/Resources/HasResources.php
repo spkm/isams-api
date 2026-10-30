@@ -23,6 +23,11 @@ trait HasResources
         return new ExclusionsResource($this);
     }
 
+    public function humanResources(): HumanResourcesResource
+    {
+        return new HumanResourcesResource($this);
+    }
+
     public function medicalCentre(): MedicalCentreResource
     {
         return new MedicalCentreResource($this);

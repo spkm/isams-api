@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead.
+ */
+
+namespace spkm\IsamsApi\Resources\HumanResources;
+
+use Saloon\Http\BaseResource;
+use Saloon\Http\Response;
+use spkm\IsamsApi\Data\HumanResources\AbsenceForCreate;
+use spkm\IsamsApi\Data\HumanResources\AbsenceForUpdate;
+use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\CreateEmployeeAbsenceRequest;
+use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\GetEmployeeAbsenceRequest;
+use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\GetEmployeeAbsencesRequest;
+use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\UpdateEmployeeAbsenceRequest;
+
+class EmployeeAbsencesResource extends BaseResource
+{
+    /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForCreate|array<string, mixed>  $absence
+     */
+    public function createEmployeeAbsence(int $employeeId, AbsenceForCreate|array $absence): Response
+    {
+        return $this->connector->send(new CreateEmployeeAbsenceRequest($employeeId, $absence));
+    }
+
+    public function getEmployeeAbsence(int $employeeId, int $absenceId): Response
+    {
+        return $this->connector->send(new GetEmployeeAbsenceRequest($employeeId, $absenceId));
+    }
+
+    public function getEmployeeAbsences(int $employeeId): Response
+    {
+        return $this->connector->send(new GetEmployeeAbsencesRequest($employeeId));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForUpdate|array<string, mixed>  $absence
+     */
+    public function updateEmployeeAbsence(int $employeeId, int $id, AbsenceForUpdate|array $absence): Response
+    {
+        return $this->connector->send(new UpdateEmployeeAbsenceRequest($employeeId, $id, $absence));
+    }
+}

@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -154,6 +154,33 @@ return [
         'MedicalVisit_GetAllTransportOptions' => ['cacheable' => true],
         'StudentDocuments_DownloadBySchoolidDocumentid' => ['response' => 'file'],
 
+        // HR
+        'EmployeeHouses_GetByEmployeeid' => ['class' => 'GetEmployeeHousesRequest'],
+        'EmployeePhotos_GetCurrentByEmployeeid' => ['class' => 'GetCurrentEmployeePhotoRequest'],
+        'AbsenceTypes_Get' => ['cacheable' => true],
+        'AbsenceTypes_GetById' => ['cacheable' => true],
+        'AdditionalPaymentTypes_GetAdditionalPaymentTypesAsync' => ['cacheable' => true],
+        'ContractEmployeeLevels_Get' => ['cacheable' => true],
+        'DfeAbsenceCategories_Get' => ['cacheable' => true],
+        'DfeContractTypes_Get' => ['cacheable' => true],
+        'DfeRoleIdentifiers_Get' => ['cacheable' => true],
+        'DisclosureProbationCheckStatuses_Get' => ['cacheable' => true],
+        'DisclosureTypes_Get' => ['cacheable' => true],
+        'EmploymentTypes_Get' => ['cacheable' => true],
+        'IdentityEvidenceTypes_Get' => ['cacheable' => true],
+        'LeavingReasons_Get' => ['cacheable' => true],
+        'QualificationEvidenceTypes_Get' => ['cacheable' => true],
+        'QualificationLevels_Get' => ['cacheable' => true],
+        'QualificationSubjects_Get' => ['cacheable' => true],
+        'QualificationTypes_Get' => ['cacheable' => true],
+        'RegistrationEvidenceTypes_Get' => ['cacheable' => true],
+        'RightToWorkCheckTypes_Get' => ['cacheable' => true],
+        'Roles_Get' => ['cacheable' => true],
+        'Roles_GetById' => ['cacheable' => true],
+        'SalaryPayScales_GetSalaryPayScalesAsync' => ['cacheable' => true],
+        'TeachingSkills_GetTeachingSkillAsyncById' => ['cacheable' => true],
+        'TeachingSkills_GetTeachingSkillsAsync' => ['cacheable' => true],
+
         // Wellbeing Manager
         // These GETs run workflows in iSAMS: never retried or cached.
         'Workflows_ProcessWorkflows' => ['safe' => false],
@@ -225,6 +252,7 @@ return [
     'models' => [
         'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessions' => 'DetentionSession',
         'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessionStudents' => 'DetentionSessionStudent',
+        'iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateContractCommand' => 'Contract',
     ],
 
     // Words that are the same singular and plural.

@@ -18,6 +18,9 @@ class Spec
     private static ?array $spec = null;
 
     /** @var array<string, mixed>|null */
+    private static ?array $specV2 = null;
+
+    /** @var array<string, mixed>|null */
     private static ?array $manifest = null;
 
     /** @var array<string, mixed>|null */
@@ -29,6 +32,42 @@ class Spec
     public static function spec(): array
     {
         return self::$spec ??= json_decode((string) file_get_contents(dirname(__DIR__, 2).'/generator/spec/isams-v1.json'), true);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public static function specV2(): array
+    {
+        return self::$specV2 ??= json_decode((string) file_get_contents(dirname(__DIR__, 2).'/generator/spec/isams-v2.json'), true);
+    }
+
+    /**
+     * Operation ids the package should account for: every v1 operation, then "v2:{id}" for each v2 operation that differs.
+     *
+     * @return list<string>
+     */
+    public static function operationIds(): array
+    {
+        $ids = [];
+
+        foreach (self::spec()['paths'] as $methods) {
+            foreach ($methods as $operation) {
+                if (isset($operation['operationId'])) {
+                    $ids[] = $operation['operationId'];
+                }
+            }
+        }
+
+        foreach (self::specV2()['paths'] as $path => $methods) {
+            foreach ($methods as $method => $operation) {
+                if (isset($operation['operationId']) && $operation != (self::spec()['paths'][$path][$method] ?? null)) {
+                    $ids[] = 'v2:'.$operation['operationId'];
+                }
+            }
+        }
+
+        return $ids;
     }
 
     /**
@@ -54,9 +93,9 @@ class Spec
     /**
      * @return array<string, mixed>
      */
-    public static function operation(string $method, string $path): array
+    public static function operation(string $method, string $path, string $id = ''): array
     {
-        return self::spec()['paths'][$path][strtolower($method)];
+        return (str_starts_with($id, 'v2:') ? self::specV2() : self::spec())['paths'][$path][strtolower($method)];
     }
 
     /**

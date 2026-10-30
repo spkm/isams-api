@@ -11,20 +11,10 @@ use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 use spkm\IsamsApi\Tests\Helpers\Spec;
 
-it('accounts for every operation in the iSAMS spec exactly once', function () {
-    $specOperations = [];
-
-    foreach (Spec::spec()['paths'] as $path => $methods) {
-        foreach ($methods as $method => $operation) {
-            if (isset($operation['operationId'])) {
-                $specOperations[] = $operation['operationId'];
-            }
-        }
-    }
-
+it('accounts for every operation in the iSAMS v1 spec, and each one v2 changes, exactly once', function () {
     $manifest = Spec::manifest()['operations'];
 
-    expect(array_keys($manifest))->toEqualCanonicalizing($specOperations)
+    expect(array_keys($manifest))->toEqualCanonicalizing(Spec::operationIds())
         ->and(collect($manifest)->pluck('source')->unique()->diff(['generated', 'handwritten', 'skipped', 'pending'])->all())->toBe([])
         ->and(collect($manifest)->where('source', 'skipped')->every(fn (array $operation) => ($operation['reason'] ?? '') !== ''))->toBeTrue();
 });
@@ -39,7 +29,7 @@ it('names a class that exists for every generated and hand-written operation, an
 it('builds each generated request with the method, path, query names and body the spec documents', function (string $id, string $method, string $path) {
     $class = Spec::manifest()['operations'][$id]['class'];
     $arguments = Spec::arguments($class);
-    $spec = Spec::operation($method, $path);
+    $spec = Spec::operation($method, $path, $id);
     $documentedQuery = collect($spec['parameters'] ?? [])->where('in', 'query')->pluck('name')->all();
     $hasBody = collect($spec['parameters'] ?? [])->whereIn('in', ['body', 'formData'])->isNotEmpty();
 
@@ -53,7 +43,7 @@ it('builds each generated request with the method, path, query names and body th
 
 it('turns each generated request\'s documented response into the right kind of result', function (string $id, string $method, string $path) {
     $class = Spec::manifest()['operations'][$id]['class'];
-    $spec = Spec::operation($method, $path);
+    $spec = Spec::operation($method, $path, $id);
     $correction = Spec::override($id)['response'] ?? null;
     $codes = array_filter(array_keys($spec['responses']), fn ($code) => $code >= 200 && $code < 300);
     sort($codes);

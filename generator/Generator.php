@@ -45,6 +45,9 @@ final class Generator
     /** @var list<string> */
     private array $modelQueue = [];
 
+    /** @var array<string, mixed> */
+    private array $specV2;
+
     /** @var list<string>|null every tag in the spec, cleaned */
     private ?array $tags = null;
 
@@ -54,6 +57,8 @@ final class Generator
     public function __construct(private readonly string $root)
     {
         $this->spec = json_decode((string) file_get_contents($root.'/generator/spec/isams-v1.json'), true, flags: JSON_THROW_ON_ERROR);
+        $this->specV2 = json_decode((string) file_get_contents($root.'/generator/spec/isams-v2.json'), true, flags: JSON_THROW_ON_ERROR);
+        $this->spec['definitions'] += $this->specV2['definitions'];
         $this->overrides = require $root.'/generator/overrides.php';
     }
 
@@ -73,6 +78,7 @@ final class Generator
                 'source' => $operation['source'],
                 'class' => $operation['class'] ?? null,
                 'reason' => $operation['reason'] ?? null,
+                'apiVersion' => $operation['apiVersion'],
             ]);
 
             if ($operation['source'] === 'generated') {
@@ -104,28 +110,51 @@ final class Generator
     private function operations(): array
     {
         $operations = [];
-        $paths = $this->spec['paths'];
-        ksort($paths);
 
-        foreach ($paths as $path => $methods) {
-            foreach (['get', 'post', 'put', 'patch', 'delete'] as $method) {
-                if (! isset($methods[$method]['operationId'])) {
-                    continue;
-                }
+        foreach ($this->specOperations() as $operation) {
+            $spec = $operation['spec'];
+            $override = $this->overrides['operations'][$operation['id']] ?? [];
+            $tag = $spec['tags'][0] ?? 'Other';
+            $operation = [...$operation, 'override' => $override, 'tag' => $tag];
 
-                $spec = $methods[$method];
-                $override = $this->overrides['operations'][$spec['operationId']] ?? [];
-                $tag = $spec['tags'][0] ?? 'Other';
-                $operation = ['id' => $spec['operationId'], 'method' => $method, 'path' => $path, 'spec' => $spec, 'override' => $override, 'tag' => $tag];
+            if (isset($override['skip'])) {
+                $operations[] = [...$operation, 'source' => 'skipped', 'reason' => $override['skip']];
+            } elseif (isset($override['handwritten'])) {
+                $operations[] = [...$operation, 'source' => 'handwritten', 'class' => $override['handwritten'], 'namespace' => $this->namespaceFor($tag)];
+            } elseif (! in_array($this->tagParts($tag)['area'], $this->overrides['areas'], true)) {
+                $operations[] = [...$operation, 'source' => 'pending'];
+            } else {
+                $operations[] = $this->describe($operation);
+            }
+        }
 
-                if (isset($override['skip'])) {
-                    $operations[] = [...$operation, 'source' => 'skipped', 'reason' => $override['skip']];
-                } elseif (isset($override['handwritten'])) {
-                    $operations[] = [...$operation, 'source' => 'handwritten', 'class' => $override['handwritten'], 'namespace' => $this->namespaceFor($tag)];
-                } elseif (! in_array($this->tagParts($tag)['area'], $this->overrides['areas'], true)) {
-                    $operations[] = [...$operation, 'source' => 'pending'];
-                } else {
-                    $operations[] = $this->describe($operation);
+        return $operations;
+    }
+
+    /**
+     * Every operation in the v1 spec, then the v2 spec's operations that differ from v1 (keyed "v2:{operationId}").
+     *
+     * @return list<array{id: string, method: string, path: string, spec: array<string, mixed>, apiVersion: ?string}>
+     */
+    private function specOperations(): array
+    {
+        $operations = [];
+
+        foreach (['1.0' => $this->spec, '2.0' => $this->specV2] as $version => $spec) {
+            $paths = $spec['paths'];
+            ksort($paths);
+
+            foreach ($paths as $path => $methods) {
+                foreach (['get', 'post', 'put', 'patch', 'delete'] as $method) {
+                    $operation = $methods[$method] ?? null;
+
+                    if (! isset($operation['operationId']) || ($version === '2.0' && $operation == ($this->spec['paths'][$path][$method] ?? null))) {
+                        continue;
+                    }
+
+                    $operations[] = $version === '1.0'
+                        ? ['id' => $operation['operationId'], 'method' => $method, 'path' => $path, 'spec' => $operation, 'apiVersion' => null]
+                        : ['id' => 'v2:'.$operation['operationId'], 'method' => $method, 'path' => $path, 'spec' => $operation, 'apiVersion' => $version];
                 }
             }
         }
@@ -143,7 +172,7 @@ final class Generator
         $override = $operation['override'];
         $response = $this->response($spec, $override);
         $parameters = $this->parameters($spec, $override);
-        $namespace = $this->namespaceFor($operation['tag']);
+        $namespace = $this->namespaceFor($operation['tag']).($operation['apiVersion'] ? '\\V'.(int) $operation['apiVersion'] : '');
         $name = $override['class'] ?? $this->className($operation, $response, $parameters);
 
         return [...$operation,
@@ -258,9 +287,20 @@ final class Generator
         $name = $this->studly($action);
 
         if (! str_contains($name, $singular) && ! str_contains($name, $plural)) {
-            preg_match('/^[A-Z][a-z]*([A-Z][a-z]*)?/', $name, $firstWords);
-            $repeatsHead = Str::singular($firstWords[1] ?? '') === $this->studly(Str::singular($head));
-            $noun = $repeatsHead ? $this->studly(implode(' ', array_slice($words, 0, -1))) : $singular;
+            preg_match_all('/[A-Z][a-z]*/', $name, $actionWords);
+            [$verb, $rest] = [$actionWords[0][0] ?? '', array_slice($actionWords[0], 1)];
+            $noun = $singular;
+
+            for ($count = count($words); $count > 0; $count--) {
+                $tail = array_slice($words, -$count);
+                $start = array_slice($rest, 0, $count);
+
+                if ($start !== [] && $this->studly(Str::singular(implode(' ', $tail))) === Str::singular(implode('', $start))) {
+                    $noun = $this->studly(implode(' ', array_slice($words, 0, -$count)));
+                    break;
+                }
+            }
+
             $name = (string) preg_replace('/^([A-Z][a-z]*)/', '$1'.$noun, $name);
         }
 
@@ -291,7 +331,7 @@ final class Generator
             }
         }
 
-        return (string) preg_replace(['/Async$/', '/^GetAll(?=[A-Z])/'], ['', 'Get'], $action);
+        return (string) preg_replace(['/Async$/', '/^GetAll(?=[A-Z])/', '/(?<=^Get)ById$/'], ['', 'Get', ''], $action);
     }
 
     private function hasBodylessPost(string $path): bool
@@ -515,6 +555,10 @@ final class Generator
 
         if (! $operation['safe']) {
             $class->addProperty('safe', false)->setProtected()->setType('bool');
+        }
+
+        if ($operation['apiVersion']) {
+            $class->addProperty('apiVersion', $operation['apiVersion'])->setProtected()->setType('?string');
         }
 
         $constructor = $class->addMethod('__construct');

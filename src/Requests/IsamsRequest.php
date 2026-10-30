@@ -45,6 +45,8 @@ abstract class IsamsRequest extends Request implements Cacheable
 
     protected bool $safe = true;
 
+    protected ?string $apiVersion = null;
+
     public function resolveCacheDriver(): Driver
     {
         return new LaravelCacheDriver(Cache::store(config('isams-api.cache.store')));
@@ -76,6 +78,13 @@ abstract class IsamsRequest extends Request implements Cacheable
         $query = (string) preg_replace('/%5B\d+%5D=/', '=', $request->getUri()->getQuery());
 
         return $request->withUri($request->getUri()->withQuery($query));
+    }
+
+    public function boot(PendingRequest $pendingRequest): void
+    {
+        if ($this->apiVersion !== null) {
+            $pendingRequest->query()->add('api-version', $this->apiVersion);
+        }
     }
 
     public function isSafe(): bool
