@@ -13,6 +13,11 @@ use ReflectionClass;
 use ReflectionNamedType;
 use RuntimeException;
 
+/**
+ * Builds the request, model, enum and resource classes in generated/ from iSAMS's pinned API spec
+ * (generator/spec), corrected by generator/overrides.php, and records each operation in generator/manifest.json.
+ * Run by bin/generate.
+ */
 final class Generator
 {
     private const PAGING = ['count', 'page', 'pageSize', 'totalCount', 'totalPages'];

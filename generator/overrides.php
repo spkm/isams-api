@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Corrections the generator applies to iSAMS's API spec: which areas to generate, better class and model names,
+ * response and body fixes where the spec is wrong, cacheable and unsafe requests, hand-written requests to keep, and
+ * operations to skip. Edit this file, not generated/, then run composer generate.
+ */
+
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
 use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 
