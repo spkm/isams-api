@@ -163,7 +163,8 @@ All of these are off unless you configure them (see `config/isams-api.php`):
   Writes are never retried.
 - **Re-authentication:** `ISAMS_REAUTHENTICATE=true` fetches a new token and repeats the request once when iSAMS rejects
   a cached token.
-- **Caching:** `ISAMS_CACHE=true` caches slow-changing reference lists in your Laravel cache.
+- **Caching:** `ISAMS_CACHE=true` caches slow-changing reference lists (terms, houses, year groups, forms, divisions,
+  departments, buildings, rooms and the timetable structure) in your Laravel cache, for an hour by default.
 
 ## Testing
 

@@ -22,10 +22,6 @@ class GetContactGroupsRequest extends IsamsRequest
     protected ?string $dto = ContactGroup::class;
     public string $resultKey = 'contactGroups';
 
-    public function __construct()
-    {
-    }
-
     public function resolveEndpoint(): string
     {
         return '/api/students/contactgroups';

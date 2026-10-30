@@ -22,10 +22,6 @@ class GetStudentDocumentCategoriesRequest extends IsamsRequest
     protected ?string $dto = DocumentCategory::class;
     public string $resultKey = 'documentCategories';
 
-    public function __construct()
-    {
-    }
-
     public function resolveEndpoint(): string
     {
         return '/api/student/documents/categories';

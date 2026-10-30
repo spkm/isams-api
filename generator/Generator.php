@@ -486,6 +486,10 @@ final class Generator
         $constructor = $class->addMethod('__construct');
         $this->addParameters($constructor, $parameters, $namespace, true);
 
+        if ($constructor->getParameters() === []) {
+            $class->removeMethod('__construct');
+        }
+
         $endpoint = "'".preg_replace_callback('/\{(\w+)\}/', fn (array $match) => "'.rawurlencode((string) \$this->".$parameters['path'][$match[1]]['php'].").'", $operation['path'])."'";
         $class->addMethod('resolveEndpoint')->setReturnType('string')->setBody('return '.str_replace(".''", '', $endpoint).';');
 
@@ -785,7 +789,7 @@ final class Generator
                 $item = $this->queueModel($this->refName($property['items']['$ref']));
                 $namespace->addUse($item);
                 $namespace->addUse('Illuminate\Support\Collection');
-                $doc = 'Collection<int, '.class_basename($item).'>'.($isPayload ? '|null' : '');
+                $doc = 'Collection<int, '.class_basename($item).'>'.($isPayload && $nullable ? '|null' : '');
 
                 return $isPayload
                     ? [$nullable.'Illuminate\Support\Collection', null, $doc, $item]
@@ -800,7 +804,7 @@ final class Generator
                 default => 'mixed',
             };
 
-            return $isPayload ? [$nullable.'array', null, "list<$itemType>|null", null] : ['array', [], "list<$itemType>", null];
+            return $isPayload ? [$nullable.'array', null, "list<$itemType>".($nullable ? '|null' : ''), null] : ['array', [], "list<$itemType>", null];
         }
 
         $type = match ($property['type'] ?? null) {

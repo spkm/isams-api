@@ -22,10 +22,6 @@ class GetBoardingStatusesRequest extends IsamsRequest
     protected ?string $dto = GlobalListItem::class;
     public string $resultKey = 'items';
 
-    public function __construct()
-    {
-    }
-
     public function resolveEndpoint(): string
     {
         return '/api/students/boardingstatuses';

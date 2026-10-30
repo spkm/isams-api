@@ -680,42 +680,50 @@
         "BuildingDivisions_DeleteByBuildingidDivisionid": {
             "method": "DELETE",
             "path": "/api/estates/buildings/{buildingId}/divisions/{divisionId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\BuildingDivisions\\RemoveBuildingDivisionRequest"
         },
         "BuildingDivisions_GetByBuildingid": {
             "method": "GET",
             "path": "/api/estates/buildings/{buildingId}/divisions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\BuildingDivisions\\GetBuildingDivisionsRequest"
         },
         "BuildingDivisions_PostByBuildingidDivisionid": {
             "method": "POST",
             "path": "/api/estates/buildings/{buildingId}/divisions/{divisionId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\BuildingDivisions\\AddBuildingDivisionRequest"
         },
         "BuildingRooms_GetByBuildingid": {
             "method": "GET",
             "path": "/api/estates/buildings/{buildingId}/rooms",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\BuildingRooms\\GetBuildingRoomsRequest"
         },
         "Buildings_GetAll": {
             "method": "GET",
             "path": "/api/estates/buildings",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Buildings\\GetBuildingsRequest"
         },
         "Buildings_GetById": {
             "method": "GET",
             "path": "/api/estates/buildings/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Buildings\\GetBuildingRequest"
         },
         "Buildings_PostByBuilding": {
             "method": "POST",
             "path": "/api/estates/buildings",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Buildings\\CreateBuildingRequest"
         },
         "Buildings_PutByIdBuilding": {
             "method": "PUT",
             "path": "/api/estates/buildings/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Buildings\\UpdateBuildingRequest"
         },
         "BulletinCategory_UpdateBulletinCategoryAsyncByBulletinidCategoryid": {
             "method": "PUT",
@@ -1415,22 +1423,26 @@
         "DepartmentEmployees_GetByDepartmenttypeDepartmentid": {
             "method": "GET",
             "path": "/api/school/departments/{departmentType}/{departmentId}/employees",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\DepartmentEmployees\\GetDepartmentEmployeesRequest"
         },
         "DepartmentTimetables_GetByDepartmentid": {
             "method": "GET",
             "path": "/api/timetables/departments/{departmentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\DepartmentTimetables\\GetDepartmentTimetableRequest"
         },
         "Departments_GetByDepartmenttypeExpand": {
             "method": "GET",
             "path": "/api/school/departments/{departmentType}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Departments\\GetDepartmentsRequest"
         },
         "Departments_GetByDepartmenttypeId": {
             "method": "GET",
             "path": "/api/school/departments/{departmentType}/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Departments\\GetDepartmentRequest"
         },
         "Deposits_GetAllBySchoolIdsBySchoolids": {
             "method": "GET",
@@ -1505,12 +1517,14 @@
         "Divisions_GetAll": {
             "method": "GET",
             "path": "/api/school/divisions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Divisions\\GetDivisionsRequest"
         },
         "Divisions_GetByCode": {
             "method": "GET",
             "path": "/api/school/divisions/{code}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Divisions\\GetDivisionRequest"
         },
         "EmailOptions_CancelEmailDetailsVerification": {
             "method": "POST",
@@ -1850,7 +1864,8 @@
         "EmployeeTimetables_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/timetables/employees/{employeeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\EmployeeTimetables\\GetEmployeeTimetableRequest"
         },
         "Employees_GetAllAsyncByPagePagesizeExpand": {
             "method": "GET",
@@ -2125,12 +2140,14 @@
         "FormTimetables_GetByFormcode": {
             "method": "GET",
             "path": "/api/timetables/forms/{formCode}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\FormTimetables\\GetFormTimetableRequest"
         },
         "Forms_Get": {
             "method": "GET",
             "path": "/api/school/forms",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Forms\\GetFormsRequest"
         },
         "GirfecAreas_GetAllGirfecAreas": {
             "method": "GET",
@@ -2320,12 +2337,14 @@
         "Houses_GetByHousetype": {
             "method": "GET",
             "path": "/api/school/houses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Houses\\GetHousesRequest"
         },
         "Houses_GetById": {
             "method": "GET",
             "path": "/api/school/houses/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Houses\\GetHouseRequest"
         },
         "IdentityEvidenceTypes_DeleteById": {
             "method": "DELETE",
@@ -3976,27 +3995,32 @@
         "RoomTimetables_GetByRoomid": {
             "method": "GET",
             "path": "/api/timetables/rooms/{roomId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\RoomTimetables\\GetRoomTimetableRequest"
         },
         "Rooms_GetAll": {
             "method": "GET",
             "path": "/api/estates/rooms",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Rooms\\GetRoomsRequest"
         },
         "Rooms_GetById": {
             "method": "GET",
             "path": "/api/estates/rooms/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Rooms\\GetRoomRequest"
         },
         "Rooms_PostByRoom": {
             "method": "POST",
             "path": "/api/estates/rooms",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Rooms\\CreateRoomRequest"
         },
         "Rooms_PutByIdRoom": {
             "method": "PUT",
             "path": "/api/estates/rooms/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Estates\\Rooms\\UpdateRoomRequest"
         },
         "Salaries_CreateSalaryAsyncByContractidCommand": {
             "method": "POST",
@@ -4066,7 +4090,8 @@
         "SchoolConfiguration_Get": {
             "method": "GET",
             "path": "/api/school/details",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Configuration\\GetSchoolDetailsRequest"
         },
         "SchoolDirectory_GetDepartmentsByPagePagesize": {
             "method": "GET",
@@ -4136,7 +4161,8 @@
         "SetTimetables_GetBySetid": {
             "method": "GET",
             "path": "/api/timetables/sets/{setId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\SetTimetables\\GetSetTimetableRequest"
         },
         "SmsSubscriptions_GetSmsSubscriptions": {
             "method": "GET",
@@ -4726,7 +4752,8 @@
         "StudentTimetables_GetBySchoolid": {
             "method": "GET",
             "path": "/api/timetables/students/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\StudentTimetables\\GetStudentTimetableRequest"
         },
         "StudentVaccinations_CreateBySchoolidVaccination": {
             "method": "POST",
@@ -4955,7 +4982,8 @@
         "SubjectTimetables_GetBySubjectid": {
             "method": "GET",
             "path": "/api/timetables/subjects/{subjectId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\SubjectTimetables\\GetSubjectTimetableRequest"
         },
         "Subjects_GetAll": {
             "method": "GET",
@@ -5019,17 +5047,20 @@
         "TeachingDepartmentSubjects_DeleteByDepartmentidSubjectid": {
             "method": "DELETE",
             "path": "/api/school/departments/teaching/{departmentId}/subjects/{subjectId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\TeachingDepartmentSubjects\\RemoveTeachingDepartmentSubjectRequest"
         },
         "TeachingDepartmentSubjects_GetByDepartmentid": {
             "method": "GET",
             "path": "/api/school/departments/teaching/{departmentId}/subjects",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\TeachingDepartmentSubjects\\GetTeachingDepartmentSubjectsRequest"
         },
         "TeachingDepartmentSubjects_PostByDepartmentidSubjectid": {
             "method": "POST",
             "path": "/api/school/departments/teaching/{departmentId}/subjects/{subjectId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\TeachingDepartmentSubjects\\AddTeachingDepartmentSubjectRequest"
         },
         "TeachingGroups_GetTeachingGroupFormByIdBySchoolidId": {
             "method": "GET",
@@ -5103,37 +5134,44 @@
         "Terms_GetAsync": {
             "method": "GET",
             "path": "/api/school/terms",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\Terms\\GetTermsRequest"
         },
         "TimetableImport_CompleteImport": {
             "method": "POST",
             "path": "/api/timetables/import/active/commands/complete",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\Import\\CompleteTimetableImportRequest"
         },
         "TimetableImport_CreateImportByRequest": {
             "method": "POST",
             "path": "/api/timetables/import",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\Import\\CreateTimetableImportRequest"
         },
         "TimetableImport_DeleteActiveImport": {
             "method": "DELETE",
             "path": "/api/timetables/import/active",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\Import\\DeleteActiveTimetableImportRequest"
         },
         "TimetableImport_GetActiveImport": {
             "method": "GET",
             "path": "/api/timetables/import/active",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\Import\\GetActiveTimetableImportRequest"
         },
         "TimetableImport_GetImportResultById": {
             "method": "GET",
             "path": "/api/timetables/import/timetables/{id}/results",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\Import\\GetTimetableImportResultRequest"
         },
         "TimetableStructures_GetByAcademicyearCalendarenddateCalendarstartdateCalendarweekDivisioncodeTermnameTimetableweekshortname": {
             "method": "GET",
             "path": "/api/timetables/structure",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Timetable\\Structures\\GetTimetableStructuresRequest"
         },
         "Timetable_GetTimetableActivityCollectionAsyncBySchoolidStartdate": {
             "method": "GET",
@@ -5318,20 +5356,30 @@
         "YearGroupDivisions_GetById": {
             "method": "GET",
             "path": "/api/school/yeargroups/{id}/divisions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\YearGroupDivisions\\GetYearGroupDivisionsRequest"
         },
         "YearGroups_Get": {
             "method": "GET",
             "path": "/api/school/yeargroups",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\YearGroups\\GetYearGroupsRequest"
         },
         "YearGroups_GetById": {
             "method": "GET",
             "path": "/api/school/yeargroups/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\School\\YearGroups\\GetYearGroupRequest"
         }
     },
     "models": {
+        "iSAMS.Estates.AppServices.Objects.Public.Resources.Get.Building": "spkm\\IsamsApi\\Data\\Estates\\Building",
+        "iSAMS.Estates.AppServices.Objects.Public.Resources.Get.Division": "spkm\\IsamsApi\\Data\\Estates\\Division",
+        "iSAMS.Estates.AppServices.Objects.Public.Resources.Get.Room": "spkm\\IsamsApi\\Data\\Estates\\Room",
+        "iSAMS.Estates.AppServices.Objects.Public.Resources.Post.Building": "spkm\\IsamsApi\\Data\\Estates\\BuildingForCreate",
+        "iSAMS.Estates.AppServices.Objects.Public.Resources.Post.Room": "spkm\\IsamsApi\\Data\\Estates\\RoomForCreate",
+        "iSAMS.Estates.AppServices.Objects.Public.Resources.Put.Building": "spkm\\IsamsApi\\Data\\Estates\\BuildingForUpdate",
+        "iSAMS.Estates.AppServices.Objects.Public.Resources.Put.Room": "spkm\\IsamsApi\\Data\\Estates\\RoomForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Alumni": "spkm\\IsamsApi\\Data\\Students\\Alumni",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.AlumniContact": "spkm\\IsamsApi\\Data\\Students\\AlumniContact",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Student": "spkm\\IsamsApi\\Data\\Students\\AlumniStudent",
@@ -5365,9 +5413,62 @@
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.PublicStudent": "spkm\\IsamsApi\\Data\\Students\\StudentForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.PublicStudentPassport": "spkm\\IsamsApi\\Data\\Students\\StudentPassportForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.StudentVisa": "spkm\\IsamsApi\\Data\\Students\\StudentVisaForUpdate",
+        "iSAMS.School.AppServices.Objects.Public.Contracts.IDepartment": "spkm\\IsamsApi\\Data\\School\\IDepartment",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.Department": "spkm\\IsamsApi\\Data\\School\\Department",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.Division": "spkm\\IsamsApi\\Data\\School\\Division",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.Employee": "spkm\\IsamsApi\\Data\\School\\Employee",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.Form": "spkm\\IsamsApi\\Data\\School\\Form",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.House": "spkm\\IsamsApi\\Data\\School\\House",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.SchoolDetails": "spkm\\IsamsApi\\Data\\School\\SchoolDetails",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.Subject": "spkm\\IsamsApi\\Data\\School\\Subject",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.Term": "spkm\\IsamsApi\\Data\\School\\Term",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.YearGroup": "spkm\\IsamsApi\\Data\\School\\YearGroup",
+        "iSAMS.School.AppServices.Objects.Public.Resources.Get.YearGroupDivision": "spkm\\IsamsApi\\Data\\School\\YearGroupDivision",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Post.GlobalListItem": "spkm\\IsamsApi\\Data\\Teaching\\GlobalListItemForCreate",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Post.Subject": "spkm\\IsamsApi\\Data\\Teaching\\SubjectForCreate",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\Teaching\\GlobalListItemForUpdate",
-        "iSAMS.Teaching.AppServices.Objects.Public.Resources.Put.Subject": "spkm\\IsamsApi\\Data\\Teaching\\SubjectForUpdate"
+        "iSAMS.Teaching.AppServices.Objects.Public.Resources.Put.Subject": "spkm\\IsamsApi\\Data\\Teaching\\SubjectForUpdate",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.Availability": "spkm\\IsamsApi\\Data\\Timetable\\Availability",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.CalendarDate": "spkm\\IsamsApi\\Data\\Timetable\\CalendarDate",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.DepartmentTimetable": "spkm\\IsamsApi\\Data\\Timetable\\DepartmentTimetable",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.DepartmentTimetableForm": "spkm\\IsamsApi\\Data\\Timetable\\DepartmentTimetableForm",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.DepartmentTimetableSet": "spkm\\IsamsApi\\Data\\Timetable\\DepartmentTimetableSet",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.Employee": "spkm\\IsamsApi\\Data\\Timetable\\Employee",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.EmployeeTimetable": "spkm\\IsamsApi\\Data\\Timetable\\EmployeeTimetable",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.EmployeeTimetableForm": "spkm\\IsamsApi\\Data\\Timetable\\EmployeeTimetableForm",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.EmployeeTimetableSet": "spkm\\IsamsApi\\Data\\Timetable\\EmployeeTimetableSet",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.EmployeeTimetableTutorial": "spkm\\IsamsApi\\Data\\Timetable\\EmployeeTimetableTutorial",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.FormTimetable": "spkm\\IsamsApi\\Data\\Timetable\\FormTimetable",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.FormTimetableForm": "spkm\\IsamsApi\\Data\\Timetable\\FormTimetableForm",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.Meeting": "spkm\\IsamsApi\\Data\\Timetable\\Meeting",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.Period": "spkm\\IsamsApi\\Data\\Timetable\\Period",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.RoomTimetable": "spkm\\IsamsApi\\Data\\Timetable\\RoomTimetable",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.RoomTimetableForm": "spkm\\IsamsApi\\Data\\Timetable\\RoomTimetableForm",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.RoomTimetableMeeting": "spkm\\IsamsApi\\Data\\Timetable\\RoomTimetableMeeting",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.RoomTimetableSet": "spkm\\IsamsApi\\Data\\Timetable\\RoomTimetableSet",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.SchoolDivision": "spkm\\IsamsApi\\Data\\Timetable\\SchoolDivision",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.SetTimetable": "spkm\\IsamsApi\\Data\\Timetable\\SetTimetable",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.SetTimetableSet": "spkm\\IsamsApi\\Data\\Timetable\\SetTimetableSet",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.StudentTimetable": "spkm\\IsamsApi\\Data\\Timetable\\StudentTimetable",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.StudentTimetableForm": "spkm\\IsamsApi\\Data\\Timetable\\StudentTimetableForm",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.StudentTimetableSet": "spkm\\IsamsApi\\Data\\Timetable\\StudentTimetableSet",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.StudentTimetableTutorial": "spkm\\IsamsApi\\Data\\Timetable\\StudentTimetableTutorial",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.StudentTimetableYearSchedule": "spkm\\IsamsApi\\Data\\Timetable\\StudentTimetableYearSchedule",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.SubjectTimetable": "spkm\\IsamsApi\\Data\\Timetable\\SubjectTimetable",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.SubjectTimetableForm": "spkm\\IsamsApi\\Data\\Timetable\\SubjectTimetableForm",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.SubjectTimetableSet": "spkm\\IsamsApi\\Data\\Timetable\\SubjectTimetableSet",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.Term": "spkm\\IsamsApi\\Data\\Timetable\\Term",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.TimetableDay": "spkm\\IsamsApi\\Data\\Timetable\\TimetableDay",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.TimetableImport": "spkm\\IsamsApi\\Data\\Timetable\\TimetableImport",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.TimetableImportResult": "spkm\\IsamsApi\\Data\\Timetable\\TimetableImportResult",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.TimetableImportResultItem": "spkm\\IsamsApi\\Data\\Timetable\\TimetableImportResultItem",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.TimetableLesson": "spkm\\IsamsApi\\Data\\Timetable\\TimetableLesson",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.TimetableWeek": "spkm\\IsamsApi\\Data\\Timetable\\TimetableWeek",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.Tutorial": "spkm\\IsamsApi\\Data\\Timetable\\Tutorial",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Get.YearSchedule": "spkm\\IsamsApi\\Data\\Timetable\\YearSchedule",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Post.TimetableImportNonClassData": "spkm\\IsamsApi\\Data\\Timetable\\TimetableImportNonClassDataForCreate",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Post.TimetableImportRequest": "spkm\\IsamsApi\\Data\\Timetable\\TimetableImportRequestForCreate",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Post.TimetableImportSetList": "spkm\\IsamsApi\\Data\\Timetable\\TimetableImportSetListForCreate",
+        "iSAMS.Timetable.AppServices.Objects.Public.Resources.Post.TimetableImportSubject": "spkm\\IsamsApi\\Data\\Timetable\\TimetableImportSubjectForCreate"
     }
 }
