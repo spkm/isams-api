@@ -35,6 +35,9 @@
         "pestphp/pest": "^4.0",
         "symfony/var-dumper": "^7.2"
     },
+    "suggest": {
+        "ext-zip": "Reads the student and staff photos the Batch API sends as a zip"
+    },
     "autoload": {
         "psr-4": {
             "spkm\\IsamsApi\\": [

@@ -5,6 +5,8 @@ return [
     'client_secret' => env('ISAMS_REST_CLIENT_SECRET'),
     'base_url' => env('ISAMS_BASE_URL', env('IASMS_BASE_URL')),
 
+    'batch_keys' => [],
+
     'connections' => [],
 
     'timeouts' => [
