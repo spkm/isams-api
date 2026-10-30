@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ReasonsForDismissalResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ReasonForDismissalForCreate|array<string, mixed>  $reasonForDismissal
-     */
-    public function createReasonForDismissal(ReasonForDismissalForCreate|array $reasonForDismissal): Response
-    {
-        return $this->connector->send(new CreateReasonForDismissalRequest($reasonForDismissal));
-    }
-
-    public function deleteReasonForDismissal(int $id): Response
-    {
-        return $this->connector->send(new DeleteReasonForDismissalRequest($id));
-    }
-
-    public function getReasonForDismissal(int $id): Response
-    {
-        return $this->connector->send(new GetReasonForDismissalRequest($id));
-    }
-
-    public function getReasonsForDismissal(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetReasonsForDismissalRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ReasonForDismissalForCreate|array<string, mixed>  $reasonForDismissal
+     */
+    public function create(ReasonForDismissalForCreate|array $reasonForDismissal): Response
+    {
+        return $this->connector->send(new CreateReasonForDismissalRequest($reasonForDismissal));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteReasonForDismissalRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetReasonForDismissalRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchReasonForDismissal(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchReasonForDismissalRequest($id, $patch));
     }

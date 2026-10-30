@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\HumanResources;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\AbsenceForUpdateAbsenceCategoryCode;
+use spkm\IsamsApi\Data\HumanResources\Enums\AbsenceCategoryCode;
 
 readonly class AbsenceForUpdate extends Data
 {
@@ -23,8 +23,8 @@ readonly class AbsenceForUpdate extends Data
     ) {
     }
 
-    public function absenceCategoryCodeEnum(): ?AbsenceForUpdateAbsenceCategoryCode
+    public function absenceCategoryCodeEnum(): ?AbsenceCategoryCode
     {
-        return AbsenceForUpdateAbsenceCategoryCode::tryFrom((string) $this->absenceCategoryCode);
+        return AbsenceCategoryCode::tryFrom((string) $this->absenceCategoryCode);
     }
 }

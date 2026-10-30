@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\School\DepartmentEmployees\GetDepartmentEmployeesRequ
 
 class DepartmentEmployeesResource extends BaseResource
 {
-    public function getDepartmentEmployees(string $departmentType, int $departmentId): Response
+    public function all(string $departmentType, int $departmentId): Response
     {
         return $this->connector->send(new GetDepartmentEmployeesRequest($departmentType, $departmentId));
     }

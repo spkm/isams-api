@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\WellbeingManager\GirfecAreas\GetGirfecAreasRequest;
 
 class GirfecAreasResource extends BaseResource
 {
-    public function getGirfecAreas(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetGirfecAreasRequest());
     }

@@ -17,38 +17,38 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class MarkCommentsResource extends BaseResource
 {
+    public function all(int $gradebookId, int $columnId, string $schoolId): Response
+    {
+        return $this->connector->send(new GetMarkCommentsRequest($gradebookId, $columnId, $schoolId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\Gradebooks\CommentForCreate|array<string, mixed>  $comment
      */
-    public function createMarkComment(
+    public function create(
         int $gradebookId,
-        string $schoolId,
         int $columnId,
+        string $schoolId,
         CommentForCreate|array $comment,
     ): Response {
-        return $this->connector->send(new CreateMarkCommentRequest($gradebookId, $schoolId, $columnId, $comment));
+        return $this->connector->send(new CreateMarkCommentRequest($gradebookId, $columnId, $schoolId, $comment));
     }
 
-    public function deleteMarkComment(int $gradebookId, string $schoolId, int $columnId, int $commentId): Response
+    public function delete(int $gradebookId, int $columnId, string $schoolId, int $commentId): Response
     {
-        return $this->connector->send(new DeleteMarkCommentRequest($gradebookId, $schoolId, $columnId, $commentId));
-    }
-
-    public function getMarkComments(int $gradebookId, string $schoolId, int $columnId): Response
-    {
-        return $this->connector->send(new GetMarkCommentsRequest($gradebookId, $schoolId, $columnId));
+        return $this->connector->send(new DeleteMarkCommentRequest($gradebookId, $columnId, $schoolId, $commentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchMarkComment(
+    public function patch(
         int $gradebookId,
-        string $schoolId,
         int $columnId,
+        string $schoolId,
         int $commentId,
         JsonPatch|array $patch,
     ): Response {
-        return $this->connector->send(new PatchMarkCommentRequest($gradebookId, $schoolId, $columnId, $commentId, $patch));
+        return $this->connector->send(new PatchMarkCommentRequest($gradebookId, $columnId, $schoolId, $commentId, $patch));
     }
 }

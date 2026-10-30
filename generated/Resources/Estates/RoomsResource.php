@@ -17,28 +17,28 @@ use spkm\IsamsApi\Requests\Estates\Rooms\UpdateRoomRequest;
 
 class RoomsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Estates\RoomForCreate|array<string, mixed>  $room
-     */
-    public function createRoom(RoomForCreate|array $room): Response
-    {
-        return $this->connector->send(new CreateRoomRequest($room));
-    }
-
-    public function getRoom(int $id): Response
-    {
-        return $this->connector->send(new GetRoomRequest($id));
-    }
-
-    public function getRooms(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetRoomsRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\Estates\RoomForCreate|array<string, mixed>  $room
+     */
+    public function create(RoomForCreate|array $room): Response
+    {
+        return $this->connector->send(new CreateRoomRequest($room));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetRoomRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\Estates\RoomForUpdate|array<string, mixed>  $room
      */
-    public function updateRoom(int $id, RoomForUpdate|array $room): Response
+    public function update(int $id, RoomForUpdate|array $room): Response
     {
         return $this->connector->send(new UpdateRoomRequest($id, $room));
     }

@@ -14,7 +14,7 @@ use spkm\IsamsApi\Requests\Students\Contacts\GetStudentContactsRequest;
 
 class ContactsResource extends BaseResource
 {
-    public function getAllStudentContacts(
+    public function all(
         ?int $page = null,
         ?int $pageSize = null,
         ?string $expand = null,
@@ -23,7 +23,7 @@ class ContactsResource extends BaseResource
         return $this->connector->send(new GetAllStudentContactsRequest($page, $pageSize, $expand, $filter));
     }
 
-    public function getStudentContacts(
+    public function forStudent(
         string $schoolId,
         ?bool $includeDeceased = null,
         ?string $expand = null,

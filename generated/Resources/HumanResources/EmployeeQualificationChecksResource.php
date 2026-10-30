@@ -18,35 +18,35 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\UpdateEmpl
 
 class EmployeeQualificationChecksResource extends BaseResource
 {
+    public function all(int $employeeId): Response
+    {
+        return $this->connector->send(new GetEmployeeQualificationChecksRequest($employeeId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheckForCreate|array<string, mixed>  $employeeQualificationCheck
      */
-    public function createEmployeeQualificationCheck(
+    public function create(
         int $employeeId,
         EmployeeQualificationCheckForCreate|array $employeeQualificationCheck,
     ): Response {
         return $this->connector->send(new CreateEmployeeQualificationCheckRequest($employeeId, $employeeQualificationCheck));
     }
 
-    public function deleteEmployeeQualificationCheck(int $employeeId, int $qualificationCheckId): Response
+    public function delete(int $employeeId, int $qualificationCheckId): Response
     {
         return $this->connector->send(new DeleteEmployeeQualificationCheckRequest($employeeId, $qualificationCheckId));
     }
 
-    public function getEmployeeQualificationCheck(int $employeeId, int $qualificationCheckId): Response
+    public function get(int $employeeId, int $qualificationCheckId): Response
     {
         return $this->connector->send(new GetEmployeeQualificationCheckRequest($employeeId, $qualificationCheckId));
-    }
-
-    public function getEmployeeQualificationChecks(int $employeeId): Response
-    {
-        return $this->connector->send(new GetEmployeeQualificationChecksRequest($employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheckForUpdate|array<string, mixed>  $employeeQualificationCheck
      */
-    public function updateEmployeeQualificationCheck(
+    public function update(
         int $employeeId,
         int $qualificationCheckId,
         EmployeeQualificationCheckForUpdate|array $employeeQualificationCheck,

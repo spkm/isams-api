@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Gradebooks\DisassociatedStudent\RemoveGradebookDisass
 
 class DisassociatedStudentResource extends BaseResource
 {
-    public function removeGradebookDisassociatedStudent(int $gradebookId, string $schoolId): Response
+    public function remove(int $gradebookId, string $schoolId): Response
     {
         return $this->connector->send(new RemoveGradebookDisassociatedStudentRequest($gradebookId, $schoolId));
     }

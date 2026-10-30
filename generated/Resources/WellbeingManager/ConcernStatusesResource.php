@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernStatusesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernStatusForCreate|array<string, mixed>  $concernStatus
-     */
-    public function createConcernStatus(ConcernStatusForCreate|array $concernStatus): Response
-    {
-        return $this->connector->send(new CreateConcernStatusRequest($concernStatus));
-    }
-
-    public function deleteConcernStatus(int $id): Response
-    {
-        return $this->connector->send(new DeleteConcernStatusRequest($id));
-    }
-
-    public function getConcernStatus(int $id): Response
-    {
-        return $this->connector->send(new GetConcernStatusRequest($id));
-    }
-
-    public function getConcernStatuses(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernStatusesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernStatusForCreate|array<string, mixed>  $concernStatus
+     */
+    public function create(ConcernStatusForCreate|array $concernStatus): Response
+    {
+        return $this->connector->send(new CreateConcernStatusRequest($concernStatus));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteConcernStatusRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetConcernStatusRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernStatus(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernStatusRequest($id, $patch));
     }

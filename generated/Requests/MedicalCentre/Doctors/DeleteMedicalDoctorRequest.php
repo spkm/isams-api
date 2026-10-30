@@ -20,8 +20,8 @@ class DeleteMedicalDoctorRequest extends IsamsRequest
     protected string $responseShape = self::NONE;
 
     public function __construct(
-        protected int $doctorId,
         protected string $surgeryId,
+        protected int $doctorId,
     ) {
     }
 

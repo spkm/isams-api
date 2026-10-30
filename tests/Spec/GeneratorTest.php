@@ -67,3 +67,11 @@ it('refuses a hand-written request class that does not exist', function () {
 it('accepts the package\'s own overrides', function () {
     expect(fn () => generateWithOverrides(fn (array $overrides) => $overrides))->not->toThrow(RuntimeException::class);
 });
+
+it('refuses an enum rename for an enum the generator does not make', function () {
+    expect(fn () => generateWithOverrides(function (array $overrides) {
+        $overrides['enums']['Gradebooks\Kind'] = 'MembershipType';
+
+        return $overrides;
+    }))->toThrow(RuntimeException::class, 'enums.Gradebooks\Kind: no such enum');
+});

@@ -14,13 +14,13 @@ use spkm\IsamsApi\Requests\School\Divisions\GetDivisionsRequest;
 
 class DivisionsResource extends BaseResource
 {
-    public function getDivision(string $code): Response
-    {
-        return $this->connector->send(new GetDivisionRequest($code));
-    }
-
-    public function getDivisions(string|Stringable|null $filter = null): Response
+    public function all(string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetDivisionsRequest($filter));
+    }
+
+    public function get(string $code): Response
+    {
+        return $this->connector->send(new GetDivisionRequest($code));
     }
 }

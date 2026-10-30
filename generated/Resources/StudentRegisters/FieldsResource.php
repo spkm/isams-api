@@ -14,7 +14,7 @@ use spkm\IsamsApi\Requests\StudentRegisters\Fields\PatchStudentFieldsRequest;
 
 class FieldsResource extends BaseResource
 {
-    public function getFields(
+    public function all(
         int $registerId,
         ?string $systemStatus = null,
         ?int $page = null,
@@ -23,7 +23,7 @@ class FieldsResource extends BaseResource
         return $this->connector->send(new GetFieldsRequest($registerId, $systemStatus, $page, $pageSize));
     }
 
-    public function getStudentFields(int $registerId, string $schoolId): Response
+    public function forStudent(int $registerId, string $schoolId): Response
     {
         return $this->connector->send(new GetStudentFieldsRequest($registerId, $schoolId));
     }
@@ -31,7 +31,7 @@ class FieldsResource extends BaseResource
     /**
      * @param  array<mixed>  $values
      */
-    public function patchStudentFields(int $registerId, string $schoolId, array $values): Response
+    public function patchMany(int $registerId, string $schoolId, array $values): Response
     {
         return $this->connector->send(new PatchStudentFieldsRequest($registerId, $schoolId, $values));
     }

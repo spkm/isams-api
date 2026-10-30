@@ -26,11 +26,11 @@ class UpdateCountryRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
      */
     public function __construct(
         protected int $id,
-        protected GlobalListItemForUpdate|array $globalListItem,
+        protected GlobalListItemForUpdate|array $listItem,
     ) {
     }
 
@@ -44,6 +44,6 @@ class UpdateCountryRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->globalListItem instanceof Data ? $this->globalListItem->toArray() : $this->globalListItem;
+        return $this->listItem instanceof Data ? $this->listItem->toArray() : $this->listItem;
     }
 }

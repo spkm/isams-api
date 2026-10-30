@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionStatuses\GetConcernActi
 
 class ConcernActionStatusesResource extends BaseResource
 {
-    public function getConcernActionStatus(int $id): Response
-    {
-        return $this->connector->send(new GetConcernActionStatusRequest($id));
-    }
-
-    public function getConcernActionStatuses(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernActionStatusesRequest());
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetConcernActionStatusRequest($id));
     }
 }

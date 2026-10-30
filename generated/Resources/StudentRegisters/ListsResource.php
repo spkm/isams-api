@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\StudentRegisters\Lists\GetListItemsRequest;
 
 class ListsResource extends BaseResource
 {
-    public function getListItems(int $listId): Response
+    public function getItems(int $listId): Response
     {
         return $this->connector->send(new GetListItemsRequest($listId));
     }

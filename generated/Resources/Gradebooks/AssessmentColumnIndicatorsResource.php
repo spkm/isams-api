@@ -16,12 +16,12 @@ class AssessmentColumnIndicatorsResource extends BaseResource
     /**
      * @param  array<mixed>  $indicators
      */
-    public function createAssessmentColumnIndicators(int $gradebookId, int $columnId, array $indicators): Response
+    public function createMany(int $gradebookId, int $columnId, array $indicators): Response
     {
         return $this->connector->send(new CreateAssessmentColumnIndicatorsRequest($gradebookId, $columnId, $indicators));
     }
 
-    public function deleteAssessmentColumnIndicator(int $gradebookId, int $columnId, int $indicatorId): Response
+    public function delete(int $gradebookId, int $columnId, int $indicatorId): Response
     {
         return $this->connector->send(new DeleteAssessmentColumnIndicatorRequest($gradebookId, $columnId, $indicatorId));
     }

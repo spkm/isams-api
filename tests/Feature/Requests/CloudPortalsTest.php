@@ -4,16 +4,16 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Facades\Isams;
-use spkm\IsamsApi\Requests\CloudPortals\Admissions\PortalDocument\DownloadPortalDocumentRequest;
-use spkm\IsamsApi\Requests\CloudPortals\PortalDocumentSigning\GetEmbeddedSigningUrlRequest;
+use spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\DownloadPortalDocumentRequest;
+use spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\GetEmbeddedSigningUrlRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Bookmark\GetBookmarksRequest;
-use spkm\IsamsApi\Requests\CloudPortals\School\SchoolsPortal\GetPortalSchoolsRequest;
+use spkm\IsamsApi\Requests\CloudPortals\School\Schools\GetPortalSchoolsRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 it('reaches the Cloud Portals requests through the default connection\'s resources', function () {
     $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => []])]);
 
-    FakeIsams::connector()->cloudPortals()->schoolBookmark()->getBookmarks();
+    FakeIsams::connector()->cloudPortals()->school()->bookmark()->all();
 
     $isams->assertSent(GetBookmarksRequest::class);
     expect(FakeIsams::received($isams, GetClientCredentialsTokenRequest::class)->body()->all()['scope'])->toBe('restapi');
@@ -23,7 +23,7 @@ it('asks for the Cloud Portals scope on a connection configured with it', functi
     config(['isams-api.connections.portals' => ['client_id' => 'portal-id', 'client_secret' => 'portal-secret', 'base_url' => FakeIsams::BASE_URL, 'scopes' => ['iSAMS.CloudPortals.Api']]]);
     $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => []])]);
 
-    Isams::connection('portals')->cloudPortals()->schoolBookmark()->getBookmarks();
+    Isams::connection('portals')->cloudPortals()->school()->bookmark()->all();
 
     expect(FakeIsams::received($isams, GetClientCredentialsTokenRequest::class)->body()->all())->toMatchArray(['client_id' => 'portal-id', 'scope' => 'iSAMS.CloudPortals.Api']);
 });

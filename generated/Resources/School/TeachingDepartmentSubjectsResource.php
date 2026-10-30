@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\School\TeachingDepartmentSubjects\RemoveTeachingDepar
 
 class TeachingDepartmentSubjectsResource extends BaseResource
 {
-    public function addTeachingDepartmentSubject(int $departmentId, int $subjectId): Response
+    public function add(int $departmentId, int $subjectId): Response
     {
         return $this->connector->send(new AddTeachingDepartmentSubjectRequest($departmentId, $subjectId));
     }
 
-    public function getTeachingDepartmentSubjects(int $departmentId): Response
+    public function all(int $departmentId): Response
     {
         return $this->connector->send(new GetTeachingDepartmentSubjectsRequest($departmentId));
     }
 
-    public function removeTeachingDepartmentSubject(int $departmentId, int $subjectId): Response
+    public function remove(int $departmentId, int $subjectId): Response
     {
         return $this->connector->send(new RemoveTeachingDepartmentSubjectRequest($departmentId, $subjectId));
     }

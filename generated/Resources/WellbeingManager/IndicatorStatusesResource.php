@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\WellbeingManager\IndicatorStatuses\GetIndicatorStatus
 
 class IndicatorStatusesResource extends BaseResource
 {
-    public function getIndicatorStatuses(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetIndicatorStatusesRequest());
     }

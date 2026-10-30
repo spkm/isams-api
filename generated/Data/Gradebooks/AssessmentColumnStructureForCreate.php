@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\Gradebooks;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Gradebooks\Enums\AssessmentColumnStructureForCreateShareStatus;
+use spkm\IsamsApi\Data\Gradebooks\Enums\AssessmentColumnStructureShareStatus;
 
 readonly class AssessmentColumnStructureForCreate extends Data
 {
@@ -45,8 +45,8 @@ readonly class AssessmentColumnStructureForCreate extends Data
     ) {
     }
 
-    public function shareStatusEnum(): ?AssessmentColumnStructureForCreateShareStatus
+    public function shareStatusEnum(): ?AssessmentColumnStructureShareStatus
     {
-        return AssessmentColumnStructureForCreateShareStatus::tryFrom((string) $this->shareStatus);
+        return AssessmentColumnStructureShareStatus::tryFrom((string) $this->shareStatus);
     }
 }

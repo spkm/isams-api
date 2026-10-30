@@ -20,20 +20,17 @@ class ConcernActionsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernActionForCreate|array<string, mixed>  $concernAction
      */
-    public function createConcernAction(
-        string $schoolId,
-        int $concernId,
-        ConcernActionForCreate|array $concernAction,
-    ): Response {
+    public function create(string $schoolId, int $concernId, ConcernActionForCreate|array $concernAction): Response
+    {
         return $this->connector->send(new CreateConcernActionRequest($schoolId, $concernId, $concernAction));
     }
 
-    public function deleteConcernAction(string $schoolId, int $concernId, int $id): Response
+    public function delete(string $schoolId, int $concernId, int $id): Response
     {
         return $this->connector->send(new DeleteConcernActionRequest($schoolId, $concernId, $id));
     }
 
-    public function getConcernAction(string $schoolId, int $concernId, int $id): Response
+    public function get(string $schoolId, int $concernId, int $id): Response
     {
         return $this->connector->send(new GetConcernActionRequest($schoolId, $concernId, $id));
     }
@@ -41,7 +38,7 @@ class ConcernActionsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernAction(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernActionRequest($schoolId, $concernId, $id, $patch));
     }

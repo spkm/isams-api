@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\WellbeingManager\WorkflowActions\GetWorkflowActionTyp
 
 class WorkflowActionsResource extends BaseResource
 {
-    public function getWorkflowActionTypes(): Response
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetWorkflowActionTypesRequest());
     }

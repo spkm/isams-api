@@ -20,7 +20,12 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class StudentConditionsResource extends BaseResource
 {
-    public function archiveStudentCondition(string $schoolId, string $conditionId): Response
+    public function all(string $schoolId, ?bool $includeArchive = null): Response
+    {
+        return $this->connector->send(new GetStudentConditionsRequest($schoolId, $includeArchive));
+    }
+
+    public function archive(string $schoolId, string $conditionId): Response
     {
         return $this->connector->send(new ArchiveStudentConditionRequest($schoolId, $conditionId));
     }
@@ -28,35 +33,30 @@ class StudentConditionsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\ConditionForCreate|array<string, mixed>  $condition
      */
-    public function createStudentCondition(string $schoolId, ConditionForCreate|array $condition): Response
+    public function create(string $schoolId, ConditionForCreate|array $condition): Response
     {
         return $this->connector->send(new CreateStudentConditionRequest($schoolId, $condition));
     }
 
-    public function deleteStudentCondition(string $schoolId, string $conditionId): Response
+    public function delete(string $schoolId, string $conditionId): Response
     {
         return $this->connector->send(new DeleteStudentConditionRequest($schoolId, $conditionId));
     }
 
-    public function getStudentCondition(string $schoolId, string $conditionId): Response
+    public function get(string $schoolId, string $conditionId): Response
     {
         return $this->connector->send(new GetStudentConditionRequest($schoolId, $conditionId));
-    }
-
-    public function getStudentConditions(string $schoolId, ?bool $includeArchive = null): Response
-    {
-        return $this->connector->send(new GetStudentConditionsRequest($schoolId, $includeArchive));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentCondition(string $schoolId, string $conditionId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $conditionId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentConditionRequest($schoolId, $conditionId, $patch));
     }
 
-    public function restoreStudentCondition(string $schoolId, string $conditionId): Response
+    public function restore(string $schoolId, string $conditionId): Response
     {
         return $this->connector->send(new RestoreStudentConditionRequest($schoolId, $conditionId));
     }

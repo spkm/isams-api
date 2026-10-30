@@ -8,7 +8,7 @@ use Saloon\Http\Request;
 /**
  * The 'sets' property is an array of TeachingSet objects.
  *
- * @deprecated Use \spkm\IsamsApi\Requests\Teaching\TeachingSets\GetTeachingSetsRequest instead.
+ * @deprecated Use \spkm\IsamsApi\Requests\Teaching\Sets\GetTeachingSetsRequest instead.
  */
 class GetTeachingSetsRequest extends Request
 {

@@ -20,7 +20,12 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class StudentInventoryResource extends BaseResource
 {
-    public function archiveStudentInventory(string $schoolId, string $inventoryId): Response
+    public function all(string $schoolId, ?bool $includeArchive = null): Response
+    {
+        return $this->connector->send(new GetStudentInventoriesRequest($schoolId, $includeArchive));
+    }
+
+    public function archive(string $schoolId, string $inventoryId): Response
     {
         return $this->connector->send(new ArchiveStudentInventoryRequest($schoolId, $inventoryId));
     }
@@ -28,22 +33,17 @@ class StudentInventoryResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\InventoryForCreate|array<string, mixed>  $inventory
      */
-    public function createStudentInventory(string $schoolId, InventoryForCreate|array $inventory): Response
+    public function create(string $schoolId, InventoryForCreate|array $inventory): Response
     {
         return $this->connector->send(new CreateStudentInventoryRequest($schoolId, $inventory));
     }
 
-    public function deleteStudentInventory(string $schoolId, string $inventoryId): Response
+    public function delete(string $schoolId, string $inventoryId): Response
     {
         return $this->connector->send(new DeleteStudentInventoryRequest($schoolId, $inventoryId));
     }
 
-    public function getStudentInventories(string $schoolId, ?bool $includeArchive = null): Response
-    {
-        return $this->connector->send(new GetStudentInventoriesRequest($schoolId, $includeArchive));
-    }
-
-    public function getStudentInventory(string $schoolId, string $inventoryId): Response
+    public function get(string $schoolId, string $inventoryId): Response
     {
         return $this->connector->send(new GetStudentInventoryRequest($schoolId, $inventoryId));
     }
@@ -51,12 +51,12 @@ class StudentInventoryResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentInventory(string $schoolId, string $inventoryId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $inventoryId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentInventoryRequest($schoolId, $inventoryId, $patch));
     }
 
-    public function restoreStudentInventory(string $schoolId, string $inventoryId): Response
+    public function restore(string $schoolId, string $inventoryId): Response
     {
         return $this->connector->send(new RestoreStudentInventoryRequest($schoolId, $inventoryId));
     }

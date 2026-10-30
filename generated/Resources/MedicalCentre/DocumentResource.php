@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\MedicalCentre\Document\GetMedicalDocumentCategoriesRe
 
 class DocumentResource extends BaseResource
 {
-    public function getMedicalDocumentCategories(): Response
+    public function getCategories(): Response
     {
         return $this->connector->send(new GetMedicalDocumentCategoriesRequest());
     }

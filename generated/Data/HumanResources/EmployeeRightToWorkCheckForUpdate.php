@@ -8,8 +8,8 @@ namespace spkm\IsamsApi\Data\HumanResources;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeRightToWorkCheckForUpdateStatus;
-use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeRightToWorkCheckForUpdateType;
+use spkm\IsamsApi\Data\HumanResources\Enums\CheckStatus;
+use spkm\IsamsApi\Data\HumanResources\Enums\EmployeeRightToWorkCheckType;
 
 readonly class EmployeeRightToWorkCheckForUpdate extends Data
 {
@@ -23,13 +23,13 @@ readonly class EmployeeRightToWorkCheckForUpdate extends Data
     ) {
     }
 
-    public function statusEnum(): ?EmployeeRightToWorkCheckForUpdateStatus
+    public function statusEnum(): ?CheckStatus
     {
-        return EmployeeRightToWorkCheckForUpdateStatus::tryFrom((string) $this->status);
+        return CheckStatus::tryFrom((string) $this->status);
     }
 
-    public function typeEnum(): ?EmployeeRightToWorkCheckForUpdateType
+    public function typeEnum(): ?EmployeeRightToWorkCheckType
     {
-        return EmployeeRightToWorkCheckForUpdateType::tryFrom((string) $this->type);
+        return EmployeeRightToWorkCheckType::tryFrom((string) $this->type);
     }
 }

@@ -20,7 +20,12 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class StudentConsentsResource extends BaseResource
 {
-    public function archiveStudentConsent(string $schoolId, string $consentId): Response
+    public function all(string $schoolId): Response
+    {
+        return $this->connector->send(new GetStudentConsentsRequest($schoolId));
+    }
+
+    public function archive(string $schoolId, string $consentId): Response
     {
         return $this->connector->send(new ArchiveStudentConsentRequest($schoolId, $consentId));
     }
@@ -28,35 +33,30 @@ class StudentConsentsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\ConsentForCreate|array<string, mixed>  $consent
      */
-    public function createStudentConsent(string $schoolId, ConsentForCreate|array $consent): Response
+    public function create(string $schoolId, ConsentForCreate|array $consent): Response
     {
         return $this->connector->send(new CreateStudentConsentRequest($schoolId, $consent));
     }
 
-    public function deleteStudentConsent(string $schoolId, string $consentId): Response
+    public function delete(string $schoolId, string $consentId): Response
     {
         return $this->connector->send(new DeleteStudentConsentRequest($schoolId, $consentId));
     }
 
-    public function getStudentConsent(string $schoolId, string $consentId): Response
+    public function get(string $schoolId, string $consentId): Response
     {
         return $this->connector->send(new GetStudentConsentRequest($schoolId, $consentId));
-    }
-
-    public function getStudentConsents(string $schoolId): Response
-    {
-        return $this->connector->send(new GetStudentConsentsRequest($schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentConsent(string $schoolId, string $consentId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $consentId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentConsentRequest($schoolId, $consentId, $patch));
     }
 
-    public function restoreStudentConsent(string $schoolId, string $consentId): Response
+    public function restore(string $schoolId, string $consentId): Response
     {
         return $this->connector->send(new RestoreStudentConsentRequest($schoolId, $consentId));
     }

@@ -8,12 +8,12 @@ namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
-use spkm\IsamsApi\Resources\Agent\AgentsResource;
+use spkm\IsamsApi\Requests\Agent\GetAgentsRequest;
 
 class AgentResource extends BaseResource
 {
-    public function agents(): AgentsResource
+    public function all(): Response
     {
-        return new AgentsResource($this->connector);
+        return $this->connector->send(new GetAgentsRequest());
     }
 }

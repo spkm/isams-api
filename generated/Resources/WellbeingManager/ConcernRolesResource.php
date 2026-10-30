@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernRolesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernRoleForCreate|array<string, mixed>  $concernRole
-     */
-    public function createConcernRole(ConcernRoleForCreate|array $concernRole): Response
-    {
-        return $this->connector->send(new CreateConcernRoleRequest($concernRole));
-    }
-
-    public function deleteConcernRole(int $id): Response
-    {
-        return $this->connector->send(new DeleteConcernRoleRequest($id));
-    }
-
-    public function getConcernRole(int $id): Response
-    {
-        return $this->connector->send(new GetConcernRoleRequest($id));
-    }
-
-    public function getConcernRoles(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernRolesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernRoleForCreate|array<string, mixed>  $concernRole
+     */
+    public function create(ConcernRoleForCreate|array $concernRole): Response
+    {
+        return $this->connector->send(new CreateConcernRoleRequest($concernRole));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteConcernRoleRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetConcernRoleRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernRole(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernRoleRequest($id, $patch));
     }

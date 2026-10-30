@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\HumanResources;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\Enums\ChildrensBarredListCheckStatus;
+use spkm\IsamsApi\Data\HumanResources\Enums\CheckStatus;
 
 readonly class ChildrensBarredListCheck extends Data
 {
@@ -24,8 +24,8 @@ readonly class ChildrensBarredListCheck extends Data
     ) {
     }
 
-    public function statusEnum(): ?ChildrensBarredListCheckStatus
+    public function statusEnum(): ?CheckStatus
     {
-        return ChildrensBarredListCheckStatus::tryFrom((string) $this->status);
+        return CheckStatus::tryFrom((string) $this->status);
     }
 }

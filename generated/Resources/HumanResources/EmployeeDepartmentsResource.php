@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\RemoveEmployeeDepa
 
 class EmployeeDepartmentsResource extends BaseResource
 {
-    public function addEmployeeDepartment(int $employeeId, string $departmentType, int $departmentId): Response
+    public function add(int $employeeId, string $departmentType, int $departmentId): Response
     {
         return $this->connector->send(new AddEmployeeDepartmentRequest($employeeId, $departmentType, $departmentId));
     }
 
-    public function getEmployeeDepartments(int $employeeId): Response
+    public function all(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeDepartmentsRequest($employeeId));
     }
 
-    public function removeEmployeeDepartment(int $employeeId, string $departmentType, int $departmentId): Response
+    public function remove(int $employeeId, string $departmentType, int $departmentId): Response
     {
         return $this->connector->send(new RemoveEmployeeDepartmentRequest($employeeId, $departmentType, $departmentId));
     }

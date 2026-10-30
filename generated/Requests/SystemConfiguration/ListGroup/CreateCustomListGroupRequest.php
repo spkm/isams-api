@@ -26,10 +26,10 @@ class CreateCustomListGroupRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListRuleForCreate|array<string, mixed>  $globalListGroup
+     * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListRuleForCreate|array<string, mixed>  $listRule
      */
     public function __construct(
-        protected GlobalListRuleForCreate|array $globalListGroup,
+        protected GlobalListRuleForCreate|array $listRule,
     ) {
     }
 
@@ -43,6 +43,6 @@ class CreateCustomListGroupRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->globalListGroup instanceof Data ? $this->globalListGroup->toArray() : $this->globalListGroup;
+        return $this->listRule instanceof Data ? $this->listRule->toArray() : $this->listRule;
     }
 }

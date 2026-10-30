@@ -19,42 +19,42 @@ use spkm\IsamsApi\Requests\Admissions\Visas\UpdateApplicantVisasRequest;
 
 class VisasResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Admissions\ApplicantVisaForCreate|array<string, mixed>  $visa
-     */
-    public function createApplicantVisa(string $schoolId, ApplicantVisaForCreate|array $visa): Response
-    {
-        return $this->connector->send(new CreateApplicantVisaRequest($schoolId, $visa));
-    }
-
-    public function deleteApplicantVisa(string $schoolId, int $id): Response
-    {
-        return $this->connector->send(new DeleteApplicantVisaRequest($schoolId, $id));
-    }
-
-    public function getApplicantVisa(string $schoolId, int $id, ?string $expand = null): Response
-    {
-        return $this->connector->send(new GetApplicantVisaRequest($schoolId, $id, $expand));
-    }
-
-    public function getApplicantVisas(string $schoolId, ?string $expand = null): Response
+    public function all(string $schoolId, ?string $expand = null): Response
     {
         return $this->connector->send(new GetApplicantVisasRequest($schoolId, $expand));
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>  $visa
+     * @param  \spkm\IsamsApi\Data\Admissions\ApplicantVisaForCreate|array<string, mixed>  $applicantVisa
      */
-    public function updateApplicantVisa(string $schoolId, int $id, ApplicantVisaForUpdate|array $visa): Response
+    public function create(string $schoolId, ApplicantVisaForCreate|array $applicantVisa): Response
     {
-        return $this->connector->send(new UpdateApplicantVisaRequest($schoolId, $id, $visa));
+        return $this->connector->send(new CreateApplicantVisaRequest($schoolId, $applicantVisa));
+    }
+
+    public function delete(string $schoolId, int $id): Response
+    {
+        return $this->connector->send(new DeleteApplicantVisaRequest($schoolId, $id));
+    }
+
+    public function get(string $schoolId, int $id, ?string $expand = null): Response
+    {
+        return $this->connector->send(new GetApplicantVisaRequest($schoolId, $id, $expand));
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>>  $visas
+     * @param  \spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>  $applicantVisa
      */
-    public function updateApplicantVisas(string $schoolId, array $visas): Response
+    public function update(string $schoolId, int $id, ApplicantVisaForUpdate|array $applicantVisa): Response
     {
-        return $this->connector->send(new UpdateApplicantVisasRequest($schoolId, $visas));
+        return $this->connector->send(new UpdateApplicantVisaRequest($schoolId, $id, $applicantVisa));
+    }
+
+    /**
+     * @param  list<\spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>>  $applicantVisas
+     */
+    public function updateMany(string $schoolId, array $applicantVisas): Response
+    {
+        return $this->connector->send(new UpdateApplicantVisasRequest($schoolId, $applicantVisas));
     }
 }

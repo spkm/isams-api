@@ -16,12 +16,12 @@ class CharacteristicsResource extends BaseResource
     /**
      * @param  array<mixed>  $characteristics
      */
-    public function createGradebookCharacteristics(int $gradebookId, array $characteristics): Response
+    public function createMany(int $gradebookId, array $characteristics): Response
     {
         return $this->connector->send(new CreateGradebookCharacteristicsRequest($gradebookId, $characteristics));
     }
 
-    public function deleteGradebookCharacteristic(int $gradebookId, string $characteristic): Response
+    public function delete(int $gradebookId, string $characteristic): Response
     {
         return $this->connector->send(new DeleteGradebookCharacteristicRequest($gradebookId, $characteristic));
     }

@@ -19,30 +19,30 @@ use spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\UpdateWorkflowRuleRequ
 
 class WorkflowRulesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\RuleForCreate|array<string, mixed>  $rule
-     */
-    public function createWorkflowRule(RuleForCreate|array $rule): Response
-    {
-        return $this->connector->send(new CreateWorkflowRuleRequest($rule));
-    }
-
-    public function deleteWorkflowRule(int $id): Response
-    {
-        return $this->connector->send(new DeleteWorkflowRuleRequest($id));
-    }
-
-    public function getWorkflowRule(int $id): Response
-    {
-        return $this->connector->send(new GetWorkflowRuleRequest($id));
-    }
-
-    public function getWorkflowRuleParameters(string $id): Response
+    public function all(string $id): Response
     {
         return $this->connector->send(new GetWorkflowRuleParametersRequest($id));
     }
 
-    public function getWorkflowRuleTypes(): Response
+    /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\RuleForCreate|array<string, mixed>  $rule
+     */
+    public function create(RuleForCreate|array $rule): Response
+    {
+        return $this->connector->send(new CreateWorkflowRuleRequest($rule));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteWorkflowRuleRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetWorkflowRuleRequest($id));
+    }
+
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetWorkflowRuleTypesRequest());
     }
@@ -50,7 +50,7 @@ class WorkflowRulesResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\RuleForUpdate|array<string, mixed>  $rule
      */
-    public function updateWorkflowRule(RuleForUpdate|array $rule): Response
+    public function update(RuleForUpdate|array $rule): Response
     {
         return $this->connector->send(new UpdateWorkflowRuleRequest($rule));
     }

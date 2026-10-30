@@ -17,28 +17,28 @@ use spkm\IsamsApi\Requests\Teaching\Subjects\UpdateSubjectRequest;
 
 class SubjectsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\Teaching\SubjectForCreate|array<string, mixed>  $subject
-     */
-    public function createSubject(SubjectForCreate|array $subject): Response
-    {
-        return $this->connector->send(new CreateSubjectRequest($subject));
-    }
-
-    public function getSubject(int $id): Response
-    {
-        return $this->connector->send(new GetSubjectRequest($id));
-    }
-
-    public function getSubjects(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetSubjectsRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\Teaching\SubjectForCreate|array<string, mixed>  $subject
+     */
+    public function create(SubjectForCreate|array $subject): Response
+    {
+        return $this->connector->send(new CreateSubjectRequest($subject));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetSubjectRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\Teaching\SubjectForUpdate|array<string, mixed>  $subject
      */
-    public function updateSubject(int $id, SubjectForUpdate|array $subject): Response
+    public function update(int $id, SubjectForUpdate|array $subject): Response
     {
         return $this->connector->send(new UpdateSubjectRequest($id, $subject));
     }

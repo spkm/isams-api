@@ -7,12 +7,12 @@
 namespace spkm\IsamsApi\Data\Gradebooks;
 
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookForCreateDisplayGradesetCountRow;
-use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookForCreateDisplayMaximumRow;
-use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookForCreateDisplayMeanRow;
-use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookForCreateDisplayMedianRow;
-use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookForCreateDisplayMinimumRow;
-use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookForCreateDisplayStandardDeviationRow;
+use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookDisplayGradesetCountRow;
+use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookDisplayMaximumRow;
+use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookDisplayMeanRow;
+use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookDisplayMedianRow;
+use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookDisplayMinimumRow;
+use spkm\IsamsApi\Data\Gradebooks\Enums\GradebookDisplayStandardDeviationRow;
 
 readonly class GradebookForCreate extends Data
 {
@@ -30,33 +30,33 @@ readonly class GradebookForCreate extends Data
     ) {
     }
 
-    public function displayGradesetCountRowEnum(): ?GradebookForCreateDisplayGradesetCountRow
+    public function displayGradesetCountRowEnum(): ?GradebookDisplayGradesetCountRow
     {
-        return GradebookForCreateDisplayGradesetCountRow::tryFrom((string) $this->displayGradesetCountRow);
+        return GradebookDisplayGradesetCountRow::tryFrom((string) $this->displayGradesetCountRow);
     }
 
-    public function displayMaximumRowEnum(): ?GradebookForCreateDisplayMaximumRow
+    public function displayMaximumRowEnum(): ?GradebookDisplayMaximumRow
     {
-        return GradebookForCreateDisplayMaximumRow::tryFrom((string) $this->displayMaximumRow);
+        return GradebookDisplayMaximumRow::tryFrom((string) $this->displayMaximumRow);
     }
 
-    public function displayMeanRowEnum(): ?GradebookForCreateDisplayMeanRow
+    public function displayMeanRowEnum(): ?GradebookDisplayMeanRow
     {
-        return GradebookForCreateDisplayMeanRow::tryFrom((string) $this->displayMeanRow);
+        return GradebookDisplayMeanRow::tryFrom((string) $this->displayMeanRow);
     }
 
-    public function displayMedianRowEnum(): ?GradebookForCreateDisplayMedianRow
+    public function displayMedianRowEnum(): ?GradebookDisplayMedianRow
     {
-        return GradebookForCreateDisplayMedianRow::tryFrom((string) $this->displayMedianRow);
+        return GradebookDisplayMedianRow::tryFrom((string) $this->displayMedianRow);
     }
 
-    public function displayMinimumRowEnum(): ?GradebookForCreateDisplayMinimumRow
+    public function displayMinimumRowEnum(): ?GradebookDisplayMinimumRow
     {
-        return GradebookForCreateDisplayMinimumRow::tryFrom((string) $this->displayMinimumRow);
+        return GradebookDisplayMinimumRow::tryFrom((string) $this->displayMinimumRow);
     }
 
-    public function displayStandardDeviationRowEnum(): ?GradebookForCreateDisplayStandardDeviationRow
+    public function displayStandardDeviationRowEnum(): ?GradebookDisplayStandardDeviationRow
     {
-        return GradebookForCreateDisplayStandardDeviationRow::tryFrom((string) $this->displayStandardDeviationRow);
+        return GradebookDisplayStandardDeviationRow::tryFrom((string) $this->displayStandardDeviationRow);
     }
 }

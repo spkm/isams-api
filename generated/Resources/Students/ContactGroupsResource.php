@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Students\ContactGroups\GetContactGroupsRequest;
 
 class ContactGroupsResource extends BaseResource
 {
-    public function getContactGroups(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetContactGroupsRequest());
     }

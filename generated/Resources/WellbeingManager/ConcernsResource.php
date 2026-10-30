@@ -13,11 +13,8 @@ use spkm\IsamsApi\Requests\WellbeingManager\Concerns\GetConcernsRequest;
 
 class ConcernsResource extends BaseResource
 {
-    public function getConcerns(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    {
         return $this->connector->send(new GetConcernsRequest($page, $pageSize, $filter));
     }
 }

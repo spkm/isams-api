@@ -11,7 +11,7 @@ use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 use spkm\IsamsApi\Attributes\Beta;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\HumanResources\CreateSalaryCommandForCreate;
+use spkm\IsamsApi\Data\HumanResources\SalaryForCreate;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -28,11 +28,11 @@ class CreateSalaryRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\CreateSalaryCommandForCreate|array<string, mixed>  $command
+     * @param  \spkm\IsamsApi\Data\HumanResources\SalaryForCreate|array<string, mixed>  $salary
      */
     public function __construct(
         protected int $contractId,
-        protected CreateSalaryCommandForCreate|array $command,
+        protected SalaryForCreate|array $salary,
     ) {
     }
 
@@ -46,6 +46,6 @@ class CreateSalaryRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->command instanceof Data ? $this->command->toArray() : $this->command;
+        return $this->salary instanceof Data ? $this->salary->toArray() : $this->salary;
     }
 }

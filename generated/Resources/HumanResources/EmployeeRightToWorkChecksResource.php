@@ -18,35 +18,35 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\UpdateEmploy
 
 class EmployeeRightToWorkChecksResource extends BaseResource
 {
+    public function all(int $employeeId): Response
+    {
+        return $this->connector->send(new GetEmployeeRightToWorkChecksRequest($employeeId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheckForCreate|array<string, mixed>  $employeeRightToWorkCheck
      */
-    public function createEmployeeRightToWorkCheck(
+    public function create(
         int $employeeId,
         EmployeeRightToWorkCheckForCreate|array $employeeRightToWorkCheck,
     ): Response {
         return $this->connector->send(new CreateEmployeeRightToWorkCheckRequest($employeeId, $employeeRightToWorkCheck));
     }
 
-    public function deleteEmployeeRightToWorkCheck(int $employeeId, int $rightToWorkCheckId): Response
+    public function delete(int $employeeId, int $rightToWorkCheckId): Response
     {
         return $this->connector->send(new DeleteEmployeeRightToWorkCheckRequest($employeeId, $rightToWorkCheckId));
     }
 
-    public function getEmployeeRightToWorkCheck(int $employeeId, int $rightToWorkCheckId): Response
+    public function get(int $employeeId, int $rightToWorkCheckId): Response
     {
         return $this->connector->send(new GetEmployeeRightToWorkCheckRequest($employeeId, $rightToWorkCheckId));
-    }
-
-    public function getEmployeeRightToWorkChecks(int $employeeId): Response
-    {
-        return $this->connector->send(new GetEmployeeRightToWorkChecksRequest($employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheckForUpdate|array<string, mixed>  $employeeRightToWorkCheck
      */
-    public function updateEmployeeRightToWorkCheck(
+    public function update(
         int $employeeId,
         int $rightToWorkCheckId,
         EmployeeRightToWorkCheckForUpdate|array $employeeRightToWorkCheck,

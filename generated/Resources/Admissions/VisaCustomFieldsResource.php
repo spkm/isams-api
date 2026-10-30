@@ -14,21 +14,21 @@ use spkm\IsamsApi\Requests\Admissions\VisaCustomFields\PatchApplicantVisaCustomF
 
 class VisaCustomFieldsResource extends BaseResource
 {
-    public function getApplicantVisaCustomField(string $schoolId, int $visaId, int $customFieldId): Response
-    {
-        return $this->connector->send(new GetApplicantVisaCustomFieldRequest($schoolId, $visaId, $customFieldId));
-    }
-
-    public function getApplicantVisaCustomFields(string $schoolId, int $visaId): Response
+    public function all(string $schoolId, int $visaId): Response
     {
         return $this->connector->send(new GetApplicantVisaCustomFieldsRequest($schoolId, $visaId));
     }
 
-    /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $listCustomField
-     */
-    public function patchApplicantVisaCustomFields(string $schoolId, int $visaId, array $listCustomField): Response
+    public function get(string $schoolId, int $visaId, int $customFieldId): Response
     {
-        return $this->connector->send(new PatchApplicantVisaCustomFieldsRequest($schoolId, $visaId, $listCustomField));
+        return $this->connector->send(new GetApplicantVisaCustomFieldRequest($schoolId, $visaId, $customFieldId));
+    }
+
+    /**
+     * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
+     */
+    public function patchMany(string $schoolId, int $visaId, array $customFields): Response
+    {
+        return $this->connector->send(new PatchApplicantVisaCustomFieldsRequest($schoolId, $visaId, $customFields));
     }
 }

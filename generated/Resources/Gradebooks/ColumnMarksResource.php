@@ -16,12 +16,8 @@ class ColumnMarksResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchGradebookColumnMark(
-        int $gradebookId,
-        int $columnId,
-        string $schoolId,
-        JsonPatch|array $patch,
-    ): Response {
+    public function patch(int $gradebookId, int $columnId, string $schoolId, JsonPatch|array $patch): Response
+    {
         return $this->connector->send(new PatchGradebookColumnMarkRequest($gradebookId, $columnId, $schoolId, $patch));
     }
 }

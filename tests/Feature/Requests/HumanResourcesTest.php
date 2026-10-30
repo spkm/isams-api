@@ -5,9 +5,9 @@ use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Data\HumanResources\Contract;
 use spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch;
 use spkm\IsamsApi\Data\HumanResources\Employee;
-use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\GetEmployeeContractsRequest as GetEmployeeContractsV1Request;
-use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\V2\GetEmployeeContractsRequest;
-use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\V2\PatchEmployeeContractRequest;
+use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\GetEmployeeContractsRequest;
+use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\PatchEmployeeContractRequest;
+use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\V1\GetEmployeeContractsRequest as GetEmployeeContractsV1Request;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldsRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\GetCurrentEmployeePhotoRequest;
 use spkm\IsamsApi\Requests\HumanResources\Employees\GetEmployeeByUserCodeRequest;
@@ -18,19 +18,19 @@ use spkm\IsamsApi\Requests\HumanResources\Roles\GetRolesRequest;
 use spkm\IsamsApi\Support\JsonPatch;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
-it('asks for version 2.0 of the contract endpoints and reads its contracts as models', function () {
+it('asks for iSAMS\'s newest version of the contract endpoints, 2.0, without being told, and reads its contracts as models', function () {
     $isams = FakeIsams::respondWith([GetEmployeeContractsRequest::class => MockResponse::make(['contracts' => [['id' => 6]]])]);
 
-    $contracts = FakeIsams::connector()->humanResources()->employeeContractsV2()->getEmployeeContracts(40)->dto();
+    $contracts = FakeIsams::connector()->humanResources()->employeeContracts()->all(40)->dto();
 
     expect($contracts->first())->toBeInstanceOf(Contract::class)
         ->and(FakeIsams::queriesReceived($isams, GetEmployeeContractsRequest::class)[0])->toBe(['api-version' => '2.0']);
 });
 
-it('keeps asking for version 1.0 of the contract endpoints by default', function () {
+it('asks for version 1.0 of the contract endpoints only when told to', function () {
     $isams = FakeIsams::respondWith([GetEmployeeContractsV1Request::class => MockResponse::make(['contracts' => []])]);
 
-    FakeIsams::connector()->humanResources()->employeeContracts()->getEmployeeContracts(40);
+    FakeIsams::connector()->humanResources()->employeeContracts()->v1()->all(40);
 
     expect(FakeIsams::queriesReceived($isams, GetEmployeeContractsV1Request::class)[0])->toBe([]);
 });
@@ -92,8 +92,8 @@ it('serves HR reference lists from the cache once caching is on, but not who hol
     $humanResources = FakeIsams::connector()->humanResources();
 
     foreach ([1, 2] as $time) {
-        $humanResources->roles()->getRoles();
-        $humanResources->roleEmployees()->getRoleEmployees(2);
+        $humanResources->roles()->all();
+        $humanResources->roleEmployees()->all(2);
     }
 
     expect(FakeIsams::queriesReceived($isams, GetRolesRequest::class))->toHaveCount(1)

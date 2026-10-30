@@ -17,11 +17,8 @@ class ExternalInvoiceCommunicationsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\Billing\InvoiceCommunicationForUpdate|array<string, mixed>  $data
      */
-    public function createExternalInvoiceCommunication(
-        int $invoiceId,
-        MultipartValue $email,
-        InvoiceCommunicationForUpdate|array $data,
-    ): Response {
+    public function create(int $invoiceId, MultipartValue $email, InvoiceCommunicationForUpdate|array $data): Response
+    {
         return $this->connector->send(new CreateExternalInvoiceCommunicationRequest($invoiceId, $email, $data));
     }
 }

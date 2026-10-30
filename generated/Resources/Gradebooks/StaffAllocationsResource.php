@@ -14,24 +14,21 @@ use spkm\IsamsApi\Requests\Gradebooks\StaffAllocations\GetGradebookStaffAllocati
 
 class StaffAllocationsResource extends BaseResource
 {
+    public function all(int $gradebookId, string $criteria): Response
+    {
+        return $this->connector->send(new GetGradebookStaffAllocationsRequest($gradebookId, $criteria));
+    }
+
     /**
      * @param  array<mixed>  $staffAllocations
      */
-    public function createGradebookStaffAllocations(
-        int $gradebookId,
-        string $criteria,
-        array $staffAllocations,
-    ): Response {
+    public function createMany(int $gradebookId, string $criteria, array $staffAllocations): Response
+    {
         return $this->connector->send(new CreateGradebookStaffAllocationsRequest($gradebookId, $criteria, $staffAllocations));
     }
 
-    public function deleteGradebookStaffAllocation(int $gradebookId, string $criteria, int $allocationId): Response
+    public function delete(int $gradebookId, string $criteria, int $allocationId): Response
     {
         return $this->connector->send(new DeleteGradebookStaffAllocationRequest($gradebookId, $criteria, $allocationId));
-    }
-
-    public function getGradebookStaffAllocations(int $gradebookId, string $criteria): Response
-    {
-        return $this->connector->send(new GetGradebookStaffAllocationsRequest($gradebookId, $criteria));
     }
 }

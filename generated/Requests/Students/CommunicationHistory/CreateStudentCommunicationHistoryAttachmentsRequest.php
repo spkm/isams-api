@@ -26,8 +26,8 @@ class CreateStudentCommunicationHistoryAttachmentsRequest extends IsamsRequest i
     protected string $responseShape = self::CREATED;
 
     public function __construct(
-        protected int $id,
         protected string $schoolId,
+        protected int $id,
         protected MultipartValue $attachment,
     ) {
     }

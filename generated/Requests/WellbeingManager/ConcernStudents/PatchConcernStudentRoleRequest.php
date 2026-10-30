@@ -30,8 +30,8 @@ class PatchConcernStudentRoleRequest extends IsamsRequest implements HasBody
      */
     public function __construct(
         protected string $schoolId,
-        protected int $id,
         protected int $concernId,
+        protected int $id,
         protected JsonPatch|array $patch,
     ) {
     }

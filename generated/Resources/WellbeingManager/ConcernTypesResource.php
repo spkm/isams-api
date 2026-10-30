@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernTypesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernTypeForCreate|array<string, mixed>  $concernType
-     */
-    public function createConcernType(ConcernTypeForCreate|array $concernType): Response
-    {
-        return $this->connector->send(new CreateConcernTypeRequest($concernType));
-    }
-
-    public function deleteConcernType(int $id): Response
-    {
-        return $this->connector->send(new DeleteConcernTypeRequest($id));
-    }
-
-    public function getConcernType(int $id): Response
-    {
-        return $this->connector->send(new GetConcernTypeRequest($id));
-    }
-
-    public function getConcernTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernTypesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernTypeForCreate|array<string, mixed>  $concernType
+     */
+    public function create(ConcernTypeForCreate|array $concernType): Response
+    {
+        return $this->connector->send(new CreateConcernTypeRequest($concernType));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteConcernTypeRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetConcernTypeRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernType(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernTypeRequest($id, $patch));
     }

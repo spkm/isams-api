@@ -14,12 +14,12 @@ use spkm\IsamsApi\Requests\RewardsAndConduct\Categories\GetCategoryRequest;
 
 class CategoriesResource extends BaseResource
 {
-    public function getCategories(int $moduleTypeId, string|Stringable|null $filter = null): Response
+    public function all(int $moduleTypeId, string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetCategoriesRequest($moduleTypeId, $filter));
     }
 
-    public function getCategory(int $moduleTypeId, int $categoryId): Response
+    public function get(int $moduleTypeId, int $categoryId): Response
     {
         return $this->connector->send(new GetCategoryRequest($moduleTypeId, $categoryId));
     }

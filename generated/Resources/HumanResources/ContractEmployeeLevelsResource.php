@@ -17,29 +17,29 @@ use spkm\IsamsApi\Requests\HumanResources\ContractEmployeeLevels\UpdateContractE
 
 class ContractEmployeeLevelsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $globalListItem
-     */
-    public function createContractEmployeeLevel(GlobalListItemForCreate|array $globalListItem): Response
-    {
-        return $this->connector->send(new CreateContractEmployeeLevelRequest($globalListItem));
-    }
-
-    public function deleteContractEmployeeLevel(int $id): Response
-    {
-        return $this->connector->send(new DeleteContractEmployeeLevelRequest($id));
-    }
-
-    public function getContractEmployeeLevels(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetContractEmployeeLevelsRequest());
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
-    public function updateContractEmployeeLevel(int $id, GlobalListItemForUpdate|array $globalListItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Response
     {
-        return $this->connector->send(new UpdateContractEmployeeLevelRequest($id, $globalListItem));
+        return $this->connector->send(new CreateContractEmployeeLevelRequest($listItem));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteContractEmployeeLevelRequest($id));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     */
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    {
+        return $this->connector->send(new UpdateContractEmployeeLevelRequest($id, $listItem));
     }
 }

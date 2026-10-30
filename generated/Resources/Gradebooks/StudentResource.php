@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Gradebooks\Student\GetGradebookStudentsRequest;
 
 class StudentResource extends BaseResource
 {
-    public function getGradebookStudents(int $gradebookId): Response
+    public function all(int $gradebookId): Response
     {
         return $this->connector->send(new GetGradebookStudentsRequest($gradebookId));
     }

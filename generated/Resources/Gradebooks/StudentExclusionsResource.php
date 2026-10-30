@@ -14,21 +14,21 @@ use spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\GetStudentExclusionsRequ
 
 class StudentExclusionsResource extends BaseResource
 {
+    public function all(int $gradebookId, int $columnId): Response
+    {
+        return $this->connector->send(new GetStudentExclusionsRequest($gradebookId, $columnId));
+    }
+
     /**
      * @param  array<mixed>  $schoolIds
      */
-    public function createStudentExclusions(int $gradebookId, int $columnId, array $schoolIds): Response
+    public function createMany(int $gradebookId, int $columnId, array $schoolIds): Response
     {
         return $this->connector->send(new CreateStudentExclusionsRequest($gradebookId, $columnId, $schoolIds));
     }
 
-    public function deleteStudentExclusion(int $gradebookId, int $columnId, string $schoolId): Response
+    public function delete(int $gradebookId, int $columnId, string $schoolId): Response
     {
         return $this->connector->send(new DeleteStudentExclusionRequest($gradebookId, $columnId, $schoolId));
-    }
-
-    public function getStudentExclusions(int $gradebookId, int $columnId): Response
-    {
-        return $this->connector->send(new GetStudentExclusionsRequest($gradebookId, $columnId));
     }
 }

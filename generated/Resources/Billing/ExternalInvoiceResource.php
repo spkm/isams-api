@@ -18,14 +18,14 @@ class ExternalInvoiceResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\Billing\ExternalAccountsInvoiceForUpdate|array<string, mixed>  $externalAccountsInvoice
      */
-    public function updateExternalInvoice(
+    public function update(
         string $invoiceNumber,
         ExternalAccountsInvoiceForUpdate|array $externalAccountsInvoice,
     ): Response {
         return $this->connector->send(new UpdateExternalInvoiceRequest($invoiceNumber, $externalAccountsInvoice));
     }
 
-    public function updateExternalInvoiceDocument(string $invoiceNumber, MultipartValue $document): Response
+    public function updateDocument(string $invoiceNumber, MultipartValue $document): Response
     {
         return $this->connector->send(new UpdateExternalInvoiceDocumentRequest($invoiceNumber, $document));
     }

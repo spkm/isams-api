@@ -14,7 +14,7 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeFinancialInformation\UpdateEmp
 
 class EmployeeFinancialInformationResource extends BaseResource
 {
-    public function getEmployeeFinancialInformation(int $employeeId): Response
+    public function get(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeFinancialInformationRequest($employeeId));
     }
@@ -22,7 +22,7 @@ class EmployeeFinancialInformationResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeFinancialInformationForUpdate|array<string, mixed>  $employeeFinancialInformation
      */
-    public function updateEmployeeFinancialInformation(
+    public function update(
         int $employeeId,
         EmployeeFinancialInformationForUpdate|array $employeeFinancialInformation,
     ): Response {

@@ -26,11 +26,11 @@ class CreateStudentFlagRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralFlagForCreate|array<string, mixed>  $flag
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralFlagForCreate|array<string, mixed>  $pastoralFlag
      */
     public function __construct(
         protected string $schoolId,
-        protected PastoralFlagForCreate|array $flag,
+        protected PastoralFlagForCreate|array $pastoralFlag,
     ) {
     }
 
@@ -44,6 +44,6 @@ class CreateStudentFlagRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->flag instanceof Data ? $this->flag->toArray() : $this->flag;
+        return $this->pastoralFlag instanceof Data ? $this->pastoralFlag->toArray() : $this->pastoralFlag;
     }
 }

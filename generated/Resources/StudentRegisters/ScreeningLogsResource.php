@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\StudentRegisters\ScreeningLogs\GetScreeningLogsReques
 
 class ScreeningLogsResource extends BaseResource
 {
-    public function getScreeningLogs(int $registerId, string $schoolId): Response
+    public function all(int $registerId, string $schoolId): Response
     {
         return $this->connector->send(new GetScreeningLogsRequest($registerId, $schoolId));
     }

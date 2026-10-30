@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Estates\BuildingRooms\GetBuildingRoomsRequest;
 
 class BuildingRoomsResource extends BaseResource
 {
-    public function getBuildingRooms(int $buildingId): Response
+    public function all(int $buildingId): Response
     {
         return $this->connector->send(new GetBuildingRoomsRequest($buildingId));
     }

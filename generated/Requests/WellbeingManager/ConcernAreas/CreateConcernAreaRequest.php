@@ -26,10 +26,10 @@ class CreateConcernAreaRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralConcernAreaForCreate|array<string, mixed>  $concernArea
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralConcernAreaForCreate|array<string, mixed>  $pastoralConcernArea
      */
     public function __construct(
-        protected PastoralConcernAreaForCreate|array $concernArea,
+        protected PastoralConcernAreaForCreate|array $pastoralConcernArea,
     ) {
     }
 
@@ -43,6 +43,6 @@ class CreateConcernAreaRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->concernArea instanceof Data ? $this->concernArea->toArray() : $this->concernArea;
+        return $this->pastoralConcernArea instanceof Data ? $this->pastoralConcernArea->toArray() : $this->pastoralConcernArea;
     }
 }

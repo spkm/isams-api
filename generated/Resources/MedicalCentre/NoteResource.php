@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\MedicalCentre\Note\GetMedicalNoteTypesRequest;
 
 class NoteResource extends BaseResource
 {
-    public function getMedicalNoteTypes(): Response
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetMedicalNoteTypesRequest());
     }

@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\Gradebooks\StylingDesignConfiguration\GetStylingDesig
 
 class StylingDesignConfigurationResource extends BaseResource
 {
-    public function getStylingDesignConfiguration(int $stylingDesignId): Response
-    {
-        return $this->connector->send(new GetStylingDesignConfigurationRequest($stylingDesignId));
-    }
-
-    public function getStylingDesignConfigurations(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetStylingDesignConfigurationsRequest());
+    }
+
+    public function get(int $stylingDesignId): Response
+    {
+        return $this->connector->send(new GetStylingDesignConfigurationRequest($stylingDesignId));
     }
 }

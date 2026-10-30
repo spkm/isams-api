@@ -20,17 +20,17 @@ class StudentConcernsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernForCreate|array<string, mixed>  $concern
      */
-    public function createStudentConcern(string $schoolId, ConcernForCreate|array $concern): Response
+    public function create(string $schoolId, ConcernForCreate|array $concern): Response
     {
         return $this->connector->send(new CreateStudentConcernRequest($schoolId, $concern));
     }
 
-    public function deleteStudentConcern(string $schoolId, int $id): Response
+    public function delete(string $schoolId, int $id): Response
     {
         return $this->connector->send(new DeleteStudentConcernRequest($schoolId, $id));
     }
 
-    public function getStudentConcern(string $schoolId, int $id): Response
+    public function get(string $schoolId, int $id): Response
     {
         return $this->connector->send(new GetStudentConcernRequest($schoolId, $id));
     }
@@ -38,7 +38,7 @@ class StudentConcernsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentConcern(string $schoolId, int $id, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentConcernRequest($schoolId, $id, $patch));
     }

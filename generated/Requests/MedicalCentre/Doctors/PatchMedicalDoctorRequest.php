@@ -29,8 +29,8 @@ class PatchMedicalDoctorRequest extends IsamsRequest implements HasBody
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
     public function __construct(
-        protected int $doctorId,
         protected string $surgeryId,
+        protected int $doctorId,
         protected JsonPatch|array $patch,
     ) {
     }

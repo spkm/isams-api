@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class StudentVisitsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\MedicalCentre\VisitForCreate|array<string, mixed>  $visit
-     */
-    public function createStudentVisit(string $schoolId, VisitForCreate|array $visit): Response
-    {
-        return $this->connector->send(new CreateStudentVisitRequest($schoolId, $visit));
-    }
-
-    public function deleteStudentVisit(string $schoolId, string $visitId): Response
-    {
-        return $this->connector->send(new DeleteStudentVisitRequest($schoolId, $visitId));
-    }
-
-    public function getStudentVisit(string $schoolId, string $visitId): Response
-    {
-        return $this->connector->send(new GetStudentVisitRequest($schoolId, $visitId));
-    }
-
-    public function getStudentVisits(string $schoolId): Response
+    public function all(string $schoolId): Response
     {
         return $this->connector->send(new GetStudentVisitsRequest($schoolId));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\MedicalCentre\VisitForCreate|array<string, mixed>  $visit
+     */
+    public function create(string $schoolId, VisitForCreate|array $visit): Response
+    {
+        return $this->connector->send(new CreateStudentVisitRequest($schoolId, $visit));
+    }
+
+    public function delete(string $schoolId, string $visitId): Response
+    {
+        return $this->connector->send(new DeleteStudentVisitRequest($schoolId, $visitId));
+    }
+
+    public function get(string $schoolId, string $visitId): Response
+    {
+        return $this->connector->send(new GetStudentVisitRequest($schoolId, $visitId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentVisit(string $schoolId, string $visitId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $visitId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentVisitRequest($schoolId, $visitId, $patch));
     }

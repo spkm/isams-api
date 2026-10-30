@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\WellbeingManager\Configuration\GetWellbeingConfigurat
 
 class ConfigurationResource extends BaseResource
 {
-    public function getWellbeingConfiguration(): Response
+    public function get(): Response
     {
         return $this->connector->send(new GetWellbeingConfigurationRequest());
     }

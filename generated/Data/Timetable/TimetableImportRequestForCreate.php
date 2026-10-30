@@ -8,8 +8,8 @@ namespace spkm\IsamsApi\Data\Timetable;
 
 use Illuminate\Support\Collection;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Timetable\Enums\TimetableImportRequestForCreateImportAction;
-use spkm\IsamsApi\Data\Timetable\Enums\TimetableImportRequestForCreateNonClassOption;
+use spkm\IsamsApi\Data\Timetable\Enums\ImportAction;
+use spkm\IsamsApi\Data\Timetable\Enums\NonClassOption;
 
 readonly class TimetableImportRequestForCreate extends Data
 {
@@ -44,13 +44,13 @@ readonly class TimetableImportRequestForCreate extends Data
     ) {
     }
 
-    public function importActionEnum(): ?TimetableImportRequestForCreateImportAction
+    public function importActionEnum(): ?ImportAction
     {
-        return TimetableImportRequestForCreateImportAction::tryFrom((string) $this->importAction);
+        return ImportAction::tryFrom((string) $this->importAction);
     }
 
-    public function nonClassOptionEnum(): ?TimetableImportRequestForCreateNonClassOption
+    public function nonClassOptionEnum(): ?NonClassOption
     {
-        return TimetableImportRequestForCreateNonClassOption::tryFrom((string) $this->nonClassOption);
+        return NonClassOption::tryFrom((string) $this->nonClassOption);
     }
 }

@@ -7,24 +7,17 @@
 namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Resources\HumanResources\AbsenceTypesResource;
 use spkm\IsamsApi\Resources\HumanResources\AdditionalPaymentTypesResource;
 use spkm\IsamsApi\Resources\HumanResources\ContractEmployeeLevelsResource;
 use spkm\IsamsApi\Resources\HumanResources\DfEAbsenceCategoriesResource;
 use spkm\IsamsApi\Resources\HumanResources\DfEContractTypesResource;
 use spkm\IsamsApi\Resources\HumanResources\DfERoleIdentifiersResource;
-use spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbationCheckStatusesResource;
-use spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbationDisclosureTypesResource;
-use spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbationIdentityEvidenceTypesResource;
-use spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbationQualificationEvidenceTypesResource;
-use spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbationRegistrationEvidenceTypesResource;
-use spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbationRightToWorkCheckTypesResource;
+use spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbationResource;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeAbsencesResource;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeChildrensBarredListChecksResource;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeContactsResource;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeContractsResource;
-use spkm\IsamsApi\Resources\HumanResources\EmployeeContractsV2Resource;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeCustomFieldsResource;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeDepartmentsResource;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeDisclosureBarringServiceChecksResource;
@@ -84,34 +77,9 @@ class HumanResourcesResource extends BaseResource
         return new DfERoleIdentifiersResource($this->connector);
     }
 
-    public function disclosureAndProbationCheckStatuses(): DisclosureAndProbationCheckStatusesResource
+    public function disclosureAndProbation(): DisclosureAndProbationResource
     {
-        return new DisclosureAndProbationCheckStatusesResource($this->connector);
-    }
-
-    public function disclosureAndProbationDisclosureTypes(): DisclosureAndProbationDisclosureTypesResource
-    {
-        return new DisclosureAndProbationDisclosureTypesResource($this->connector);
-    }
-
-    public function disclosureAndProbationIdentityEvidenceTypes(): DisclosureAndProbationIdentityEvidenceTypesResource
-    {
-        return new DisclosureAndProbationIdentityEvidenceTypesResource($this->connector);
-    }
-
-    public function disclosureAndProbationQualificationEvidenceTypes(
-    ): DisclosureAndProbationQualificationEvidenceTypesResource {
-        return new DisclosureAndProbationQualificationEvidenceTypesResource($this->connector);
-    }
-
-    public function disclosureAndProbationRegistrationEvidenceTypes(
-    ): DisclosureAndProbationRegistrationEvidenceTypesResource {
-        return new DisclosureAndProbationRegistrationEvidenceTypesResource($this->connector);
-    }
-
-    public function disclosureAndProbationRightToWorkCheckTypes(): DisclosureAndProbationRightToWorkCheckTypesResource
-    {
-        return new DisclosureAndProbationRightToWorkCheckTypesResource($this->connector);
+        return new DisclosureAndProbationResource($this->connector);
     }
 
     public function employeeAbsences(): EmployeeAbsencesResource
@@ -132,11 +100,6 @@ class HumanResourcesResource extends BaseResource
     public function employeeContracts(): EmployeeContractsResource
     {
         return new EmployeeContractsResource($this->connector);
-    }
-
-    public function employeeContractsV2(): EmployeeContractsV2Resource
-    {
-        return new EmployeeContractsV2Resource($this->connector);
     }
 
     public function employeeCustomFields(): EmployeeCustomFieldsResource

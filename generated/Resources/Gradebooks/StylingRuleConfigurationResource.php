@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\Gradebooks\StylingRuleConfiguration\GetStylingRuleCon
 
 class StylingRuleConfigurationResource extends BaseResource
 {
-    public function getStylingRuleConfiguration(int $stylingRuleId): Response
-    {
-        return $this->connector->send(new GetStylingRuleConfigurationRequest($stylingRuleId));
-    }
-
-    public function getStylingRuleConfigurations(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetStylingRuleConfigurationsRequest());
+    }
+
+    public function get(int $stylingRuleId): Response
+    {
+        return $this->connector->send(new GetStylingRuleConfigurationRequest($stylingRuleId));
     }
 }

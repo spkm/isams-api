@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Data\Integrations;
 
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Integrations\Enums\DocumentSignerSigningTabSigningTabType;
+use spkm\IsamsApi\Data\Integrations\Enums\DocumentSignerSigningTabType;
 
 readonly class DocumentSignerSigningTab extends Data
 {
@@ -17,8 +17,8 @@ readonly class DocumentSignerSigningTab extends Data
     ) {
     }
 
-    public function signingTabTypeEnum(): ?DocumentSignerSigningTabSigningTabType
+    public function signingTabTypeEnum(): ?DocumentSignerSigningTabType
     {
-        return DocumentSignerSigningTabSigningTabType::tryFrom((string) $this->signingTabType);
+        return DocumentSignerSigningTabType::tryFrom((string) $this->signingTabType);
     }
 }

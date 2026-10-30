@@ -7,7 +7,8 @@
 namespace spkm\IsamsApi\Requests\HumanResources\EmployeeContracts;
 
 use Saloon\Enums\Method;
-use spkm\IsamsApi\Data\HumanResources\EmployeeContract;
+use spkm\IsamsApi\Attributes\Beta;
+use spkm\IsamsApi\Data\HumanResources\Contract;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -15,12 +16,14 @@ use spkm\IsamsApi\Requests\IsamsRequest;
  *
  * GET /api/humanresources/employees/{employeeId}/contracts
  */
+#[Beta]
 class GetEmployeeContractsRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
     protected string $responseShape = self::LIST;
-    protected ?string $dto = EmployeeContract::class;
+    protected ?string $dto = Contract::class;
     public string $resultKey = 'contracts';
+    protected ?string $apiVersion = '2.0';
 
     public function __construct(
         protected int $employeeId,

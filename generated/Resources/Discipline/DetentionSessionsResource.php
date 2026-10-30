@@ -16,26 +16,23 @@ use spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetStudentDetentionSessi
 
 class DetentionSessionsResource extends BaseResource
 {
-    public function getDetentionSession(int $id): Response
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    {
+        return $this->connector->send(new GetDetentionSessionsRequest($page, $pageSize, $filter));
+    }
+
+    public function forStudent(string $schoolId): Response
+    {
+        return $this->connector->send(new GetStudentDetentionSessionsRequest($schoolId));
+    }
+
+    public function get(int $id): Response
     {
         return $this->connector->send(new GetDetentionSessionRequest($id));
     }
 
-    public function getDetentionSessionStudents(int $id): Response
+    public function students(int $id): Response
     {
         return $this->connector->send(new GetDetentionSessionStudentsRequest($id));
-    }
-
-    public function getDetentionSessions(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetDetentionSessionsRequest($page, $pageSize, $filter));
-    }
-
-    public function getStudentDetentionSessions(string $schoolId): Response
-    {
-        return $this->connector->send(new GetStudentDetentionSessionsRequest($schoolId));
     }
 }

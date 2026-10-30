@@ -26,11 +26,11 @@ class CreateStudentNoteRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\MedicalCentre\MedicalNoteForCreate|array<string, mixed>  $note
+     * @param  \spkm\IsamsApi\Data\MedicalCentre\MedicalNoteForCreate|array<string, mixed>  $medicalNote
      */
     public function __construct(
         protected string $schoolId,
-        protected MedicalNoteForCreate|array $note,
+        protected MedicalNoteForCreate|array $medicalNote,
     ) {
     }
 
@@ -44,6 +44,6 @@ class CreateStudentNoteRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->note instanceof Data ? $this->note->toArray() : $this->note;
+        return $this->medicalNote instanceof Data ? $this->medicalNote->toArray() : $this->medicalNote;
     }
 }

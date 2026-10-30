@@ -18,33 +18,33 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class ConcernAreasResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralConcernAreaForCreate|array<string, mixed>  $concernArea
-     */
-    public function createConcernArea(PastoralConcernAreaForCreate|array $concernArea): Response
-    {
-        return $this->connector->send(new CreateConcernAreaRequest($concernArea));
-    }
-
-    public function deleteConcernArea(int $id): Response
-    {
-        return $this->connector->send(new DeleteConcernAreaRequest($id));
-    }
-
-    public function getConcernArea(int $id): Response
-    {
-        return $this->connector->send(new GetConcernAreaRequest($id));
-    }
-
-    public function getConcernAreas(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetConcernAreasRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralConcernAreaForCreate|array<string, mixed>  $pastoralConcernArea
+     */
+    public function create(PastoralConcernAreaForCreate|array $pastoralConcernArea): Response
+    {
+        return $this->connector->send(new CreateConcernAreaRequest($pastoralConcernArea));
+    }
+
+    public function delete(int $id): Response
+    {
+        return $this->connector->send(new DeleteConcernAreaRequest($id));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetConcernAreaRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernArea(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernAreaRequest($id, $patch));
     }

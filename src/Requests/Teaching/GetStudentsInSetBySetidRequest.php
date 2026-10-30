@@ -8,7 +8,7 @@ use Saloon\Http\Request;
 /**
  * The 'students' property is an array of Student objects.
  *
- * @deprecated Use \spkm\IsamsApi\Requests\Teaching\TeachingSets\GetTeachingSetStudentsRequest instead.
+ * @deprecated Use \spkm\IsamsApi\Requests\Teaching\Sets\GetTeachingSetStudentsRequest instead.
  */
 class GetStudentsInSetBySetidRequest extends Request
 {

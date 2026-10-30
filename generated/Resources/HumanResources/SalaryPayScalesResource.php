@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\HumanResources\SalaryPayScales\GetSalaryPayScalesRequ
 
 class SalaryPayScalesResource extends BaseResource
 {
-    public function getSalaryPayScales(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetSalaryPayScalesRequest());
     }

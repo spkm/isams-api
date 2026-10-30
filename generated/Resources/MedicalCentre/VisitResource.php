@@ -16,27 +16,27 @@ use spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitTransportOptionsRe
 
 class VisitResource extends BaseResource
 {
-    public function getMedicalVisitArriveFrom(): Response
+    public function getArriveFrom(): Response
     {
         return $this->connector->send(new GetMedicalVisitArriveFromRequest());
     }
 
-    public function getMedicalVisitDepartTo(): Response
+    public function getDepartTo(): Response
     {
         return $this->connector->send(new GetMedicalVisitDepartToRequest());
     }
 
-    public function getMedicalVisitLocations(): Response
+    public function getLocations(): Response
     {
         return $this->connector->send(new GetMedicalVisitLocationsRequest());
     }
 
-    public function getMedicalVisitReasons(): Response
+    public function getReasons(): Response
     {
         return $this->connector->send(new GetMedicalVisitReasonsRequest());
     }
 
-    public function getMedicalVisitTransportOptions(): Response
+    public function getTransportOptions(): Response
     {
         return $this->connector->send(new GetMedicalVisitTransportOptionsRequest());
     }

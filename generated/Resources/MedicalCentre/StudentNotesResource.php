@@ -20,43 +20,43 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class StudentNotesResource extends BaseResource
 {
-    public function archiveStudentNote(string $schoolId, string $noteId): Response
+    public function all(string $schoolId): Response
+    {
+        return $this->connector->send(new GetStudentNotesRequest($schoolId));
+    }
+
+    public function archive(string $schoolId, string $noteId): Response
     {
         return $this->connector->send(new ArchiveStudentNoteRequest($schoolId, $noteId));
     }
 
     /**
-     * @param  \spkm\IsamsApi\Data\MedicalCentre\MedicalNoteForCreate|array<string, mixed>  $note
+     * @param  \spkm\IsamsApi\Data\MedicalCentre\MedicalNoteForCreate|array<string, mixed>  $medicalNote
      */
-    public function createStudentNote(string $schoolId, MedicalNoteForCreate|array $note): Response
+    public function create(string $schoolId, MedicalNoteForCreate|array $medicalNote): Response
     {
-        return $this->connector->send(new CreateStudentNoteRequest($schoolId, $note));
+        return $this->connector->send(new CreateStudentNoteRequest($schoolId, $medicalNote));
     }
 
-    public function deleteStudentNote(string $schoolId, string $noteId): Response
+    public function delete(string $schoolId, string $noteId): Response
     {
         return $this->connector->send(new DeleteStudentNoteRequest($schoolId, $noteId));
     }
 
-    public function getStudentNote(string $schoolId, string $noteId): Response
+    public function get(string $schoolId, string $noteId): Response
     {
         return $this->connector->send(new GetStudentNoteRequest($schoolId, $noteId));
-    }
-
-    public function getStudentNotes(string $schoolId): Response
-    {
-        return $this->connector->send(new GetStudentNotesRequest($schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchStudentNote(string $schoolId, string $noteId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $noteId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchStudentNoteRequest($schoolId, $noteId, $patch));
     }
 
-    public function restoreStudentNote(string $schoolId, string $noteId): Response
+    public function restore(string $schoolId, string $noteId): Response
     {
         return $this->connector->send(new RestoreStudentNoteRequest($schoolId, $noteId));
     }

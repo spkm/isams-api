@@ -18,28 +18,28 @@ use spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\UpdateRewardRequest;
 
 class RewardsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\RewardsAndConduct\RewardForCreate|array<string, mixed>  $reward
-     */
-    public function createReward(string $schoolId, RewardForCreate|array $reward): Response
-    {
-        return $this->connector->send(new CreateRewardRequest($schoolId, $reward));
-    }
-
-    public function getReward(string $schoolId, int $rewardId): Response
-    {
-        return $this->connector->send(new GetRewardRequest($schoolId, $rewardId));
-    }
-
-    public function getRewards(string $schoolId, string|Stringable|null $filter = null): Response
+    public function all(string $schoolId, string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetRewardsRequest($schoolId, $filter));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\RewardsAndConduct\RewardForCreate|array<string, mixed>  $reward
+     */
+    public function create(string $schoolId, RewardForCreate|array $reward): Response
+    {
+        return $this->connector->send(new CreateRewardRequest($schoolId, $reward));
+    }
+
+    public function get(string $schoolId, int $rewardId): Response
+    {
+        return $this->connector->send(new GetRewardRequest($schoolId, $rewardId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\RewardsAndConduct\RewardForUpdate|array<string, mixed>  $reward
      */
-    public function updateReward(string $schoolId, int $rewardId, RewardForUpdate|array $reward): Response
+    public function update(string $schoolId, int $rewardId, RewardForUpdate|array $reward): Response
     {
         return $this->connector->send(new UpdateRewardRequest($schoolId, $rewardId, $reward));
     }

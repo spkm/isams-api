@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\Estates\BuildingDivisions\RemoveBuildingDivisionReque
 
 class BuildingDivisionsResource extends BaseResource
 {
-    public function addBuildingDivision(int $buildingId, int $divisionId): Response
+    public function add(int $buildingId, int $divisionId): Response
     {
         return $this->connector->send(new AddBuildingDivisionRequest($buildingId, $divisionId));
     }
 
-    public function getBuildingDivisions(int $buildingId): Response
+    public function all(int $buildingId): Response
     {
         return $this->connector->send(new GetBuildingDivisionsRequest($buildingId));
     }
 
-    public function removeBuildingDivision(int $buildingId, int $divisionId): Response
+    public function remove(int $buildingId, int $divisionId): Response
     {
         return $this->connector->send(new RemoveBuildingDivisionRequest($buildingId, $divisionId));
     }

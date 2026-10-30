@@ -34,23 +34,20 @@ class BulletinResource extends BaseResource
         return new YearGroupResource($this->connector);
     }
 
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    {
+        return $this->connector->send(new GetBulletinsRequest($page, $pageSize, $filter));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\Bulletin\BulletinForCreate|array<string, mixed>  $bulletin
      */
-    public function createBulletin(BulletinForCreate|array $bulletin): Response
+    public function create(BulletinForCreate|array $bulletin): Response
     {
         return $this->connector->send(new CreateBulletinRequest($bulletin));
     }
 
-    public function getBulletins(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetBulletinsRequest($page, $pageSize, $filter));
-    }
-
-    public function getBulletinsByGroup(int $groupId): Response
+    public function getByGroup(int $groupId): Response
     {
         return $this->connector->send(new GetBulletinsByGroupRequest($groupId));
     }

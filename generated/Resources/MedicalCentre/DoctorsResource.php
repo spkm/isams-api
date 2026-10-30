@@ -18,34 +18,34 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class DoctorsResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\MedicalCentre\DoctorForCreate|array<string, mixed>  $doctor
-     */
-    public function createMedicalDoctor(int $surgeryId, DoctorForCreate|array $doctor): Response
-    {
-        return $this->connector->send(new CreateMedicalDoctorRequest($surgeryId, $doctor));
-    }
-
-    public function deleteMedicalDoctor(int $doctorId, string $surgeryId): Response
-    {
-        return $this->connector->send(new DeleteMedicalDoctorRequest($doctorId, $surgeryId));
-    }
-
-    public function getMedicalDoctor(int $doctorId, string $surgeryId): Response
-    {
-        return $this->connector->send(new GetMedicalDoctorRequest($doctorId, $surgeryId));
-    }
-
-    public function getMedicalDoctors(int $surgeryId): Response
+    public function all(int $surgeryId): Response
     {
         return $this->connector->send(new GetMedicalDoctorsRequest($surgeryId));
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\MedicalCentre\DoctorForCreate|array<string, mixed>  $doctor
+     */
+    public function create(int $surgeryId, DoctorForCreate|array $doctor): Response
+    {
+        return $this->connector->send(new CreateMedicalDoctorRequest($surgeryId, $doctor));
+    }
+
+    public function delete(string $surgeryId, int $doctorId): Response
+    {
+        return $this->connector->send(new DeleteMedicalDoctorRequest($surgeryId, $doctorId));
+    }
+
+    public function get(string $surgeryId, int $doctorId): Response
+    {
+        return $this->connector->send(new GetMedicalDoctorRequest($surgeryId, $doctorId));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchMedicalDoctor(int $doctorId, string $surgeryId, JsonPatch|array $patch): Response
+    public function patch(string $surgeryId, int $doctorId, JsonPatch|array $patch): Response
     {
-        return $this->connector->send(new PatchMedicalDoctorRequest($doctorId, $surgeryId, $patch));
+        return $this->connector->send(new PatchMedicalDoctorRequest($surgeryId, $doctorId, $patch));
     }
 }

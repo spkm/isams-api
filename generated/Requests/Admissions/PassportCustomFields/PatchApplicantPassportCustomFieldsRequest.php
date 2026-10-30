@@ -27,12 +27,12 @@ class PatchApplicantPassportCustomFieldsRequest extends IsamsRequest implements 
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $listCustomField
+     * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
      */
     public function __construct(
         protected string $schoolId,
         protected int $passportId,
-        protected array $listCustomField,
+        protected array $customFields,
     ) {
     }
 
@@ -46,6 +46,6 @@ class PatchApplicantPassportCustomFieldsRequest extends IsamsRequest implements 
      */
     protected function defaultBody(): array
     {
-        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->listCustomField);
+        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->customFields);
     }
 }

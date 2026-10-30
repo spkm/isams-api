@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\School\YearGroups\GetYearGroupsRequest;
 
 class YearGroupsResource extends BaseResource
 {
-    public function getYearGroup(int $id): Response
-    {
-        return $this->connector->send(new GetYearGroupRequest($id));
-    }
-
-    public function getYearGroups(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetYearGroupsRequest());
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetYearGroupRequest($id));
     }
 }

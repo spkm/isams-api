@@ -7,7 +7,6 @@
 namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Resources\RewardsAndConduct\CategoriesResource;
 use spkm\IsamsApi\Resources\RewardsAndConduct\FieldTypesResource;
 use spkm\IsamsApi\Resources\RewardsAndConduct\FieldValuesResource;

@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\HumanResources\DfEAbsenceCategories\GetDfEAbsenceCate
 
 class DfEAbsenceCategoriesResource extends BaseResource
 {
-    public function getDfEAbsenceCategories(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetDfEAbsenceCategoriesRequest());
     }

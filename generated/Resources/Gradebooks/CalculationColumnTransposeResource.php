@@ -16,12 +16,12 @@ class CalculationColumnTransposeResource extends BaseResource
     /**
      * @param  array<mixed>  $transposeIds
      */
-    public function createCalculationColumnTransposes(int $gradebookId, int $columnId, array $transposeIds): Response
+    public function createMany(int $gradebookId, int $columnId, array $transposeIds): Response
     {
         return $this->connector->send(new CreateCalculationColumnTransposesRequest($gradebookId, $columnId, $transposeIds));
     }
 
-    public function deleteCalculationColumnTranspose(int $gradebookId, int $columnId, int $transposeId): Response
+    public function delete(int $gradebookId, int $columnId, int $transposeId): Response
     {
         return $this->connector->send(new DeleteCalculationColumnTransposeRequest($gradebookId, $columnId, $transposeId));
     }

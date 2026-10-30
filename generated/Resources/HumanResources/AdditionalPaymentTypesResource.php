@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\HumanResources\AdditionalPaymentTypes\GetAdditionalPa
 
 class AdditionalPaymentTypesResource extends BaseResource
 {
-    public function getAdditionalPaymentTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetAdditionalPaymentTypesRequest());
     }

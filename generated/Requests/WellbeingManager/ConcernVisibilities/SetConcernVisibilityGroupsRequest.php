@@ -26,12 +26,12 @@ class SetConcernVisibilityGroupsRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityGroupsForPatch|array<string, mixed>  $visibilityGroups
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernVisibilityGroupsForPatch|array<string, mixed>  $concernVisibilityGroups
      */
     public function __construct(
         protected string $schoolId,
         protected int $concernId,
-        protected ConcernVisibilityGroupsForPatch|array $visibilityGroups,
+        protected ConcernVisibilityGroupsForPatch|array $concernVisibilityGroups,
     ) {
     }
 
@@ -45,6 +45,6 @@ class SetConcernVisibilityGroupsRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->visibilityGroups instanceof Data ? $this->visibilityGroups->toArray() : $this->visibilityGroups;
+        return $this->concernVisibilityGroups instanceof Data ? $this->concernVisibilityGroups->toArray() : $this->concernVisibilityGroups;
     }
 }

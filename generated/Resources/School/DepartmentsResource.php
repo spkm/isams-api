@@ -13,13 +13,13 @@ use spkm\IsamsApi\Requests\School\Departments\GetDepartmentsRequest;
 
 class DepartmentsResource extends BaseResource
 {
-    public function getDepartment(string $departmentType, int $id): Response
-    {
-        return $this->connector->send(new GetDepartmentRequest($departmentType, $id));
-    }
-
-    public function getDepartments(string $departmentType, ?string $expand = null): Response
+    public function all(string $departmentType, ?string $expand = null): Response
     {
         return $this->connector->send(new GetDepartmentsRequest($departmentType, $expand));
+    }
+
+    public function get(string $departmentType, int $id): Response
+    {
+        return $this->connector->send(new GetDepartmentRequest($departmentType, $id));
     }
 }

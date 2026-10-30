@@ -15,23 +15,23 @@ use spkm\IsamsApi\Requests\WellbeingManager\VisibilityGroups\GetVisibilityGroups
 
 class VisibilityGroupsResource extends BaseResource
 {
-    public function getDefaultVisibilityGroup(): Response
+    public function all(): Response
     {
-        return $this->connector->send(new GetDefaultVisibilityGroupRequest());
+        return $this->connector->send(new GetVisibilityGroupsRequest());
     }
 
-    public function getVisibilityGroup(int $id): Response
+    public function get(int $id): Response
     {
         return $this->connector->send(new GetVisibilityGroupRequest($id));
     }
 
-    public function getVisibilityGroupUsers(int $groupId): Response
+    public function getDefault(): Response
     {
-        return $this->connector->send(new GetVisibilityGroupUsersRequest($groupId));
+        return $this->connector->send(new GetDefaultVisibilityGroupRequest());
     }
 
-    public function getVisibilityGroups(): Response
+    public function getUsers(int $groupId): Response
     {
-        return $this->connector->send(new GetVisibilityGroupsRequest());
+        return $this->connector->send(new GetVisibilityGroupUsersRequest($groupId));
     }
 }

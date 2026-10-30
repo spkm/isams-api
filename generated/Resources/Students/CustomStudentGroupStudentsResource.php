@@ -18,10 +18,15 @@ use spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\UpdateCustomStude
 
 class CustomStudentGroupStudentsResource extends BaseResource
 {
+    public function all(int $customGroupId, string|Stringable|null $filter = null): Response
+    {
+        return $this->connector->send(new GetCustomStudentGroupStudentsRequest($customGroupId, $filter));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\Students\CustomStudentGroupStudentForCreate|array<string, mixed>  $customStudentGroupStudent
      */
-    public function createCustomStudentGroupStudent(
+    public function create(
         int $customGroupId,
         string $schoolId,
         CustomStudentGroupStudentForCreate|array $customStudentGroupStudent,
@@ -29,20 +34,15 @@ class CustomStudentGroupStudentsResource extends BaseResource
         return $this->connector->send(new CreateCustomStudentGroupStudentRequest($customGroupId, $schoolId, $customStudentGroupStudent));
     }
 
-    public function deleteCustomStudentGroupStudent(int $customGroupId, string $schoolId): Response
+    public function delete(int $customGroupId, string $schoolId): Response
     {
         return $this->connector->send(new DeleteCustomStudentGroupStudentRequest($customGroupId, $schoolId));
-    }
-
-    public function getCustomStudentGroupStudents(int $customGroupId, string|Stringable|null $filter = null): Response
-    {
-        return $this->connector->send(new GetCustomStudentGroupStudentsRequest($customGroupId, $filter));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\CustomStudentGroupStudentForUpdate|array<string, mixed>  $customStudentGroupStudent
      */
-    public function updateCustomStudentGroupStudent(
+    public function update(
         int $customGroupId,
         string $schoolId,
         CustomStudentGroupStudentForUpdate|array $customStudentGroupStudent,

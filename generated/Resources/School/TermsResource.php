@@ -13,7 +13,7 @@ use spkm\IsamsApi\Requests\School\Terms\GetTermsRequest;
 
 class TermsResource extends BaseResource
 {
-    public function getTerms(string|Stringable|null $filter = null): Response
+    public function all(string|Stringable|null $filter = null): Response
     {
         return $this->connector->send(new GetTermsRequest($filter));
     }

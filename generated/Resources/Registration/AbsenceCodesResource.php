@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Registration\AbsenceCodes\GetAbsenceCodesRequest;
 
 class AbsenceCodesResource extends BaseResource
 {
-    public function getAbsenceCodes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetAbsenceCodesRequest());
     }

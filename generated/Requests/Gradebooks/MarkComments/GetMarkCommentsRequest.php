@@ -26,8 +26,8 @@ class GetMarkCommentsRequest extends IsamsRequest
 
     public function __construct(
         protected int $gradebookId,
-        protected string $schoolId,
         protected int $columnId,
+        protected string $schoolId,
     ) {
     }
 

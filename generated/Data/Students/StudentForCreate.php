@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\Students;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Students\Enums\StudentForCreateGender;
+use spkm\IsamsApi\Data\Students\Enums\Gender;
 
 readonly class StudentForCreate extends Data
 {
@@ -62,8 +62,8 @@ readonly class StudentForCreate extends Data
     ) {
     }
 
-    public function genderEnum(): ?StudentForCreateGender
+    public function genderEnum(): ?Gender
     {
-        return StudentForCreateGender::tryFrom((string) $this->gender);
+        return Gender::tryFrom((string) $this->gender);
     }
 }

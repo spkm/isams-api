@@ -10,16 +10,21 @@ use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\StudentRegisters\GetRecordCollectionElementsRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\GetStudentRegistersRequest;
+use spkm\IsamsApi\Resources\StudentRegisters\AssociationResource;
 use spkm\IsamsApi\Resources\StudentRegisters\DateRangesResource;
 use spkm\IsamsApi\Resources\StudentRegisters\FieldsResource;
 use spkm\IsamsApi\Resources\StudentRegisters\ListsResource;
 use spkm\IsamsApi\Resources\StudentRegisters\MetadataResource;
 use spkm\IsamsApi\Resources\StudentRegisters\RecordCollectionResource;
-use spkm\IsamsApi\Resources\StudentRegisters\RegisterAssociationResource;
 use spkm\IsamsApi\Resources\StudentRegisters\ScreeningLogsResource;
 
 class StudentRegistersResource extends BaseResource
 {
+    public function association(): AssociationResource
+    {
+        return new AssociationResource($this->connector);
+    }
+
     public function dateRanges(): DateRangesResource
     {
         return new DateRangesResource($this->connector);
@@ -45,23 +50,18 @@ class StudentRegistersResource extends BaseResource
         return new RecordCollectionResource($this->connector);
     }
 
-    public function registerAssociation(): RegisterAssociationResource
-    {
-        return new RegisterAssociationResource($this->connector);
-    }
-
     public function screeningLogs(): ScreeningLogsResource
     {
         return new ScreeningLogsResource($this->connector);
     }
 
+    public function all(?int $page = null, ?int $pageSize = null): Response
+    {
+        return $this->connector->send(new GetStudentRegistersRequest($page, $pageSize));
+    }
+
     public function getRecordCollectionElements(int $registerId): Response
     {
         return $this->connector->send(new GetRecordCollectionElementsRequest($registerId));
-    }
-
-    public function getStudentRegisters(?int $page = null, ?int $pageSize = null): Response
-    {
-        return $this->connector->send(new GetStudentRegistersRequest($page, $pageSize));
     }
 }

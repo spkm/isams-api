@@ -16,20 +16,17 @@ use spkm\IsamsApi\Requests\Students\CommunicationHistory\CreateStudentCommunicat
 class CommunicationHistoryResource extends BaseResource
 {
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentCommunicationHistoryForCreate|array<string, mixed>  $communicationHistory
+     * @param  \spkm\IsamsApi\Data\Students\StudentCommunicationHistoryForCreate|array<string, mixed>  $studentCommunicationHistory
      */
-    public function createStudentCommunicationHistory(
+    public function create(
         string $schoolId,
-        StudentCommunicationHistoryForCreate|array $communicationHistory,
+        StudentCommunicationHistoryForCreate|array $studentCommunicationHistory,
     ): Response {
-        return $this->connector->send(new CreateStudentCommunicationHistoryRequest($schoolId, $communicationHistory));
+        return $this->connector->send(new CreateStudentCommunicationHistoryRequest($schoolId, $studentCommunicationHistory));
     }
 
-    public function createStudentCommunicationHistoryAttachments(
-        int $id,
-        string $schoolId,
-        MultipartValue $attachment,
-    ): Response {
-        return $this->connector->send(new CreateStudentCommunicationHistoryAttachmentsRequest($id, $schoolId, $attachment));
+    public function createAttachments(string $schoolId, int $id, MultipartValue $attachment): Response
+    {
+        return $this->connector->send(new CreateStudentCommunicationHistoryAttachmentsRequest($schoolId, $id, $attachment));
     }
 }

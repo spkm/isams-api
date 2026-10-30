@@ -12,11 +12,8 @@ use spkm\IsamsApi\Requests\Registration\Status\GetRegistrationStatusesRequest;
 
 class StatusResource extends BaseResource
 {
-    public function getRegistrationStatuses(
-        int $registrationPeriodId,
-        ?int $page = null,
-        ?int $pageSize = null,
-    ): Response {
+    public function all(int $registrationPeriodId, ?int $page = null, ?int $pageSize = null): Response
+    {
         return $this->connector->send(new GetRegistrationStatusesRequest($registrationPeriodId, $page, $pageSize));
     }
 }

@@ -100,9 +100,9 @@ it('reaches generated and hand-written student requests through resources', func
     ]);
     $students = FakeIsams::connector()->students();
 
-    $students->customFields()->patchStudentCustomFields('100001', [['id' => 53, 'value' => 'Yes']]);
-    $students->contacts()->getStudentContacts('100001');
-    $students->getStudent('100001');
+    $students->customFields()->patchMany('100001', [['id' => 53, 'value' => 'Yes']]);
+    $students->contacts()->forStudent('100001');
+    $students->get('100001');
 
     $isams->assertSent(PatchStudentCustomFieldsRequest::class);
     $isams->assertSent(GetStudentContactsRequest::class);

@@ -14,7 +14,7 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeProbations\UpdateEmployeeProba
 
 class EmployeeProbationsResource extends BaseResource
 {
-    public function getEmployeeProbation(int $employeeId): Response
+    public function get(int $employeeId): Response
     {
         return $this->connector->send(new GetEmployeeProbationRequest($employeeId));
     }
@@ -22,10 +22,8 @@ class EmployeeProbationsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeProbationForUpdate|array<string, mixed>  $employeeProbation
      */
-    public function updateEmployeeProbation(
-        int $employeeId,
-        EmployeeProbationForUpdate|array $employeeProbation,
-    ): Response {
+    public function update(int $employeeId, EmployeeProbationForUpdate|array $employeeProbation): Response
+    {
         return $this->connector->send(new UpdateEmployeeProbationRequest($employeeId, $employeeProbation));
     }
 }

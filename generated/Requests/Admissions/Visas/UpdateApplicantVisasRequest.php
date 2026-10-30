@@ -27,11 +27,11 @@ class UpdateApplicantVisasRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>>  $visas
+     * @param  list<\spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>>  $applicantVisas
      */
     public function __construct(
         protected string $schoolId,
-        protected array $visas,
+        protected array $applicantVisas,
     ) {
     }
 
@@ -45,6 +45,6 @@ class UpdateApplicantVisasRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->visas);
+        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->applicantVisas);
     }
 }

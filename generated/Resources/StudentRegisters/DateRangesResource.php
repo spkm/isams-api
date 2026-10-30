@@ -18,20 +18,7 @@ use spkm\IsamsApi\Requests\StudentRegisters\DateRanges\UpdateDateRangeRequest;
 
 class DateRangesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\StudentRegisters\DateRangeForCreate|array<string, mixed>  $dateRange
-     */
-    public function createDateRange(int $registerId, string $schoolId, DateRangeForCreate|array $dateRange): Response
-    {
-        return $this->connector->send(new CreateDateRangeRequest($registerId, $schoolId, $dateRange));
-    }
-
-    public function deleteDateRange(int $registerId, string $schoolId, int $dateRangeId): Response
-    {
-        return $this->connector->send(new DeleteDateRangeRequest($registerId, $schoolId, $dateRangeId));
-    }
-
-    public function getDateRanges(
+    public function all(
         int $registerId,
         ?string $systemStatus = null,
         ?int $page = null,
@@ -40,7 +27,20 @@ class DateRangesResource extends BaseResource
         return $this->connector->send(new GetDateRangesRequest($registerId, $systemStatus, $page, $pageSize));
     }
 
-    public function getStudentDateRanges(int $registerId, string $schoolId): Response
+    /**
+     * @param  \spkm\IsamsApi\Data\StudentRegisters\DateRangeForCreate|array<string, mixed>  $dateRange
+     */
+    public function create(int $registerId, string $schoolId, DateRangeForCreate|array $dateRange): Response
+    {
+        return $this->connector->send(new CreateDateRangeRequest($registerId, $schoolId, $dateRange));
+    }
+
+    public function delete(int $registerId, string $schoolId, int $dateRangeId): Response
+    {
+        return $this->connector->send(new DeleteDateRangeRequest($registerId, $schoolId, $dateRangeId));
+    }
+
+    public function forStudent(int $registerId, string $schoolId): Response
     {
         return $this->connector->send(new GetStudentDateRangesRequest($registerId, $schoolId));
     }
@@ -48,7 +48,7 @@ class DateRangesResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\StudentRegisters\DateRangeForUpdate|array<string, mixed>  $dateRange
      */
-    public function updateDateRange(
+    public function update(
         int $registerId,
         string $schoolId,
         int $dateRangeId,

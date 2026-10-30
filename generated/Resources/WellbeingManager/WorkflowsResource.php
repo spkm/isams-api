@@ -22,27 +22,27 @@ class WorkflowsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\WorkflowForCreate|array<string, mixed>  $workflow
      */
-    public function createWorkflow(WorkflowForCreate|array $workflow): Response
+    public function create(WorkflowForCreate|array $workflow): Response
     {
         return $this->connector->send(new CreateWorkflowRequest($workflow));
     }
 
-    public function deleteWorkflow(int $id): Response
+    public function delete(int $id): Response
     {
         return $this->connector->send(new DeleteWorkflowRequest($id));
     }
 
-    public function getWorkflow(int $id): Response
+    public function get(int $id): Response
     {
         return $this->connector->send(new GetWorkflowRequest($id));
     }
 
-    public function processWorkflow(int $workflowId): Response
+    public function process(int $workflowId): Response
     {
         return $this->connector->send(new ProcessWorkflowRequest($workflowId));
     }
 
-    public function processWorkflows(): Response
+    public function processAll(): Response
     {
         return $this->connector->send(new ProcessWorkflowsRequest());
     }
@@ -50,7 +50,7 @@ class WorkflowsResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\WorkflowForUpdate|array<string, mixed>  $workflow
      */
-    public function updateWorkflow(WorkflowForUpdate|array $workflow): Response
+    public function update(WorkflowForUpdate|array $workflow): Response
     {
         return $this->connector->send(new UpdateWorkflowRequest($workflow));
     }

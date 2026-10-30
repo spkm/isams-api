@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Registration\PresentCodes\GetPresentCodesRequest;
 
 class PresentCodesResource extends BaseResource
 {
-    public function getPresentCodes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetPresentCodesRequest());
     }

@@ -8,8 +8,8 @@ namespace spkm\IsamsApi\Data\Timetable;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\Timetable\Enums\TimetableImportImportAction;
-use spkm\IsamsApi\Data\Timetable\Enums\TimetableImportNonClassOption;
+use spkm\IsamsApi\Data\Timetable\Enums\ImportAction;
+use spkm\IsamsApi\Data\Timetable\Enums\NonClassOption;
 
 readonly class TimetableImport extends Data
 {
@@ -33,13 +33,13 @@ readonly class TimetableImport extends Data
     ) {
     }
 
-    public function importActionEnum(): ?TimetableImportImportAction
+    public function importActionEnum(): ?ImportAction
     {
-        return TimetableImportImportAction::tryFrom((string) $this->importAction);
+        return ImportAction::tryFrom((string) $this->importAction);
     }
 
-    public function nonClassOptionEnum(): ?TimetableImportNonClassOption
+    public function nonClassOptionEnum(): ?NonClassOption
     {
-        return TimetableImportNonClassOption::tryFrom((string) $this->nonClassOption);
+        return NonClassOption::tryFrom((string) $this->nonClassOption);
     }
 }

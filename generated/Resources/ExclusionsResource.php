@@ -14,16 +14,13 @@ use spkm\IsamsApi\Requests\Exclusions\GetExclusionsRequest;
 
 class ExclusionsResource extends BaseResource
 {
-    public function getExclusionCancellationReasons(): Response
+    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
     {
-        return $this->connector->send(new GetExclusionCancellationReasonsRequest());
+        return $this->connector->send(new GetExclusionsRequest($page, $pageSize, $filter));
     }
 
-    public function getExclusions(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetExclusionsRequest($page, $pageSize, $filter));
+    public function getCancellationReasons(): Response
+    {
+        return $this->connector->send(new GetExclusionCancellationReasonsRequest());
     }
 }

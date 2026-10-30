@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Timetable\SubjectTimetables\GetSubjectTimetableReques
 
 class SubjectTimetablesResource extends BaseResource
 {
-    public function getSubjectTimetable(int $subjectId): Response
+    public function get(int $subjectId): Response
     {
         return $this->connector->send(new GetSubjectTimetableRequest($subjectId));
     }

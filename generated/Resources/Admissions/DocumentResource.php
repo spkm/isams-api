@@ -15,19 +15,16 @@ use spkm\IsamsApi\Requests\Admissions\Document\GetApplicantDocumentsRequest;
 
 class DocumentResource extends BaseResource
 {
+    public function all(string $schoolId): Response
+    {
+        return $this->connector->send(new GetApplicantDocumentsRequest($schoolId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantDocumentForCreate|array<string, mixed>  $data
      */
-    public function createApplicantDocument(
-        string $schoolId,
-        MultipartValue $binary,
-        ApplicantDocumentForCreate|array $data,
-    ): Response {
-        return $this->connector->send(new CreateApplicantDocumentRequest($schoolId, $binary, $data));
-    }
-
-    public function getApplicantDocuments(string $schoolId): Response
+    public function create(string $schoolId, MultipartValue $binary, ApplicantDocumentForCreate|array $data): Response
     {
-        return $this->connector->send(new GetApplicantDocumentsRequest($schoolId));
+        return $this->connector->send(new CreateApplicantDocumentRequest($schoolId, $binary, $data));
     }
 }

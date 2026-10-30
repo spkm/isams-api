@@ -14,17 +14,17 @@ use spkm\IsamsApi\Requests\MedicalCentre\Medication\GetMedicalMedicationTypesReq
 
 class MedicationResource extends BaseResource
 {
-    public function getMedicalMedicationLocations(): Response
+    public function getLocations(): Response
     {
         return $this->connector->send(new GetMedicalMedicationLocationsRequest());
     }
 
-    public function getMedicalMedicationSuppliers(): Response
+    public function getSuppliers(): Response
     {
         return $this->connector->send(new GetMedicalMedicationSuppliersRequest());
     }
 
-    public function getMedicalMedicationTypes(): Response
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetMedicalMedicationTypesRequest());
     }

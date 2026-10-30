@@ -16,7 +16,7 @@ use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 it('uploads a file to storage, naming it and its folder in the query', function () {
     $isams = FakeIsams::respondWith([UploadFileRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/storage/files/download?path=reports&fileName=summary.pdf'])]);
 
-    FakeIsams::connector()->storage()->files()->uploadFile('documents', new MultipartValue('file', 'made-up PDF bytes', 'summary.pdf'), 'summary.pdf', 'reports', overwrite: true);
+    FakeIsams::connector()->storage()->files()->upload('documents', new MultipartValue('file', 'made-up PDF bytes', 'summary.pdf'), 'summary.pdf', 'reports', overwrite: true);
 
     $sent = FakeIsams::received($isams, UploadFileRequest::class);
     expect($sent->getUrl())->toEndWith('/api/storage/files/upload/documents')
@@ -71,8 +71,8 @@ it('serves the curriculum cycles from the cache once caching is on', function ()
     $isams = FakeIsams::respondWith([GetCurriculumCyclesRequest::class => MockResponse::make(['cycles' => []])]);
     $curriculum = FakeIsams::connector()->curriculum();
 
-    $curriculum->cycles()->getCurriculumCycles();
-    $curriculum->cycles()->getCurriculumCycles();
+    $curriculum->cycles()->all();
+    $curriculum->cycles()->all();
 
     expect(FakeIsams::queriesReceived($isams, GetCurriculumCyclesRequest::class))->toHaveCount(1);
 });

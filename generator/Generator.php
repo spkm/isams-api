@@ -53,6 +53,9 @@ final class Generator
     /** @var array<string, mixed> */
     private array $specV2;
 
+    /** @var array<string, string>|null enum key => enum class */
+    private ?array $enumClasses = null;
+
     /** @var list<string>|null property names a generated request inherits */
     private ?array $requestProperties = null;
 
@@ -125,7 +128,7 @@ final class Generator
         $areas = array_unique(array_column($tags, 0));
         $segments = array_unique(array_merge(...array_map(fn (array $parts) => array_slice($parts, 1, -1), $tags)));
         $modules = array_unique(array_map(fn (string $definition) => explode('.', $definition)[1] ?? '', array_keys($this->spec['definitions'])));
-        $settings = ['class', 'handwritten', 'skip', 'response', 'multipart', 'cacheable', 'safe', 'paginatable'];
+        $settings = ['class', 'method', 'handwritten', 'skip', 'response', 'multipart', 'cacheable', 'safe', 'paginatable'];
         $problems = [];
 
         foreach ($this->overrides['operations'] as $id => $override) {
@@ -160,6 +163,12 @@ final class Generator
             }
         }
 
+        foreach (array_keys($this->overrides['noiseWords'] ?? []) as $area) {
+            if (! in_array($area, $areas, true)) {
+                $problems[] = "noiseWords.$area: no such area in the spec";
+            }
+        }
+
         foreach (array_keys($this->overrides['modules'] ?? []) as $module) {
             if (! in_array($module, $modules, true)) {
                 $problems[] = "modules.$module: no such module in the spec's definitions";
@@ -169,6 +178,8 @@ final class Generator
         if ($problems !== []) {
             throw new RuntimeException("generator/overrides.php names things the spec does not have:\n- ".implode("\n- ", $problems));
         }
+
+        $this->enumClasses ??= $this->nameEnums();
     }
 
     /**
@@ -199,9 +210,10 @@ final class Generator
     }
 
     /**
-     * Every operation in the v1 spec, then the v2 spec's operations that differ from v1 (keyed "v2:{operationId}").
+     * Every operation in the v1 spec, then the v2 spec's operations that differ from v1 (keyed "v2:{operationId}"). A v1
+     * operation that v2 changed or dropped is superseded: the newest version takes the plain name.
      *
-     * @return list<array{id: string, method: string, path: string, spec: array<string, mixed>, apiVersion: ?string}>
+     * @return list<array{id: string, method: string, path: string, spec: array<string, mixed>, apiVersion: ?string, superseded: bool}>
      */
     private function specOperations(): array
     {
@@ -220,8 +232,8 @@ final class Generator
                     }
 
                     $operations[] = $version === '1.0'
-                        ? ['id' => $operation['operationId'], 'method' => $method, 'path' => $path, 'spec' => $operation, 'apiVersion' => null]
-                        : ['id' => 'v2:'.$operation['operationId'], 'method' => $method, 'path' => $path, 'spec' => $operation, 'apiVersion' => $version];
+                        ? ['id' => $operation['operationId'], 'method' => $method, 'path' => $path, 'spec' => $operation, 'apiVersion' => null, 'superseded' => $operation != ($this->specV2['paths'][$path][$method] ?? null)]
+                        : ['id' => 'v2:'.$operation['operationId'], 'method' => $method, 'path' => $path, 'spec' => $operation, 'apiVersion' => $version, 'superseded' => false];
                 }
             }
         }
@@ -238,8 +250,8 @@ final class Generator
         $spec = $operation['spec'];
         $override = $operation['override'];
         $response = $this->response($spec, $override);
-        $parameters = $this->parameters($spec, $override);
-        $namespace = $this->namespaceFor($operation['tag']).($operation['apiVersion'] ? '\\V'.(int) $operation['apiVersion'] : '');
+        $parameters = $this->parameters($spec, $override, $operation['path']);
+        $namespace = $this->namespaceFor($operation['tag']).($operation['superseded'] ? '\\V1' : '');
         $name = $override['class'] ?? $this->className($operation, $response, $parameters);
 
         return [...$operation,
@@ -300,13 +312,44 @@ final class Generator
             array_shift($words);
         }
 
-        $segments = [$this->areaName($parts['area']), ...array_map($this->studly(...), $parts['middle'])];
+        $segments = [$this->areaName($parts['area'])];
+        $ancestors = array_map($this->singularWord(...), [...$this->words($segments[0]), ...explode(' ', $parts['area'])]);
 
-        if ($words !== [] && $this->studly(implode(' ', $words)) !== end($segments)) {
-            $segments[] = $this->studly(implode(' ', $words));
+        foreach ([...$parts['middle'], implode(' ', $words)] as $segment) {
+            $segmentWords = $this->withoutNoise($parts['area'], array_values(array_filter(explode(' ', $segment))));
+
+            $areaHead = $this->singularWord((string) last(explode(' ', $parts['area'])));
+
+            while ($segmentWords !== [] && in_array($this->singularWord($segmentWords[0]), $ancestors, true)
+                && (count($segmentWords) > 1 || $this->singularWord($segmentWords[0]) === $areaHead)) {
+                array_shift($segmentWords);
+            }
+
+            if ($segmentWords !== [] && ! str_ends_with((string) end($segments), $this->studly(implode(' ', $segmentWords)))) {
+                $segments[] = $this->studly(implode(' ', $segmentWords));
+                $ancestors = [...$ancestors, ...array_map($this->singularWord(...), $segmentWords)];
+            }
         }
 
         return 'spkm\IsamsApi\Requests\\'.implode('\\', $segments);
+    }
+
+    /**
+     * The words without the area's noise words (overrides "noiseWords"), which iSAMS adds to names without meaning.
+     *
+     * @param  list<string>  $words
+     * @return list<string>
+     */
+    private function withoutNoise(string $area, array $words): array
+    {
+        $noise = array_map($this->singularWord(...), $this->overrides['noiseWords'][$area] ?? []);
+
+        return array_values(array_filter($words, fn (string $word) => ! in_array($this->singularWord($word), $noise, true)));
+    }
+
+    private function singularWord(string $word): string
+    {
+        return strtolower(Str::singular($word));
     }
 
     private function areaName(string $area): string
@@ -321,7 +364,8 @@ final class Generator
      */
     private function className(array $operation, array $response, array $parameters): string
     {
-        $words = explode(' ', $this->tagParts($operation['tag'])['resource'] ?: $this->tagParts($operation['tag'])['area']);
+        $tag = $this->tagParts($operation['tag']);
+        $words = $this->withoutNoise($tag['area'], explode(' ', $tag['resource'] ?: $tag['area'])) ?: explode(' ', $tag['resource'] ?: $tag['area']);
         $head = (string) end($words);
         $uncountable = in_array($head, $this->overrides['uncountable'] ?? [], true);
         $plural = $this->studly(implode(' ', [...array_slice($words, 0, -1), $uncountable ? $head : Str::plural(Str::singular($head))]));
@@ -519,7 +563,7 @@ final class Generator
      * @param  array<string, mixed>  $override
      * @return array{path: array<string, array<string, mixed>>, query: array<string, array<string, mixed>>, body: ?array<string, mixed>, multipart: array<string, array<string, mixed>>}
      */
-    private function parameters(array $spec, array $override): array
+    private function parameters(array $spec, array $override, string $path): array
     {
         $parameters = ['path' => [], 'query' => [], 'body' => null, 'multipart' => []];
 
@@ -537,6 +581,14 @@ final class Generator
                 'formData' => $parameters['multipart'][$parameter['name']] = ['php' => $name, 'file' => ($parameter['type'] ?? null) === 'file', 'model' => $this->multipartModel($override['multipart'][$parameter['name']] ?? (isset($parameter['schema']['$ref']) ? $this->refName($parameter['schema']['$ref']) : null)), 'required' => $parameter['required'] ?? false],
                 default => null,
             };
+        }
+
+        uksort($parameters['path'], fn (string $a, string $b) => strpos($path, '{'.$a.'}') <=> strpos($path, '{'.$b.'}'));
+
+        $otherNames = array_column([...$parameters['path'], ...$parameters['query']], 'php');
+
+        if (isset($parameters['body']['specName']) && in_array($parameters['body']['php'], $otherNames, true)) {
+            $parameters['body']['php'] = $parameters['body']['specName'];
         }
 
         return $parameters;
@@ -579,6 +631,14 @@ final class Generator
         return in_array($name, $this->requestProperties, true) ? $name.'Value' : $name;
     }
 
+    /**
+     * A body parameter's name, from its model: $contract for a ContractForCreate, $listItem for a GlobalListItem.
+     */
+    private function modelParameterName(string $modelClass): string
+    {
+        return $this->phpName(lcfirst((string) preg_replace(['/^(Global|Private)(?=[A-Z])/', '/(ForCreate|ForUpdate|ForPatch|Command)$/'], '', class_basename($modelClass))));
+    }
+
     private function body(array $parameter): array
     {
         $schema = $parameter['schema'] ?? [];
@@ -587,8 +647,8 @@ final class Generator
 
         return match (true) {
             $reference !== null && str_starts_with($reference, 'Marvin.JsonPatch') => ['php' => 'patch', 'kind' => 'patch', 'list' => false, 'required' => true],
-            $reference !== null && ! $this->isEmptyModel($reference) => ['php' => $name, 'kind' => 'model', 'model' => $this->queueModel($reference), 'list' => false, 'required' => true],
-            ($schema['type'] ?? null) === 'array' && isset($schema['items']['$ref']) => ['php' => $name, 'kind' => 'models', 'model' => $this->queueModel($this->refName($schema['items']['$ref'])), 'list' => true, 'required' => true],
+            $reference !== null && ! $this->isEmptyModel($reference) => ['php' => $this->modelParameterName($this->queueModel($reference)), 'specName' => $name, 'kind' => 'model', 'model' => $this->models[$reference], 'list' => false, 'required' => true],
+            ($schema['type'] ?? null) === 'array' && isset($schema['items']['$ref']) => ['php' => Str::plural($this->modelParameterName($this->queueModel($this->refName($schema['items']['$ref'])))), 'specName' => $name, 'kind' => 'models', 'model' => $this->models[$this->refName($schema['items']['$ref'])], 'list' => true, 'required' => true],
             ($schema['type'] ?? null) === 'string' => ['php' => $name, 'kind' => 'string', 'list' => false, 'required' => true],
             default => ['php' => $name, 'kind' => 'array', 'list' => ($schema['type'] ?? null) === 'array', 'required' => true],
         };
@@ -844,7 +904,14 @@ final class Generator
     private function queueModel(string $definition): string
     {
         if (! isset($this->models[$definition])) {
-            $this->models[$definition] = $this->modelClass($definition);
+            $class = $this->modelClass($definition);
+            $taken = array_search($class, $this->models, true);
+
+            if ($taken !== false) {
+                throw new RuntimeException("$definition and $taken would both be $class; add a \"models\" override for one of them.");
+            }
+
+            $this->models[$definition] = $class;
             $this->modelQueue[] = $definition;
         }
 
@@ -875,6 +942,7 @@ final class Generator
             $name = 'Private'.$name;
         }
 
+        $name = (string) preg_replace(['/^(?:Create|Update)(\w+)Command$/', '/(?<=\w)Dto$/'], ['$1', ''], $name);
         $name = $this->overrides['models'][$definition] ?? $name;
 
         $module = $segments[1] ?? 'Common';
@@ -1007,7 +1075,16 @@ final class Generator
      */
     private function addEnum(ClassType $class, PhpNamespace $namespace, string $modelClass, string $property, array $values): void
     {
-        $enumClass = Str::beforeLast($modelClass, '\\').'\Enums\\'.class_basename($modelClass).ucfirst($property);
+        $this->enumClasses ??= $this->nameEnums();
+        $enumClass = $this->enumClasses[$this->enumKey($modelClass, $property, $values)];
+        $namespace->addUse($enumClass);
+        $class->addMethod($property.'Enum')->setReturnType('?'.$enumClass)
+            ->setBody('return '.class_basename($enumClass).'::tryFrom((string) $this->'.$property.');');
+
+        if (isset($this->files[$this->pathFor($enumClass)])) {
+            return;
+        }
+
         [$enumNamespace, $file] = $this->file(Str::beforeLast($enumClass, '\\'));
         $enum = $enumNamespace->addEnum(class_basename($enumClass))->setType('string');
         $used = [];
@@ -1021,9 +1098,102 @@ final class Generator
         }
 
         $this->files[$this->pathFor($enumClass)] = $this->print($file);
-        $namespace->addUse($enumClass);
-        $class->addMethod($property.'Enum')->setReturnType('?'.$enumClass)
-            ->setBody('return '.class_basename($enumClass).'::tryFrom((string) $this->'.$property.');');
+    }
+
+    /**
+     * One enum per module, property and set of values, shared by every model with that property: named after its model
+     * (or what its models' names end with in common) and the property, without repeating a word.
+     *
+     * @return array<string, string> enum key => enum class
+     */
+    private function nameEnums(): array
+    {
+        $groups = [];
+
+        foreach ($this->spec['definitions'] as $definition => $schema) {
+            foreach ($schema['properties'] ?? [] as $property => $propertySchema) {
+                if (isset($propertySchema['enum']) && preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $property) === 1) {
+                    $modelClass = $this->modelClass($definition);
+                    $groups[$this->enumKey($modelClass, $property, $propertySchema['enum'])][] = (string) preg_replace(['/^Private(?=[A-Z])/', '/(ForCreate|ForUpdate|ForPatch|Command)$/'], '', class_basename($modelClass));
+                }
+            }
+        }
+
+        $classes = [];
+
+        foreach ($groups as $key => $models) {
+            [$namespace, $property] = explode('|', $key);
+            $models = array_values(array_unique($models));
+            $words = array_map(fn (string $model) => $this->words($model), $models);
+            $shared = $words[0];
+
+            foreach ($words as $modelWords) {
+                while ($shared !== [] && array_slice($modelWords, -count($shared)) !== $shared) {
+                    array_shift($shared);
+                }
+            }
+
+            $classes[$key] = $namespace.'\\Enums\\'.$this->joinWords(count($models) === 1 ? $words[0] : $shared, $this->words(ucfirst($property)));
+        }
+
+        $renames = $this->overrides['enums'] ?? [];
+
+        foreach ($classes as $key => $class) {
+            $name = Str::after($class, 'spkm\\IsamsApi\\Data\\');
+            $name = str_replace('\\Enums\\', '\\', $name);
+
+            if (isset($renames[$name])) {
+                $classes[$key] = Str::beforeLast($class, '\\').'\\'.$renames[$name];
+                unset($renames[$name]);
+            }
+        }
+
+        if ($renames !== []) {
+            throw new RuntimeException('generator/overrides.php names things the spec does not have:'.implode('', array_map(fn (string $name) => "\n- enums.$name: no such enum", array_keys($renames))));
+        }
+
+        foreach (array_count_values($classes) as $class => $count) {
+            if ($count > 1) {
+                throw new RuntimeException("Several enums with different values would all be $class.");
+            }
+        }
+
+        return $classes;
+    }
+
+    /**
+     * @param  list<string>  $values
+     */
+    private function enumKey(string $modelClass, string $property, array $values): string
+    {
+        return Str::beforeLast($modelClass, '\\').'|'.$property.'|'.implode(',', $values);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function words(string $name): array
+    {
+        preg_match_all('/[A-Z]+(?![a-z])|[A-Z][a-z0-9]*|[a-z0-9]+/', $name, $matches);
+
+        return $matches[0];
+    }
+
+    /**
+     * The two names joined, without repeating the words the first ends with and the second starts with.
+     *
+     * @param  list<string>  $first
+     * @param  list<string>  $second
+     */
+    private function joinWords(array $first, array $second): string
+    {
+        for ($overlap = min(count($first), count($second)); $overlap > 0; $overlap--) {
+            if (array_slice($first, -$overlap) === array_slice($second, 0, $overlap)) {
+                return implode('', [...$first, ...array_slice($second, $overlap)]);
+            }
+        }
+
+        return implode('', [...$first, ...$second]);
     }
 
     /**
@@ -1031,11 +1201,7 @@ final class Generator
      */
     private function addResourceMethod(array $operation): void
     {
-        $segments = explode('\\', Str::after($operation['namespace'], 'spkm\IsamsApi\Requests\\'));
-        $area = array_shift($segments);
-        $resource = $segments === []
-            ? 'spkm\IsamsApi\Resources\\'.$area.'Resource'
-            : 'spkm\IsamsApi\Resources\\'.$area.'\\'.implode('', $segments).'Resource';
+        $resource = $this->resourceFor($operation['namespace']);
         $requestClass = ltrim($operation['class'], '\\');
         $name = lcfirst((string) preg_replace('/Request$/', '', class_basename($requestClass)));
         $method = (new Method($name))->setPublic()->setReturnType('Saloon\Http\Response');
@@ -1064,36 +1230,140 @@ final class Generator
             throw new RuntimeException("Two requests would both be {$resource}::{$name}(); add a \"class\" override for {$operation['id']}.");
         }
 
-        $this->resources[$resource][$name] = ['method' => $method, 'request' => $requestClass];
-        $this->resources['spkm\IsamsApi\Resources\\'.$area.'Resource'] ??= [];
+        $this->resources[$resource][$name] = [
+            'method' => $method,
+            'request' => $requestClass,
+            'short' => $operation['override']['method'] ?? $this->actionName($requestClass, $operation['namespace'], $operation['tag'], $operation['path']),
+        ];
+
+        for ($child = $resource; ($parent = $this->parentResource($child)) !== null; $child = $parent) {
+            $this->resources[$parent] ??= [];
+        }
+    }
+
+    /**
+     * The resource class for a request namespace: Requests\A\B\C is Resources\A\B\CResource.
+     */
+    private function resourceFor(string $requestNamespace): string
+    {
+        return 'spkm\IsamsApi\Resources\\'.Str::after($requestNamespace, 'spkm\IsamsApi\Requests\\').'Resource';
+    }
+
+    private function parentResource(string $resource): ?string
+    {
+        $path = Str::after(Str::beforeLast($resource, 'Resource'), 'spkm\IsamsApi\Resources\\');
+
+        return str_contains($path, '\\') ? 'spkm\IsamsApi\Resources\\'.Str::beforeLast($path, '\\').'Resource' : null;
+    }
+
+    /**
+     * A resource method's name: the request's action without the noun its resource already names. A list is all(), a
+     * single item get(), and other actions keep their words: archive(), moveToAlumni(), getCurrent().
+     */
+    private function actionName(string $requestClass, string $requestNamespace, string $tag, string $path): string
+    {
+        $area = $this->tagParts($tag)['area'];
+        $segments = array_values(array_filter(explode('\\', Str::after($requestNamespace, 'spkm\IsamsApi\Requests\\')), fn (string $segment) => preg_match('/^V\d+$/', $segment) !== 1));
+        $areaNouns = $this->overrides['areaNouns'][$area] ?? [];
+        $nouns = array_map($this->singularWord(...), [
+            ...array_merge(...array_map($this->words(...), $segments)),
+            ...$areaNouns,
+            ...$this->overrides['noiseWords'][$area] ?? [],
+            ...explode(' ', $area),
+            ...(preg_match_all('#/([A-Za-z]+)/\{#', $path, $collections) ? $collections[1] : []),
+        ]);
+        $words = $this->words(Str::beforeLast(class_basename($requestClass), 'Request'));
+        $verb = (string) array_shift($words);
+        $isNoun = fn (string $word) => in_array($this->singularWord($word), $nouns, true);
+        $heads = array_map($this->singularWord(...), [(string) last($this->words((string) end($segments))), ...(count($segments) === 1 ? $areaNouns : [])]);
+        $head = collect($heads)->first(fn (string $candidate) => in_array($candidate, array_map($this->singularWord(...), $words), true)) ?? $heads[0];
+
+        $end = 0;
+        while ($end < count($words) && $isNoun($words[$end])) {
+            $end++;
+        }
+        $start = 0;
+
+        if (! in_array($head, array_map($this->singularWord(...), array_slice($words, 0, $end)), true)) {
+            $last = null;
+            foreach ($words as $index => $word) {
+                if ($this->singularWord($word) === $head) {
+                    $last = $index;
+                }
+            }
+
+            if ($last === null) {
+                return lcfirst($verb.implode('', $words));
+            }
+
+            [$start, $end] = [$last, $last + 1];
+            while ($start > 0 && $isNoun($words[$start - 1])) {
+                $start--;
+            }
+        }
+
+        $noun = array_slice($words, $start, $end - $start);
+        $rest = [...array_slice($words, 0, $start), ...array_slice($words, $end)];
+
+        $byId = array_search('By', $rest, true);
+
+        if ($byId !== false && end($rest) === 'Id') {
+            $rest = array_slice($rest, 0, $byId);
+        }
+
+        if ($start > 0 && $end === count($words)) {
+            while ($rest !== [] && in_array(end($rest), ['To', 'From', 'For', 'By', 'In', 'Of', 'With', 'On', 'At'], true)) {
+                array_pop($rest);
+            }
+        }
+
+        $isPlural = $noun !== [] && ! in_array(end($noun), $this->overrides['uncountable'] ?? [], true) && Str::singular((string) end($noun)) !== end($noun);
+
+        return match (true) {
+            $verb === 'Get' && ($rest === [] || $rest === ['All']) => $isPlural || $rest === ['All'] ? 'all' : 'get',
+            $rest === [] && $isPlural && in_array($verb, ['Create', 'Update', 'Patch', 'Delete'], true) => lcfirst($verb).'Many',
+            default => lcfirst($verb.implode('', $rest)),
+        };
     }
 
     private function emitResources(): void
     {
         ksort($this->resources);
         $areas = [];
+        $children = [];
+
+        foreach (array_keys($this->resources) as $resource) {
+            $parent = $this->parentResource($resource);
+            $parent === null ? $areas[] = $resource : $children[$parent][lcfirst((string) preg_replace('/Resource$/', '', class_basename($resource)))] = $resource;
+        }
 
         foreach ($this->resources as $resource => $methods) {
             [$namespace, $file] = $this->file(Str::beforeLast($resource, '\\'));
             $namespace->addUse('Saloon\Http\BaseResource');
-            $namespace->addUse('Saloon\Http\Response');
             $class = $namespace->addClass(class_basename($resource))->setExtends('Saloon\Http\BaseResource');
-            ksort($methods);
+            $childNames = $children[$resource] ?? [];
+            ksort($childNames);
 
-            if (substr_count($resource, '\\') === 3) {
-                $areas[] = $resource;
-
-                foreach (array_keys($this->resources) as $child) {
-                    if (str_starts_with($child, Str::beforeLast($resource, 'Resource').'\\')) {
-                        $namespace->addUse($child);
-                        $class->addMethod(lcfirst((string) preg_replace('/Resource$/', '', class_basename($child))))
-                            ->setReturnType($child)
-                            ->setBody('return new '.class_basename($child).'($this->connector);');
-                    }
-                }
+            foreach ($childNames as $name => $child) {
+                $namespace->addUse($child);
+                $class->addMethod($name)->setReturnType($child)->setBody('return new '.class_basename($child).'($this->connector);');
             }
 
-            foreach ($methods as ['method' => $method, 'request' => $request]) {
+            $shortNames = array_count_values(array_column($methods, 'short'));
+            $named = [];
+
+            foreach ($methods as $fullName => ['method' => $method, 'request' => $request, 'short' => $short]) {
+                $name = $shortNames[$short] === 1 && ! isset($childNames[$short]) ? $short : $fullName;
+                $named[$name] = [$method->cloneWithName($name), $request];
+            }
+
+            ksort($named);
+
+            if ($named !== []) {
+                $namespace->addUse('Saloon\Http\Response');
+            }
+
+            foreach ($named as [$method, $request]) {
                 $this->useShortNames($namespace, $method, $request);
                 $class->addMember($method);
             }

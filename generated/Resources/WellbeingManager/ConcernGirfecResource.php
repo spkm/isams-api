@@ -17,17 +17,17 @@ use spkm\IsamsApi\Support\JsonPatch;
 class ConcernGirfecResource extends BaseResource
 {
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernGirfecFormForCreate|array<string, mixed>  $form
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernGirfecFormForCreate|array<string, mixed>  $concernGirfecForm
      */
-    public function createConcernGirfecForm(
+    public function createForm(
         string $schoolId,
         int $concernId,
-        ConcernGirfecFormForCreate|array $form,
+        ConcernGirfecFormForCreate|array $concernGirfecForm,
     ): Response {
-        return $this->connector->send(new CreateConcernGirfecFormRequest($schoolId, $concernId, $form));
+        return $this->connector->send(new CreateConcernGirfecFormRequest($schoolId, $concernId, $concernGirfecForm));
     }
 
-    public function getConcernGirfecForm(string $schoolId, int $concernId): Response
+    public function getForm(string $schoolId, int $concernId): Response
     {
         return $this->connector->send(new GetConcernGirfecFormRequest($schoolId, $concernId));
     }
@@ -35,7 +35,7 @@ class ConcernGirfecResource extends BaseResource
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchConcernGirfecForm(string $schoolId, int $concernId, JsonPatch|array $patch): Response
+    public function patchForm(string $schoolId, int $concernId, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchConcernGirfecFormRequest($schoolId, $concernId, $patch));
     }

@@ -17,28 +17,28 @@ use spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\UpdateAbsenceTypeRequest;
 
 class AbsenceTypesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceTypeForCreate|array<string, mixed>  $absenceType
-     */
-    public function createAbsenceType(AbsenceTypeForCreate|array $absenceType): Response
-    {
-        return $this->connector->send(new CreateAbsenceTypeRequest($absenceType));
-    }
-
-    public function getAbsenceType(int $id): Response
-    {
-        return $this->connector->send(new GetAbsenceTypeRequest($id));
-    }
-
-    public function getAbsenceTypes(): Response
+    public function all(): Response
     {
         return $this->connector->send(new GetAbsenceTypesRequest());
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceTypeForCreate|array<string, mixed>  $absenceType
+     */
+    public function create(AbsenceTypeForCreate|array $absenceType): Response
+    {
+        return $this->connector->send(new CreateAbsenceTypeRequest($absenceType));
+    }
+
+    public function get(int $id): Response
+    {
+        return $this->connector->send(new GetAbsenceTypeRequest($id));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceTypeForUpdate|array<string, mixed>  $absenceType
      */
-    public function updateAbsenceType(int $id, AbsenceTypeForUpdate|array $absenceType): Response
+    public function update(int $id, AbsenceTypeForUpdate|array $absenceType): Response
     {
         return $this->connector->send(new UpdateAbsenceTypeRequest($id, $absenceType));
     }

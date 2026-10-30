@@ -26,11 +26,11 @@ class CreateStudentCommunicationHistoryRequest extends IsamsRequest implements H
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentCommunicationHistoryForCreate|array<string, mixed>  $communicationHistory
+     * @param  \spkm\IsamsApi\Data\Students\StudentCommunicationHistoryForCreate|array<string, mixed>  $studentCommunicationHistory
      */
     public function __construct(
         protected string $schoolId,
-        protected StudentCommunicationHistoryForCreate|array $communicationHistory,
+        protected StudentCommunicationHistoryForCreate|array $studentCommunicationHistory,
     ) {
     }
 
@@ -44,6 +44,6 @@ class CreateStudentCommunicationHistoryRequest extends IsamsRequest implements H
      */
     protected function defaultBody(): array
     {
-        return $this->communicationHistory instanceof Data ? $this->communicationHistory->toArray() : $this->communicationHistory;
+        return $this->studentCommunicationHistory instanceof Data ? $this->studentCommunicationHistory->toArray() : $this->studentCommunicationHistory;
     }
 }

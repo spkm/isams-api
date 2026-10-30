@@ -26,10 +26,10 @@ class CreateQualificationEvidenceTypeRequest extends IsamsRequest implements Has
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $globalListItem
+     * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
      */
     public function __construct(
-        protected GlobalListItemForCreate|array $globalListItem,
+        protected GlobalListItemForCreate|array $listItem,
     ) {
     }
 
@@ -43,6 +43,6 @@ class CreateQualificationEvidenceTypeRequest extends IsamsRequest implements Has
      */
     protected function defaultBody(): array
     {
-        return $this->globalListItem instanceof Data ? $this->globalListItem->toArray() : $this->globalListItem;
+        return $this->listItem instanceof Data ? $this->listItem->toArray() : $this->listItem;
     }
 }

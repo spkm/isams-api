@@ -202,7 +202,7 @@
             "method": "GET",
             "path": "/api/agents",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Agent\\Agents\\GetAgentsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Agent\\GetAgentsRequest"
         },
         "AlumniCommands_MoveToApplicantBySchoolid": {
             "method": "POST",
@@ -676,25 +676,25 @@
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\CreateAssessmentColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumn\\CreateAssessmentColumnRequest"
         },
         "AssessmentColumnStructure_DeleteByGradebookidColumnid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\DeleteAssessmentColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumn\\DeleteAssessmentColumnRequest"
         },
         "AssessmentColumnStructure_GetByGradebookidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\GetAssessmentColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumn\\GetAssessmentColumnRequest"
         },
         "AssessmentColumnStructure_UpdateAssessmentColumnByGradebookidColumnidAssessmentcolumnstructure": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\PatchAssessmentColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumn\\PatchAssessmentColumnRequest"
         },
         "AssessmentColumnTranspose_DeleteByGradebookidColumnidTransposeid": {
             "method": "DELETE",
@@ -880,25 +880,25 @@
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\CreateCalculationColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumn\\CreateCalculationColumnRequest"
         },
         "CalculationColumnStructure_DeleteByGradebookidColumnid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\DeleteCalculationColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumn\\DeleteCalculationColumnRequest"
         },
         "CalculationColumnStructure_GetByGradebookidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\GetCalculationColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumn\\GetCalculationColumnRequest"
         },
         "CalculationColumnStructure_UpdateByGradebookidColumnidCalculationcolumnstructure": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\PatchCalculationColumnRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumn\\PatchCalculationColumnRequest"
         },
         "CalculationColumnTranspose_DeleteByGradebookidColumnidTransposeid": {
             "method": "DELETE",
@@ -964,19 +964,19 @@
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/columns/{columnId}/reportmappings",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnStructureReportMappings\\CreateColumnReportMappingsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnReportMappings\\CreateColumnReportMappingsRequest"
         },
         "ColumnStructureReportMappings_DeleteByGradebookidColumnidReportmappingid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/columns/{columnId}/reportmappings/{reportMappingId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnStructureReportMappings\\DeleteColumnReportMappingRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnReportMappings\\DeleteColumnReportMappingRequest"
         },
         "ColumnStructureReportMappings_GetByGradebookidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/columns/{columnId}/reportmappings",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnStructureReportMappings\\GetColumnReportMappingsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnReportMappings\\GetColumnReportMappingsRequest"
         },
         "CommunicationHistory_GetPortalEmailCommunicationHistory": {
             "method": "GET",
@@ -1744,25 +1744,25 @@
             "method": "DELETE",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\DeleteDisclosureTypeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\Types\\DeleteDisclosureTypeRequest"
         },
         "DisclosureTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\GetDisclosureTypesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\Types\\GetDisclosureTypesRequest"
         },
         "DisclosureTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\CreateDisclosureTypeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\Types\\CreateDisclosureTypeRequest"
         },
         "DisclosureTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\UpdateDisclosureTypeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\Types\\UpdateDisclosureTypeRequest"
         },
         "Divisions_GetAll": {
             "method": "GET",
@@ -1864,25 +1864,25 @@
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/contracts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\GetEmployeeContractsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V1\\GetEmployeeContractsRequest"
         },
         "EmployeeContracts_GetByEmployeeidContractid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\GetEmployeeContractRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V1\\GetEmployeeContractRequest"
         },
         "EmployeeContracts_PostByEmployeeidContract": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/contracts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\CreateEmployeeContractRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V1\\CreateEmployeeContractRequest"
         },
         "EmployeeContracts_PutByEmployeeidContractidEmployeecontract": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\UpdateEmployeeContractRequest"
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V1\\UpdateEmployeeContractRequest"
         },
         "EmployeeCustomFields_GetAllAsyncByEmployeeid": {
             "method": "GET",
@@ -2680,37 +2680,37 @@
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/groups",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\CreateGradebookGroupRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Group\\CreateGradebookGroupRequest"
         },
         "GroupStructure_DeleteByGradebookidGroupid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/groups/{groupId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\DeleteGradebookGroupRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Group\\DeleteGradebookGroupRequest"
         },
         "GroupStructure_GetByGradebookidGroupid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/groups/{groupId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\GetGradebookGroupRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Group\\GetGradebookGroupRequest"
         },
         "GroupStructure_UpdateByGradebookidGroupidGroupstructure": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/structure/groups/{groupId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\PatchGradebookGroupRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Group\\PatchGradebookGroupRequest"
         },
         "HomeworkSubmission_GetAsyncByHomeworkidSchoolid": {
             "method": "GET",
             "path": "/api/portal/homework/{homeworkId}/students/{schoolId}/submission",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Homework\\HomeworkSubmission\\GetHomeworkSubmissionRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Homework\\Submission\\GetHomeworkSubmissionRequest"
         },
         "HomeworkSubmission_PatchAsyncByHomeworkidSchoolidPatchoperations": {
             "method": "PATCH",
             "path": "/api/portal/homework/{homeworkId}/students/{schoolId}/submission",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Homework\\HomeworkSubmission\\PatchHomeworkSubmissionRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Homework\\Submission\\PatchHomeworkSubmissionRequest"
         },
         "Homework_DownloadAsyncByHomeworkidResourceid": {
             "method": "GET",
@@ -3082,7 +3082,7 @@
             "method": "GET",
             "path": "/api/portals/listgroups",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\ListGroupPortals\\GetListGroupPortalsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\ListGroup\\GetListGroupsRequest"
         },
         "ListGroup_GetAllCustomAsync": {
             "method": "GET",
@@ -3148,49 +3148,49 @@
             "method": "GET",
             "path": "/api/portals/markbooks/students/{schoolId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalMarkbooksWithPublishedColumnsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookMarkbooksWithPublishedColumnsRequest"
         },
         "MarkbooksPortals_GetMarkbooksWithPublishedColumnsForParentUserBySchoolidViewedasusercode": {
             "method": "GET",
             "path": "/api/portals/markbooks/students/{schoolId}/users/{viewedAsUserCode}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalMarkbooksWithPublishedColumnsForParentUserRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookMarkbooksWithPublishedColumnsForParentUserRequest"
         },
         "MarkbooksPortals_GetPublishedColumnCommentsForMarkbookBySchoolidMarkbookidColumnid": {
             "method": "GET",
             "path": "/api/portals/markbooks/{markbookId}/students/{schoolId}/columns/{columnId}/comments",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalPublishedColumnCommentsForMarkbookRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookPublishedColumnCommentsForMarkbookRequest"
         },
         "MarkbooksPortals_GetPublishedColumnCommentsForMarkbookForParentUserBySchoolidMarkbookidViewedasusercodeColumnid": {
             "method": "GET",
             "path": "/api/portals/markbooks/{markbookId}/students/{schoolId}/users/{viewedAsUserCode}/columns/{columnId}/comments",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalPublishedColumnCommentsForMarkbookForParentUserRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookPublishedColumnCommentsForMarkbookForParentUserRequest"
         },
         "MarkbooksPortals_GetPublishedColumnDetailForMarkbookBySchoolidMarkbookidColumnid": {
             "method": "GET",
             "path": "/api/portals/markbooks/{markbookId}/students/{schoolId}/columns/{columnId}/details",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalPublishedColumnDetailForMarkbookRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookPublishedColumnDetailForMarkbookRequest"
         },
         "MarkbooksPortals_GetPublishedColumnDetailForMarkbookForParentUserBySchoolidMarkbookidViewedasusercodeColumnid": {
             "method": "GET",
             "path": "/api/portals/markbooks/{markbookId}/students/{schoolId}/users/{viewedAsUserCode}/columns/{columnId}/details",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalPublishedColumnDetailForMarkbookForParentUserRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookPublishedColumnDetailForMarkbookForParentUserRequest"
         },
         "MarkbooksPortals_GetPublishedColumnsForMarkbookBySchoolidMarkbookid": {
             "method": "GET",
             "path": "/api/portals/markbooks/{markbookId}/students/{schoolId}/columns",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalPublishedColumnsForMarkbookRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookPublishedColumnsForMarkbookRequest"
         },
         "MarkbooksPortals_GetPublishedColumnsForMarkbookForParentUserBySchoolidMarkbookidViewedasusercode": {
             "method": "GET",
             "path": "/api/portals/markbooks/{markbookId}/students/{schoolId}/users/{viewedAsUserCode}/columns",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\GradebooksPortals\\GetGradebooksPortalPublishedColumnsForMarkbookForParentUserRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Gradebooks\\GetGradebookPublishedColumnsForMarkbookForParentUserRequest"
         },
         "Marks_GetAllByGradebookidPagePagesize": {
             "method": "GET",
@@ -3454,13 +3454,13 @@
             "method": "GET",
             "path": "/api/portals/notifications/settings",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\NotificationsPortal\\GetNotificationsPortalUserNotificationSettingByUserCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\Notifications\\GetUserNotificationSettingByUserCodeRequest"
         },
         "NotificationsPortal_SetUserNotificationSettingByUserCodeByNotificationsettingpublic": {
             "method": "PUT",
             "path": "/api/portals/notifications/settings",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\NotificationsPortal\\SetNotificationsPortalUserNotificationSettingByUserCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\Notifications\\SetUserNotificationSettingByUserCodeRequest"
         },
         "Notifications_GetUserNotificationSettings": {
             "method": "GET",
@@ -3502,25 +3502,25 @@
             "method": "GET",
             "path": "/api/otherschools",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\Schools\\GetOtherSchoolsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\GetOtherSchoolsRequest"
         },
         "OtherSchools_GetById": {
             "method": "GET",
             "path": "/api/otherschools/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\Schools\\GetOtherSchoolRequest"
+            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\GetOtherSchoolRequest"
         },
         "OtherSchools_PostBySchool": {
             "method": "POST",
             "path": "/api/otherschools",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\Schools\\CreateOtherSchoolRequest"
+            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\CreateOtherSchoolRequest"
         },
         "OtherSchools_PutByIdSchool": {
             "method": "PUT",
             "path": "/api/otherschools/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\Schools\\UpdateOtherSchoolRequest"
+            "class": "spkm\\IsamsApi\\Requests\\OtherSchools\\UpdateOtherSchoolRequest"
         },
         "OutstandingForms_ContinueFillAsyncByFormidInstanceid": {
             "method": "GET",
@@ -3766,391 +3766,391 @@
             "method": "GET",
             "path": "/api/portals/account/students/{schoolId}/contacts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalContacts\\GetPortalContactStudentContactsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Contacts\\GetStudentContactsRequest"
         },
         "PortalContacts_SubmitContactUpdateRequestAsyncByRequest": {
             "method": "POST",
             "path": "/api/portals/account/contacts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalContacts\\SubmitPortalContactUpdateRequestRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Contacts\\SubmitContactUpdateRequest"
         },
         "PortalContacts_UpdateStudentContactBySchoolidContactidContactupdates": {
             "method": "PATCH",
             "path": "/api/portals/account/students/{schoolId}/contacts/{contactId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalContacts\\PatchPortalContactStudentContactRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Contacts\\PatchStudentContactRequest"
         },
         "PortalDocumentSigning_CreateParentPortalSigningRequestAsyncByDocumentsigningcreaterequest": {
             "method": "POST",
             "path": "/api/portals/documentsigning/createSigningRequest",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\PortalDocumentSigning\\CreateDocumentSigningRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\DocumentSigning\\CreateDocumentSigningRequest"
         },
         "PortalDocumentSigning_GetDocumentsForSigningAsync": {
             "method": "GET",
             "path": "/api/portals/documentsigning/signingrequests",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\PortalDocumentSigning\\GetDocumentsForSigningRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\DocumentSigning\\GetDocumentsForSigningRequest"
         },
         "PortalDocumentSigning_GetEmbeddedSigningUrlAsyncBySigningrequestid": {
             "method": "GET",
             "path": "/api/portals/documentsigning/signingrequest/{signingRequestId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\PortalDocumentSigning\\GetEmbeddedSigningUrlRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\DocumentSigning\\GetEmbeddedSigningUrlRequest"
         },
         "PortalDocumentSigning_GetEmbeddedSigningUrlForDocumentAsyncByDocumentguid": {
             "method": "GET",
             "path": "/api/portals/documentsigning/signingrequest/document/{documentGuid}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\PortalDocumentSigning\\GetEmbeddedSigningUrlForDocumentRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\DocumentSigning\\GetEmbeddedSigningUrlForDocumentRequest"
         },
         "PortalDocument_DocumentDownloadByDocumentid": {
             "method": "GET",
             "path": "/api/portals/documents/{documentId}/commands/download",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalDocument\\DownloadPortalDocumentRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Document\\DownloadPortalDocumentRequest"
         },
         "PortalDocument_GetDocumentsDownloadHistory": {
             "method": "GET",
             "path": "/api/portals/documents/downloadhistory",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalDocument\\GetPortalDocumentsDownloadHistoryRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Document\\GetDocumentsDownloadHistoryRequest"
         },
         "PortalDocument_GetDocumentsInFolderBySelectedfolder": {
             "method": "GET",
             "path": "/api/portals/documents/folders/{selectedFolder}/documents",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalDocument\\GetPortalDocumentsInFolderRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Document\\GetDocumentsInFolderRequest"
         },
         "PortalDocument_GetFolderBySelectedfolder": {
             "method": "GET",
             "path": "/api/portals/documents/folders/{selectedFolder}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalDocument\\GetPortalDocumentFolderRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Document\\GetDocumentFolderRequest"
         },
         "PortalDocument_GetLatestDocuments": {
             "method": "GET",
             "path": "/api/portals/documents/latest",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalDocument\\GetPortalDocumentLatestDocumentsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Document\\GetLatestDocumentsRequest"
         },
         "PortalDocument_SearchDocumentsBySearchterm": {
             "method": "GET",
             "path": "/api/portals/documents/search",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalDocument\\SearchPortalDocumentsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Document\\SearchDocumentsRequest"
         },
         "PortalLinkMigration_ConvertPortalLinkById": {
             "method": "POST",
             "path": "/api/portals/invalidportalinks/{id}/convert",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalLinkMigration\\ConvertPortalLinkMigrationPortalLinkRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\LinkMigration\\ConvertLinkMigrationPortalLinkRequest"
         },
         "PortalLinkMigration_DeletePortalLinkById": {
             "method": "DELETE",
             "path": "/api/portals/invalidportalinks/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalLinkMigration\\DeletePortalLinkMigrationPortalLinkRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\LinkMigration\\DeleteLinkMigrationPortalLinkRequest"
         },
         "PortalLinkMigration_GetInvalidPortalLinks": {
             "method": "GET",
             "path": "/api/portals/invalidportalinks/list",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalLinkMigration\\GetPortalLinkMigrationInvalidPortalLinksRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\LinkMigration\\GetLinkMigrationInvalidPortalLinksRequest"
         },
         "PortalLinkMigration_MigratePortalLinkById": {
             "method": "POST",
             "path": "/api/portals/invalidportalinks/{id}/migrate",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalLinkMigration\\MigratePortalLinkMigrationPortalLinkRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\LinkMigration\\MigrateLinkMigrationPortalLinkRequest"
         },
         "PortalList_GetByListtype": {
             "method": "GET",
             "path": "/api/portals/list/{listType}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListsRequest"
         },
         "PortalList_GetCounties": {
             "method": "GET",
             "path": "/api/portals/list/counties",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListCountiesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListCountiesRequest"
         },
         "PortalList_GetCountries": {
             "method": "GET",
             "path": "/api/portals/list/countries",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListCountriesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListCountriesRequest"
         },
         "PortalList_GetEthnicity": {
             "method": "GET",
             "path": "/api/portals/list/ethnicity",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListEthnicityRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListEthnicityRequest"
         },
         "PortalList_GetLanguages": {
             "method": "GET",
             "path": "/api/portals/list/languages",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListLanguagesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListLanguagesRequest"
         },
         "PortalList_GetMedicalConditionSeverityTypes": {
             "method": "GET",
             "path": "/api/portals/list/allergyseverity",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalConditionSeverityTypesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalConditionSeverityTypesRequest"
         },
         "PortalList_GetMedicalConditionTypes": {
             "method": "GET",
             "path": "/api/portals/list/pupilhealthconditions",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalConditionTypesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalConditionTypesRequest"
         },
         "PortalList_GetMedicalConsentTypes": {
             "method": "GET",
             "path": "/api/portals/list/medicalconsenttypes",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalConsentTypesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalConsentTypesRequest"
         },
         "PortalList_GetMedicalDocumentCategories": {
             "method": "GET",
             "path": "/api/portals/list/medicaldocumentcategories",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalDocumentCategoriesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalDocumentCategoriesRequest"
         },
         "PortalList_GetMedicalDocumentSources": {
             "method": "GET",
             "path": "/api/portals/list/medicaldocumentsources",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalDocumentSourcesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalDocumentSourcesRequest"
         },
         "PortalList_GetMedicalMedicationLocations": {
             "method": "GET",
             "path": "/api/portals/list/medicalmedicationlocations",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalMedicationLocationsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalMedicationLocationsRequest"
         },
         "PortalList_GetMedicalMedicationSuppliers": {
             "method": "GET",
             "path": "/api/portals/list/medicalmedicationsuppliers",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalMedicationSuppliersRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalMedicationSuppliersRequest"
         },
         "PortalList_GetMedicalMedicationTypes": {
             "method": "GET",
             "path": "/api/portals/list/medicalmedicationtypes",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalMedicationTypesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalMedicationTypesRequest"
         },
         "PortalList_GetMedicalNoteTypes": {
             "method": "GET",
             "path": "/api/portals/list/medicalnotetypes",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalNoteTypesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalNoteTypesRequest"
         },
         "PortalList_GetMedicalVaccinationTypes": {
             "method": "GET",
             "path": "/api/portals/list/medicalvaccinationtypes",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListMedicalVaccinationTypesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListMedicalVaccinationTypesRequest"
         },
         "PortalList_GetNationalities": {
             "method": "GET",
             "path": "/api/portals/list/nationalities",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListNationalitiesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListNationalitiesRequest"
         },
         "PortalList_GetPassportPlaceIssued": {
             "method": "GET",
             "path": "/api/portals/list/passportplaceissued",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListPassportPlaceIssuedRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListPassportPlaceIssuedRequest"
         },
         "PortalList_GetPassportType": {
             "method": "GET",
             "path": "/api/portals/list/passporttype",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListPassportTypeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListPassportTypeRequest"
         },
         "PortalList_GetReligions": {
             "method": "GET",
             "path": "/api/portals/list/religions",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListReligionsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListReligionsRequest"
         },
         "PortalList_GetSchools": {
             "method": "GET",
             "path": "/api/portals/list/schools",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListSchoolsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListSchoolsRequest"
         },
         "PortalList_GetSelectionCategories": {
             "method": "GET",
             "path": "/api/portals/list/selectioncategories",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListSelectionCategoriesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListSelectionCategoriesRequest"
         },
         "PortalList_GetTitles": {
             "method": "GET",
             "path": "/api/portals/list/titles",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListTitlesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListTitlesRequest"
         },
         "PortalList_GetUniversities": {
             "method": "GET",
             "path": "/api/portals/list/universities",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\PortalList\\GetPortalListUniversitiesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\List\\GetListUniversitiesRequest"
         },
         "PortalModules_GetCapabilitiesAsync": {
             "method": "GET",
             "path": "/api/portals/modules/capabilities",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Students\\PortalModules\\GetPortalModuleCapabilitiesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Students\\Modules\\GetModuleCapabilitiesRequest"
         },
         "PortalsAdmissionsForms_GetApplicationFormByCodeByCode": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/application/{code}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormApplicationFormByCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetApplicationFormRequest"
         },
         "PortalsAdmissionsForms_GetApplicationSummaryFormByCodeByCodes": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/application/summary",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormApplicationSummaryFormByCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetApplicationSummaryRequest"
         },
         "PortalsAdmissionsForms_GetDefaultApplicationForm": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/application",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormDefaultApplicationFormRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetAdmissionsFormDefaultApplicationFormRequest"
         },
         "PortalsAdmissionsForms_GetDefaultEnquiryForm": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/enquiry",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormDefaultEnquiryFormRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetAdmissionsFormDefaultEnquiryFormRequest"
         },
         "PortalsAdmissionsForms_GetDefaultRegistrationForm": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/registration",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormDefaultRegistrationFormRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetAdmissionsFormDefaultRegistrationFormRequest"
         },
         "PortalsAdmissionsForms_GetEnquiryFormFromCodeByCode": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/enquiry/{code}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormEnquiryFormFromCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetEnquiryFormRequest"
         },
         "PortalsAdmissionsForms_GetLegacyConfiguration": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/legacy",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormLegacyConfigurationRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetAdmissionsFormLegacyConfigurationRequest"
         },
         "PortalsAdmissionsForms_GetOriginalFormByCodeByCode": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/enquiry/original/{code}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormOriginalFormByCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetOriginalFormRequest"
         },
         "PortalsAdmissionsForms_GetRegistrationFormByCodeByCode": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/registration/{code}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormRegistrationFormByCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetRegistrationFormRequest"
         },
         "PortalsAdmissionsForms_GetRegistrationSummariesFormByCodesByCodes": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/enquiry/summary",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormRegistrationSummariesFormByCodesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetRegistrationSummariesRequest"
         },
         "PortalsAdmissionsForms_GetRegistrationSummaryFormByCodeByCodes": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/registration/summary",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormRegistrationSummaryFormByCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetRegistrationSummaryRequest"
         },
         "PortalsAdmissionsForms_GetSubmissionByGlobalReferenceIdByFormsubmissionglobalid": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/submission/globalreference/{formSubmissionGlobalId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormSubmissionByGlobalReferenceIdRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetFormSubmissionByGlobalReferenceIdRequest"
         },
         "PortalsAdmissionsForms_GetSubmissionByIdById": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/submission/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormSubmissionByIdRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetFormSubmissionRequest"
         },
         "PortalsAdmissionsForms_GetSubmissionsByUserCodeByTypeTempguestuser": {
             "method": "GET",
             "path": "/api/portals/admissions/forms/submissions",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\GetPortalsAdmissionsFormSubmissionsByUserCodeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\GetAdmissionsFormSubmissionsByUserCodeRequest"
         },
         "PortalsAdmissionsForms_SaveSubmittedFormAsyncByForm": {
             "method": "POST",
             "path": "/api/portals/admissions/forms/submission",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\SavePortalsAdmissionsFormSubmittedFormRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\SaveAdmissionsFormSubmittedFormRequest"
         },
         "PortalsAdmissionsForms_UpdateSubmissionOwnerByForm": {
             "method": "POST",
             "path": "/api/portals/admissions/forms/submission/updateOwner",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsAdmissionsForms\\UpdatePortalsAdmissionsFormSubmissionOwnerRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\Forms\\UpdateAdmissionsFormSubmissionOwnerRequest"
         },
         "PortalsApplicantContacts_GetBySchoolidIncludedeceased": {
             "method": "GET",
             "path": "/api/portals/admissions/applicants/{schoolId}/contacts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsApplicantContacts\\GetPortalsApplicantContactsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\ApplicantContacts\\GetApplicantContactsRequest"
         },
         "PortalsDivisions_GetDivisionList": {
             "method": "GET",
             "path": "/api/portals/school/divisions",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalsDivisions\\GetPortalsDivisionListRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Divisions\\GetDivisionListRequest"
         },
         "PortalsFormInstance_GetApplicationFormList": {
             "method": "GET",
             "path": "/api/portals/admissions/forminstance/applicationForms",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsFormInstance\\GetPortalsFormInstanceApplicationFormListRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\FormInstance\\GetFormInstanceApplicationFormListRequest"
         },
         "PortalsFormInstance_GetEnquiryFormList": {
             "method": "GET",
             "path": "/api/portals/admissions/forminstance/enquiryForms",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsFormInstance\\GetPortalsFormInstanceEnquiryFormListRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\FormInstance\\GetFormInstanceEnquiryFormListRequest"
         },
         "PortalsFormInstance_GetRegistrationFormList": {
             "method": "GET",
             "path": "/api/portals/admissions/forminstance/registrationForms",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\PortalsFormInstance\\GetPortalsFormInstanceRegistrationFormListRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Admissions\\FormInstance\\GetFormInstanceRegistrationFormListRequest"
         },
         "PortalsForms_Get": {
             "method": "GET",
             "path": "/api/portals/school/forms",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalsForms\\GetPortalsFormsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Forms\\GetFormsRequest"
         },
         "PortalsHouses_GetByHousetype": {
             "method": "GET",
             "path": "/api/portals/school/houses",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalsHouses\\GetPortalsHousesRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Houses\\GetHousesRequest"
         },
         "PortalsYearGroups_Get": {
             "method": "GET",
             "path": "/api/portals/school/yeargroups",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\PortalsYearGroups\\GetPortalsYearGroupsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\YearGroups\\GetYearGroupsRequest"
         },
         "PresentCodes_Get": {
             "method": "GET",
@@ -4222,85 +4222,85 @@
             "method": "GET",
             "path": "/api/portals/notifications/push/messages",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationMessagesPortal\\GetPushNotificationMessagesPortalRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotificationMessages\\GetPushNotificationMessagesRequest"
         },
         "PushNotificationMessagesPortal_MarkAllMessagesAsDeleted": {
             "method": "PATCH",
             "path": "/api/portals/notifications/push/messages/delete",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationMessagesPortal\\MarkPushNotificationMessagesPortalAllMessagesAsDeletedRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotificationMessages\\MarkPushNotificationMessageAllMessagesAsDeletedRequest"
         },
         "PushNotificationMessagesPortal_MarkAllMessagesAsRead": {
             "method": "PATCH",
             "path": "/api/portals/notifications/push/messages/read",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationMessagesPortal\\MarkPushNotificationMessagesPortalAllMessagesAsReadRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotificationMessages\\MarkPushNotificationMessageAllMessagesAsReadRequest"
         },
         "PushNotificationMessagesPortal_MarkMessageAsDeletedByMessageid": {
             "method": "PATCH",
             "path": "/api/portals/notifications/push/messages/{messageId}/delete",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationMessagesPortal\\MarkPushNotificationMessagesPortalMessageAsDeletedRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotificationMessages\\MarkPushNotificationMessageAsDeletedRequest"
         },
         "PushNotificationMessagesPortal_MarkMessageAsReadByMessageid": {
             "method": "PATCH",
             "path": "/api/portals/notifications/push/messages/{messageId}/read",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationMessagesPortal\\MarkPushNotificationMessagesPortalMessageAsReadRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotificationMessages\\MarkPushNotificationMessageAsReadRequest"
         },
         "PushNotificationMessagesPortal_UpdateMessageStatusByUpdatedtoMessageid": {
             "method": "PATCH",
             "path": "/api/portals/notifications/push/messages/{messageId}/status",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationMessagesPortal\\UpdatePushNotificationMessagesPortalMessageStatusRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotificationMessages\\UpdatePushNotificationMessageStatusRequest"
         },
         "PushNotificationPortal_GetChannels": {
             "method": "GET",
             "path": "/api/portals/notifications/push/channels",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\GetPushNotificationPortalChannelsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\GetPushNotificationChannelsRequest"
         },
         "PushNotificationPortal_GetConfig": {
             "method": "GET",
             "path": "/api/portals/notifications/push/config",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\GetPushNotificationPortalConfigRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\GetPushNotificationConfigRequest"
         },
         "PushNotificationPortal_GetUserChannelSubscriptions": {
             "method": "GET",
             "path": "/api/portals/notifications/push/subscriptions",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\GetPushNotificationPortalUserChannelSubscriptionsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\GetPushNotificationUserChannelSubscriptionsRequest"
         },
         "PushNotificationPortal_GetUserPushDeviceToken": {
             "method": "GET",
             "path": "/api/portals/notifications/push/token",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\GetPushNotificationPortalUserPushDeviceTokenRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\GetPushNotificationUserPushDeviceTokenRequest"
         },
         "PushNotificationPortal_SendDebugPushNotification": {
             "method": "POST",
             "path": "/api/portals/notifications/push/debug",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\SendPushNotificationPortalDebugPushNotificationRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\SendDebugPushNotificationRequest"
         },
         "PushNotificationPortal_SubscribeUserToChannelAsyncBySubscribe": {
             "method": "PUT",
             "path": "/api/portals/notifications/push/subscriptions/subscribe",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\SubscribePushNotificationPortalUserToChannelRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\SubscribePushNotificationUserToChannelRequest"
         },
         "PushNotificationPortal_UnSubscribeUserFromChannelAsyncBySubscribe": {
             "method": "PUT",
             "path": "/api/portals/notifications/push/subscriptions/unsubscribe",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\UnsubscribePushNotificationUserFromChannelRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\UnsubscribePushNotificationUserFromChannelRequest"
         },
         "PushNotificationPortal_UpdateUserPushDeviceTokenAsyncByUpdatedevicetokenprivate": {
             "method": "PUT",
             "path": "/api/portals/notifications/push/token",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\PushNotificationPortal\\UpdatePushNotificationPortalUserPushDeviceTokenRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\PushNotification\\UpdatePushNotificationUserPushDeviceTokenRequest"
         },
         "QualificationEvidenceTypes_DeleteById": {
             "method": "DELETE",
@@ -4462,19 +4462,19 @@
             "method": "GET",
             "path": "/api/registers/{registerId}/students/association",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RegisterAssociation\\GetRegisterAssociationsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Association\\GetRegisterAssociationsRequest"
         },
         "RegisterAssociation_GetAsyncByRegisteridSchoolid": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/{schoolId}/association",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RegisterAssociation\\GetRegisterAssociationRequest"
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Association\\GetRegisterAssociationRequest"
         },
         "RegisterAssociation_PutByRegisteridSchoolidAssociation": {
             "method": "PUT",
             "path": "/api/registers/{registerId}/students/{schoolId}/association",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RegisterAssociation\\UpdateRegisterAssociationRequest"
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Association\\UpdateRegisterAssociationRequest"
         },
         "RegistrationEvidenceTypes_DeleteById": {
             "method": "DELETE",
@@ -4810,13 +4810,13 @@
             "method": "GET",
             "path": "/api/portals/school/addresses/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\SchoolAddresses\\GetSchoolAddressRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Addresses\\GetSchoolAddressRequest"
         },
         "SchoolAddresses_GetSchoolAddressList": {
             "method": "GET",
             "path": "/api/portals/school/addresses",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\SchoolAddresses\\GetSchoolAddressListRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Addresses\\GetSchoolAddressListRequest"
         },
         "SchoolConfiguration_Get": {
             "method": "GET",
@@ -4828,31 +4828,31 @@
             "method": "GET",
             "path": "/api/portals/schooldirectory/departments",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\SchoolDirectory\\GetSchoolDirectoryDepartmentsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\SchoolDirectory\\GetSchoolDirectoryDepartmentsRequest"
         },
         "SchoolDirectory_GetNonTeachingStaffByPagePagesize": {
             "method": "GET",
             "path": "/api/portals/schooldirectory/nonteachingstaff",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\SchoolDirectory\\GetSchoolDirectoryNonTeachingStaffRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\SchoolDirectory\\GetSchoolDirectoryNonTeachingStaffRequest"
         },
         "SchoolDirectory_GetTeachingStaffByPagePagesize": {
             "method": "GET",
             "path": "/api/portals/schooldirectory/teachingstaff",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\ParentPortal\\SchoolDirectory\\GetSchoolDirectoryTeachingStaffRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Parent\\SchoolDirectory\\GetSchoolDirectoryTeachingStaffRequest"
         },
         "SchoolTermsPortal_GetSchoolTermsAsync": {
             "method": "GET",
             "path": "/api/portals/schools/terms",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\SchoolTermsPortal\\GetPortalSchoolTermsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Terms\\GetPortalSchoolTermsRequest"
         },
         "SchoolsPortal_GetSchoolsByQueryPagePagesize": {
             "method": "GET",
             "path": "/api/portals/schools",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\SchoolsPortal\\GetPortalSchoolsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\School\\Schools\\GetPortalSchoolsRequest"
         },
         "ScreeningLogs_GetByRegisteridSchoolid": {
             "method": "GET",
@@ -4930,25 +4930,25 @@
             "method": "POST",
             "path": "/api/portals/contacts/add",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContactsPortal\\AssociateStaffContactsPortalContactRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContacts\\AssociateStaffContactPortalContactRequest"
         },
         "StaffContactsPortal_DisassociatePortalContactByPortalcontact": {
             "method": "POST",
             "path": "/api/portals/contacts/delete",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContactsPortal\\DisassociateStaffContactsPortalContactRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContacts\\DisassociateStaffContactPortalContactRequest"
         },
         "StaffContactsPortal_GetAllStaffContactDetails": {
             "method": "GET",
             "path": "/api/portals/contacts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContactsPortal\\GetStaffContactsPortalStaffContactDetailsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContacts\\GetStaffContactDetailsRequest"
         },
         "StaffContactsPortal_GetPortalContactDetailsById": {
             "method": "GET",
             "path": "/api/portals/contacts/{id}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContactsPortal\\GetStaffContactsPortalContactDetailsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\SystemConfiguration\\StaffContacts\\GetStaffContactPortalContactDetailsRequest"
         },
         "StatementOfAccounts_GetCurrentBillingCycle": {
             "method": "GET",
@@ -4990,7 +4990,7 @@
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Structure\\GetGradebookStructureRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GetGradebookStructureRequest"
         },
         "StudentApplicantCustomFields_GetAllAsyncBySchoolid": {
             "method": "GET",
@@ -5734,13 +5734,13 @@
             "method": "GET",
             "path": "/api/portals/students/{schoolId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Students\\StudentsPortal\\GetPortalStudentRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Students\\GetPortalStudentRequest"
         },
         "StudentsPortal_GetStudentsByPortalTypeAsyncByPortaltypeDivisionidscommaseparated": {
             "method": "GET",
             "path": "/api/portals/students/portal/{portalType}/{divisionIdsCommaSeparated}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Students\\StudentsPortal\\GetPortalStudentsByPortalTypeRequest"
+            "class": "spkm\\IsamsApi\\Requests\\CloudPortals\\Students\\GetPortalStudentsByPortalTypeRequest"
         },
         "Students_GetAllByPagePagesizeExpand": {
             "method": "GET",
@@ -5932,25 +5932,25 @@
             "method": "DELETE",
             "path": "/api/teaching/sets/{setId}/setList/{schoolId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\TeachingSets\\RemoveStudentFromTeachingSetRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\Sets\\RemoveStudentFromTeachingSetRequest"
         },
         "TeachingSets_Get": {
             "method": "GET",
             "path": "/api/teaching/sets",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\TeachingSets\\GetTeachingSetsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\Sets\\GetTeachingSetsRequest"
         },
         "TeachingSets_GetStudentsInSetBySetid": {
             "method": "GET",
             "path": "/api/teaching/sets/{setId}/setList",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\TeachingSets\\GetTeachingSetStudentsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\Sets\\GetTeachingSetStudentsRequest"
         },
         "TeachingSets_PostBySetidSchoolid": {
             "method": "POST",
             "path": "/api/teaching/sets/{setId}/setList/{schoolId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\TeachingSets\\AddStudentToTeachingSetRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\Sets\\AddStudentToTeachingSetRequest"
         },
         "TeachingSkills_CreateTeachingSkillAsyncByCommand": {
             "method": "POST",
@@ -6262,35 +6262,35 @@
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/contracts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\CreateEmployeeContractRequest",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\CreateEmployeeContractRequest",
             "apiVersion": "2.0"
         },
         "v2:EmployeeContracts_DeleteContractAsyncByEmployeeidContractid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\DeleteEmployeeContractRequest",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\DeleteEmployeeContractRequest",
             "apiVersion": "2.0"
         },
         "v2:EmployeeContracts_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/contracts",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\GetEmployeeContractsRequest",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\GetEmployeeContractsRequest",
             "apiVersion": "2.0"
         },
         "v2:EmployeeContracts_GetByEmployeeidContractid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\GetEmployeeContractRequest",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\GetEmployeeContractRequest",
             "apiVersion": "2.0"
         },
         "v2:EmployeeContracts_UpdateContractAsyncByEmployeeidContractidContractdetails": {
             "method": "PATCH",
             "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
             "source": "generated",
-            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\PatchEmployeeContractRequest",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\PatchEmployeeContractRequest",
             "apiVersion": "2.0"
         }
     },
@@ -6413,10 +6413,10 @@
         "iSAMS.HR.AppServices.Objects.Public.Resources.Post.Absence": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceForCreate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Post.AbsenceType": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceTypeForCreate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Post.ChildrensBarredListCheck": "spkm\\IsamsApi\\Data\\HumanResources\\ChildrensBarredListCheckForCreate",
-        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateAdditionalPaymentCommand": "spkm\\IsamsApi\\Data\\HumanResources\\CreateAdditionalPaymentCommandForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateAdditionalPaymentCommand": "spkm\\IsamsApi\\Data\\HumanResources\\AdditionalPaymentForCreate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateContractCommand": "spkm\\IsamsApi\\Data\\HumanResources\\ContractForCreate",
-        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateSalaryCommand": "spkm\\IsamsApi\\Data\\HumanResources\\CreateSalaryCommandForCreate",
-        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateTeachingSkillCommand": "spkm\\IsamsApi\\Data\\HumanResources\\CreateTeachingSkillCommandForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateSalaryCommand": "spkm\\IsamsApi\\Data\\HumanResources\\SalaryForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateTeachingSkillCommand": "spkm\\IsamsApi\\Data\\HumanResources\\TeachingSkillForCreate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Post.DisclosureBarringServiceCheck": "spkm\\IsamsApi\\Data\\HumanResources\\DisclosureBarringServiceCheckForCreate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Post.DivisionLessonCost": "spkm\\IsamsApi\\Data\\HumanResources\\DivisionLessonCostForCreate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Post.Employee": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeForCreate",
@@ -6553,7 +6553,7 @@
         "iSAMS.MedicalCentre.Entities.Public.Resources.Get.MedicalVaccinationType": "spkm\\IsamsApi\\Data\\MedicalCentre\\MedicalVaccinationType",
         "iSAMS.News.AppServices.Objects.Resources.Get.News": "spkm\\IsamsApi\\Data\\News\\News",
         "iSAMS.News.AppServices.Objects.Resources.Post.News": "spkm\\IsamsApi\\Data\\News\\NewsForCreate",
-        "iSAMS.Notifications.Model.Dto.NotificationSettingPublicDto": "spkm\\IsamsApi\\Data\\Notifications\\NotificationSettingPublicDto",
+        "iSAMS.Notifications.Model.Dto.NotificationSettingPublicDto": "spkm\\IsamsApi\\Data\\Notifications\\NotificationSettingPublic",
         "iSAMS.Notifications.Model.NotificationSetting": "spkm\\IsamsApi\\Data\\Notifications\\NotificationSetting",
         "iSAMS.OtherSchools.AppServices.Objects.Public.Contracts.IContact": "spkm\\IsamsApi\\Data\\OtherSchools\\IContact",
         "iSAMS.OtherSchools.AppServices.Objects.Public.Resources.Get.OtherSchool": "spkm\\IsamsApi\\Data\\OtherSchools\\OtherSchool",
@@ -6725,9 +6725,9 @@
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.PublicStudent": "spkm\\IsamsApi\\Data\\Students\\StudentForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.PublicStudentPassport": "spkm\\IsamsApi\\Data\\Students\\StudentPassportForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.StudentVisa": "spkm\\IsamsApi\\Data\\Students\\StudentVisaForUpdate",
-        "iSAMS.PushNotifications.AppServices.Objects.Dto.NotificationSubscriptionDto": "spkm\\IsamsApi\\Data\\PushNotifications\\NotificationSubscriptionDto",
-        "iSAMS.PushNotifications.AppServices.Objects.Dto.NotificationUpdateDevicePrivateDto": "spkm\\IsamsApi\\Data\\PushNotifications\\NotificationUpdateDevicePrivateDto",
-        "iSAMS.PushNotifications.AppServices.Objects.Dto.UserMessageStatusUpdateDto": "spkm\\IsamsApi\\Data\\PushNotifications\\UserMessageStatusUpdateDto",
+        "iSAMS.PushNotifications.AppServices.Objects.Dto.NotificationSubscriptionDto": "spkm\\IsamsApi\\Data\\PushNotifications\\NotificationSubscription",
+        "iSAMS.PushNotifications.AppServices.Objects.Dto.NotificationUpdateDevicePrivateDto": "spkm\\IsamsApi\\Data\\PushNotifications\\NotificationUpdateDevicePrivate",
+        "iSAMS.PushNotifications.AppServices.Objects.Dto.UserMessageStatusUpdateDto": "spkm\\IsamsApi\\Data\\PushNotifications\\UserMessageStatusUpdate",
         "iSAMS.PushNotifications.AppServices.Objects.NotificationChannel": "spkm\\IsamsApi\\Data\\PushNotifications\\NotificationChannel",
         "iSAMS.PushNotifications.AppServices.Objects.NotificationUserSubscription": "spkm\\IsamsApi\\Data\\PushNotifications\\NotificationUserSubscription",
         "iSAMS.PushNotifications.AppServices.Objects.Private.Get.NotificationDeviceTokenMapped": "spkm\\IsamsApi\\Data\\PushNotifications\\PrivateNotificationDeviceTokenMapped",
@@ -6770,7 +6770,7 @@
         "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.StudentSelfRegistrationRegisterPeriod": "spkm\\IsamsApi\\Data\\Registration\\StudentSelfRegistrationRegisterPeriod",
         "iSAMS.Registration.AppServices.Objects.Public.Resources.Post.AttendanceCodeReasonForChange": "spkm\\IsamsApi\\Data\\Registration\\AttendanceCodeReasonForChangeForCreate",
         "iSAMS.Registration.AppServices.Objects.Public.Resources.Post.RegistrationOffGame": "spkm\\IsamsApi\\Data\\Registration\\RegistrationOffGameForCreate",
-        "iSAMS.Registration.AppServices.Objects.Public.Resources.Put.Collections.UpdateStudentAttendanceSelfRegistrationRegisterCollection": "spkm\\IsamsApi\\Data\\Registration\\UpdateStudentAttendanceSelfRegistrationRegisterCollectionForUpdate",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Put.Collections.UpdateStudentAttendanceSelfRegistrationRegisterCollection": "spkm\\IsamsApi\\Data\\Registration\\SelfRegistrationRegistersForUpdate",
         "iSAMS.Reports.AppServices.Objects.Resources.Get.Report": "spkm\\IsamsApi\\Data\\Reports\\Report",
         "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Contracts.IActivityPermission": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\IActivityPermission",
         "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.ActivityPermission": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\ActivityPermission",

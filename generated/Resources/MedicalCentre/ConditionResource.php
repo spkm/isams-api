@@ -13,12 +13,12 @@ use spkm\IsamsApi\Requests\MedicalCentre\Condition\GetMedicalConditionTypesReque
 
 class ConditionResource extends BaseResource
 {
-    public function getMedicalConditionSeverities(): Response
+    public function getSeverities(): Response
     {
         return $this->connector->send(new GetMedicalConditionSeveritiesRequest());
     }
 
-    public function getMedicalConditionTypes(): Response
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetMedicalConditionTypesRequest());
     }

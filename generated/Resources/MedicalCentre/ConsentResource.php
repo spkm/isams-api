@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\MedicalCentre\Consent\GetMedicalConsentTypesRequest;
 
 class ConsentResource extends BaseResource
 {
-    public function getMedicalConsentTypes(): Response
+    public function getTypes(): Response
     {
         return $this->connector->send(new GetMedicalConsentTypesRequest());
     }

@@ -26,10 +26,10 @@ class CreateConcernActionOutcomeRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\WellbeingManager\ActionOutcomeForCreate|array<string, mixed>  $concernActionOutcome
+     * @param  \spkm\IsamsApi\Data\WellbeingManager\ActionOutcomeForCreate|array<string, mixed>  $actionOutcome
      */
     public function __construct(
-        protected ActionOutcomeForCreate|array $concernActionOutcome,
+        protected ActionOutcomeForCreate|array $actionOutcome,
     ) {
     }
 
@@ -43,6 +43,6 @@ class CreateConcernActionOutcomeRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->concernActionOutcome instanceof Data ? $this->concernActionOutcome->toArray() : $this->concernActionOutcome;
+        return $this->actionOutcome instanceof Data ? $this->actionOutcome->toArray() : $this->actionOutcome;
     }
 }

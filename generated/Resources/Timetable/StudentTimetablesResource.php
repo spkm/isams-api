@@ -12,7 +12,7 @@ use spkm\IsamsApi\Requests\Timetable\StudentTimetables\GetStudentTimetableReques
 
 class StudentTimetablesResource extends BaseResource
 {
-    public function getStudentTimetable(string $schoolId): Response
+    public function get(string $schoolId): Response
     {
         return $this->connector->send(new GetStudentTimetableRequest($schoolId));
     }

@@ -7,7 +7,6 @@
 namespace spkm\IsamsApi\Resources;
 
 use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Resources\School\ConfigurationResource;
 use spkm\IsamsApi\Resources\School\DepartmentEmployeesResource;
 use spkm\IsamsApi\Resources\School\DepartmentsResource;

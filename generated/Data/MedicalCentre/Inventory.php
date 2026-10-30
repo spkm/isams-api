@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Data\MedicalCentre;
 
 use Carbon\CarbonImmutable;
 use spkm\IsamsApi\Data\Data;
-use spkm\IsamsApi\Data\MedicalCentre\Enums\InventoryRecordType;
+use spkm\IsamsApi\Data\MedicalCentre\Enums\RecordType;
 
 readonly class Inventory extends Data
 {
@@ -32,8 +32,8 @@ readonly class Inventory extends Data
     ) {
     }
 
-    public function recordTypeEnum(): ?InventoryRecordType
+    public function recordTypeEnum(): ?RecordType
     {
-        return InventoryRecordType::tryFrom((string) $this->recordType);
+        return RecordType::tryFrom((string) $this->recordType);
     }
 }

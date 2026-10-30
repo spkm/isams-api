@@ -28,12 +28,12 @@ class CreateRegistrationReasonForChangeRequest extends IsamsRequest implements H
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Registration\AttendanceCodeReasonForChangeForCreate|array<string, mixed>  $reasonForChange
+     * @param  \spkm\IsamsApi\Data\Registration\AttendanceCodeReasonForChangeForCreate|array<string, mixed>  $attendanceCodeReasonForChange
      */
     public function __construct(
         protected int $periodId,
         protected string $schoolId,
-        protected AttendanceCodeReasonForChangeForCreate|array $reasonForChange,
+        protected AttendanceCodeReasonForChangeForCreate|array $attendanceCodeReasonForChange,
     ) {
     }
 
@@ -47,6 +47,6 @@ class CreateRegistrationReasonForChangeRequest extends IsamsRequest implements H
      */
     protected function defaultBody(): array
     {
-        return $this->reasonForChange instanceof Data ? $this->reasonForChange->toArray() : $this->reasonForChange;
+        return $this->attendanceCodeReasonForChange instanceof Data ? $this->attendanceCodeReasonForChange->toArray() : $this->attendanceCodeReasonForChange;
     }
 }

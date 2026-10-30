@@ -12,26 +12,44 @@ use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurati
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationSecurityOptionsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationSystemNotificationSettingsRequest;
+use spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration\ListGroupResource;
+use spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration\ListResource;
+use spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration\StaffContactsResource;
 
 class SystemConfigurationResource extends BaseResource
 {
-    public function getSystemConfiguration(): Response
+    public function list(): ListResource
+    {
+        return new ListResource($this->connector);
+    }
+
+    public function listGroup(): ListGroupResource
+    {
+        return new ListGroupResource($this->connector);
+    }
+
+    public function staffContacts(): StaffContactsResource
+    {
+        return new StaffContactsResource($this->connector);
+    }
+
+    public function get(): Response
     {
         return $this->connector->send(new GetSystemConfigurationRequest());
     }
 
-    public function getSystemConfigurationLanguages(): Response
+    public function getLanguages(): Response
     {
         return $this->connector->send(new GetSystemConfigurationLanguagesRequest());
     }
 
-    public function getSystemConfigurationSecurityOptions(): Response
-    {
-        return $this->connector->send(new GetSystemConfigurationSecurityOptionsRequest());
-    }
-
-    public function getSystemConfigurationSystemNotificationSettings(): Response
+    public function getNotificationSettings(): Response
     {
         return $this->connector->send(new GetSystemConfigurationSystemNotificationSettingsRequest());
+    }
+
+    public function getSecurityOptions(): Response
+    {
+        return $this->connector->send(new GetSystemConfigurationSecurityOptionsRequest());
     }
 }

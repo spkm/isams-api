@@ -19,25 +19,7 @@ use spkm\IsamsApi\Requests\HumanResources\Employees\UpdateEmployeeRequest;
 
 class EmployeesResource extends BaseResource
 {
-    /**
-     * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeForCreate|array<string, mixed>  $employee
-     */
-    public function createEmployee(EmployeeForCreate|array $employee): Response
-    {
-        return $this->connector->send(new CreateEmployeeRequest($employee));
-    }
-
-    public function getEmployee(int $id, ?string $expand = null, string|Stringable|null $filter = null): Response
-    {
-        return $this->connector->send(new GetEmployeeRequest($id, $expand, $filter));
-    }
-
-    public function getEmployeeByUserCode(string $userCode): Response
-    {
-        return $this->connector->send(new GetEmployeeByUserCodeRequest($userCode));
-    }
-
-    public function getEmployees(
+    public function all(
         ?int $page = null,
         ?int $pageSize = null,
         ?string $expand = null,
@@ -47,9 +29,27 @@ class EmployeesResource extends BaseResource
     }
 
     /**
+     * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeForCreate|array<string, mixed>  $employee
+     */
+    public function create(EmployeeForCreate|array $employee): Response
+    {
+        return $this->connector->send(new CreateEmployeeRequest($employee));
+    }
+
+    public function get(int $id, ?string $expand = null, string|Stringable|null $filter = null): Response
+    {
+        return $this->connector->send(new GetEmployeeRequest($id, $expand, $filter));
+    }
+
+    public function getByUserCode(string $userCode): Response
+    {
+        return $this->connector->send(new GetEmployeeByUserCodeRequest($userCode));
+    }
+
+    /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeForUpdate|array<string, mixed>  $employee
      */
-    public function updateEmployee(int $id, EmployeeForUpdate|array $employee): Response
+    public function update(int $id, EmployeeForUpdate|array $employee): Response
     {
         return $this->connector->send(new UpdateEmployeeRequest($id, $employee));
     }

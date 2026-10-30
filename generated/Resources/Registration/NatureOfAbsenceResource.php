@@ -17,17 +17,7 @@ use spkm\IsamsApi\Support\JsonPatch;
 
 class NatureOfAbsenceResource extends BaseResource
 {
-    public function createRegistrationNatureOfAbsence(int $registrationPupilId, string $reason): Response
-    {
-        return $this->connector->send(new CreateRegistrationNatureOfAbsenceRequest($registrationPupilId, $reason));
-    }
-
-    public function deleteRegistrationNatureOfAbsence(int $registrationPupilId): Response
-    {
-        return $this->connector->send(new DeleteRegistrationNatureOfAbsenceRequest($registrationPupilId));
-    }
-
-    public function getRegistrationNatureOfAbsences(
+    public function all(
         DateTimeInterface|string|null $registrationFrom = null,
         DateTimeInterface|string|null $registrationTo = null,
         ?string $code = null,
@@ -39,10 +29,20 @@ class NatureOfAbsenceResource extends BaseResource
         return $this->connector->send(new GetRegistrationNatureOfAbsencesRequest($registrationFrom, $registrationTo, $code, $onlyEmptyNatureOfAbsence, $orderBy, $page, $pageSize));
     }
 
+    public function create(int $registrationPupilId, string $reason): Response
+    {
+        return $this->connector->send(new CreateRegistrationNatureOfAbsenceRequest($registrationPupilId, $reason));
+    }
+
+    public function delete(int $registrationPupilId): Response
+    {
+        return $this->connector->send(new DeleteRegistrationNatureOfAbsenceRequest($registrationPupilId));
+    }
+
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      */
-    public function patchRegistrationNatureOfAbsence(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): Response
     {
         return $this->connector->send(new PatchRegistrationNatureOfAbsenceRequest($id, $patch));
     }

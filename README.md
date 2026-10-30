@@ -10,8 +10,7 @@ A Laravel package for the [iSAMS](https://www.isams.com) REST API and Batch API,
 `billing()`, `bulletin()`, `cloudPortals()`, `curriculum()`, `discipline()`, `estates()`, `exclusions()`,
 `gradebooks()`, `humanResources()`, `medicalCentre()`, `news()`, `otherSchools()`, `registration()`,
 `rewardsAndConduct()`, `school()`, `storage()`, `studentRegisters()`, `students()`, `systemConfiguration()`,
-`teaching()`, `timetable()` and `wellbeingManager()`. iSAMS's payment-provider webhooks are left out: iSAMS receives
-those, not your app.
+`teaching()`, `timetable()` and `wellbeingManager()`. iSAMS's payment-provider webhooks are left out.
 
 ## Requirements
 
@@ -42,8 +41,8 @@ Code written for version 1 keeps working, apart from the Laravel minimum above a
   | `Teaching\GetSubjectsRequest` | `Teaching\Subjects\GetSubjectsRequest` |
   | `Teaching\GetSubjectByIdRequest` | `Teaching\Subjects\GetSubjectRequest` |
   | `Teaching\GetSubjectTeachingDepartmentsBySubjectidRequest` | `Teaching\SubjectTeachingDepartments\GetSubjectTeachingDepartmentsRequest` |
-  | `Teaching\GetTeachingSetsRequest` | `Teaching\TeachingSets\GetTeachingSetsRequest` |
-  | `Teaching\GetStudentsInSetBySetidRequest` | `Teaching\TeachingSets\GetTeachingSetStudentsRequest` |
+  | `Teaching\GetTeachingSetsRequest` | `Teaching\Sets\GetTeachingSetsRequest` |
+  | `Teaching\GetStudentsInSetBySetidRequest` | `Teaching\Sets\GetTeachingSetStudentsRequest` |
   | `Teaching\GetCurriculumSubjectCodesRequest` | `Teaching\CurriculumSubjectCodes\GetCurriculumSubjectCodesRequest` |
   | `BatchApi\GetEndpointRequest`, `BatchApi\FilterEndpointRequest` | `Isams::batch()` with `Batch\BatchRequest` (see [Batch API](#batch-api)) |
 
@@ -101,18 +100,28 @@ The connector fetches an access token from iSAMS and caches it, encrypted, until
 
 ### Resources
 
-Every request is also reachable by area, which your IDE can autocomplete:
+Every request is also reachable through resources that follow iSAMS's areas, which your IDE can autocomplete. A
+resource's methods are named for what they do: `all()` for a list, `get()` for one item, `create()`, `update()`,
+`patch()` and `delete()`, `patchMany()` and the like for several at once, and actions of their own such as
+`archive()` or `moveToAlumni()`:
 
 ```php
-Isams::teaching()->subjects()->getSubjects();
-Isams::teaching()->teachingSets()->addStudentToTeachingSet(setId: 34, schoolId: '100001');
+Isams::teaching()->subjects()->all();
+Isams::teaching()->subjects()->get(7);
+Isams::teaching()->sets()->addStudent(setId: 34, schoolId: '100001');
+Isams::medicalCentre()->studentConditions()->archive(schoolId: '100001', conditionId: $key);
+Isams::systemConfiguration()->list()->contactTypes()->all();
 ```
 
-Where iSAMS offers a version 2.0 of an endpoint (so far, HR employee contracts), it sits beside version 1.0 in a `V2`
-namespace and resource, and asks iSAMS for `api-version=2.0`:
+Path parameters always come in the order the URL has them.
+
+Where iSAMS has changed an endpoint in a newer API version (so far, HR employee contracts), the plain request and
+resource use the newest version; the older one sits in a `V1` namespace and resource for anything the newer version
+dropped:
 
 ```php
-Isams::humanResources()->employeeContractsV2()->getEmployeeContracts(employeeId: 40);
+Isams::humanResources()->employeeContracts()->all(employeeId: 40);       // iSAMS API version 2.0
+Isams::humanResources()->employeeContracts()->v1()->all(employeeId: 40); // version 1.0
 ```
 
 ### Models
@@ -189,7 +198,7 @@ Add named connections to `config/isams-api.php`:
 ```
 
 ```php
-Isams::connection('prep')->teaching()->subjects()->getSubjects();
+Isams::connection('prep')->teaching()->subjects()->all();
 ```
 
 The top-level `client_id`, `client_secret` and `base_url` remain the default connection.
@@ -262,7 +271,7 @@ separate `iSAMS.CloudPortals.Api` scope; if your credentials need that scope, gi
 ```
 
 ```php
-Isams::connection('portals')->cloudPortals()->schoolBookmark()->getBookmarks();
+Isams::connection('portals')->cloudPortals()->school()->bookmark()->all();
 ```
 
 Many of them act for a signed-in portal user and are untyped in iSAMS's spec, so they return arrays; treat them as

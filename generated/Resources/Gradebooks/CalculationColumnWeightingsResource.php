@@ -16,15 +16,12 @@ class CalculationColumnWeightingsResource extends BaseResource
     /**
      * @param  array<mixed>  $weightingElementIds
      */
-    public function createCalculationColumnWeightings(
-        int $gradebookId,
-        int $columnId,
-        array $weightingElementIds,
-    ): Response {
+    public function createMany(int $gradebookId, int $columnId, array $weightingElementIds): Response
+    {
         return $this->connector->send(new CreateCalculationColumnWeightingsRequest($gradebookId, $columnId, $weightingElementIds));
     }
 
-    public function deleteCalculationColumnWeighting(int $gradebookId, int $columnId, int $weightingId): Response
+    public function delete(int $gradebookId, int $columnId, int $weightingId): Response
     {
         return $this->connector->send(new DeleteCalculationColumnWeightingRequest($gradebookId, $columnId, $weightingId));
     }
