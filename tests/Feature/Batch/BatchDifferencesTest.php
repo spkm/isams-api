@@ -11,7 +11,7 @@ use spkm\IsamsApi\Batch\IsamsBatchConnector;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 /*
-| Batch API records as iSAMS sends them where its node lists say otherwise.
+| Batch API records as iSAMS sends them where its node lists say otherwise (see ISAMS-API-DIFFERENCES.md).
 */
 
 /**

@@ -190,7 +190,8 @@ Each has iSAMS's `isamsMessage()` and `trackingNumber()`, the status from `getSt
 iSAMS responded 404 to GET /api/teaching/subjects/7: Failed to read subject - Subject does not exist.
 ```
 
-Where iSAMS's own answer says little, the message adds what is known about it: iSAMS answers a `$filter` it can't
+Where iSAMS's own answer says little, the message adds what is known about it (see
+[ISAMS-API-DIFFERENCES.md](ISAMS-API-DIFFERENCES.md#errors)): iSAMS answers a `$filter` it can't
 apply with a bare 500 ("An error occurred."), and a path it doesn't have with an HTML error page rather than a 404.
 A refused token request says why (a wrong client id or secret, or a scope the client isn't allowed). iSAMS sets each API client's permission per area (None, Read, Write, Modify or Full), so a
 `MissingPermissionException` also says which permission is needed and where:
@@ -402,9 +403,14 @@ The tests never contact a real iSAMS: every response is faked.
 
 ### Checking the package against your iSAMS sandbox
 
-iSAMS's documentation isn't always what its API does. The separate `Sandbox` test suite calls your own iSAMS sandbox,
-reads every list it can without arguments (and every root node a Batch API key returns), and prints the field names
-that differ from the package's models.
+iSAMS's documentation isn't always what its API does; [ISAMS-API-DIFFERENCES.md](ISAMS-API-DIFFERENCES.md) lists
+what these checks have found so far, and how the package handles each difference.
+
+The separate `Sandbox` test suite calls your own iSAMS sandbox. It reads every list it can without arguments and every
+endpoint it can reach with ids from those lists, runs each Batch API method allocated to a key, checks paging, and
+provokes errors with reads (an unknown record, a malformed filter, a forged token). It reports the fields that differ
+from the package's models, values a model can't read, endpoints the sandbox doesn't offer, and what iSAMS sends for
+each error.
 
 ```dotenv
 ISAMS_SANDBOX_BASE_URL=https://your-sandbox.example
@@ -439,7 +445,6 @@ If you discover any security related issues, please email hello@spkmitchell.co.u
 
 - [Simon Mitchell](https://github.com/spkm)
 - [Fred Bradley](https://github.com/fredbradley)
-- [All Contributors](../../contributors)
 
 ## Licence
 
