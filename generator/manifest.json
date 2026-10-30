@@ -9,22 +9,26 @@
         "AbsenceTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/absencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\AbsenceTypes\\GetAbsenceTypesRequest"
         },
         "AbsenceTypes_GetById": {
             "method": "GET",
             "path": "/api/humanresources/absencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\AbsenceTypes\\GetAbsenceTypeRequest"
         },
         "AbsenceTypes_PostByAbsencetype": {
             "method": "POST",
             "path": "/api/humanresources/absencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\AbsenceTypes\\CreateAbsenceTypeRequest"
         },
         "AbsenceTypes_PutByIdAbsencetype": {
             "method": "PUT",
             "path": "/api/humanresources/absencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\AbsenceTypes\\UpdateAbsenceTypeRequest"
         },
         "AcademicReports_GetSchoolAssessmentsAsyncBySchoolidPagePagesize": {
             "method": "GET",
@@ -99,7 +103,8 @@
         "AdditionalPaymentTypes_GetAdditionalPaymentTypesAsync": {
             "method": "GET",
             "path": "/api/humanresources/additionalpayments/types",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\AdditionalPaymentTypes\\GetAdditionalPaymentTypesRequest"
         },
         "Address_GetAddressDetailsByIdAsyncById": {
             "method": "GET",
@@ -1320,22 +1325,26 @@
         "ContractEmployeeLevels_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/employeelevels/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\ContractEmployeeLevels\\DeleteContractEmployeeLevelRequest"
         },
         "ContractEmployeeLevels_Get": {
             "method": "GET",
             "path": "/api/humanresources/employeelevels",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\ContractEmployeeLevels\\GetContractEmployeeLevelsRequest"
         },
         "ContractEmployeeLevels_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/employeelevels",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\ContractEmployeeLevels\\CreateContractEmployeeLevelRequest"
         },
         "ContractEmployeeLevels_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/employeelevels/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\ContractEmployeeLevels\\UpdateContractEmployeeLevelRequest"
         },
         "Counties_DeleteById": {
             "method": "DELETE",
@@ -1551,17 +1560,20 @@
         "DfeAbsenceCategories_Get": {
             "method": "GET",
             "path": "/api/humanresources/absencecategories",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DfEAbsenceCategories\\GetDfEAbsenceCategoriesRequest"
         },
         "DfeContractTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/contracttypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DfEContractTypes\\GetDfEContractTypesRequest"
         },
         "DfeRoleIdentifiers_Get": {
             "method": "GET",
             "path": "/api/humanresources/roleidentifiers",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DfERoleIdentifiers\\GetDfERoleIdentifiersRequest"
         },
         "DisciplineRecords_GetDetentionRecordsForStudentBySchoolid": {
             "method": "GET",
@@ -1571,27 +1583,32 @@
         "DisclosureProbationCheckStatuses_Get": {
             "method": "GET",
             "path": "/api/humanresources/disclosureandprobation/checkstatuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\CheckStatuses\\GetCheckStatusesRequest"
         },
         "DisclosureTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\DeleteDisclosureTypeRequest"
         },
         "DisclosureTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\GetDisclosureTypesRequest"
         },
         "DisclosureTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\CreateDisclosureTypeRequest"
         },
         "DisclosureTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/disclosureandprobation/disclosuretypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\DisclosureTypes\\UpdateDisclosureTypeRequest"
         },
         "Divisions_GetAll": {
             "method": "GET",
@@ -1638,307 +1655,368 @@
         "EmployeeAbsences_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/absences",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeAbsences\\GetEmployeeAbsencesRequest"
         },
         "EmployeeAbsences_GetByIdByEmployeeidAbsenceid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/absences/{absenceId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeAbsences\\GetEmployeeAbsenceRequest"
         },
         "EmployeeAbsences_PostByEmployeeidAbsence": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/absences",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeAbsences\\CreateEmployeeAbsenceRequest"
         },
         "EmployeeAbsences_PutByEmployeeidIdAbsence": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/absences/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeAbsences\\UpdateEmployeeAbsenceRequest"
         },
         "EmployeeChildrensBarredListChecks_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/childrensbarredlistcheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeChildrensBarredListChecks\\GetEmployeeChildrensBarredListCheckRequest"
         },
         "EmployeeChildrensBarredListChecks_PostByEmployeeidChildrensbarredlistcheck": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/childrensbarredlistcheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeChildrensBarredListChecks\\CreateEmployeeChildrensBarredListCheckRequest"
         },
         "EmployeeChildrensBarredListChecks_PutByEmployeeidChildrensbarredlistcheck": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/childrensbarredlistcheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeChildrensBarredListChecks\\UpdateEmployeeChildrensBarredListCheckRequest"
         },
         "EmployeeContacts_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/contacts",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContacts\\GetEmployeeContactsRequest"
         },
         "EmployeeContracts_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/contracts",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\GetEmployeeContractsRequest"
         },
         "EmployeeContracts_GetByEmployeeidContractid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\GetEmployeeContractRequest"
         },
         "EmployeeContracts_PostByEmployeeidContract": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/contracts",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\CreateEmployeeContractRequest"
         },
         "EmployeeContracts_PutByEmployeeidContractidEmployeecontract": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\UpdateEmployeeContractRequest"
         },
         "EmployeeCustomFields_GetAllAsyncByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeCustomFields\\GetEmployeeCustomFieldsRequest"
         },
         "EmployeeCustomFields_GetAsyncByEmployeeidCustomfieldid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeCustomFields\\GetEmployeeCustomFieldRequest"
         },
         "EmployeeCustomFields_PatchByEmployeeidCustomfieldidCustomfield": {
             "method": "PATCH",
             "path": "/api/humanresources/employees/{employeeId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeCustomFields\\PatchEmployeeCustomFieldRequest"
         },
         "EmployeeCustomFields_PatchByEmployeeidCustomfields": {
             "method": "PATCH",
             "path": "/api/humanresources/employees/{employeeId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeCustomFields\\PatchEmployeeCustomFieldsRequest"
         },
         "EmployeeDepartments_DeleteByEmployeeidDepartmenttypeDepartmentid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/departments/{departmentType}/{departmentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeDepartments\\RemoveEmployeeDepartmentRequest"
         },
         "EmployeeDepartments_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/departments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeDepartments\\GetEmployeeDepartmentsRequest"
         },
         "EmployeeDepartments_PostByEmployeeidDepartmenttypeDepartmentid": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/departments/{departmentType}/{departmentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeDepartments\\AddEmployeeDepartmentRequest"
         },
         "EmployeeDisclosureBarringServiceChecks_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/disclosurebarringservicecheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeDisclosureBarringServiceChecks\\GetEmployeeDisclosureBarringServiceCheckRequest"
         },
         "EmployeeDisclosureBarringServiceChecks_PostByEmployeeidDisclosurebarringservicecheck": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/disclosurebarringservicecheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeDisclosureBarringServiceChecks\\CreateEmployeeDisclosureBarringServiceCheckRequest"
         },
         "EmployeeDisclosureBarringServiceChecks_PutByEmployeeidDisclosurebarringservicecheck": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/disclosurebarringservicecheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeDisclosureBarringServiceChecks\\UpdateEmployeeDisclosureBarringServiceCheckRequest"
         },
         "EmployeeFinancialInformation_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/financialinformation",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeFinancialInformation\\GetEmployeeFinancialInformationRequest"
         },
         "EmployeeFinancialInformation_PutByEmployeeidEmployeefinancialinformation": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/financialinformation",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeFinancialInformation\\UpdateEmployeeFinancialInformationRequest"
         },
         "EmployeeHouses_DeleteByEmployeeidHouseid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/houses/{houseId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeHouses\\RemoveEmployeeHouseRequest"
         },
         "EmployeeHouses_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/houses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeHouses\\GetEmployeeHousesRequest"
         },
         "EmployeeHouses_PostByEmployeeidHouseid": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/houses/{houseId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeHouses\\AddEmployeeHouseRequest"
         },
         "EmployeeIdentityChecks_DeleteByEmployeeidIdentitycheckid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/identitychecks/{identityCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeIdentityChecks\\DeleteEmployeeIdentityCheckRequest"
         },
         "EmployeeIdentityChecks_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/identitychecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeIdentityChecks\\GetEmployeeIdentityChecksRequest"
         },
         "EmployeeIdentityChecks_GetByEmployeeidIdentitycheckid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/identitychecks/{identityCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeIdentityChecks\\GetEmployeeIdentityCheckRequest"
         },
         "EmployeeIdentityChecks_PostByEmployeeidEmployeeidentitycheck": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/identitychecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeIdentityChecks\\CreateEmployeeIdentityCheckRequest"
         },
         "EmployeeIdentityChecks_PutByEmployeeidIdentitycheckidEmployeeidentitycheck": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/identitychecks/{identityCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeIdentityChecks\\UpdateEmployeeIdentityCheckRequest"
         },
         "EmployeePhotos_GetByEmployeeidPhotoid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/photos/{photoId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeePhotos\\GetEmployeePhotoRequest"
         },
         "EmployeePhotos_GetCurrentByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/photos/current",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeePhotos\\GetCurrentEmployeePhotoRequest"
         },
         "EmployeePhotos_PostAsyncByEmployeeid": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/photos",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeePhotos\\CreateEmployeePhotoRequest"
         },
         "EmployeeProbations_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/probation",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeProbations\\GetEmployeeProbationRequest"
         },
         "EmployeeProbations_PutByEmployeeidEmployeeprobation": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/probation",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeProbations\\UpdateEmployeeProbationRequest"
         },
         "EmployeeQualificationChecks_DeleteByEmployeeidQualificationcheckid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/qualificationchecks/{qualificationCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualificationChecks\\DeleteEmployeeQualificationCheckRequest"
         },
         "EmployeeQualificationChecks_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/qualificationchecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualificationChecks\\GetEmployeeQualificationChecksRequest"
         },
         "EmployeeQualificationChecks_GetByEmployeeidQualificationcheckid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/qualificationchecks/{qualificationCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualificationChecks\\GetEmployeeQualificationCheckRequest"
         },
         "EmployeeQualificationChecks_PostByEmployeeidEmployeequalificationcheck": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/qualificationchecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualificationChecks\\CreateEmployeeQualificationCheckRequest"
         },
         "EmployeeQualificationChecks_PutByEmployeeidQualificationcheckidEmployeequalificationcheck": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/qualificationchecks/{qualificationCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualificationChecks\\UpdateEmployeeQualificationCheckRequest"
         },
         "EmployeeQualifications_DeleteByEmployeeidQualificationid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/qualifications/{qualificationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualifications\\DeleteEmployeeQualificationRequest"
         },
         "EmployeeQualifications_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/qualifications",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualifications\\GetEmployeeQualificationsRequest"
         },
         "EmployeeQualifications_PostByEmployeeidQualification": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/qualifications",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualifications\\CreateEmployeeQualificationRequest"
         },
         "EmployeeQualifications_PutByEmployeeidQualificationidQualification": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/qualifications/{qualificationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeQualifications\\UpdateEmployeeQualificationRequest"
         },
         "EmployeeReferenceChecks_DeleteByEmployeeidReferencecheckid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/referencechecks/{referenceCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeReferenceChecks\\DeleteEmployeeReferenceCheckRequest"
         },
         "EmployeeReferenceChecks_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/referencechecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeReferenceChecks\\GetEmployeeReferenceChecksRequest"
         },
         "EmployeeReferenceChecks_GetByEmployeeidReferencecheckid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/referencechecks/{referenceCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeReferenceChecks\\GetEmployeeReferenceCheckRequest"
         },
         "EmployeeReferenceChecks_PostByEmployeeidEmployeereferencecheck": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/referencechecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeReferenceChecks\\CreateEmployeeReferenceCheckRequest"
         },
         "EmployeeReferenceChecks_PutByEmployeeidReferencecheckidEmployeereferencecheck": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/referencechecks/{referenceCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeReferenceChecks\\UpdateEmployeeReferenceCheckRequest"
         },
         "EmployeeRightToWorkChecks_DeleteByEmployeeidRighttoworkcheckid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/righttoworkchecks/{rightToWorkCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRightToWorkChecks\\DeleteEmployeeRightToWorkCheckRequest"
         },
         "EmployeeRightToWorkChecks_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/righttoworkchecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRightToWorkChecks\\GetEmployeeRightToWorkChecksRequest"
         },
         "EmployeeRightToWorkChecks_GetByEmployeeidRighttoworkcheckid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/righttoworkchecks/{rightToWorkCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRightToWorkChecks\\GetEmployeeRightToWorkCheckRequest"
         },
         "EmployeeRightToWorkChecks_PostByEmployeeidEmployeerighttoworkcheck": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/righttoworkchecks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRightToWorkChecks\\CreateEmployeeRightToWorkCheckRequest"
         },
         "EmployeeRightToWorkChecks_PutByEmployeeidRighttoworkcheckidEmployeerighttoworkcheck": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/righttoworkchecks/{rightToWorkCheckId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRightToWorkChecks\\UpdateEmployeeRightToWorkCheckRequest"
         },
         "EmployeeRoles_DeleteByEmployeeidRoleid": {
             "method": "DELETE",
             "path": "/api/humanresources/employees/{employeeId}/roles/{roleId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRoles\\RemoveEmployeeRoleRequest"
         },
         "EmployeeRoles_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/roles",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRoles\\GetEmployeeRolesRequest"
         },
         "EmployeeRoles_PostByEmployeeidRoleid": {
             "method": "POST",
             "path": "/api/humanresources/employees/{employeeId}/roles/{roleId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeRoles\\AddEmployeeRoleRequest"
         },
         "EmployeeTeachingProhibitionChecks_GetByEmployeeid": {
             "method": "GET",
             "path": "/api/humanresources/employees/{employeeId}/teachingprohibitioncheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeTeachingProhibitionChecks\\GetEmployeeTeachingProhibitionCheckRequest"
         },
         "EmployeeTeachingProhibitionChecks_PutByEmployeeidEmployeeteachingprohibitioncheck": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{employeeId}/teachingprohibitioncheck",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeTeachingProhibitionChecks\\UpdateEmployeeTeachingProhibitionCheckRequest"
         },
         "EmployeeTimetables_GetByEmployeeid": {
             "method": "GET",
@@ -1949,47 +2027,56 @@
         "Employees_GetAllAsyncByPagePagesizeExpand": {
             "method": "GET",
             "path": "/api/humanresources/employees",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Employees\\GetEmployeesRequest"
         },
         "Employees_GetAsyncByIdExpand": {
             "method": "GET",
             "path": "/api/humanresources/employees/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Employees\\GetEmployeeRequest"
         },
         "Employees_GetByUserCodeAsyncByUsercode": {
             "method": "GET",
             "path": "/api/humanresources/employees/{userCode}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Employees\\GetEmployeeByUserCodeRequest"
         },
         "Employees_PostByEmployee": {
             "method": "POST",
             "path": "/api/humanresources/employees",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Employees\\CreateEmployeeRequest"
         },
         "Employees_PutByIdEmployee": {
             "method": "PUT",
             "path": "/api/humanresources/employees/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Employees\\UpdateEmployeeRequest"
         },
         "EmploymentTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/employmenttypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmploymentTypes\\DeleteEmploymentTypeRequest"
         },
         "EmploymentTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/employmenttypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmploymentTypes\\GetEmploymentTypesRequest"
         },
         "EmploymentTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/employmenttypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmploymentTypes\\CreateEmploymentTypeRequest"
         },
         "EmploymentTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/employmenttypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmploymentTypes\\UpdateEmploymentTypeRequest"
         },
         "EnquiryReasons_DeleteById": {
             "method": "DELETE",
@@ -2443,22 +2530,26 @@
         "IdentityEvidenceTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/disclosureandprobation/identityevidencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\IdentityEvidenceTypes\\DeleteIdentityEvidenceTypeRequest"
         },
         "IdentityEvidenceTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/disclosureandprobation/identityevidencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\IdentityEvidenceTypes\\GetIdentityEvidenceTypesRequest"
         },
         "IdentityEvidenceTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/disclosureandprobation/identityevidencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\IdentityEvidenceTypes\\CreateIdentityEvidenceTypeRequest"
         },
         "IdentityEvidenceTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/disclosureandprobation/identityevidencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\IdentityEvidenceTypes\\UpdateIdentityEvidenceTypeRequest"
         },
         "IndicatorConfiguration_GetAll": {
             "method": "GET",
@@ -2655,22 +2746,26 @@
         "LeavingReasons_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/leavingreasons/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\LeavingReasons\\DeleteLeavingReasonRequest"
         },
         "LeavingReasons_Get": {
             "method": "GET",
             "path": "/api/humanresources/leavingreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\LeavingReasons\\GetLeavingReasonsRequest"
         },
         "LeavingReasons_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/leavingreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\LeavingReasons\\CreateLeavingReasonRequest"
         },
         "LeavingReasons_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/leavingreasons/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\LeavingReasons\\UpdateLeavingReasonRequest"
         },
         "LifeEventTypes_CreateByLifeeventtype": {
             "method": "POST",
@@ -3804,82 +3899,98 @@
         "QualificationEvidenceTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/disclosureandprobation/qualificationevidencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\QualificationEvidenceTypes\\DeleteQualificationEvidenceTypeRequest"
         },
         "QualificationEvidenceTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/disclosureandprobation/qualificationevidencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\QualificationEvidenceTypes\\GetQualificationEvidenceTypesRequest"
         },
         "QualificationEvidenceTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/disclosureandprobation/qualificationevidencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\QualificationEvidenceTypes\\CreateQualificationEvidenceTypeRequest"
         },
         "QualificationEvidenceTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/disclosureandprobation/qualificationevidencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\QualificationEvidenceTypes\\UpdateQualificationEvidenceTypeRequest"
         },
         "QualificationLevels_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/qualificationlevels/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationLevels\\DeleteQualificationLevelRequest"
         },
         "QualificationLevels_Get": {
             "method": "GET",
             "path": "/api/humanresources/qualificationlevels",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationLevels\\GetQualificationLevelsRequest"
         },
         "QualificationLevels_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/qualificationlevels",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationLevels\\CreateQualificationLevelRequest"
         },
         "QualificationLevels_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/qualificationlevels/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationLevels\\UpdateQualificationLevelRequest"
         },
         "QualificationSubjects_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/qualificationsubjects/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationSubjects\\DeleteQualificationSubjectRequest"
         },
         "QualificationSubjects_Get": {
             "method": "GET",
             "path": "/api/humanresources/qualificationsubjects",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationSubjects\\GetQualificationSubjectsRequest"
         },
         "QualificationSubjects_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/qualificationsubjects",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationSubjects\\CreateQualificationSubjectRequest"
         },
         "QualificationSubjects_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/qualificationsubjects/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationSubjects\\UpdateQualificationSubjectRequest"
         },
         "QualificationTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/qualificationtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationTypes\\DeleteQualificationTypeRequest"
         },
         "QualificationTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/qualificationtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationTypes\\GetQualificationTypesRequest"
         },
         "QualificationTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/qualificationtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationTypes\\CreateQualificationTypeRequest"
         },
         "QualificationTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/qualificationtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\QualificationTypes\\UpdateQualificationTypeRequest"
         },
         "ReasonsForDismissal_CreateByReasonfordismissal": {
             "method": "POST",
@@ -3962,22 +4073,26 @@
         "RegistrationEvidenceTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/humanresources/disclosureandprobation/registrationevidencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\RegistrationEvidenceTypes\\DeleteRegistrationEvidenceTypeRequest"
         },
         "RegistrationEvidenceTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/disclosureandprobation/registrationevidencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\RegistrationEvidenceTypes\\GetRegistrationEvidenceTypesRequest"
         },
         "RegistrationEvidenceTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/humanresources/disclosureandprobation/registrationevidencetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\RegistrationEvidenceTypes\\CreateRegistrationEvidenceTypeRequest"
         },
         "RegistrationEvidenceTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/humanresources/disclosureandprobation/registrationevidencetypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\RegistrationEvidenceTypes\\UpdateRegistrationEvidenceTypeRequest"
         },
         "RegistrationNatureOfAbsence_DeleteByRegistrationpupilid": {
             "method": "DELETE",
@@ -4138,42 +4253,50 @@
         "RightToWorkCheckTypes_Get": {
             "method": "GET",
             "path": "/api/humanresources/disclosureandprobation/righttoworkchecktypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\DisclosureAndProbation\\RightToWorkCheckTypes\\GetRightToWorkCheckTypesRequest"
         },
         "RoleEmployees_DeleteByRoleidEmployeeid": {
             "method": "DELETE",
             "path": "/api/humanresources/roles/{roleId}/employees/{employeeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\RoleEmployees\\RemoveRoleEmployeeRequest"
         },
         "RoleEmployees_GetByRoleid": {
             "method": "GET",
             "path": "/api/humanresources/roles/{roleId}/employees",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\RoleEmployees\\GetRoleEmployeesRequest"
         },
         "RoleEmployees_PostByRoleidEmployeeid": {
             "method": "POST",
             "path": "/api/humanresources/roles/{roleId}/employees/{employeeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\RoleEmployees\\AddRoleEmployeeRequest"
         },
         "Roles_Get": {
             "method": "GET",
             "path": "/api/humanresources/roles",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Roles\\GetRolesRequest"
         },
         "Roles_GetById": {
             "method": "GET",
             "path": "/api/humanresources/roles/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Roles\\GetRoleRequest"
         },
         "Roles_PostByRole": {
             "method": "POST",
             "path": "/api/humanresources/roles",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Roles\\CreateRoleRequest"
         },
         "Roles_PutByIdRole": {
             "method": "PUT",
             "path": "/api/humanresources/roles/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Roles\\UpdateRoleRequest"
         },
         "RoomTimetables_GetByRoomid": {
             "method": "GET",
@@ -4208,57 +4331,68 @@
         "Salaries_CreateSalaryAsyncByContractidCommand": {
             "method": "POST",
             "path": "/api/humanresources/contracts/{contractId}/salaries",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Salaries\\CreateSalaryRequest"
         },
         "Salaries_DeleteSalaryAsyncByContractidSalaryid": {
             "method": "DELETE",
             "path": "/api/humanresources/contracts/{contractId}/salaries/{salaryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Salaries\\DeleteSalaryRequest"
         },
         "Salaries_GetAllSalariesAsyncByContractid": {
             "method": "GET",
             "path": "/api/humanresources/contracts/{contractId}/salaries",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Salaries\\GetSalariesRequest"
         },
         "Salaries_GetSalaryAsyncByContractidSalaryid": {
             "method": "GET",
             "path": "/api/humanresources/contracts/{contractId}/salaries/{salaryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Salaries\\GetSalaryRequest"
         },
         "Salaries_UpdateSalaryAsyncByContractidSalaryidSalarydetails": {
             "method": "PATCH",
             "path": "/api/humanresources/contracts/{contractId}/salaries/{salaryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\Salaries\\PatchSalaryRequest"
         },
         "SalaryAdditionalPayments_CreateSalaryAdditionalPaymentAsyncBySalaryidCommand": {
             "method": "POST",
             "path": "/api/humanresources/salaries/{salaryId}/additionalpayments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\SalaryAdditionalPayments\\CreateSalaryAdditionalPaymentRequest"
         },
         "SalaryAdditionalPayments_DeleteAdditionalPaymentAsyncBySalaryidAdditionalpaymentid": {
             "method": "DELETE",
             "path": "/api/humanresources/salaries/{salaryId}/additionalpayments/{additionalPaymentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\SalaryAdditionalPayments\\DeleteSalaryAdditionalPaymentRequest"
         },
         "SalaryAdditionalPayments_GetAllSalaryAdditionalPaymentsAsyncBySalaryid": {
             "method": "GET",
             "path": "/api/humanresources/salaries/{salaryId}/additionalpayments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\SalaryAdditionalPayments\\GetSalaryAdditionalPaymentsRequest"
         },
         "SalaryAdditionalPayments_GetSalaryAdditionalPaymentAsyncBySalaryidAdditionalpaymentid": {
             "method": "GET",
             "path": "/api/humanresources/salaries/{salaryId}/additionalpayments/{additionalPaymentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\SalaryAdditionalPayments\\GetSalaryAdditionalPaymentRequest"
         },
         "SalaryAdditionalPayments_UpdateAdditionalPaymentAsyncBySalaryidAdditionalpaymentidAdditionalpaymentdetails": {
             "method": "PATCH",
             "path": "/api/humanresources/salaries/{salaryId}/additionalpayments/{additionalPaymentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\SalaryAdditionalPayments\\PatchSalaryAdditionalPaymentRequest"
         },
         "SalaryPayScales_GetSalaryPayScalesAsync": {
             "method": "GET",
             "path": "/api/humanresources/salaries/payscales",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\SalaryPayScales\\GetSalaryPayScalesRequest"
         },
         "SchoolAddresses_GetSchoolAddressById": {
             "method": "GET",
@@ -5361,27 +5495,32 @@
         "TeachingSkills_CreateTeachingSkillAsyncByCommand": {
             "method": "POST",
             "path": "/api/humanresources/teachingskills",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\TeachingSkills\\CreateTeachingSkillRequest"
         },
         "TeachingSkills_DeleteTeachingSkillAsyncById": {
             "method": "DELETE",
             "path": "/api/humanresources/teachingskills/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\TeachingSkills\\DeleteTeachingSkillRequest"
         },
         "TeachingSkills_GetTeachingSkillAsyncById": {
             "method": "GET",
             "path": "/api/humanresources/teachingskills/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\TeachingSkills\\GetTeachingSkillRequest"
         },
         "TeachingSkills_GetTeachingSkillsAsync": {
             "method": "GET",
             "path": "/api/humanresources/teachingskills",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\TeachingSkills\\GetTeachingSkillsRequest"
         },
         "TeachingSkills_UpdateTeachingSkillAsyncByIdTeachingskilldetails": {
             "method": "PATCH",
             "path": "/api/humanresources/teachingskills/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\TeachingSkills\\PatchTeachingSkillRequest"
         },
         "Terms_GetAsync": {
             "method": "GET",
@@ -5639,6 +5778,41 @@
             "path": "/api/school/yeargroups/{id}",
             "source": "generated",
             "class": "spkm\\IsamsApi\\Requests\\School\\YearGroups\\GetYearGroupRequest"
+        },
+        "v2:EmployeeContracts_CreateContractAsyncByEmployeeidCommand": {
+            "method": "POST",
+            "path": "/api/humanresources/employees/{employeeId}/contracts",
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\CreateEmployeeContractRequest",
+            "apiVersion": "2.0"
+        },
+        "v2:EmployeeContracts_DeleteContractAsyncByEmployeeidContractid": {
+            "method": "DELETE",
+            "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\DeleteEmployeeContractRequest",
+            "apiVersion": "2.0"
+        },
+        "v2:EmployeeContracts_GetByEmployeeid": {
+            "method": "GET",
+            "path": "/api/humanresources/employees/{employeeId}/contracts",
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\GetEmployeeContractsRequest",
+            "apiVersion": "2.0"
+        },
+        "v2:EmployeeContracts_GetByEmployeeidContractid": {
+            "method": "GET",
+            "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\GetEmployeeContractRequest",
+            "apiVersion": "2.0"
+        },
+        "v2:EmployeeContracts_UpdateContractAsyncByEmployeeidContractidContractdetails": {
+            "method": "PATCH",
+            "path": "/api/humanresources/employees/{employeeId}/contracts/{contractId}",
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\HumanResources\\EmployeeContracts\\V2\\PatchEmployeeContractRequest",
+            "apiVersion": "2.0"
         }
     },
     "models": {
@@ -5657,6 +5831,79 @@
         "iSAMS.Exclusions.AppServices.Objects.Common.ExclusionType": "spkm\\IsamsApi\\Data\\Exclusions\\ExclusionType",
         "iSAMS.Exclusions.AppServices.Objects.Public.Resources.Contracts.IExclusion": "spkm\\IsamsApi\\Data\\Exclusions\\IExclusion",
         "iSAMS.Exclusions.AppServices.Objects.Public.Resources.Get.ReasonForCancellation": "spkm\\IsamsApi\\Data\\Exclusions\\ReasonForCancellation",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Absence": "spkm\\IsamsApi\\Data\\HumanResources\\Absence",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.AbsenceCategory": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceCategory",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.AbsenceType": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceType",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.AdditionalPayment": "spkm\\IsamsApi\\Data\\HumanResources\\AdditionalPayment",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.AdditionalPaymentType": "spkm\\IsamsApi\\Data\\HumanResources\\AdditionalPaymentType",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.ChildrensBarredListCheck": "spkm\\IsamsApi\\Data\\HumanResources\\ChildrensBarredListCheck",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Contract": "spkm\\IsamsApi\\Data\\HumanResources\\Contract",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.ContractType": "spkm\\IsamsApi\\Data\\HumanResources\\ContractType",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.CustomField": "spkm\\IsamsApi\\Data\\HumanResources\\CustomField",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Department": "spkm\\IsamsApi\\Data\\HumanResources\\Department",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.DisclosureBarringServiceCheck": "spkm\\IsamsApi\\Data\\HumanResources\\DisclosureBarringServiceCheck",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.DisclosureProbationCheckStatus": "spkm\\IsamsApi\\Data\\HumanResources\\DisclosureProbationCheckStatus",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Division": "spkm\\IsamsApi\\Data\\HumanResources\\Division",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.DivisionLessonCost": "spkm\\IsamsApi\\Data\\HumanResources\\DivisionLessonCost",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Employee": "spkm\\IsamsApi\\Data\\HumanResources\\Employee",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeContact": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeContact",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeContract": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeContract",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeFinancialInformation": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeFinancialInformation",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeHouses": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeHouses",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeIdentityCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeIdentityCheck",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeProbation": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeProbation",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeQualificationCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeQualificationCheck",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeReferenceCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeReferenceCheck",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeRightToWorkCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeRightToWorkCheck",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.EmployeeTeachingProhibitionCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeTeachingProhibitionCheck",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.ExternalSystemId": "spkm\\IsamsApi\\Data\\HumanResources\\ExternalSystemId",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.GlobalListItem": "spkm\\IsamsApi\\Data\\HumanResources\\GlobalListItem",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.House": "spkm\\IsamsApi\\Data\\HumanResources\\House",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Integration": "spkm\\IsamsApi\\Data\\HumanResources\\Integration",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.IsoMapping": "spkm\\IsamsApi\\Data\\HumanResources\\IsoMapping",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Qualification": "spkm\\IsamsApi\\Data\\HumanResources\\Qualification",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.RightToWorkCheckType": "spkm\\IsamsApi\\Data\\HumanResources\\RightToWorkCheckType",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Role": "spkm\\IsamsApi\\Data\\HumanResources\\Role",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.RoleIdentifier": "spkm\\IsamsApi\\Data\\HumanResources\\RoleIdentifier",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.Salary": "spkm\\IsamsApi\\Data\\HumanResources\\Salary",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.SalaryPayScale": "spkm\\IsamsApi\\Data\\HumanResources\\SalaryPayScale",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.SchoolDivision": "spkm\\IsamsApi\\Data\\HumanResources\\SchoolDivision",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Get.TeachingSkill": "spkm\\IsamsApi\\Data\\HumanResources\\TeachingSkill",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Patch.CustomField": "spkm\\IsamsApi\\Data\\HumanResources\\CustomFieldForPatch",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.Absence": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.AbsenceType": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceTypeForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.ChildrensBarredListCheck": "spkm\\IsamsApi\\Data\\HumanResources\\ChildrensBarredListCheckForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateAdditionalPaymentCommand": "spkm\\IsamsApi\\Data\\HumanResources\\CreateAdditionalPaymentCommandForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateContractCommand": "spkm\\IsamsApi\\Data\\HumanResources\\ContractForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateSalaryCommand": "spkm\\IsamsApi\\Data\\HumanResources\\CreateSalaryCommandForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateTeachingSkillCommand": "spkm\\IsamsApi\\Data\\HumanResources\\CreateTeachingSkillCommandForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.DisclosureBarringServiceCheck": "spkm\\IsamsApi\\Data\\HumanResources\\DisclosureBarringServiceCheckForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.DivisionLessonCost": "spkm\\IsamsApi\\Data\\HumanResources\\DivisionLessonCostForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.Employee": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.EmployeeContract": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeContractForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.EmployeeIdentityCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeIdentityCheckForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.EmployeeQualificationCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeQualificationCheckForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.EmployeeReferenceCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeReferenceCheckForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.EmployeeRightToWorkCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeRightToWorkCheckForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.GlobalListItem": "spkm\\IsamsApi\\Data\\HumanResources\\GlobalListItemForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.Qualification": "spkm\\IsamsApi\\Data\\HumanResources\\QualificationForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Post.Role": "spkm\\IsamsApi\\Data\\HumanResources\\RoleForCreate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.Absence": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.AbsenceType": "spkm\\IsamsApi\\Data\\HumanResources\\AbsenceTypeForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.ChildrensBarredListCheck": "spkm\\IsamsApi\\Data\\HumanResources\\ChildrensBarredListCheckForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.DisclosureBarringServiceCheck": "spkm\\IsamsApi\\Data\\HumanResources\\DisclosureBarringServiceCheckForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.Employee": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeContract": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeContractForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeFinancialInformation": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeFinancialInformationForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeIdentityCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeIdentityCheckForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeProbation": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeProbationForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeQualificationCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeQualificationCheckForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeReferenceCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeReferenceCheckForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeRightToWorkCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeRightToWorkCheckForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.EmployeeTeachingProhibitionCheck": "spkm\\IsamsApi\\Data\\HumanResources\\EmployeeTeachingProhibitionCheckForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\HumanResources\\GlobalListItemForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.Qualification": "spkm\\IsamsApi\\Data\\HumanResources\\QualificationForUpdate",
+        "iSAMS.HR.AppServices.Objects.Public.Resources.Put.Role": "spkm\\IsamsApi\\Data\\HumanResources\\RoleForUpdate",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Contracts.IMedicalNote": "spkm\\IsamsApi\\Data\\MedicalCentre\\IMedicalNote",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Bmi": "spkm\\IsamsApi\\Data\\MedicalCentre\\Bmi",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Condition": "spkm\\IsamsApi\\Data\\MedicalCentre\\Condition",

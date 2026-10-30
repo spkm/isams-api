@@ -71,6 +71,13 @@ Isams::teaching()->subjects()->getSubjects();
 Isams::teaching()->teachingSets()->addStudentToTeachingSet(setId: 34, schoolId: '100001');
 ```
 
+Where iSAMS offers a version 2.0 of an endpoint (so far, HR employee contracts), it sits beside version 1.0 in a `V2`
+namespace and resource, and asks iSAMS for `api-version=2.0`:
+
+```php
+Isams::humanResources()->employeeContractsV2()->getEmployeeContracts(employeeId: 40);
+```
+
 ### Models
 
 Requests turn iSAMS's JSON into typed, read-only models with `dto()`: one model, a `Collection` of models for
