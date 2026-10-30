@@ -73,11 +73,11 @@ function sandboxErrorText(Response $response): string
 
 /**
  * iSAMS's text, shortened, without tags or extra spacing, and with quoted values left out so that the same error reads
- * the same for any record.
+ * the same for any record (double-quoted ones too, for the package's own messages, which quote the API client).
  */
-function sandboxRedact(string $text): string
+function sandboxRedact(string $text, bool $doubleQuoted = false): string
 {
-    $text = (string) preg_replace(['/\s+/', "/'[^']*'/"], [' ', "'…'"], strip_tags($text));
+    $text = (string) preg_replace(['/\s+/', "/'[^']*'/", ...($doubleQuoted ? ['/"[^"]*"/'] : [])], [' ', "'…'", ...($doubleQuoted ? ['"…"'] : [])], strip_tags($text));
 
     return mb_substr(trim($text), 0, 240);
 }
@@ -94,6 +94,12 @@ function sandboxCompare(string $label, IsamsRequest $request, Response $response
     }
 
     $json = json_decode($response->body(), true);
+
+    if (trim($response->body()) === 'null') {
+        Sandbox::line("$label: iSAMS answered null (no record)");
+
+        return;
+    }
 
     if ($json === null && $response->body() !== '') {
         Sandbox::line("$label: iSAMS answered ".$response->status().' with '.($response->header('Content-Type') ?: 'no content type').', not JSON');
@@ -182,8 +188,13 @@ it('reads each endpoint that needs ids, filling them from the first record of th
 
         if (! array_key_exists($path, $firsts)) {
             $request = isset($byPath[$template]) ? sandboxBuild($byPath[$template], $values) : null;
+
+            if ($request !== null && ! $request->isSafe()) {
+                return $firsts[$path] = null;
+            }
+
             $response = $request !== null ? $isams->send($request) : $isams->get($path);
-            $firsts[$path] = $response->successful() ? Sandbox::firstRecord($response->json()) : null;
+            $firsts[$path] = $response->successful() ? Sandbox::firstRecord(json_decode($response->body(), true)) : null;
         }
 
         return $firsts[$path];
@@ -277,7 +288,7 @@ it('reads Cloud Portals lists when the credentials have the Cloud Portals scope'
     try {
         $portals = Sandbox::connector(['iSAMS.CloudPortals.Api']);
     } catch (Throwable $exception) {
-        Sandbox::line('Cloud Portals: the token request was refused: '.class_basename($exception).': '.mb_substr($exception->getMessage(), 0, 240));
+        Sandbox::line('Cloud Portals: the token request was refused: '.class_basename($exception).': '.sandboxRedact($exception->getMessage(), doubleQuoted: true));
         expect(true)->toBeTrue();
 
         return;
@@ -343,7 +354,7 @@ it('shows what iSAMS sends for REST errors, and what the package makes of them',
         new IsamsConnector('made-up-client', 'made-up-secret', (string) getenv('ISAMS_SANDBOX_BASE_URL'));
         Sandbox::line('ERROR PROBE made-up client credentials: a token was issued');
     } catch (Throwable $exception) {
-        Sandbox::line('ERROR PROBE made-up client credentials: package: '.$exception::class.': '.mb_substr(preg_replace('/\s+/', ' ', $exception->getMessage()) ?? '', 0, 300));
+        Sandbox::line('ERROR PROBE made-up client credentials: package: '.$exception::class.': '.sandboxRedact($exception->getMessage(), doubleQuoted: true));
     }
 
     expect(true)->toBeTrue();
@@ -534,7 +545,7 @@ it('runs filtered batch calls under the filter names the package sends', functio
         'pupil()->passports()' => fn () => $batch->pupil()->passports(systemStatusesToInclude: [0, 1]),
         'contactAdvanced()->contacts()' => fn () => $batch->contactAdvanced()->contacts(contactTypes: ['Mother', 'Father'], systemStatusesToInclude: [0, 1]),
         'schoolReports()->reportCycles()' => fn () => $batch->schoolReports()->reportCycles(reportYear: (int) date('Y')),
-        'schoolReports()->reports()' => fn () => $batch->schoolReports()->reports(),
+        'schoolReports()->reports()' => fn () => $batch->schoolReports()->reports(ncYear: 9),
         'pupil()->currentPupils()' => fn () => $batch->pupil()->currentPupils(),
     ];
 

@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Requests\Gradebooks;
 
 use Saloon\Enums\Method;
 use spkm\IsamsApi\Attributes\Beta;
-use spkm\IsamsApi\Data\Gradebooks\GradebookOverview;
+use spkm\IsamsApi\Data\Gradebooks\Gradebook;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -21,7 +21,7 @@ class GetGradebooksRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
     protected string $responseShape = self::LIST;
-    protected ?string $dto = GradebookOverview::class;
+    protected ?string $dto = Gradebook::class;
 
     public function __construct(
         protected string|\Stringable|null $filter = null,

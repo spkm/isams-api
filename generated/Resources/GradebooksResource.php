@@ -191,7 +191,7 @@ class GradebooksResource extends IsamsResource
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\GradebookOverview>
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\Gradebook>
      * @see \spkm\IsamsApi\Requests\Gradebooks\GetGradebooksRequest
      */
     public function all(string|Stringable|null $filter = null): Collection

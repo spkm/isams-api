@@ -6471,7 +6471,6 @@
         "iSAMS.Markbooks.AppServices.Objects.Public.Get.CalculationColumnStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\CalculationColumnStructure",
         "iSAMS.Markbooks.AppServices.Objects.Public.Get.Comment": "spkm\\IsamsApi\\Data\\Gradebooks\\Comment",
         "iSAMS.Markbooks.AppServices.Objects.Public.Get.Gradebook": "spkm\\IsamsApi\\Data\\Gradebooks\\Gradebook",
-        "iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookOverview": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookOverview",
         "iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookStructure",
         "iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookStructureOrderedItem": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookStructureOrderedItem",
         "iSAMS.Markbooks.AppServices.Objects.Public.Get.Gradeset": "spkm\\IsamsApi\\Data\\Gradebooks\\Gradeset",
