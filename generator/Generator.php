@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\Method;
+use Nette\PhpGenerator\Parameter;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
@@ -1361,6 +1362,7 @@ final class Generator
         ksort($this->resources);
         $areas = [];
         $children = [];
+        $calls = [];
 
         foreach (array_keys($this->resources) as $resource) {
             $parent = $this->parentResource($resource);
@@ -1394,6 +1396,8 @@ final class Generator
                 $class->addMember($method);
             }
 
+            $calls[$resource] = array_column($named, 0);
+
             $this->files[$this->pathFor($resource)] = $this->print($file);
         }
 
@@ -1409,6 +1413,84 @@ final class Generator
 
         $this->files[$this->pathFor('spkm\IsamsApi\Resources\HasResources')] = $this->print($file);
         $this->emitFacade($areas);
+        $this->emitEndpoints($areas, $children, $calls);
+    }
+
+    /**
+     * ENDPOINTS.md: every resource call, written as a caller writes it, with what it returns, one table per area.
+     *
+     * @param  list<string>  $areas
+     * @param  array<string, array<string, string>>  $children
+     * @param  array<string, list<Method>>  $calls
+     */
+    private function emitEndpoints(array $areas, array $children, array $calls): void
+    {
+        $chains = [];
+        $walk = function (string $resource, string $chain) use (&$walk, &$chains, $children): void {
+            $chains[$resource] = $chain;
+
+            foreach ($children[$resource] ?? [] as $name => $child) {
+                $walk($child, "$chain->$name()");
+            }
+        };
+
+        $contents = [];
+        $sections = [];
+
+        foreach ($areas as $area) {
+            $name = lcfirst((string) preg_replace('/Resource$/', '', class_basename($area)));
+            $title = Str::headline($name);
+            $chains = [];
+            $walk($area, "Isams::$name()");
+            $rows = [];
+
+            foreach ($chains as $resource => $chain) {
+                foreach ($calls[$resource] ?? [] as $method) {
+                    $call = $chain.'->'.$method->getName().'('.implode(', ', array_map($this->endpointParameter(...), $method->getParameters())).')';
+                    $rows[] = '| `'.str_replace('|', '\\|', $call).'` | '.str_replace('|', '\\|', $this->endpointReturn($method)).' |';
+                }
+            }
+
+            sort($rows);
+            $contents[] = '- ['.$title.'](#'.Str::slug($title).') ('.count($rows).')';
+            $sections[] = "## $title\n\n| Call | Returns |\n|---|---|\n".implode("\n", $rows)."\n";
+        }
+
+        $this->files['ENDPOINTS.md'] = implode("\n", [
+            '# Endpoints',
+            '',
+            '<!-- '.self::MARKER.' -->',
+            '',
+            'Every call the package\'s resources provide, as you write it, and what it returns. Lists come back as a',
+            '`Collection` of models, lists iSAMS sends in pages as a `LazyCollection` that fetches each page as you loop, and',
+            'a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#two-ways-to-call-isams) and',
+            '[Errors](README.md#errors). Each call\'s docblock names the request it sends, for `Isams::send()`.',
+            '',
+            ...$contents,
+            '',
+            implode("\n", $sections),
+        ]);
+    }
+
+    private function endpointParameter(Parameter $parameter): string
+    {
+        $type = implode('|', array_map(fn (string $part) => (str_starts_with($part, '?') ? '?' : '').class_basename(ltrim($part, '?')), explode('|', (string) $parameter->getType())));
+        $default = $parameter->hasDefaultValue() ? ' = '.($parameter->getDefaultValue() === null ? 'null' : var_export($parameter->getDefaultValue(), true)) : '';
+
+        return ($type === '' ? '' : "$type ").'$'.$parameter->getName().$default;
+    }
+
+    private function endpointReturn(Method $method): string
+    {
+        $type = (string) $method->getReturnType();
+        preg_match('/@return\\s+\\S*Collection<int, \\\\?([\\w\\\\]+)>/', $method->getComment() ?? '', $item);
+
+        return match (true) {
+            $type === 'void' => 'nothing',
+            $type === 'mixed' => 'iSAMS\'s JSON, decoded (the spec gives no model)',
+            isset($item[1]) => '`'.class_basename($type).'<'.class_basename($item[1]).'>`',
+            default => '`'.class_basename($type).'`',
+        };
     }
 
     /**

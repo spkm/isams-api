@@ -121,7 +121,7 @@ The connector fetches an access token from iSAMS and caches it, encrypted, until
 Resources follow iSAMS's areas, and your IDE autocompletes them from `Isams::`. A resource's methods are named for
 what they do: `all()` for a list, `get()` for one item, `create()`, `update()`, `patch()` and `delete()`, `patchMany()`
 and the like for several at once, and actions of their own such as `archive()` or `moveToAlumni()`. Each returns what
-iSAMS sent back:
+iSAMS sent back. [ENDPOINTS.md](ENDPOINTS.md) lists every call, with its parameters and what it returns:
 
 ```php
 use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
