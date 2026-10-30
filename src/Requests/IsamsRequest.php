@@ -16,7 +16,7 @@ use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Data;
 use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\IsamsApiException;
-use spkm\IsamsApi\IsamsConnector;
+use spkm\IsamsApi\IsamsBaseConnector;
 
 abstract class IsamsRequest extends Request implements Cacheable
 {
@@ -68,7 +68,7 @@ abstract class IsamsRequest extends Request implements Cacheable
     protected function cacheKey(PendingRequest $pendingRequest): string
     {
         $connector = $pendingRequest->getConnector();
-        $client = $connector instanceof IsamsConnector ? $connector->oauthConfig()->getClientId() : '';
+        $client = $connector instanceof IsamsBaseConnector ? $connector->oauthConfig()->getClientId() : '';
 
         return 'isams-api.response.'.sha1($client.' '.$pendingRequest->getMethod()->value.' '.$pendingRequest->getUri());
     }

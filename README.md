@@ -279,41 +279,56 @@ ISAMS_BATCH_CLIENT_SECRET=your-batch-api-client-secret
 If your school uses separate keys, add them by name to `batch_keys` in `config/isams-api.php` (the published file
 has a commented-out example), at the top level for the default school or under a named connection.
 
-Run every method allocated to the key, or only some, with filters for the methods that need them:
+As with REST, there are two ways to call it. Each Batch API method is one call that returns its records as models,
+grouped by the part of the method's name before the underscore (`Pupil_GetCurrentPupils` is `pupil()->currentPupils()`),
+with the method's filters as named parameters. A call throws a `BatchApiException` when iSAMS refuses:
+
+```php
+$students = Isams::batch()->pupil()->currentPupils();                             // Collection of Pupil models
+$passports = Isams::batch()->pupil()->passports(systemStatusesToInclude: [0, 1]);  // filtered by system status
+$terms = Isams::batch()->school()->terms();
+$staff = Isams::batch()->humanResources()->currentStaff();
+$timetables = Isams::batch('timetable')->timetable()->published();                 // a separately named key
+```
+
+[ENDPOINTS.md](ENDPOINTS.md#batch-api) lists every call, with its filters and what it returns.
+
+The Batch API can also run several methods in one request, the Saloon way: send a `BatchRequest` naming them, with
+filters for those that take them, and read each method from the response:
 
 ```php
 use spkm\IsamsApi\Batch\BatchFilters;
 use spkm\IsamsApi\Batch\BatchRequest;
 
-$batch = Isams::batch()->send(new BatchRequest)->dto();
-
-$events = Isams::batch()->send(new BatchRequest(
+$batch = Isams::batch()->send(new BatchRequest(
     BatchFilters::make()
-        ->methods('Calendar_GetEvents')
-        ->filter('Calendar', 'Events', ['StartDate' => now(), 'EndDate' => now()->addMonth()])
-))->dto()->method('Calendar_GetEvents');
+        ->methods('Pupil_GetCurrentPupils', 'Pupil_GetPassports')
+        ->filter('StudentManager', 'Passports', ['SystemStatusesToInclude' => [0, 1]])
+))->dto();
 
-$timetable = Isams::batch('timetable')->send(new BatchRequest)->dto(); // a separately named key
+$students = $batch->method('Pupil_GetCurrentPupils');
+$passports = $batch->method('Pupil_GetPassports');
+
+$everything = Isams::batch()->send(new BatchRequest)->dto(); // every method allocated to the key
 ```
 
-[ENDPOINTS.md](ENDPOINTS.md#batch-api) lists every method, with the model it returns and the filters it takes.
 `method()` returns a collection of models (`Data\Batch\{Module}\{RootNode}\{Node}`); `models($module, $rootNode)`
 does the same by node name, and `get($module, $rootNode)` returns plain arrays for anything the package has no model
-for. The filter's module and method names are the ones iSAMS documents for filters, which can differ from the
-response's (for example `StudentManager` filters `PupilManager` methods). `cachedSecondsAgo()` says whether iSAMS
-served the response from its cache. A failed request's `dto()` throws a `BatchApiException` with iSAMS's error name,
-title and description; its `isPermissionError()` is true when the key is unknown, revoked or not allocated the methods
-asked for.
+for. A filter's module and element names are the ones iSAMS documents for filters, which can differ from the
+method's (for example `Pupil_GetPassports` is filtered under `StudentManager`); the one-call methods use them for you.
+`cachedSecondsAgo()` says whether iSAMS served the response from its cache. A failed request's `dto()` throws a
+`BatchApiException` with iSAMS's error name, title and description; its `isPermissionError()` is true when the key is
+unknown, revoked or not allocated the methods asked for.
 
 Photos come as a zip, read by the student's or staff member's id:
 
 ```php
-use spkm\IsamsApi\Batch\BatchPhotosRequest;
-
-foreach (Isams::batch()->send(BatchPhotosRequest::students())->dto()->photos() as $id => $png) {
+foreach (Isams::batch()->studentPhotos()->photos() as $id => $png) {
     //
 }
 ```
+
+`staffPhotos()` does the same for staff.
 
 The older `GetEndpointRequest` and `FilterEndpointRequest` still work but are deprecated: from 2 November 2026 iSAMS
 only accepts Batch API requests that authenticate with the key's own client secret.

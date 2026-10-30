@@ -29,32 +29,32 @@ Everything the package can ask iSAMS for, as you write it: the REST API's calls,
   - [Teaching](#teaching) (15)
   - [Timetable](#timetable) (13)
   - [Wellbeing Manager](#wellbeing-manager) (121)
-- [Batch API](#batch-api) (154 methods and root nodes)
-  - [AgencyManager](#agencymanager) (2)
-  - [CalendarManager](#calendarmanager) (9)
-  - [ControlPanel](#controlpanel) (6)
-  - [CoverManager](#covermanager) (8)
-  - [CurriculumManager](#curriculummanager) (35)
-  - [DailyBulletin](#dailybulletin) (4)
-  - [DisciplineManager](#disciplinemanager) (3)
-  - [EstateManager](#estatemanager) (1)
-  - [ExamsManager](#examsmanager) (9)
-  - [HRManager](#hrmanager) (2)
-  - [InternalExamsManager](#internalexamsmanager) (1)
-  - [NewsManager](#newsmanager) (4)
-  - [OffGames](#offgames) (1)
-  - [OtherSchools](#otherschools) (5)
-  - [PupilManager](#pupilmanager) (17)
-  - [PupilRegisters](#pupilregisters) (6)
-  - [RegistrationManager](#registrationmanager) (6)
-  - [RewardsAndConduct](#rewardsandconduct) (3)
-  - [SENManager](#senmanager) (6)
-  - [SchoolManager](#schoolmanager) (7)
-  - [SchoolReports](#schoolreports) (5)
-  - [TeachingManager](#teachingmanager) (4)
-  - [TimetableManager](#timetablemanager) (8)
-  - [TrackingManager](#trackingmanager) (2)
-  - [Photos](#photos) (2)
+- [Batch API](#batch-api) (115 calls)
+  - [Agent](#batch-agent) (2)
+  - [Calendar](#batch-calendar) (9)
+  - [ContactAdvanced](#batch-contactadvanced) (2)
+  - [ControlPanel](#batch-controlpanel) (6)
+  - [Cover](#batch-cover) (8)
+  - [DailyBulletin](#batch-dailybulletin) (4)
+  - [Discipline](#batch-discipline) (3)
+  - [Estate](#batch-estate) (1)
+  - [ExternalExams](#batch-externalexams) (8)
+  - [HumanResources](#batch-humanresources) (2)
+  - [News](#batch-news) (4)
+  - [OffGames](#batch-offgames) (1)
+  - [OtherSchools](#batch-otherschools) (5)
+  - [Pupil](#batch-pupil) (15)
+  - [PupilRegisters](#batch-pupilregisters) (5)
+  - [Registration](#batch-registration) (6)
+  - [RewardsAndConduct](#batch-rewardsandconduct) (3)
+  - [SENManager](#batch-senmanager) (6)
+  - [School](#batch-school) (7)
+  - [SchoolReports](#batch-schoolreports) (4)
+  - [Teaching](#batch-teaching) (4)
+  - [Timetable](#batch-timetable) (8)
+  - [Tracking](#batch-tracking) (2)
+  - [Root nodes no method names](#batch-root-nodes-no-method-names) (39)
+  - [Photos](#batch-photos) (2)
 
 ## REST API
 
@@ -1218,301 +1218,320 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 
 ## Batch API
 
-The Batch API is one request per key rather than a call per endpoint: it runs every method allocated to the key, or
-the methods `BatchFilters::methods()` names, and you read each method's records from the response as models:
+Each call runs one Batch API method and returns its records as models, taking the method's filters as named
+parameters; a failure throws a `BatchApiException`. Pass a key's name to `Isams::batch()` to use a key other than the
+default. To run several methods in one request, send a `BatchRequest` and read each method from the response; see
+[Batch API](README.md#batch-api).
 
 ```php
+$students = Isams::batch()->pupil()->currentPupils(); // Collection<Pupil>
+
+// Mother and father contacts, at their work and company locations, of students with system status 0 or 1
+// who live at home and enrol in 2026 or 2027
+$contacts = Isams::batch()->contactAdvanced()->contacts(
+    contactTypes: ['Mother', 'Father'],
+    contactLocations: ['Work', 'Company'],
+    studentHome: true,
+    systemStatusesToInclude: [0, 1],
+    enrolmentSchoolYearsToInclude: [2026, 2027],
+); // Collection<Contact>
+
+// Several methods in one request, each filtered under the names iSAMS documents for its filter
 $batch = Isams::batch()->send(new BatchRequest(
     BatchFilters::make()
-        ->methods('Calendar_GetEvents')
-        ->filter('Calendar', 'Events', ['StartDate' => now(), 'EndDate' => now()->addMonth()])
+        ->methods('Pupil_GetCurrentPupils', 'Pupil_GetPassports', 'ContactAdvanced_GetContacts')
+        ->filter('StudentManager', 'Passports', ['SystemStatusesToInclude' => [0, 1]])
+        ->filter('StudentManager', 'Contacts', [
+            'ContactTypes' => ['Mother', 'Father'],
+            'StudentHome' => true,
+            'SystemStatusesToInclude' => [0, 1],
+        ])
 ))->dto();
 
-$events = $batch->method('Calendar_GetEvents'); // Collection<Event>
+$students = $batch->method('Pupil_GetCurrentPupils');
+$passports = $batch->method('Pupil_GetPassports');
+$contacts = $batch->method('ContactAdvanced_GetContacts');
 ```
 
-Root nodes no known method fills arrive when the key runs everything; read them with `models($module, $rootNode)`.
-Filters are set with `BatchFilters::filter()`, whose module and method names are the ones iSAMS documents for
-filters. Models are in `Data\Batch\{Module}\{RootNode}`, and a failure throws a `BatchApiException`. See [Batch
-API](README.md#batch-api).
-
-### AgencyManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Agent_GetActive')` | `Collection<Agency>` | none |
-| `->method('Agent_GetInactive')` | `Collection<Agency>` | none |
-
-### CalendarManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Calendar_GetCategories')` | `Collection<Category>` | none |
-| `->method('Calendar_GetEvents')` | `Collection<Event>` | `StartDate`, `EndDate` (required) |
-| `->method('Calendar_GetEventsNextMonth')` | `Collection<Event>` | none |
-| `->method('Calendar_GetEventsNextWeek')` | `Collection<Event>` | none |
-| `->method('Calendar_GetEventsNextYear')` | `Collection<Event>` | none |
-| `->method('Calendar_GetEventsThisMonth')` | `Collection<Event>` | none |
-| `->method('Calendar_GetEventsThisWeek')` | `Collection<Event>` | none |
-| `->method('Calendar_GetEventsThisYear')` | `Collection<Event>` | none |
-| `->method('Calendar_GetTypes')` | `Collection<Type>` | none |
-
-### ControlPanel
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('ControlPanel_GetAllGlobalLists')` | `Collection<GlobalList>` | none |
-| `->method('ControlPanel_GetAllUserGroups')` | `Collection<Group>` | none |
-| `->method('ControlPanel_GetAllUsers')` | `Collection<User>` | none |
-| `->method('ControlPanel_GetContactTypeGlobalList')` | `Collection<ContactType>` | none |
-| `->method('ControlPanel_GetGroupedModules')` | `Collection<Groups>` | none |
-| `->method('ControlPanel_GetModulePermissions')` | `Collection<Permission>` | none |
-
-### CoverManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Cover_GetAllAbsenceReasons')` | `Collection<Reason>` | none |
-| `->method('Cover_GetAllAgencies')` | `Collection<Agency>` | none |
-| `->method('Cover_GetAllCoverStaff')` | `Collection<Teacher>` | none |
-| `->method('Cover_GetAllEventReasons')` | `Collection<Reason>` | none |
-| `->method('Cover_GetAllLessonSuspensions')` | `Collection<LessonSuspension>` | `StartDate`, `EndDate` (required) |
-| `->method('Cover_GetAllRoomClosureReasons')` | `Collection<Reason>` | none |
-| `->method('Cover_GetAllRoomClosuresAndCover')` | `Collection<RoomClosure>` | `StartDate`, `EndDate` (required) |
-| `->method('Cover_GetAllUnavailableReasons')` | `Collection<Reason>` | none |
-
-### CurriculumManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->models('CurriculumManager', 'Blocks')` | `Collection<Block>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'ClassStudents')` | `Collection<ClassStudent>` | none |
-| `->models('CurriculumManager', 'Classes')` | `Collection<ClassNode>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'CourseCategories')` | `Collection<CourseCategory>` | `typeId` |
-| `->models('CurriculumManager', 'CourseGPAMethodLevels')` | `Collection<CourseGPAMethodLevel>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'CourseSchedules')` | `Collection<CourseSchedule>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'CourseStudents')` | `Collection<CourseStudent>` | none |
-| `->models('CurriculumManager', 'Courses')` | `Collection<Course>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'CurriculumModels')` | `Collection<CurriculumModel>` | none |
-| `->models('CurriculumManager', 'Curriculums')` | `Collection<Curriculum>` | `typeId` |
-| `->models('CurriculumManager', 'Cycles')` | `Collection<Cycle>` | none |
-| `->models('CurriculumManager', 'Departments')` | `Collection<Department>` | `typeId` |
-| `->models('CurriculumManager', 'Entities')` | `Collection<Entity>` | `typeId` |
-| `->models('CurriculumManager', 'GPAGradeMarkPoints')` | `Collection<GPAGradeMarkPoint>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GPALevels')` | `Collection<GPALevel>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GPAMethods')` | `Collection<GPAMethod>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GPASetTypeMethodStudents')` | `Collection<GPASetTypeMethodStudent>` | `cycleId` |
-| `->models('CurriculumManager', 'GPASets')` | `Collection<GPASet>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GPATypeCategories')` | `Collection<GPATypeCategory>` | none |
-| `->models('CurriculumManager', 'GPATypes')` | `Collection<GPAType>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GradeMarks')` | `Collection<GradeMark>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GradeSets')` | `Collection<GradeSet>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GradingPeriods')` | `Collection<GradingPeriod>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'GradingSets')` | `Collection<GradingSet>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'Lengths')` | `Collection<Length>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'Levels')` | `Collection<Level>` | `typeId` |
-| `->models('CurriculumManager', 'Metadata')` | `Collection<Metadata>` | `typeId` |
-| `->models('CurriculumManager', 'Schedules')` | `Collection<Schedule>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'StandardItems')` | `Collection<StandardItem>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'StandardSets')` | `Collection<StandardSet>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'Subjects')` | `Collection<Subject>` | none |
-| `->models('CurriculumManager', 'TermDates')` | `Collection<TermDate>` | `cycleId`, `typeId` |
-| `->models('CurriculumManager', 'TermSets')` | `Collection<TermSet>` | `typeId` |
-| `->models('CurriculumManager', 'TermTypes')` | `Collection<TermType>` | `typeId` |
-| `->models('CurriculumManager', 'Types')` | `Collection<Type>` | none |
-
-### DailyBulletin
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('DailyBulletin_GetAllCategories')` | `Collection<Category>` | none |
-| `->method('DailyBulletin_GetDailyBulletins')` | `Collection<Bulletin>` | `StartDate`, `EndDate` (required) |
-| `->method('DailyBulletin_GetTodaysDailyBulletins')` | `Collection<Bulletin>` | none |
-| `->method('DailyBulletin_GetTomorrowsDailyBulletins')` | `Collection<Bulletin>` | none |
-
-### DisciplineManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Discipline_GetDetentions')` | `Collection<Session>` | `StartDate`, `EndDate` (required) |
-| `->method('Discipline_GetDetentionsThisMonth')` | `Collection<Session>` | none |
-| `->method('Discipline_GetDetentionsThisTerm')` | `Collection<Session>` | none |
-
-### EstateManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Estate_GetAllBuildingsAndClassrooms')` | `Collection<Building>` | none |
-
-### ExamsManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('ExternalExams_GetExamArrangements')` | `Collection<ExamArrangement>` | none |
-| `->method('ExternalExams_GetExamCentres')` | `Collection<ExamCentre>` | none |
-| `->method('ExternalExams_GetExamCycles')` | `Collection<ExamCycle>` | none |
-| `->method('ExternalExams_GetExamEntries')` | `Collection<ExamEntry>` | none |
-| `->method('ExternalExams_GetExamResults')` | `Collection<ExamResult>` | `examCycleIdsToInclude` |
-| `->method('ExternalExams_GetQualifications')` | `Collection<Qualification>` | none |
-| `->method('ExternalExams_GetUABGroups')` | `Collection<UABGroup>` | none |
-| `->method('ExternalExams_GetUABIdentifiers')` | `Collection<UABIdentifier>` | none |
-| `->models('ExamsManager', 'ExamFlexibleArrangements')` | `Collection<ExamFlexibleArrangement>` | none |
-
-### HRManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('HumanResources_GetCurrentStaff')` | `Collection<StaffMember>` | none |
-| `->method('HumanResources_GetCurrentStaffWithCustomFields')` | `Collection<StaffMember>` | none |
-
-### InternalExamsManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->models('InternalExamsManager', 'ExamArrangements')` | `Collection<ExamArrangement>` | none |
-
-### NewsManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('News_GetActiveNews')` | `Collection<NewsItem>` | none |
-| `->method('News_GetArchivedNews')` | `Collection<NewsItem>` | none |
-| `->method('News_GetFutureNews')` | `Collection<NewsItem>` | none |
-| `->method('News_GetNewsTypes')` | `Collection<Category>` | none |
-
-### OffGames
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('OffGames_GetAllOffGames')` | `Collection<OffGames>` | none |
-
-### OtherSchools
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('OtherSchools_BoardingTypes')` | `Collection<BoardingType>` | none |
-| `->method('OtherSchools_GetOtherSchools')` | `Collection<School>` | none |
-| `->method('OtherSchools_GetSchoolTypes')` | `Collection<SchoolType>` | none |
-| `->method('OtherSchools_GovernanceTypes')` | `Collection<GovernanceType>` | none |
-| `->method('OtherSchools_IntakeTypes')` | `Collection<IntakeType>` | none |
-
-### PupilManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('ContactAdvanced_GetContacts')` | `Collection<Contact>` | `ContactTypes`, `ContactOnly`, `ContactLocations`, `StudentHome`, `SystemStatusesToInclude`, `AdmissionsStatusesToInclude`, `EnrolmentSchoolYearsToInclude` (required) |
-| `->method('ContactAdvanced_GetContactsWithCustomFields')` | `Collection<Contact>` | `ContactTypes`, `ContactOnly`, `ContactLocations`, `StudentHome`, `SystemStatusesToInclude`, `AdmissionsStatusesToInclude`, `EnrolmentSchoolYearsToInclude` (required) |
-| `->method('Pupil_GetAlumni')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetApplicants')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetApplicantsWithCustomFields')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetCurrentPupils')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetCurrentPupilsHealth')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetCurrentPupilsHealthWithCustomFields')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetCurrentPupilsTransport')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetCurrentPupilsTransportWithCustomFields')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetCurrentPupilsWithCustomFields')` | `Collection<Pupil>` | none |
-| `->method('Pupil_GetCustomGroupCategories')` | `Collection<Category>` | none |
-| `->method('Pupil_GetCustomPupilGroupMembership')` | `Collection<CustomPupilGroupMembershipItem>` | `systemStatusesToInclude` (required) |
-| `->method('Pupil_GetCustomPupilGroupMembershipFiltered')` | `Collection<CustomPupilGroupMembershipItem>` | `systemStatusesToInclude` (required) |
-| `->method('Pupil_GetCustomPupilGroups')` | `Collection<CustomPupilGroup>` | none |
-| `->method('Pupil_GetPassports')` | `Collection<Pupil>` | `systemStatusesToInclude` (required) |
-| `->method('Pupil_GetSiblings')` | `Collection<Pupil>` | none |
-
-### PupilRegisters
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('PupilRegisters_GetFreeSchoolMeals')` | `Collection<FreeSchoolMeal>` | `StartDate`, `EndDate` (required) |
-| `->method('PupilRegisters_GetGiftedAndTalentedRegister')` | `Collection<Register>` | `systemStatusesToInclude` (required) |
-| `->method('PupilRegisters_GetSENLessons')` | `Collection<Lesson>` | `systemStatusesToInclude` (required) |
-| `->method('PupilRegisters_GetSENRegister')` | `Collection<Register>` | `systemStatusesToInclude` |
-| `->method('PupilRegisters_GetSENTypes')` | `Collection<Type>` | `systemStatusesToInclude` (required) |
-| `->models('PupilRegisters', 'SENDfERecords')` | `Collection<DfERecord>` | `systemStatusesToInclude` |
-
-### RegistrationManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Registration_GetDatesAndTimes')` | `Collection<DateTime>` | none |
-| `->method('Registration_GetOutOfSchoolPupils')` | `Collection<Pupil>` | `StartDate`, `EndDate` (required) |
-| `->method('Registration_GetPresentCodes')` | `Collection<PresentCode>` | none |
-| `->method('Registration_GetRegistrationCodes')` | `Collection<RegistrationCode>` | none |
-| `->method('Registration_GetRegistrationPeriods')` | `Collection<RegistrationPeriod>` | `StartDate`, `EndDate` (required) |
-| `->method('Registration_GetRegistrationStatus')` | `Collection<RegistrationStatus>` | `StartDate`, `EndDate` (required) |
-
-### RewardsAndConduct
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('RewardsAndConduct_GetFields')` | `Collection<Field>` | none |
-| `->method('RewardsAndConduct_GetRecords')` | `Collection<Record>` | `StartDate`, `EndDate` (required) |
-| `->method('RewardsAndConduct_GetRewardsTypes')` | `Collection<Type>` | none |
-
-### SENManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('SENManager_GetExternalExams')` | `Collection<Exam>` | none |
-| `->method('SENManager_GetGiftedAndTalentedRegister')` | `Collection<Register>` | none |
-| `->method('SENManager_GetInternalExams')` | `Collection<Exam>` | none |
-| `->method('SENManager_GetSENLessons')` | `Collection<Lesson>` | none |
-| `->method('SENManager_GetSENRegister')` | `Collection<Register>` | none |
-| `->method('SENManager_GetTypes')` | `Collection<Type>` | none |
-
-### SchoolManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('School_GetAcademicHouses')` | `Collection<House>` | none |
-| `->method('School_GetAllYears')` | `Collection<Year>` | none |
-| `->method('School_GetBoardingHouses')` | `Collection<House>` | none |
-| `->method('School_GetPastoralTutors')` | `Collection<StaffMember>` | none |
-| `->method('School_GetSchoolDivisions')` | `Collection<SchoolDivision>` | none |
-| `->method('School_GetSchoolForms')` | `Collection<Form>` | none |
-| `->method('School_GetSchoolTerms')` | `Collection<Term>` | none |
-
-### SchoolReports
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('SchoolReports_GetReportCycles')` | `Collection<ReportCycle>` | `reportTerm`, `reportCycleType`, `reportYear`, `reportCycleIdsToInclude`, `ncYear`, `reportType`, `reportStatus` (required) |
-| `->method('SchoolReports_GetReportTypes')` | `Collection<ReportType>` | none |
-| `->method('SchoolReports_GetReports')` | `Collection<ReportCycle>` | `reportTerm`, `reportCycleType`, `reportYear`, `reportCycleIdsToInclude`, `ncYear`, `reportType`, `reportStatus` (required) |
-| `->method('SchoolReports_GetTemplates')` | `Collection<Template>` | none |
-| `->models('SchoolReports', 'Records')` | `Collection<Record>` | `IdsToInclude` |
-
-### TeachingManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Teaching_GetDepartmentsAndSubjects')` | `Collection<Department>` | none |
-| `->method('Teaching_GetTeachingForms')` | `Collection<TeachingForm>` | none |
-| `->method('Teaching_GetTeachingSetLists')` | `Collection<SetList>` | none |
-| `->method('Teaching_GetTeachingSets')` | `Collection<Set>` | none |
-
-### TimetableManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Timetable_GetArchivedTimetables')` | `Collection<Timetable>` | none |
-| `->method('Timetable_GetDevelopmentTimetables')` | `Collection<Timetable>` | none |
-| `->method('Timetable_GetPreliminaryTimetables')` | `Collection<Timetable>` | none |
-| `->method('Timetable_GetPrepTimetables')` | `Collection<PrepTimetable>` | none |
-| `->method('Timetable_GetPublishedTimetables')` | `Collection<Timetable>` | none |
-| `->method('Timetable_GetPupilTimetables')` | `Collection<Pupils>` | none |
-| `->method('Timetable_GetTimetableStructure')` | `Collection<Week>` | none |
-| `->method('Timetable_GetTimetableWeekAllocations')` | `Collection<TimetableAllocation>` | none |
-
-### TrackingManager
-
-| Read with | Returns | Filters |
-|---|---|---|
-| `->method('Tracking_GetExternalData')` | `Collection<Data>` | `IdsToInclude` (required) |
-| `->method('Tracking_GetExternalDataList')` | `Collection<Data>` | none |
-
-### Photos
+### Batch: Agent
 
 | Call | Returns |
 |---|---|
-| `Isams::batch()->send(BatchPhotosRequest::staff())->dto()` | `BatchPhotos`: `photos()` yields each staff id and PNG |
-| `Isams::batch()->send(BatchPhotosRequest::students())->dto()` | `BatchPhotos`: `photos()` yields each student id and PNG |
+| `Isams::batch()->agent()->active()` | `Collection<Agency>` |
+| `Isams::batch()->agent()->inactive()` | `Collection<Agency>` |
+
+### Batch: Calendar
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->calendar()->categories()` | `Collection<Category>` |
+| `Isams::batch()->calendar()->events(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<Event>` |
+| `Isams::batch()->calendar()->eventsNextMonth()` | `Collection<Event>` |
+| `Isams::batch()->calendar()->eventsNextWeek()` | `Collection<Event>` |
+| `Isams::batch()->calendar()->eventsNextYear()` | `Collection<Event>` |
+| `Isams::batch()->calendar()->eventsThisMonth()` | `Collection<Event>` |
+| `Isams::batch()->calendar()->eventsThisWeek()` | `Collection<Event>` |
+| `Isams::batch()->calendar()->eventsThisYear()` | `Collection<Event>` |
+| `Isams::batch()->calendar()->types()` | `Collection<Type>` |
+
+### Batch: ContactAdvanced
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->contactAdvanced()->contacts(?array $contactTypes = null, ?bool $contactOnly = null, ?array $contactLocations = null, ?bool $studentHome = null, ?array $systemStatusesToInclude = null, ?array $admissionsStatusesToInclude = null, ?array $enrolmentSchoolYearsToInclude = null)` | `Collection<Contact>` |
+| `Isams::batch()->contactAdvanced()->contactsWithCustomFields(?array $contactTypes = null, ?bool $contactOnly = null, ?array $contactLocations = null, ?bool $studentHome = null, ?array $systemStatusesToInclude = null, ?array $admissionsStatusesToInclude = null, ?array $enrolmentSchoolYearsToInclude = null)` | `Collection<Contact>` |
+
+### Batch: ControlPanel
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->controlPanel()->contactTypeGlobalList()` | `Collection<ContactType>` |
+| `Isams::batch()->controlPanel()->globalLists()` | `Collection<GlobalList>` |
+| `Isams::batch()->controlPanel()->groupedModules()` | `Collection<Groups>` |
+| `Isams::batch()->controlPanel()->modulePermissions()` | `Collection<Permission>` |
+| `Isams::batch()->controlPanel()->userGroups()` | `Collection<Group>` |
+| `Isams::batch()->controlPanel()->users()` | `Collection<User>` |
+
+### Batch: Cover
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->cover()->absenceReasons()` | `Collection<Reason>` |
+| `Isams::batch()->cover()->agencies()` | `Collection<Agency>` |
+| `Isams::batch()->cover()->eventReasons()` | `Collection<Reason>` |
+| `Isams::batch()->cover()->lessonSuspensions(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<LessonSuspension>` |
+| `Isams::batch()->cover()->roomClosureReasons()` | `Collection<Reason>` |
+| `Isams::batch()->cover()->roomClosuresAndCover(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<RoomClosure>` |
+| `Isams::batch()->cover()->staff()` | `Collection<Teacher>` |
+| `Isams::batch()->cover()->unavailableReasons()` | `Collection<Reason>` |
+
+### Batch: DailyBulletin
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->dailyBulletin()->all(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<Bulletin>` |
+| `Isams::batch()->dailyBulletin()->categories()` | `Collection<Category>` |
+| `Isams::batch()->dailyBulletin()->today()` | `Collection<Bulletin>` |
+| `Isams::batch()->dailyBulletin()->tomorrow()` | `Collection<Bulletin>` |
+
+### Batch: Discipline
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->discipline()->detentions(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<Session>` |
+| `Isams::batch()->discipline()->detentionsThisMonth()` | `Collection<Session>` |
+| `Isams::batch()->discipline()->detentionsThisTerm()` | `Collection<Session>` |
+
+### Batch: Estate
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->estate()->buildingsAndClassrooms()` | `Collection<Building>` |
+
+### Batch: ExternalExams
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->externalExams()->examArrangements()` | `Collection<ExamArrangement>` |
+| `Isams::batch()->externalExams()->examCentres()` | `Collection<ExamCentre>` |
+| `Isams::batch()->externalExams()->examCycles()` | `Collection<ExamCycle>` |
+| `Isams::batch()->externalExams()->examEntries()` | `Collection<ExamEntry>` |
+| `Isams::batch()->externalExams()->examResults(?array $examCycleIdsToInclude = null)` | `Collection<ExamResult>` |
+| `Isams::batch()->externalExams()->qualifications()` | `Collection<Qualification>` |
+| `Isams::batch()->externalExams()->uabGroups()` | `Collection<UABGroup>` |
+| `Isams::batch()->externalExams()->uabIdentifiers()` | `Collection<UABIdentifier>` |
+
+### Batch: HumanResources
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->humanResources()->currentStaff()` | `Collection<StaffMember>` |
+| `Isams::batch()->humanResources()->currentStaffWithCustomFields()` | `Collection<StaffMember>` |
+
+### Batch: News
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->news()->active()` | `Collection<NewsItem>` |
+| `Isams::batch()->news()->archived()` | `Collection<NewsItem>` |
+| `Isams::batch()->news()->future()` | `Collection<NewsItem>` |
+| `Isams::batch()->news()->types()` | `Collection<Category>` |
+
+### Batch: OffGames
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->offGames()->all()` | `Collection<OffGames>` |
+
+### Batch: OtherSchools
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->otherSchools()->all()` | `Collection<School>` |
+| `Isams::batch()->otherSchools()->boardingTypes()` | `Collection<BoardingType>` |
+| `Isams::batch()->otherSchools()->governanceTypes()` | `Collection<GovernanceType>` |
+| `Isams::batch()->otherSchools()->intakeTypes()` | `Collection<IntakeType>` |
+| `Isams::batch()->otherSchools()->schoolTypes()` | `Collection<SchoolType>` |
+
+### Batch: Pupil
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->pupil()->alumni()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->applicants()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->applicantsWithCustomFields()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->currentPupils()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->currentPupilsHealth()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->currentPupilsHealthWithCustomFields()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->currentPupilsTransport()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->currentPupilsTransportWithCustomFields()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->currentPupilsWithCustomFields()` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->customGroupCategories()` | `Collection<Category>` |
+| `Isams::batch()->pupil()->customPupilGroupMembership()` | `Collection<CustomPupilGroupMembershipItem>` |
+| `Isams::batch()->pupil()->customPupilGroupMembershipFiltered(array $systemStatusesToInclude)` | `Collection<CustomPupilGroupMembershipItem>` |
+| `Isams::batch()->pupil()->customPupilGroups()` | `Collection<CustomPupilGroup>` |
+| `Isams::batch()->pupil()->passports(array $systemStatusesToInclude)` | `Collection<Pupil>` |
+| `Isams::batch()->pupil()->siblings()` | `Collection<Pupil>` |
+
+### Batch: PupilRegisters
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->pupilRegisters()->freeSchoolMeals(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<FreeSchoolMeal>` |
+| `Isams::batch()->pupilRegisters()->giftedAndTalentedRegister(array $systemStatusesToInclude)` | `Collection<Register>` |
+| `Isams::batch()->pupilRegisters()->senLessons(array $systemStatusesToInclude)` | `Collection<Lesson>` |
+| `Isams::batch()->pupilRegisters()->senRegister(?array $systemStatusesToInclude = null)` | `Collection<Register>` |
+| `Isams::batch()->pupilRegisters()->senTypes(array $systemStatusesToInclude)` | `Collection<Type>` |
+
+### Batch: Registration
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->registration()->codes()` | `Collection<RegistrationCode>` |
+| `Isams::batch()->registration()->datesAndTimes()` | `Collection<DateTime>` |
+| `Isams::batch()->registration()->outOfSchoolPupils(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<Pupil>` |
+| `Isams::batch()->registration()->periods(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<RegistrationPeriod>` |
+| `Isams::batch()->registration()->presentCodes()` | `Collection<PresentCode>` |
+| `Isams::batch()->registration()->status(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<RegistrationStatus>` |
+
+### Batch: RewardsAndConduct
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->rewardsAndConduct()->fields()` | `Collection<Field>` |
+| `Isams::batch()->rewardsAndConduct()->records(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<Record>` |
+| `Isams::batch()->rewardsAndConduct()->rewardsTypes()` | `Collection<Type>` |
+
+### Batch: SENManager
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->senManager()->externalExams()` | `Collection<Exam>` |
+| `Isams::batch()->senManager()->giftedAndTalentedRegister()` | `Collection<Register>` |
+| `Isams::batch()->senManager()->internalExams()` | `Collection<Exam>` |
+| `Isams::batch()->senManager()->senLessons()` | `Collection<Lesson>` |
+| `Isams::batch()->senManager()->senRegister()` | `Collection<Register>` |
+| `Isams::batch()->senManager()->types()` | `Collection<Type>` |
+
+### Batch: School
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->school()->academicHouses()` | `Collection<House>` |
+| `Isams::batch()->school()->boardingHouses()` | `Collection<House>` |
+| `Isams::batch()->school()->divisions()` | `Collection<SchoolDivision>` |
+| `Isams::batch()->school()->forms()` | `Collection<Form>` |
+| `Isams::batch()->school()->pastoralTutors()` | `Collection<StaffMember>` |
+| `Isams::batch()->school()->terms()` | `Collection<Term>` |
+| `Isams::batch()->school()->years()` | `Collection<Year>` |
+
+### Batch: SchoolReports
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->schoolReports()->reportCycles(?int $reportTerm = null, ?int $reportCycleType = null, ?int $reportYear = null)` | `Collection<ReportCycle>` |
+| `Isams::batch()->schoolReports()->reportTypes()` | `Collection<ReportType>` |
+| `Isams::batch()->schoolReports()->reports(?array $reportCycleIdsToInclude = null, ?int $ncYear = null, ?int $reportType = null, ?int $reportStatus = null)` | `Collection<ReportCycle>` |
+| `Isams::batch()->schoolReports()->templates()` | `Collection<Template>` |
+
+### Batch: Teaching
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->teaching()->departmentsAndSubjects()` | `Collection<Department>` |
+| `Isams::batch()->teaching()->forms()` | `Collection<TeachingForm>` |
+| `Isams::batch()->teaching()->setLists()` | `Collection<SetList>` |
+| `Isams::batch()->teaching()->sets()` | `Collection<Set>` |
+
+### Batch: Timetable
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->timetable()->archived()` | `Collection<Timetable>` |
+| `Isams::batch()->timetable()->development()` | `Collection<Timetable>` |
+| `Isams::batch()->timetable()->preliminary()` | `Collection<Timetable>` |
+| `Isams::batch()->timetable()->prep()` | `Collection<PrepTimetable>` |
+| `Isams::batch()->timetable()->published()` | `Collection<Timetable>` |
+| `Isams::batch()->timetable()->pupils()` | `Collection<Pupils>` |
+| `Isams::batch()->timetable()->structure()` | `Collection<Week>` |
+| `Isams::batch()->timetable()->weekAllocations()` | `Collection<TimetableAllocation>` |
+
+### Batch: Tracking
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->tracking()->externalData(array $idsToInclude)` | `Collection<Data>` |
+| `Isams::batch()->tracking()->externalDataList()` | `Collection<Data>` |
+
+### Batch: root nodes no method names
+
+These arrive when a request runs everything allocated to the key.
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Blocks')` | `Collection<Block>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'ClassStudents')` | `Collection<ClassStudent>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Classes')` | `Collection<ClassNode>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'CourseCategories')` | `Collection<CourseCategory>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'CourseGPAMethodLevels')` | `Collection<CourseGPAMethodLevel>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'CourseSchedules')` | `Collection<CourseSchedule>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'CourseStudents')` | `Collection<CourseStudent>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Courses')` | `Collection<Course>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'CurriculumModels')` | `Collection<CurriculumModel>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Curriculums')` | `Collection<Curriculum>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Cycles')` | `Collection<Cycle>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Departments')` | `Collection<Department>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Entities')` | `Collection<Entity>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GPAGradeMarkPoints')` | `Collection<GPAGradeMarkPoint>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GPALevels')` | `Collection<GPALevel>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GPAMethods')` | `Collection<GPAMethod>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GPASetTypeMethodStudents')` | `Collection<GPASetTypeMethodStudent>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GPASets')` | `Collection<GPASet>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GPATypeCategories')` | `Collection<GPATypeCategory>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GPATypes')` | `Collection<GPAType>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GradeMarks')` | `Collection<GradeMark>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GradeSets')` | `Collection<GradeSet>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GradingPeriods')` | `Collection<GradingPeriod>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'GradingSets')` | `Collection<GradingSet>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Lengths')` | `Collection<Length>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Levels')` | `Collection<Level>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Metadata')` | `Collection<Metadata>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Schedules')` | `Collection<Schedule>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'StandardItems')` | `Collection<StandardItem>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'StandardSets')` | `Collection<StandardSet>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Subjects')` | `Collection<Subject>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'TermDates')` | `Collection<TermDate>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'TermSets')` | `Collection<TermSet>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'TermTypes')` | `Collection<TermType>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Types')` | `Collection<Type>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('ExamsManager', 'ExamFlexibleArrangements')` | `Collection<ExamFlexibleArrangement>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('InternalExamsManager', 'ExamArrangements')` | `Collection<ExamArrangement>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('PupilRegisters', 'SENDfERecords')` | `Collection<DfERecord>` |
+| `Isams::batch()->send(new BatchRequest)->dto()->models('SchoolReports', 'Records')` | `Collection<Record>` |
+
+### Batch: photos
+
+| Call | Returns |
+|---|---|
+| `Isams::batch()->staffPhotos()` | `BatchPhotos`: `photos()` yields each staff id and PNG |
+| `Isams::batch()->studentPhotos()` | `BatchPhotos`: `photos()` yields each student id and PNG |
