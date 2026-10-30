@@ -3,7 +3,8 @@
         "AbsenceCodes_Get": {
             "method": "GET",
             "path": "/api/registration/absencecodes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\AbsenceCodes\\GetAbsenceCodesRequest"
         },
         "AbsenceTypes_Get": {
             "method": "GET",
@@ -813,12 +814,14 @@
         "Categories_GetAllByModuletypeid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/moduleTypes/{moduleTypeId}/categories",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\Categories\\GetCategoriesRequest"
         },
         "Categories_GetByModuletypeidCategoryid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/moduleTypes/{moduleTypeId}/categories/{categoryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\Categories\\GetCategoryRequest"
         },
         "CategoryTags_GetById": {
             "method": "GET",
@@ -1398,27 +1401,32 @@
         "DateRanges_DeleteByRegisteridSchoolidDaterangeid": {
             "method": "DELETE",
             "path": "/api/registers/{registerId}/students/{schoolId}/dateranges/{dateRangeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\DateRanges\\DeleteDateRangeRequest"
         },
         "DateRanges_GetAllByRegisteridSystemstatusPagePagesize": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/dateranges",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\DateRanges\\GetDateRangesRequest"
         },
         "DateRanges_GetByRegisteridSchoolid": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/{schoolId}/dateranges",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\DateRanges\\GetStudentDateRangesRequest"
         },
         "DateRanges_PostByRegisteridSchoolidDaterange": {
             "method": "POST",
             "path": "/api/registers/{registerId}/students/{schoolId}/dateranges",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\DateRanges\\CreateDateRangeRequest"
         },
         "DateRanges_PutByRegisteridSchoolidDaterangeidDaterange": {
             "method": "PUT",
             "path": "/api/registers/{registerId}/students/{schoolId}/dateranges/{dateRangeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\DateRanges\\UpdateDateRangeRequest"
         },
         "DepartmentEmployees_GetByDepartmenttypeDepartmentid": {
             "method": "GET",
@@ -1452,22 +1460,26 @@
         "DetentionSessions_GetDetentionSessionsByIdAsyncById": {
             "method": "GET",
             "path": "/api/discipline/detention/sessions/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Discipline\\DetentionSessions\\GetDetentionSessionRequest"
         },
         "DetentionSessions_GetDetentionSessionsPagedAsyncByPagePagesize": {
             "method": "GET",
             "path": "/api/discipline/detention/sessions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Discipline\\DetentionSessions\\GetDetentionSessionsRequest"
         },
         "DetentionSessions_GetSessionsByStudentSchoolIdAsyncBySchoolid": {
             "method": "GET",
             "path": "/api/discipline/detention/students/{schoolId}/sessions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Discipline\\DetentionSessions\\GetStudentDetentionSessionsRequest"
         },
         "DetentionSessions_GetStudentsBySessionIdAsyncById": {
             "method": "GET",
             "path": "/api/discipline/detention/sessions/{id}/students",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Discipline\\DetentionSessions\\GetDetentionSessionStudentsRequest"
         },
         "DfeAbsenceCategories_Get": {
             "method": "GET",
@@ -2025,12 +2037,14 @@
         "Exclusion_GetAllAsyncByPagePagesize": {
             "method": "GET",
             "path": "/api/exclusions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Exclusions\\GetExclusionsRequest"
         },
         "Exclusion_GetAllReasonsForCancellationAsync": {
             "method": "GET",
             "path": "/api/exclusions/cancellationreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Exclusions\\GetExclusionCancellationReasonsRequest"
         },
         "ExternalInvoiceCommunications_PostCommunicationAsyncByInvoiceid": {
             "method": "POST",
@@ -2050,37 +2064,44 @@
         "FieldTypes_GetAllByModuletypeidCategoryid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/moduleTypes/{moduleTypeId}/categories/{categoryId}/fieldTypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\FieldTypes\\GetFieldTypesRequest"
         },
         "FieldTypes_GetByModuletypeidCategoryidFieldtypeid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/moduleTypes/{moduleTypeId}/categories/{categoryId}/fieldTypes/{fieldTypeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\FieldTypes\\GetFieldTypeRequest"
         },
         "FieldValues_GetAllByModuletypeidCategoryidFieldtypeid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/moduleTypes/{moduleTypeId}/categories/{categoryId}/fieldTypes/{fieldTypeId}/values",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\FieldValues\\GetFieldValuesRequest"
         },
         "FieldValues_GetByModuletypeidCategoryidFieldtypeidFieldvalueid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/moduleTypes/{moduleTypeId}/categories/{categoryId}/fieldTypes/{fieldTypeId}/values/{fieldValueId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\FieldValues\\GetFieldValueRequest"
         },
         "Fields_GetAllByRegisteridSystemstatusPagePagesize": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/fields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Fields\\GetFieldsRequest"
         },
         "Fields_GetByRegisteridSchoolid": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/{schoolId}/fields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Fields\\GetStudentFieldsRequest"
         },
         "Fields_PatchByRegisteridSchoolidValues": {
             "method": "PATCH",
             "path": "/api/registers/{registerId}/students/{schoolId}/fields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Fields\\PatchStudentFieldsRequest"
         },
         "File_DownloadByFilepath": {
             "method": "GET",
@@ -2649,7 +2670,8 @@
         "Lists_GetListItemsByListid": {
             "method": "GET",
             "path": "/api/registers/lists/{listId}/items",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Lists\\GetListItemsRequest"
         },
         "MarkComments_CreateCommentByGradebookidSchoolidColumnidComment": {
             "method": "POST",
@@ -2874,12 +2896,14 @@
         "Metadata_GetMetadataByRegisteridExpand": {
             "method": "GET",
             "path": "/api/registers/{registerId}/metadata",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\Metadata\\GetMetadataRequest"
         },
         "ModuleTypes_GetAll": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/moduleTypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\ModuleTypes\\GetModuleTypesRequest"
         },
         "Nationalities_DeleteById": {
             "method": "DELETE",
@@ -3530,7 +3554,8 @@
         "PresentCodes_Get": {
             "method": "GET",
             "path": "/api/registration/presentcodes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\PresentCodes\\GetPresentCodesRequest"
         },
         "Professions_GetAll": {
             "method": "GET",
@@ -3760,42 +3785,50 @@
         "RecordCollection_DeleteByRegisteridSchoolidRecordcollectionidRecordid": {
             "method": "DELETE",
             "path": "/api/registers/{registerId}/students/{schoolId}/recordcollections/{recordCollectionId}/records/{recordId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RecordCollection\\DeleteRecordCollectionRecordRequest"
         },
         "RecordCollection_GetAllByRegisteridRecordcollectionidSystemstatusPagePagesize": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/recordcollections/{recordCollectionId}/records",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RecordCollection\\GetRecordCollectionRecordsRequest"
         },
         "RecordCollection_GetByRegisteridSchoolidRecordcollectionid": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/{schoolId}/recordcollections/{recordCollectionId}/records",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RecordCollection\\GetStudentRecordCollectionRecordsRequest"
         },
         "RecordCollection_PatchByRegisteridSchoolidRecordcollectionidRecordidValues": {
             "method": "PATCH",
             "path": "/api/registers/{registerId}/students/{schoolId}/recordcollections/{recordCollectionId}/records/{recordId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RecordCollection\\PatchRecordCollectionRecordRequest"
         },
         "RecordCollection_PostByRegisteridSchoolidRecordcollectionidValues": {
             "method": "POST",
             "path": "/api/registers/{registerId}/students/{schoolId}/recordcollections/{recordCollectionId}/records",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RecordCollection\\CreateRecordCollectionRecordRequest"
         },
         "RegisterAssociation_GetAllAsyncByRegisteridSystemstatusPagePagesize": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/association",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RegisterAssociation\\GetRegisterAssociationsRequest"
         },
         "RegisterAssociation_GetAsyncByRegisteridSchoolid": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/{schoolId}/association",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RegisterAssociation\\GetRegisterAssociationRequest"
         },
         "RegisterAssociation_PutByRegisteridSchoolidAssociation": {
             "method": "PUT",
             "path": "/api/registers/{registerId}/students/{schoolId}/association",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\RegisterAssociation\\UpdateRegisterAssociationRequest"
         },
         "RegistrationEvidenceTypes_DeleteById": {
             "method": "DELETE",
@@ -3820,87 +3853,104 @@
         "RegistrationNatureOfAbsence_DeleteByRegistrationpupilid": {
             "method": "DELETE",
             "path": "/api/registration/natureofabsence/{registrationPupilId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\NatureOfAbsence\\DeleteRegistrationNatureOfAbsenceRequest"
         },
         "RegistrationNatureOfAbsence_GetAllRegistrationNatureOfAbsencesByRegistrationfromRegistrationtoCodeOnlyemptynatureofabsenceOrderbyPagePagesize": {
             "method": "GET",
             "path": "/api/registration/natureofabsence",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\NatureOfAbsence\\GetRegistrationNatureOfAbsencesRequest"
         },
         "RegistrationNatureOfAbsence_PatchByIdNatureofabsence": {
             "method": "PATCH",
             "path": "/api/registration/natureofabsence/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\NatureOfAbsence\\PatchRegistrationNatureOfAbsenceRequest"
         },
         "RegistrationNatureOfAbsence_PostByRegistrationpupilidReason": {
             "method": "POST",
             "path": "/api/registration/natureofabsence/{registrationPupilId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\NatureOfAbsence\\CreateRegistrationNatureOfAbsenceRequest"
         },
         "RegistrationOffGames_GetAllAsyncByPagePagesize": {
             "method": "GET",
             "path": "/api/registration/offgames",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\OffGames\\GetRegistrationOffGamesRequest"
         },
         "RegistrationOffGames_PostAsyncByRegistrationoffgame": {
             "method": "POST",
             "path": "/api/registration/offgames",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\OffGames\\CreateRegistrationOffGameRequest"
         },
         "RegistrationPeriods_GetByEnddateStartdateDivisionidUsercode": {
             "method": "GET",
             "path": "/api/registration/periods",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\Periods\\GetRegistrationPeriodsRequest"
         },
         "RegistrationPeriods_GetById": {
             "method": "GET",
             "path": "/api/registration/periods/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\Periods\\GetRegistrationPeriodRequest"
         },
         "RegistrationReasonForChange_DeleteByPeriodidSchoolidCodechangeid": {
             "method": "DELETE",
             "path": "/api/registration/register/{periodId}/students/{schoolId}/reasonforchanges/{codeChangeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\ReasonForChange\\DeleteRegistrationReasonForChangeRequest"
         },
         "RegistrationReasonForChange_GetAllByChangedatestartChangedateendPagePagesizeOnlyemptyreasonsOldestfirst": {
             "method": "GET",
             "path": "/api/registration/codechanges",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\ReasonForChange\\GetRegistrationReasonForChangesRequest"
         },
         "RegistrationReasonForChange_PatchByPeriodidSchoolidCodechangeidReasonforchange": {
             "method": "PATCH",
             "path": "/api/registration/register/{periodId}/students/{schoolId}/reasonforchanges/{codeChangeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\ReasonForChange\\PatchRegistrationReasonForChangeRequest"
         },
         "RegistrationReasonForChange_PostByPeriodidSchoolidReasonforchange": {
             "method": "POST",
             "path": "/api/registration/register/{periodId}/students/{schoolId}/reasonforchanges",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\ReasonForChange\\CreateRegistrationReasonForChangeRequest"
         },
         "RegistrationRules_Get": {
             "method": "GET",
             "path": "/api/registration/rules",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\Rules\\GetRegistrationRulesRequest"
         },
         "RegistrationRules_GetById": {
             "method": "GET",
             "path": "/api/registration/rules/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\Rules\\GetRegistrationRuleRequest"
         },
         "RegistrationStatusStudents_GetByRegistrationperiodidSchoolid": {
             "method": "GET",
             "path": "/api/registration/register/{registrationPeriodId}/students/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\StatusStudents\\GetStudentRegistrationStatusRequest"
         },
         "RegistrationStatusStudents_PutByRegistrationperiodidSchoolidUpdateregistrationstatus": {
             "method": "PUT",
             "path": "/api/registration/register/{registrationPeriodId}/students/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\StatusStudents\\UpdateStudentRegistrationStatusRequest"
         },
         "RegistrationStatus_GetAllByRegistrationperiodidPagePagesize": {
             "method": "GET",
             "path": "/api/registration/register/{registrationPeriodId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Registration\\Status\\GetRegistrationStatusesRequest"
         },
         "Religions_DeleteById": {
             "method": "DELETE",
@@ -3935,22 +3985,26 @@
         "Rewards_GetAllBySchoolid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/students/{schoolId}/rewards",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\Rewards\\GetRewardsRequest"
         },
         "Rewards_GetBySchoolidRewardid": {
             "method": "GET",
             "path": "/api/rewardsAndConduct/students/{schoolId}/rewards/{rewardId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\Rewards\\GetRewardRequest"
         },
         "Rewards_PostBySchoolidReward": {
             "method": "POST",
             "path": "/api/rewardsAndConduct/students/{schoolId}/rewards",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\Rewards\\CreateRewardRequest"
         },
         "Rewards_PutBySchoolidRewardidReward": {
             "method": "PUT",
             "path": "/api/rewardsAndConduct/students/{schoolId}/rewards/{rewardId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\RewardsAndConduct\\Rewards\\UpdateRewardRequest"
         },
         "RightToWorkCheckTypes_Get": {
             "method": "GET",
@@ -4121,7 +4175,8 @@
         "ScreeningLogs_GetByRegisteridSchoolid": {
             "method": "GET",
             "path": "/api/registers/{registerId}/students/{schoolId}/screeninglogs",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\ScreeningLogs\\GetScreeningLogsRequest"
         },
         "SelectionCategory_DeleteById": {
             "method": "DELETE",
@@ -4736,12 +4791,14 @@
         "StudentRegisters_GetAllRegistersByPagePagesize": {
             "method": "GET",
             "path": "/api/registers",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\GetStudentRegistersRequest"
         },
         "StudentRegisters_GetRecordCollectionElementsByRegisterid": {
             "method": "GET",
             "path": "/api/registers/{registerId}/recordCollections",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\StudentRegisters\\GetRecordCollectionElementsRequest"
         },
         "StudentSystemStatuses_GetAllAsync": {
             "method": "GET",
@@ -5373,6 +5430,8 @@
         }
     },
     "models": {
+        "iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessionStudents": "spkm\\IsamsApi\\Data\\Discipline\\DetentionSessionStudent",
+        "iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessions": "spkm\\IsamsApi\\Data\\Discipline\\DetentionSession",
         "iSAMS.Estates.AppServices.Objects.Public.Resources.Get.Building": "spkm\\IsamsApi\\Data\\Estates\\Building",
         "iSAMS.Estates.AppServices.Objects.Public.Resources.Get.Division": "spkm\\IsamsApi\\Data\\Estates\\Division",
         "iSAMS.Estates.AppServices.Objects.Public.Resources.Get.Room": "spkm\\IsamsApi\\Data\\Estates\\Room",
@@ -5380,6 +5439,12 @@
         "iSAMS.Estates.AppServices.Objects.Public.Resources.Post.Room": "spkm\\IsamsApi\\Data\\Estates\\RoomForCreate",
         "iSAMS.Estates.AppServices.Objects.Public.Resources.Put.Building": "spkm\\IsamsApi\\Data\\Estates\\BuildingForUpdate",
         "iSAMS.Estates.AppServices.Objects.Public.Resources.Put.Room": "spkm\\IsamsApi\\Data\\Estates\\RoomForUpdate",
+        "iSAMS.Exclusions.AppServices.Objects.Common.ExclusionReasonOne": "spkm\\IsamsApi\\Data\\Exclusions\\ExclusionReasonOne",
+        "iSAMS.Exclusions.AppServices.Objects.Common.ExclusionReasonThree": "spkm\\IsamsApi\\Data\\Exclusions\\ExclusionReasonThree",
+        "iSAMS.Exclusions.AppServices.Objects.Common.ExclusionReasonTwo": "spkm\\IsamsApi\\Data\\Exclusions\\ExclusionReasonTwo",
+        "iSAMS.Exclusions.AppServices.Objects.Common.ExclusionType": "spkm\\IsamsApi\\Data\\Exclusions\\ExclusionType",
+        "iSAMS.Exclusions.AppServices.Objects.Public.Resources.Contracts.IExclusion": "spkm\\IsamsApi\\Data\\Exclusions\\IExclusion",
+        "iSAMS.Exclusions.AppServices.Objects.Public.Resources.Get.ReasonForCancellation": "spkm\\IsamsApi\\Data\\Exclusions\\ReasonForCancellation",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Alumni": "spkm\\IsamsApi\\Data\\Students\\Alumni",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.AlumniContact": "spkm\\IsamsApi\\Data\\Students\\AlumniContact",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Student": "spkm\\IsamsApi\\Data\\Students\\AlumniStudent",
@@ -5413,7 +5478,57 @@
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.PublicStudent": "spkm\\IsamsApi\\Data\\Students\\StudentForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.PublicStudentPassport": "spkm\\IsamsApi\\Data\\Students\\StudentPassportForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Put.StudentVisa": "spkm\\IsamsApi\\Data\\Students\\StudentVisaForUpdate",
-        "iSAMS.School.AppServices.Objects.Public.Contracts.IDepartment": "spkm\\IsamsApi\\Data\\School\\IDepartment",
+        "iSAMS.Registers.AppServices.Objects.Get.DateRange": "spkm\\IsamsApi\\Data\\StudentRegisters\\DateRange",
+        "iSAMS.Registers.AppServices.Objects.Get.FieldCollection": "spkm\\IsamsApi\\Data\\StudentRegisters\\FieldCollection",
+        "iSAMS.Registers.AppServices.Objects.Get.ListItem": "spkm\\IsamsApi\\Data\\StudentRegisters\\ListItem",
+        "iSAMS.Registers.AppServices.Objects.Get.MetadataField": "spkm\\IsamsApi\\Data\\StudentRegisters\\MetadataField",
+        "iSAMS.Registers.AppServices.Objects.Get.MetadataFieldGroup": "spkm\\IsamsApi\\Data\\StudentRegisters\\MetadataFieldGroup",
+        "iSAMS.Registers.AppServices.Objects.Get.MetadataFieldGroupSection": "spkm\\IsamsApi\\Data\\StudentRegisters\\MetadataFieldGroupSection",
+        "iSAMS.Registers.AppServices.Objects.Get.Record": "spkm\\IsamsApi\\Data\\StudentRegisters\\Record",
+        "iSAMS.Registers.AppServices.Objects.Get.RecordCollectionElement": "spkm\\IsamsApi\\Data\\StudentRegisters\\RecordCollectionElement",
+        "iSAMS.Registers.AppServices.Objects.Get.Register": "spkm\\IsamsApi\\Data\\StudentRegisters\\Register",
+        "iSAMS.Registers.AppServices.Objects.Get.RegisterAssociation": "spkm\\IsamsApi\\Data\\StudentRegisters\\RegisterAssociation",
+        "iSAMS.Registers.AppServices.Objects.Get.ScreeningLogColumn": "spkm\\IsamsApi\\Data\\StudentRegisters\\ScreeningLogColumn",
+        "iSAMS.Registers.AppServices.Objects.Get.StudentDateRanges": "spkm\\IsamsApi\\Data\\StudentRegisters\\StudentDateRanges",
+        "iSAMS.Registers.AppServices.Objects.Get.StudentFields": "spkm\\IsamsApi\\Data\\StudentRegisters\\StudentFields",
+        "iSAMS.Registers.AppServices.Objects.Get.StudentRecords": "spkm\\IsamsApi\\Data\\StudentRegisters\\StudentRecords",
+        "iSAMS.Registers.AppServices.Objects.Get.StudentRegisterAssociation": "spkm\\IsamsApi\\Data\\StudentRegisters\\StudentRegisterAssociation",
+        "iSAMS.Registers.AppServices.Objects.Get.StudentScreeningLog": "spkm\\IsamsApi\\Data\\StudentRegisters\\StudentScreeningLog",
+        "iSAMS.Registers.AppServices.Objects.Post.DateRange": "spkm\\IsamsApi\\Data\\StudentRegisters\\DateRangeForCreate",
+        "iSAMS.Registers.AppServices.Objects.Post.RegisterAssociation": "spkm\\IsamsApi\\Data\\StudentRegisters\\RegisterAssociationForCreate",
+        "iSAMS.Registers.AppServices.Objects.Post.ScreeningLogColumn": "spkm\\IsamsApi\\Data\\StudentRegisters\\ScreeningLogColumnForCreate",
+        "iSAMS.Registers.AppServices.Objects.Put.DateRange": "spkm\\IsamsApi\\Data\\StudentRegisters\\DateRangeForUpdate",
+        "iSAMS.Registers.AppServices.Objects.Put.ScreeningLogColumn": "spkm\\IsamsApi\\Data\\StudentRegisters\\ScreeningLogColumnForUpdate",
+        "iSAMS.Registration.AppServices.Objects.Public.Commands.UpdateRegistrationStatus": "spkm\\IsamsApi\\Data\\Registration\\UpdateRegistrationStatusCommand",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.AbsenceCode": "spkm\\IsamsApi\\Data\\Registration\\AbsenceCode",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.AttendanceCode": "spkm\\IsamsApi\\Data\\Registration\\AttendanceCode",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.AttendanceCodeReasonForChange": "spkm\\IsamsApi\\Data\\Registration\\AttendanceCodeReasonForChange",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.NatureOfAbsence": "spkm\\IsamsApi\\Data\\Registration\\NatureOfAbsence",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.PresentCode": "spkm\\IsamsApi\\Data\\Registration\\PresentCode",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.RegistrationOffGame": "spkm\\IsamsApi\\Data\\Registration\\RegistrationOffGame",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.RegistrationPeriod": "spkm\\IsamsApi\\Data\\Registration\\RegistrationPeriod",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.RegistrationRule": "spkm\\IsamsApi\\Data\\Registration\\RegistrationRule",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.RegistrationStatus": "spkm\\IsamsApi\\Data\\Registration\\RegistrationStatus",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.RegistrationStatusNote": "spkm\\IsamsApi\\Data\\Registration\\RegistrationStatusNote",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Get.SchoolDivision": "spkm\\IsamsApi\\Data\\Registration\\SchoolDivision",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Post.AttendanceCodeReasonForChange": "spkm\\IsamsApi\\Data\\Registration\\AttendanceCodeReasonForChangeForCreate",
+        "iSAMS.Registration.AppServices.Objects.Public.Resources.Post.RegistrationOffGame": "spkm\\IsamsApi\\Data\\Registration\\RegistrationOffGameForCreate",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Contracts.IActivityPermission": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\IActivityPermission",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.ActivityPermission": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\ActivityPermission",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.Category": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\Category",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.FieldType": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\FieldType",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.FieldValue": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\FieldValue",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.ModuleType": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\ModuleType",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.Reward": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\Reward",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.RewardCategory": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardCategory",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.RewardDepartment": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardDepartment",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.RewardFieldType": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardFieldType",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.RewardFieldValue": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardFieldValue",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.RewardModuleType": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardModuleType",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.RewardSubject": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardSubject",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.RewardTeacher": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardTeacher",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Post.Reward": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardForCreate",
+        "iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Put.Reward": "spkm\\IsamsApi\\Data\\RewardsAndConduct\\RewardForUpdate",
         "iSAMS.School.AppServices.Objects.Public.Resources.Get.Department": "spkm\\IsamsApi\\Data\\School\\Department",
         "iSAMS.School.AppServices.Objects.Public.Resources.Get.Division": "spkm\\IsamsApi\\Data\\School\\Division",
         "iSAMS.School.AppServices.Objects.Public.Resources.Get.Employee": "spkm\\IsamsApi\\Data\\School\\Employee",

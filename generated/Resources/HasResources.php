@@ -8,14 +8,39 @@ namespace spkm\IsamsApi\Resources;
 
 trait HasResources
 {
+    public function discipline(): DisciplineResource
+    {
+        return new DisciplineResource($this);
+    }
+
     public function estates(): EstatesResource
     {
         return new EstatesResource($this);
     }
 
+    public function exclusions(): ExclusionsResource
+    {
+        return new ExclusionsResource($this);
+    }
+
+    public function registration(): RegistrationResource
+    {
+        return new RegistrationResource($this);
+    }
+
+    public function rewardsAndConduct(): RewardsAndConductResource
+    {
+        return new RewardsAndConductResource($this);
+    }
+
     public function school(): SchoolResource
     {
         return new SchoolResource($this);
+    }
+
+    public function studentRegisters(): StudentRegistersResource
+    {
+        return new StudentRegistersResource($this);
     }
 
     public function students(): StudentsResource

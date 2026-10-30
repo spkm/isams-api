@@ -35,6 +35,12 @@ it('asks for teaching or non-teaching departments in the path', function () {
     expect($sent->getUrl())->toEndWith('/api/school/departments/NonTeaching');
 });
 
+it('keeps every detail of a department, which the spec leaves untyped', function () {
+    $departments = FakeIsams::send(new GetDepartmentsRequest('Teaching'), ['departments' => [['id' => 2, 'code' => 'MA', 'name' => 'Mathematics']]])->dto();
+
+    expect($departments->all())->toBe([['id' => 2, 'code' => 'MA', 'name' => 'Mathematics']]);
+});
+
 it('sends the timetable structure\'s dates in the format iSAMS reads and returns its weeks with their days', function () {
     $isams = FakeIsams::respondWith([GetTimetableStructuresRequest::class => MockResponse::make(['timetableWeeks' => [['id' => 1, 'name' => 'Week A', 'timetableDays' => [['id' => 2, 'name' => 'Monday']]]]])]);
 

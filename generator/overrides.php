@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -88,6 +88,49 @@ return [
         'TimetableImport_CompleteImport' => ['class' => 'CompleteTimetableImportRequest'],
         'TimetableImport_GetImportResultById' => ['class' => 'GetTimetableImportResultRequest'],
 
+        // Registration
+        'AbsenceCodes_Get' => ['cacheable' => true],
+        'PresentCodes_Get' => ['cacheable' => true],
+        'RegistrationRules_Get' => ['cacheable' => true],
+        'RegistrationRules_GetById' => ['cacheable' => true],
+        'RegistrationPeriods_GetByEnddateStartdateDivisionidUsercode' => ['cacheable' => true],
+        'RegistrationPeriods_GetById' => ['cacheable' => true],
+        'RegistrationNatureOfAbsence_GetAllRegistrationNatureOfAbsencesByRegistrationfromRegistrationtoCodeOnlyemptynatureofabsenceOrderbyPagePagesize' => ['class' => 'GetRegistrationNatureOfAbsencesRequest'],
+        'RegistrationStatusStudents_GetByRegistrationperiodidSchoolid' => ['class' => 'GetStudentRegistrationStatusRequest'],
+        'RegistrationStatusStudents_PutByRegistrationperiodidSchoolidUpdateregistrationstatus' => ['class' => 'UpdateStudentRegistrationStatusRequest'],
+
+        // Student Registers
+        'StudentRegisters_GetAllRegistersByPagePagesize' => ['class' => 'GetStudentRegistersRequest', 'cacheable' => true],
+        'StudentRegisters_GetRecordCollectionElementsByRegisterid' => ['class' => 'GetRecordCollectionElementsRequest', 'cacheable' => true],
+        'Metadata_GetMetadataByRegisteridExpand' => ['cacheable' => true],
+        'Lists_GetListItemsByListid' => ['cacheable' => true],
+        'DateRanges_GetByRegisteridSchoolid' => ['class' => 'GetStudentDateRangesRequest'],
+        'Fields_GetByRegisteridSchoolid' => ['class' => 'GetStudentFieldsRequest'],
+        'Fields_PatchByRegisteridSchoolidValues' => ['class' => 'PatchStudentFieldsRequest'],
+        'RecordCollection_GetAllByRegisteridRecordcollectionidSystemstatusPagePagesize' => ['class' => 'GetRecordCollectionRecordsRequest'],
+        'RecordCollection_GetByRegisteridSchoolidRecordcollectionid' => ['class' => 'GetStudentRecordCollectionRecordsRequest'],
+        'RecordCollection_PostByRegisteridSchoolidRecordcollectionidValues' => ['class' => 'CreateRecordCollectionRecordRequest'],
+        'RecordCollection_PatchByRegisteridSchoolidRecordcollectionidRecordidValues' => ['class' => 'PatchRecordCollectionRecordRequest'],
+        'RecordCollection_DeleteByRegisteridSchoolidRecordcollectionidRecordid' => ['class' => 'DeleteRecordCollectionRecordRequest'],
+
+        // Rewards And Conduct
+        'ModuleTypes_GetAll' => ['cacheable' => true],
+        'Categories_GetAllByModuletypeid' => ['cacheable' => true],
+        'Categories_GetByModuletypeidCategoryid' => ['cacheable' => true],
+        'FieldTypes_GetAllByModuletypeidCategoryid' => ['cacheable' => true],
+        'FieldTypes_GetByModuletypeidCategoryidFieldtypeid' => ['cacheable' => true],
+        'FieldValues_GetAllByModuletypeidCategoryidFieldtypeid' => ['cacheable' => true],
+        'FieldValues_GetByModuletypeidCategoryidFieldtypeidFieldvalueid' => ['cacheable' => true],
+
+        // Discipline
+        'DetentionSessions_GetDetentionSessionsByIdAsyncById' => ['class' => 'GetDetentionSessionRequest'],
+        'DetentionSessions_GetDetentionSessionsPagedAsyncByPagePagesize' => ['class' => 'GetDetentionSessionsRequest'],
+        'DetentionSessions_GetSessionsByStudentSchoolIdAsyncBySchoolid' => ['class' => 'GetStudentDetentionSessionsRequest'],
+        'DetentionSessions_GetStudentsBySessionIdAsyncById' => ['class' => 'GetDetentionSessionStudentsRequest'],
+
+        // Exclusions
+        'Exclusion_GetAllReasonsForCancellationAsync' => ['class' => 'GetExclusionCancellationReasonsRequest', 'cacheable' => true],
+
         // System Configuration
         'PaymentStatus_GetGetnetPaymentProcessingPage' => $paymentWebhook,
         'PaymentStatus_GetGetnetPaymentCancelledPage' => $paymentWebhook,
@@ -107,6 +150,12 @@ return [
         'PaymentStatus_UpdateParentPortalMultiplePaymentStatusGetnetStatusAsyncByGetnetpaymentdetails' => $paymentWebhook,
     ],
 
+    // Models whose iSAMS name is misleading, by definition: the class name before its kind suffix.
+    'models' => [
+        'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessions' => 'DetentionSession',
+        'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessionStudents' => 'DetentionSessionStudent',
+    ],
+
     // Words that are the same singular and plural.
     'uncountable' => ['Alumni', 'Staff', 'News', 'Homework', 'Information', 'Data', 'Metadata'],
 
@@ -120,6 +169,8 @@ return [
         'Bulletin' => ['Bulletin'],
         'Gradebooks' => ['Gradebook'],
         'Registration' => ['Registration'],
+        'Student Registers' => ['Student', 'Registers'],
+        'Exclusions' => ['Exclusion'],
         'Timetable' => ['Timetable'],
         'News' => ['News'],
         'Other Schools' => ['Other'],

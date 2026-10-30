@@ -337,7 +337,7 @@ final class Generator
         };
 
         if ($response['model'] !== null) {
-            $response['model'] = $this->queueModel($response['model']);
+            $response['model'] = $this->isEmptyModel($response['model']) ? null : $this->queueModel($response['model']);
         }
 
         return $response;
@@ -665,6 +665,13 @@ final class Generator
                 : '$parts = ['.implode(', ', $required)."];\n\n".implode("\n", $optional)."\nreturn \$parts;");
     }
 
+    private function isEmptyModel(string $definition): bool
+    {
+        $schema = $this->spec['definitions'][$definition] ?? [];
+
+        return ($schema['properties'] ?? []) === [] && ! isset($schema['additionalProperties']);
+    }
+
     private function queueModel(string $definition): string
     {
         if (! isset($this->models[$definition])) {
@@ -698,6 +705,8 @@ final class Generator
         if (in_array('Private', $segments, true)) {
             $name = 'Private'.$name;
         }
+
+        $name = $this->overrides['models'][$definition] ?? $name;
 
         $module = $segments[1] ?? 'Common';
         $area = $this->overrides['modules'][$module] ?? $this->studly($module);
@@ -774,18 +783,20 @@ final class Generator
             $reference = $this->refName($property['$ref']);
             $wrapper = $this->wrapper($reference);
 
-            if ($wrapper === null) {
+            if ($wrapper === null && ! $this->isEmptyModel($reference)) {
                 $model = $this->queueModel($reference);
                 $namespace->addUse($model);
 
                 return [$nullable.$model, null, null, null];
             }
 
-            $property = ['type' => 'array', 'items' => $wrapper['item'] ? ['$ref' => '#/definitions/'.$wrapper['item']] : []];
+            $property = $wrapper === null
+                ? ['type' => 'object']
+                : ['type' => 'array', 'items' => $wrapper['item'] ? ['$ref' => '#/definitions/'.$wrapper['item']] : []];
         }
 
         if (($property['type'] ?? null) === 'array') {
-            if (isset($property['items']['$ref']) && $this->wrapper($this->refName($property['items']['$ref'])) === null) {
+            if (isset($property['items']['$ref']) && $this->wrapper($this->refName($property['items']['$ref'])) === null && ! $this->isEmptyModel($this->refName($property['items']['$ref']))) {
                 $item = $this->queueModel($this->refName($property['items']['$ref']));
                 $namespace->addUse($item);
                 $namespace->addUse('Illuminate\Support\Collection');
