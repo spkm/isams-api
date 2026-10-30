@@ -2,12 +2,10 @@
 
 namespace spkm\IsamsApi\Requests\Students\CustomFields;
 
-use Saloon\Contracts\Body\BodyRepository;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasFormBody;
-use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * StudentCustomFields_PatchBySchoolidCustomfieldidPubliccustomfield

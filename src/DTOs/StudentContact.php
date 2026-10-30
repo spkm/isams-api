@@ -2,6 +2,7 @@
 
 namespace spkm\IsamsApi\DTOs;
 
+#[\AllowDynamicProperties]
 class StudentContact
 {
     public function __construct(
@@ -49,6 +50,5 @@ class StudentContact
         public readonly ?string $title,
         public readonly ?string $town,
         public readonly ?string $workTelephoneNumber
-    ) {
-    }
+    ) {}
 }

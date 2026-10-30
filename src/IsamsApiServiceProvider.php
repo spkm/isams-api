@@ -23,13 +23,6 @@ class IsamsApiServiceProvider extends PackageServiceProvider
         });
     }
 
-    public function boot()
-    {
-        $this->publishes([
-            __DIR__.'/../config/isams-api.php' => config_path('isams-api.php'),
-        ], 'isams-api');
-    }
-
     public function provides()
     {
         return ['isams'];

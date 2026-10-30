@@ -27,9 +27,11 @@ it('posts the XML filters it was given to the batch endpoint for its content typ
     'XML' => ['application/xml', 'https://isams.example.test/api/batch/1.0/xml.ashx?apiKey=batch-key'],
 ]);
 
-it('labels the XML filters it posts as application/xml')
-    ->todo(note: 'Suspected bug: the connector\'s default Content-type: application/x-www-form-urlencoded header overrides the Content-Type: application/xml that HasXmlBody gives the request, so the XML filters are sent labelled as a form (src/IsamsConnector.php, defaultHeaders(); src/Requests/BatchApi/FilterEndpointRequest.php)')
-    ->group('suspected-bug');
+it('labels the XML filters it posts as application/xml', function () {
+    $sent = FakeIsams::send(new FilterEndpointRequest('batch-key', 'application/xml', '<Filters />'))->getPendingRequest()->createPsrRequest();
+
+    expect($sent->getHeaderLine('Content-Type'))->toBe('application/xml');
+});
 
 it('sends batch requests with the bearer token too', function () {
     $sent = FakeIsams::send(new GetEndpointRequest('batch-key'))->getPendingRequest();
