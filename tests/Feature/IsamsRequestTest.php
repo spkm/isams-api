@@ -67,7 +67,7 @@ it('throws an IsamsApiException carrying iSAMS\'s message and tracking number wh
 
     expect(fn () => sendExample(new ExampleRequest(IsamsRequest::ONE, ExampleStudent::class), $error))
         ->toThrow(function (IsamsApiException $exception) {
-            expect($exception->getMessage())->toBe('iSAMS responded 500: An error occurred.')
+            expect($exception->getMessage())->toBe('iSAMS responded 500 to GET /api/example: An error occurred. (tracking number abc-123)')
                 ->and($exception->getStatus())->toBe(500)
                 ->and($exception->isamsMessage())->toBe('An error occurred.')
                 ->and($exception->trackingNumber())->toBe('abc-123');

@@ -166,7 +166,7 @@ it('throws a BatchApiException naming iSAMS\'s error when asked for the result o
         expect($exception->name())->toBe('MethodsNotAllocatedToKeyException')
             ->and($exception->title())->toBe('Methods Not Allocated To Key')
             ->and($exception->description())->toBe('Made-up description')
-            ->and($exception->getMessage())->toBe('iSAMS Batch API responded 403: MethodsNotAllocatedToKeyException: Methods Not Allocated To Key');
+            ->and($exception->getMessage())->toBe('iSAMS Batch API responded 403: MethodsNotAllocatedToKeyException: Methods Not Allocated To Key: Made-up description');
     }
 });
 

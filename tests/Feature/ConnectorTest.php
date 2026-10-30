@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
-use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
+use spkm\IsamsApi\Exceptions\UnauthorizedException;
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
@@ -101,7 +101,7 @@ it('asks for a new token once the cached one is a minute from expiring', functio
     $isams->assertSentCount(2);
 });
 
-it('cannot be built when iSAMS refuses its credentials, and caches nothing', function () {
+it('cannot be built when iSAMS refuses its credentials, saying so, and caches nothing', function () {
     MockClient::global([GetClientCredentialsTokenRequest::class => MockResponse::make(['error' => 'invalid_client'], 401)]);
 
     expect(fn () => FakeIsams::connector('client-id'))->toThrow(UnauthorizedException::class)

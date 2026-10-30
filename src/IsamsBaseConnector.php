@@ -92,7 +92,7 @@ abstract class IsamsBaseConnector extends Connector
         }
 
         return $exception instanceof FatalRequestException
-            || $exception->getResponse()->status() === 429
+            || in_array($exception->getResponse()->status(), [408, 429], true)
             || $exception->getResponse()->serverError();
     }
 
@@ -139,13 +139,20 @@ abstract class IsamsBaseConnector extends Connector
 
     private function getCacheKey(): string
     {
-        return 'isams-api.token.'.$this->oauthConfig()->getClientId();
+        $scopes = $this->oauthConfig()->getDefaultScopes();
+
+        return 'isams-api.token.'.$this->oauthConfig()->getClientId().($scopes === ['restapi'] ? '' : '.'.implode('+', $scopes));
     }
 
     private function cacheAccessToken(): AccessTokenAuthenticator
     {
-        /** @var AccessTokenAuthenticator $authenticator */
-        $authenticator = $this->getAccessToken();
+        try {
+            /** @var AccessTokenAuthenticator $authenticator */
+            $authenticator = $this->getAccessToken();
+        } catch (RequestException $exception) {
+            throw IsamsApiException::fromResponse($exception->getResponse());
+        }
+
         $expiresAt = $authenticator->getExpiresAt();
 
         if ($expiresAt === null) {

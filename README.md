@@ -50,6 +50,9 @@ Code written for version 1 keeps working, apart from the PHP and Laravel minimum
 - `Students\GetStudentsRequest` and `Students\GetStudentRequest` keep their names and now return `Student` models
   from `dto()` (it returned `null` before), and `dto()` throws an [`IsamsApiException`](#errors) when iSAMS returned an
   error.
+- When iSAMS refuses a connector's credentials, it now throws `Exceptions\UnauthorizedException`, which says why
+  (wrong id or secret, or a scope not allowed), instead of Saloon's `BadRequestException` or `UnauthorizedException`.
+  Both are Saloon `RequestException`s, so code catching that still works.
 - From 2 November 2026 iSAMS rejects Batch API requests that send only the key; the deprecated batch requests do
   that, `Isams::batch()` does not.
 - The config file is published with `php artisan isams-api:install`, or `vendor:publish --tag=isams-api-config`.
@@ -175,13 +178,21 @@ statuses you are likely to handle differently:
 |---|---|---|
 | 404 | `NotFoundException` | the record doesn't exist |
 | 400, 409, 412, 415, 422 | `InvalidRequestException` | iSAMS rejected what was sent; its message says why |
-| 401 | `UnauthorizedException` | iSAMS rejected the credentials |
-| 403 | `MissingPermissionException` | the API client's permission for that area is too low |
-| 5xx | `ServerErrorException` | iSAMS failed; quote the `trackingNumber()` to iSAMS support |
+| 401, or a refused token request | `UnauthorizedException` | iSAMS rejected the credentials, or the scopes asked for |
+| 403, or 401 saying a permission is required | `MissingPermissionException` | the API client's permission for that area is too low |
+| 408, 5xx | `ServerErrorException` | iSAMS timed out or failed; quote the `trackingNumber()` to iSAMS support |
 | anything else, such as 301 ("exists but not associated") | `IsamsApiException` | |
 
 Each has iSAMS's `isamsMessage()` and `trackingNumber()`, the status from `getStatus()` and the failed response from
-`getResponse()`. iSAMS sets each API client's permission per area (None, Read, Write, Modify or Full), so a
+`getResponse()`, and its message names the request, so a log line says which call failed:
+
+```text
+iSAMS responded 404 to GET /api/teaching/subjects/7: Failed to read subject - Subject does not exist.
+```
+
+Where iSAMS's own answer says little, the message adds what is known about it: iSAMS answers a `$filter` it can't
+apply with a bare 500 ("An error occurred."), and a path it doesn't have with an HTML error page rather than a 404.
+A refused token request says why (a wrong client id or secret, or a scope the client isn't allowed). iSAMS sets each API client's permission per area (None, Read, Write, Modify or Full), so a
 `MissingPermissionException` also says which permission is needed and where:
 
 ```php
