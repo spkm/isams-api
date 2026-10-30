@@ -1,0 +1,98 @@
+<?php
+
+use Illuminate\Support\Facades\Cache;
+use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
+use spkm\IsamsApi\Requests\Students\GetStudentRequest;
+use spkm\IsamsApi\Tests\Helpers\FakeIsams;
+
+it('asks iSAMS for a client credentials token as soon as it is built', function () {
+    $isams = FakeIsams::respondWith();
+
+    FakeIsams::connector('client-id');
+
+    $tokenRequest = FakeIsams::received($isams, GetClientCredentialsTokenRequest::class);
+    expect($tokenRequest->getMethod()->value)->toBe('POST')
+        ->and($tokenRequest->getUrl())->toBe('https://isams.example.test/auth/connect/token')
+        ->and($tokenRequest->query()->all())->toBe(['grant_type' => 'client_credentials'])
+        ->and($tokenRequest->body()->all())->toBe([
+            'grant_type' => 'client_credentials',
+            'client_id' => 'client-id',
+            'client_secret' => 'client-secret',
+            'scope' => 'restapi',
+        ]);
+});
+
+it('asks for the scopes it was built with, separated by spaces', function () {
+    $isams = FakeIsams::respondWith();
+
+    FakeIsams::connector(scopes: ['apiv1', 'restapi']);
+
+    expect(FakeIsams::received($isams, GetClientCredentialsTokenRequest::class)->body()->get('scope'))->toBe('apiv1 restapi');
+});
+
+it('sends requests to iSAMS with the bearer token and its default headers', function () {
+    $isams = FakeIsams::respondWith([GetStudentRequest::class => MockResponse::make(['id' => 1])]);
+
+    FakeIsams::connector()->send(new GetStudentRequest('100001'));
+
+    expect(FakeIsams::received($isams, GetStudentRequest::class)->createPsrRequest()->getHeaders())->toBe([
+        'Host' => ['isams.example.test'],
+        'cache-control' => ['no-cache'],
+        'Content-type' => ['application/x-www-form-urlencoded'],
+        'Accept' => ['application/json'],
+        'Authorization' => ['Bearer fake-token'],
+    ]);
+});
+
+it('keeps the token in the cache under its client id, encrypted', function () {
+    FakeIsams::respondWith();
+
+    FakeIsams::connector('client-id');
+
+    $cached = Cache::get('bearer_tokenclient-id');
+    expect($cached)->toBeString()->not->toContain('fake-token')
+        ->and(decrypt($cached)->getAccessToken())->toBe('fake-token');
+});
+
+it('reuses the cached token when built again with the same client id', function () {
+    $isams = FakeIsams::respondWith();
+
+    FakeIsams::connector('client-id');
+    FakeIsams::connector('client-id');
+
+    $isams->assertSentCount(1);
+});
+
+it('asks for a separate token for each client id', function () {
+    $isams = FakeIsams::respondWith();
+
+    FakeIsams::connector('first-client');
+    FakeIsams::connector('second-client');
+
+    $isams->assertSentCount(2);
+});
+
+it('asks for a new token once the cached one is a minute from expiring', function () {
+    FakeIsams::syncSaloonClockWithLaravel();
+    $this->freezeTime();
+    $isams = FakeIsams::respondWith();
+    FakeIsams::connector();
+
+    $this->travel(58)->minutes();
+    FakeIsams::connector();
+    $isams->assertSentCount(1);
+
+    $this->travel(1)->minutes();
+    FakeIsams::connector();
+    $isams->assertSentCount(2);
+});
+
+it('cannot be built when iSAMS refuses its credentials, and caches nothing', function () {
+    MockClient::global([GetClientCredentialsTokenRequest::class => MockResponse::make(['error' => 'invalid_client'], 401)]);
+
+    expect(fn () => FakeIsams::connector('client-id'))->toThrow(UnauthorizedException::class)
+        ->and(Cache::has('bearer_tokenclient-id'))->toBeFalse();
+});
