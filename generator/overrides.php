@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -228,6 +228,24 @@ return [
         'IndicatorStatuses_GetAllIndicatorStatuses' => ['cacheable' => true],
         'LifeEventTypes_GetAll' => ['cacheable' => true],
         'LifeEventTypes_GetById' => ['cacheable' => true],
+
+        // Admissions
+        'AdmissionsVisits_GetAllByPagePagesize' => ['class' => 'GetAdmissionVisitsRequest'],
+        'ApplicantAlumni_GetAllByPagePagesize' => ['class' => 'GetApplicantAlumniRequest'],
+        'ApplicantAlumni_GetBySchoolid' => ['class' => 'GetApplicantAlumnusRequest'],
+        'ApplicantAlumni_PatchBySchoolidPatchoperations' => ['class' => 'PatchApplicantAlumnusRequest'],
+        'ApplicantStudents_GetAllByPagePagesize' => ['class' => 'GetApplicantStudentsRequest'],
+        'ApplicantStudents_GetBySchoolid' => ['class' => 'GetApplicantStudentRequest'],
+        'ApplicantStudents_PatchBySchoolidPatchoperations' => ['class' => 'PatchApplicantStudentRequest'],
+        'ApplicantContacts_GetStudentContactsBySchoolidIncludedeceased' => ['class' => 'GetApplicantStudentContactsRequest'],
+        'ApplicantPassports_EditMultiplePassportsAsyncBySchoolidPassports' => ['class' => 'UpdateApplicantPassportsRequest'],
+        'ApplicantVisas_EditMultipleVisasAsyncBySchoolidVisas' => ['class' => 'UpdateApplicantVisasRequest'],
+        'ApplicantPassportDocuments_DownloadAsyncBySchoolidPassportidDocumentid' => ['response' => 'file'],
+        'ApplicantVisaDocuments_DownloadAsyncBySchoolidVisaidDocumentid' => ['response' => 'file'],
+        'ApplicantDocumentCategory_GetAll' => ['cacheable' => true],
+        'EnquiryReasons_Get' => ['cacheable' => true],
+        'EnquiryTypes_Get' => ['cacheable' => true],
+        'Statuses_Get' => ['cacheable' => true],
 
         // System Configuration
         'List_GetAsyncByListtype' => ['class' => 'GetListByTypeRequest', 'cacheable' => true],

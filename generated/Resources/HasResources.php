@@ -8,6 +8,11 @@ namespace spkm\IsamsApi\Resources;
 
 trait HasResources
 {
+    public function admissions(): AdmissionsResource
+    {
+        return new AdmissionsResource($this);
+    }
+
     public function discipline(): DisciplineResource
     {
         return new DisciplineResource($this);

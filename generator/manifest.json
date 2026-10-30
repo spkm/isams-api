@@ -148,7 +148,8 @@
         "AdmissionsVisits_GetAllByPagePagesize": {
             "method": "GET",
             "path": "/api/admissions/visits",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Visits\\GetAdmissionVisitsRequest"
         },
         "Agency_CreateByAgency": {
             "method": "POST",
@@ -266,317 +267,380 @@
         "ApplicantAgencyBranches_DeleteBySchoolidAgencybranchid": {
             "method": "DELETE",
             "path": "/api/admissions/applicants/{schoolId}/agencybranches/{agencyBranchId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\AgencyBranches\\RemoveApplicantAgencyBranchRequest"
         },
         "ApplicantAgencyBranches_GetBySchoolid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/agencybranches",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\AgencyBranches\\GetApplicantAgencyBranchesRequest"
         },
         "ApplicantAgencyBranches_PostBySchoolidAgencybranchid": {
             "method": "POST",
             "path": "/api/admissions/applicants/{schoolId}/agencybranches/{agencyBranchId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\AgencyBranches\\AddApplicantAgencyBranchRequest"
         },
         "ApplicantAlumniCustomFields_GetAllAsyncBySchoolid": {
             "method": "GET",
             "path": "/api/admissions/applicants/alumni/{schoolId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\AlumniCustomFields\\GetApplicantAlumniCustomFieldsRequest"
         },
         "ApplicantAlumniCustomFields_GetAsyncBySchoolidCustomfieldid": {
             "method": "GET",
             "path": "/api/admissions/applicants/alumni/{schoolId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\AlumniCustomFields\\GetApplicantAlumniCustomFieldRequest"
         },
         "ApplicantAlumniCustomFields_PatchAsyncBySchoolidCustomfieldidCustomfield": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/alumni/{schoolId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\AlumniCustomFields\\PatchApplicantAlumniCustomFieldRequest"
         },
         "ApplicantAlumniCustomFields_PatchAsyncBySchoolidCustomfields": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/alumni/{schoolId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\AlumniCustomFields\\PatchApplicantAlumniCustomFieldsRequest"
         },
         "ApplicantAlumni_GetAllByPagePagesize": {
             "method": "GET",
             "path": "/api/admissions/applicants/alumni",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Alumni\\GetApplicantAlumniRequest"
         },
         "ApplicantAlumni_GetBySchoolid": {
             "method": "GET",
             "path": "/api/admissions/applicants/alumni/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Alumni\\GetApplicantAlumnusRequest"
         },
         "ApplicantAlumni_PatchBySchoolidPatchoperations": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/alumni/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Alumni\\PatchApplicantAlumnusRequest"
         },
         "ApplicantCommands_MoveToCurrentBySchoolid": {
             "method": "POST",
             "path": "/api/admissions/applicants/{schoolId}/commands/movetocurrent",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\MoveApplicantToCurrentRequest"
         },
         "ApplicantContacts_GetBySchoolidIncludedeceased": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/contacts",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Contacts\\GetApplicantContactsRequest"
         },
         "ApplicantContacts_GetStudentContactsBySchoolidIncludedeceased": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/contacts/student",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Contacts\\GetApplicantStudentContactsRequest"
         },
         "ApplicantCustomFields_GetAllAsyncBySchoolid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\CustomFields\\GetApplicantCustomFieldsRequest"
         },
         "ApplicantCustomFields_GetAsyncBySchoolidCustomfieldid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\CustomFields\\GetApplicantCustomFieldRequest"
         },
         "ApplicantCustomFields_PatchAsyncBySchoolidCustomfieldidCustomfield": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/{schoolId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\CustomFields\\PatchApplicantCustomFieldRequest"
         },
         "ApplicantCustomFields_PatchAsyncBySchoolidCustomfields": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/{schoolId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\CustomFields\\PatchApplicantCustomFieldsRequest"
         },
         "ApplicantDocumentCategory_GetAll": {
             "method": "GET",
             "path": "/api/admissions/documents/categories",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\DocumentCategory\\GetApplicantDocumentCategoriesRequest"
         },
         "ApplicantDocument_GetAllAsyncBySchoolid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Document\\GetApplicantDocumentsRequest"
         },
         "ApplicantDocument_PostAsyncBySchoolid": {
             "method": "POST",
             "path": "/api/admissions/applicants/{schoolId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Document\\CreateApplicantDocumentRequest"
         },
         "ApplicantPassportCustomFields_GetAllAsyncBySchoolidPassportid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/customfields/passport/{passportId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportCustomFields\\GetApplicantPassportCustomFieldsRequest"
         },
         "ApplicantPassportCustomFields_GetAsyncBySchoolidPassportidCustomfieldid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/customfields/passport/{passportId}/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportCustomFields\\GetApplicantPassportCustomFieldRequest"
         },
         "ApplicantPassportCustomFields_PatchAsyncBySchoolidPassportidListcustomfield": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/{schoolId}/customfields/passport/{passportId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportCustomFields\\PatchApplicantPassportCustomFieldsRequest"
         },
         "ApplicantPassportDocuments_DeleteAsyncBySchoolidPassportidDocumentid": {
             "method": "DELETE",
             "path": "/api/admissions/applicants/{schoolId}/passport/{passportId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportDocuments\\DeleteApplicantPassportDocumentRequest"
         },
         "ApplicantPassportDocuments_DownloadAsyncBySchoolidPassportidDocumentid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/passport/{passportId}/documents/{documentId}/download",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportDocuments\\DownloadApplicantPassportDocumentRequest"
         },
         "ApplicantPassportDocuments_GetAllAsyncBySchoolidPassportid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/passport/{passportId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportDocuments\\GetApplicantPassportDocumentsRequest"
         },
         "ApplicantPassportDocuments_GetAsyncBySchoolidPassportidDocumentid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/passport/{passportId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportDocuments\\GetApplicantPassportDocumentRequest"
         },
         "ApplicantPassportDocuments_PatchAsyncBySchoolidPassportidDocumentidPatchoperations": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/{schoolId}/passport/{passportId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportDocuments\\PatchApplicantPassportDocumentRequest"
         },
         "ApplicantPassportDocuments_PostAsyncBySchoolidPassportid": {
             "method": "POST",
             "path": "/api/admissions/applicants/{schoolId}/passport/{passportId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PassportDocuments\\CreateApplicantPassportDocumentRequest"
         },
         "ApplicantPassports_DeleteAsyncBySchoolidId": {
             "method": "DELETE",
             "path": "/api/admissions/applicants/{schoolId}/passports/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Passports\\DeleteApplicantPassportRequest"
         },
         "ApplicantPassports_EditMultiplePassportsAsyncBySchoolidPassports": {
             "method": "PUT",
             "path": "/api/admissions/applicants/{schoolId}/passports",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Passports\\UpdateApplicantPassportsRequest"
         },
         "ApplicantPassports_GetAllAsyncBySchoolidExpand": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/passports",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Passports\\GetApplicantPassportsRequest"
         },
         "ApplicantPassports_GetAsyncBySchoolidIdExpand": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/passports/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Passports\\GetApplicantPassportRequest"
         },
         "ApplicantPassports_PostAsyncBySchoolidPassport": {
             "method": "POST",
             "path": "/api/admissions/applicants/{schoolId}/passports",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Passports\\CreateApplicantPassportRequest"
         },
         "ApplicantPassports_PutAsyncBySchoolidIdPassport": {
             "method": "PUT",
             "path": "/api/admissions/applicants/{schoolId}/passports/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Passports\\UpdateApplicantPassportRequest"
         },
         "ApplicantStudentCustomFields_GetAllAsyncBySchoolid": {
             "method": "GET",
             "path": "/api/admissions/applicants/student/{schoolId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\StudentCustomFields\\GetApplicantStudentCustomFieldsRequest"
         },
         "ApplicantStudentCustomFields_GetAsyncBySchoolidCustomfieldid": {
             "method": "GET",
             "path": "/api/admissions/applicants/student/{schoolId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\StudentCustomFields\\GetApplicantStudentCustomFieldRequest"
         },
         "ApplicantStudentCustomFields_PatchAsyncBySchoolidCustomfieldidCustomfield": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/student/{schoolId}/customFields/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\StudentCustomFields\\PatchApplicantStudentCustomFieldRequest"
         },
         "ApplicantStudentCustomFields_PatchAsyncBySchoolidCustomfields": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/student/{schoolId}/customFields",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\StudentCustomFields\\PatchApplicantStudentCustomFieldsRequest"
         },
         "ApplicantStudents_GetAllByPagePagesize": {
             "method": "GET",
             "path": "/api/admissions/applicants/students",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Students\\GetApplicantStudentsRequest"
         },
         "ApplicantStudents_GetBySchoolid": {
             "method": "GET",
             "path": "/api/admissions/applicants/students/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Students\\GetApplicantStudentRequest"
         },
         "ApplicantStudents_PatchBySchoolidPatchoperations": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/students/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Students\\PatchApplicantStudentRequest"
         },
         "ApplicantVisaCustomFields_GetAllAsyncBySchoolidVisaid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/customfields/visa/{visaId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaCustomFields\\GetApplicantVisaCustomFieldsRequest"
         },
         "ApplicantVisaCustomFields_GetAsyncBySchoolidVisaidCustomfieldid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/customfields/visa/{visaId}/{customFieldId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaCustomFields\\GetApplicantVisaCustomFieldRequest"
         },
         "ApplicantVisaCustomFields_PatchAsyncBySchoolidVisaidListcustomfield": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/{schoolId}/customfields/visa/{visaId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaCustomFields\\PatchApplicantVisaCustomFieldsRequest"
         },
         "ApplicantVisaDocuments_DeleteAsyncBySchoolidVisaidDocumentid": {
             "method": "DELETE",
             "path": "/api/admissions/applicants/{schoolId}/visa/{visaId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaDocuments\\DeleteApplicantVisaDocumentRequest"
         },
         "ApplicantVisaDocuments_DownloadAsyncBySchoolidVisaidDocumentid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/visa/{visaId}/documents/{documentId}/download",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaDocuments\\DownloadApplicantVisaDocumentRequest"
         },
         "ApplicantVisaDocuments_GetAllAsyncBySchoolidVisaid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/visa/{visaId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaDocuments\\GetApplicantVisaDocumentsRequest"
         },
         "ApplicantVisaDocuments_GetAsyncBySchoolidVisaidDocumentid": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/visa/{visaId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaDocuments\\GetApplicantVisaDocumentRequest"
         },
         "ApplicantVisaDocuments_PatchAsyncBySchoolidVisaidDocumentidPatchoperations": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/{schoolId}/visa/{visaId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaDocuments\\PatchApplicantVisaDocumentRequest"
         },
         "ApplicantVisaDocuments_PostAsyncBySchoolidVisaid": {
             "method": "POST",
             "path": "/api/admissions/applicants/{schoolId}/visa/{visaId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\VisaDocuments\\CreateApplicantVisaDocumentRequest"
         },
         "ApplicantVisas_DeleteAsyncBySchoolidId": {
             "method": "DELETE",
             "path": "/api/admissions/applicants/{schoolId}/visas/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Visas\\DeleteApplicantVisaRequest"
         },
         "ApplicantVisas_EditMultipleVisasAsyncBySchoolidVisas": {
             "method": "PUT",
             "path": "/api/admissions/applicants/{schoolId}/visas",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Visas\\UpdateApplicantVisasRequest"
         },
         "ApplicantVisas_GetAllAsyncBySchoolidExpand": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/visas",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Visas\\GetApplicantVisasRequest"
         },
         "ApplicantVisas_GetAsyncBySchoolidIdExpand": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}/visas/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Visas\\GetApplicantVisaRequest"
         },
         "ApplicantVisas_PostAsyncBySchoolidVisa": {
             "method": "POST",
             "path": "/api/admissions/applicants/{schoolId}/visas",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Visas\\CreateApplicantVisaRequest"
         },
         "ApplicantVisas_PutAsyncBySchoolidIdVisa": {
             "method": "PUT",
             "path": "/api/admissions/applicants/{schoolId}/visas/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Visas\\UpdateApplicantVisaRequest"
         },
         "ApplicantsContacts_GetAllAsyncByPagePagesize": {
             "method": "GET",
             "path": "/api/admissions/applicants/contacts",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Contacts\\GetApplicantsContactsRequest"
         },
         "Applicants_GetAllByPagePagesizeExpand": {
             "method": "GET",
             "path": "/api/admissions/applicants",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\GetApplicantsRequest"
         },
         "Applicants_GetBySchoolidExpand": {
             "method": "GET",
             "path": "/api/admissions/applicants/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\GetApplicantRequest"
         },
         "Applicants_PatchBySchoolidPatchoperations": {
             "method": "PATCH",
             "path": "/api/admissions/applicants/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\PatchApplicantRequest"
         },
         "Applicants_PostByApplicant": {
             "method": "POST",
             "path": "/api/admissions/applicants",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\CreateApplicantRequest"
         },
         "Applicants_PutBySchoolidApplicant": {
             "method": "PUT",
             "path": "/api/admissions/applicants/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\UpdateApplicantRequest"
         },
         "AssessmentColumnIndicators_DeleteByGradebookidColumnidIndicatorid": {
             "method": "DELETE",
@@ -2095,42 +2159,50 @@
         "EnquiryReasons_DeleteById": {
             "method": "DELETE",
             "path": "/api/admissions/enquiryreasons/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryReasons\\DeleteEnquiryReasonRequest"
         },
         "EnquiryReasons_Get": {
             "method": "GET",
             "path": "/api/admissions/enquiryreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryReasons\\GetEnquiryReasonsRequest"
         },
         "EnquiryReasons_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/admissions/enquiryreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryReasons\\CreateEnquiryReasonRequest"
         },
         "EnquiryReasons_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/admissions/enquiryreasons/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryReasons\\UpdateEnquiryReasonRequest"
         },
         "EnquiryTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/admissions/enquirytypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryTypes\\DeleteEnquiryTypeRequest"
         },
         "EnquiryTypes_Get": {
             "method": "GET",
             "path": "/api/admissions/enquirytypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryTypes\\GetEnquiryTypesRequest"
         },
         "EnquiryTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/admissions/enquirytypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryTypes\\CreateEnquiryTypeRequest"
         },
         "EnquiryTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/admissions/enquirytypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\EnquiryTypes\\UpdateEnquiryTypeRequest"
         },
         "EntityTypes_GetAll": {
             "method": "GET",
@@ -4592,22 +4664,26 @@
         "Statuses_DeleteById": {
             "method": "DELETE",
             "path": "/api/admissions/statuses/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Statuses\\DeleteStatusRequest"
         },
         "Statuses_Get": {
             "method": "GET",
             "path": "/api/admissions/statuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Statuses\\GetStatusesRequest"
         },
         "Statuses_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/admissions/statuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Statuses\\CreateStatusRequest"
         },
         "Statuses_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/admissions/statuses/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Admissions\\Statuses\\UpdateStatusRequest"
         },
         "Structure_GetByGradebookid": {
             "method": "GET",
@@ -5890,6 +5966,35 @@
         }
     },
     "models": {
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.Alumni": "spkm\\IsamsApi\\Data\\Admissions\\Alumni",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.Applicant": "spkm\\IsamsApi\\Data\\Admissions\\Applicant",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.ApplicantDocument": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantDocument",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.ApplicantPassport": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantPassport",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.ApplicantPassportDocument": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantPassportDocument",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.ApplicantVisa": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantVisa",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.ApplicantVisaDocument": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantVisaDocument",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.ApplicantsContact": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantsContact",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.Branch": "spkm\\IsamsApi\\Data\\Admissions\\Branch",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.Contact": "spkm\\IsamsApi\\Data\\Admissions\\Contact",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField": "spkm\\IsamsApi\\Data\\Admissions\\CustomField",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.DocumentCategory": "spkm\\IsamsApi\\Data\\Admissions\\DocumentCategory",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.GlobalListItem": "spkm\\IsamsApi\\Data\\Admissions\\GlobalListItem",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.Student": "spkm\\IsamsApi\\Data\\Admissions\\Student",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.Visit": "spkm\\IsamsApi\\Data\\Admissions\\Visit",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.VisitApplicantAttendance": "spkm\\IsamsApi\\Data\\Admissions\\VisitApplicantAttendance",
+        "iSAMS.Admissions.AppServices.Objects.Public.Get.VisitApplicantContactAttendance": "spkm\\IsamsApi\\Data\\Admissions\\VisitApplicantContactAttendance",
+        "iSAMS.Admissions.AppServices.Objects.Public.Patch.CustomField": "spkm\\IsamsApi\\Data\\Admissions\\CustomFieldForPatch",
+        "iSAMS.Admissions.AppServices.Objects.Public.Post.Applicant": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantForCreate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Post.ApplicantDocument": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantDocumentForCreate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Post.ApplicantPassport": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantPassportForCreate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Post.ApplicantPassportDocument": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantPassportDocumentForCreate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Post.ApplicantVisa": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantVisaForCreate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Post.ApplicantVisaDocument": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantVisaDocumentForCreate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Post.GlobalListItem": "spkm\\IsamsApi\\Data\\Admissions\\GlobalListItemForCreate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Put.Applicant": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantForUpdate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Put.ApplicantPassport": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantPassportForUpdate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Put.ApplicantVisa": "spkm\\IsamsApi\\Data\\Admissions\\ApplicantVisaForUpdate",
+        "iSAMS.Admissions.AppServices.Objects.Public.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\Admissions\\GlobalListItemForUpdate",
         "iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessionStudents": "spkm\\IsamsApi\\Data\\Discipline\\DetentionSessionStudent",
         "iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessions": "spkm\\IsamsApi\\Data\\Discipline\\DetentionSession",
         "iSAMS.Estates.AppServices.Objects.Public.Resources.Get.Building": "spkm\\IsamsApi\\Data\\Estates\\Building",

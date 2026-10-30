@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead.
+ */
+
+namespace spkm\IsamsApi\Resources\Admissions;
+
+use Saloon\Http\BaseResource;
+use Saloon\Http\Response;
+use spkm\IsamsApi\Requests\Admissions\DocumentCategory\GetApplicantDocumentCategoriesRequest;
+
+class DocumentCategoryResource extends BaseResource
+{
+    public function getApplicantDocumentCategories(): Response
+    {
+        return $this->connector->send(new GetApplicantDocumentCategoriesRequest());
+    }
+}
