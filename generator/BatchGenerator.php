@@ -66,6 +66,74 @@ final class BatchGenerator
     }
 
     /**
+     * The Batch API part of ENDPOINTS.md: each module's methods (and root nodes no known method fills) as you read
+     * them from a response, with the model they return and the filters they take; then the photo feeds.
+     *
+     * @return array{contents: list<string>, section: string}
+     */
+    public function endpoints(): array
+    {
+        $contents = [];
+        $sections = [];
+        $total = 0;
+
+        foreach ($this->facts['modules'] as $module => $roots) {
+            $rows = [];
+
+            foreach ($roots as $root => $facts) {
+                $returns = '`Collection<'.$this->className($facts['entity']).'>`';
+                $filters = $facts['filters'] === [] ? 'none' : implode(', ', array_map(fn (string $filter) => "`$filter`", array_keys($facts['filters']))).($facts['requiresFilters'] ? ' (required)' : '');
+                $reads = $facts['methods'] === [] ? ["->models('$module', '$root')"] : array_map(fn (string $method) => "->method('$method')", $facts['methods']);
+
+                foreach ($reads as $read) {
+                    $rows[] = "| `$read` | $returns | $filters |";
+                }
+            }
+
+            sort($rows);
+            $total += count($rows);
+            $contents[] = "  - [$module](#".strtolower($module).') ('.count($rows).')';
+            $sections[] = "### $module\n\n| Read with | Returns | Filters |\n|---|---|---|\n".implode("\n", $rows)."\n";
+        }
+
+        $section = implode("\n", [
+            '## Batch API',
+            '',
+            'The Batch API is one request per key rather than a call per endpoint: it runs every method allocated to the key, or',
+            'the methods `BatchFilters::methods()` names, and you read each method\'s records from the response as models:',
+            '',
+            '```php',
+            '$batch = Isams::batch()->send(new BatchRequest(',
+            '    BatchFilters::make()',
+            '        ->methods(\'Calendar_GetEvents\')',
+            '        ->filter(\'Calendar\', \'Events\', [\'StartDate\' => now(), \'EndDate\' => now()->addMonth()])',
+            '))->dto();',
+            '',
+            '$events = $batch->method(\'Calendar_GetEvents\'); // Collection<Event>',
+            '```',
+            '',
+            'Root nodes no known method fills arrive when the key runs everything; read them with `models($module, $rootNode)`.',
+            'Filters are set with `BatchFilters::filter()`, whose module and method names are the ones iSAMS documents for',
+            'filters. Models are in `Data\\Batch\\{Module}\\{RootNode}`, and a failure throws a `BatchApiException`. See [Batch',
+            'API](README.md#batch-api).',
+            '',
+            implode("\n", $sections),
+            '### Photos',
+            '',
+            '| Call | Returns |',
+            '|---|---|',
+            '| `Isams::batch()->send(BatchPhotosRequest::staff())->dto()` | `BatchPhotos`: `photos()` yields each staff id and PNG |',
+            '| `Isams::batch()->send(BatchPhotosRequest::students())->dto()` | `BatchPhotos`: `photos()` yields each student id and PNG |',
+            '',
+        ]);
+
+        return [
+            'contents' => ['- [Batch API](#batch-api) ('.$total.' methods and root nodes)', ...$contents, '  - [Photos](#photos) (2)'],
+            'section' => $section,
+        ];
+    }
+
+    /**
      * @param  array<string, array{attributes: array<string, string>, children: array<string, string>}>  $nodes
      */
     private function emitNode(string $namespace, string $node, array $nodes): string
