@@ -45,6 +45,6 @@ class AddGradebookStudentAssignmentsRequest extends IsamsRequest implements HasB
      */
     protected function defaultBody(): array
     {
-        return $this->schoolIds;
+        return array_values($this->schoolIds);
     }
 }

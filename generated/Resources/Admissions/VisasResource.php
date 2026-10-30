@@ -69,7 +69,7 @@ class VisasResource extends IsamsResource
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>>  $applicantVisas
+     * @param  array<int, \spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>>  $applicantVisas
      * @see \spkm\IsamsApi\Requests\Admissions\Visas\UpdateApplicantVisasRequest
      */
     public function updateMany(string $schoolId, array $applicantVisas): bool

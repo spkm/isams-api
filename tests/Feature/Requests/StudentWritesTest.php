@@ -57,6 +57,25 @@ it('updates several of a student\'s custom fields at once', function () {
     expect(json_decode((string) $sent->getBody(), true))->toBe([['id' => 53, 'value' => 'Yes'], ['id' => 89, 'value' => 'No']]);
 });
 
+it('sends an uploaded file under the part name iSAMS expects, whatever name it was given', function () {
+    $sent = FakeIsams::send(new CreateStudentDocumentRequest('100001', new MultipartValue('file', 'made-up PDF bytes', 'report.pdf', ['X-Made-Up' => 'kept']), new StudentDocumentForCreate(name: 'Report', categoryId: 2)))
+        ->getPendingRequest()->createPsrRequest();
+    $body = (string) $sent->getBody();
+
+    expect($body)->toContain('name="binary"; filename="report.pdf"')
+        ->and($body)->toContain('X-Made-Up: kept')
+        ->and($body)->not->toContain('name="file"');
+});
+
+it('sends a list body as a JSON list, even when some of its items were filtered out', function () {
+    /** @var list<array{id: int, value: ?string}> $fields */
+    $fields = array_filter([['id' => 53, 'value' => 'Yes'], ['id' => 70, 'value' => null], ['id' => 89, 'value' => 'No']], fn (array $field) => $field['value'] !== null);
+
+    $sent = FakeIsams::send(new PatchStudentCustomFieldsRequest('100001', $fields))->getPendingRequest()->createPsrRequest();
+
+    expect(json_decode((string) $sent->getBody(), true))->toBe([['id' => 53, 'value' => 'Yes'], ['id' => 89, 'value' => 'No']]);
+});
+
 it('downloads a passport document as a file', function () {
     FakeIsams::respondWith([DownloadStudentPassportDocumentRequest::class => MockResponse::make('made-up PDF bytes', 200, ['Content-Type' => 'application/pdf', 'Content-Disposition' => 'attachment; filename="passport.pdf"'])]);
 

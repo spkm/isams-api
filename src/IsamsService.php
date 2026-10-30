@@ -25,13 +25,7 @@ class IsamsService
             throw new InvalidArgumentException('No iSAMS connection named "'.$name.'" is configured in isams-api.connections.');
         }
 
-        foreach (['client_id', 'client_secret', 'base_url'] as $setting) {
-            if (! is_string($config[$setting] ?? null) || $config[$setting] === '') {
-                throw new InvalidArgumentException('The iSAMS connection "'.$name.'" needs a '.$setting.'.');
-            }
-        }
-
-        return $this->connections[$name] ??= new IsamsConnector($config['client_id'], $config['client_secret'], $config['base_url'], $config['scopes'] ?? ['restapi']);
+        return $this->connections[$name] ??= $this->connect($config, 'The iSAMS connection "'.$name.'"');
     }
 
     /**
@@ -72,16 +66,26 @@ class IsamsService
      */
     public function __call(string $method, array $parameters): mixed
     {
-        $this->connector ??= new IsamsConnector(
-            config('isams-api.client_id'),
-            config('isams-api.client_secret'),
-            config('isams-api.base_url')
-        );
+        $this->connector ??= $this->connect((array) config('isams-api'), 'The default iSAMS connection');
 
         if (method_exists($this->connector, $method)) {
             return $this->connector->{$method}(...$parameters);
         }
 
         throw new BadMethodCallException("Method {$method} does not exist.");
+    }
+
+    /**
+     * @param  array<string, mixed>  $config
+     */
+    private function connect(array $config, string $connection): IsamsConnector
+    {
+        foreach (['client_id', 'client_secret', 'base_url'] as $setting) {
+            if (! is_string($config[$setting] ?? null) || $config[$setting] === '') {
+                throw new InvalidArgumentException("$connection needs a $setting.");
+            }
+        }
+
+        return new IsamsConnector($config['client_id'], $config['client_secret'], $config['base_url'], $config['scopes'] ?? ['restapi']);
     }
 }

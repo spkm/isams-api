@@ -46,6 +46,6 @@ class CreateAssessmentColumnWeightingsRequest extends IsamsRequest implements Ha
      */
     protected function defaultBody(): array
     {
-        return $this->weightingElementIds;
+        return array_values($this->weightingElementIds);
     }
 }

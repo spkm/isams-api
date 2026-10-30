@@ -53,12 +53,15 @@ it('refuses a method the connector does not have', function () {
     expect(fn () => Isams::doesNotExist())->toThrow(BadMethodCallException::class, 'Method doesNotExist does not exist.');
 });
 
-it('cannot use the default connection until its client id, secret and base URL are configured', function () {
-    config(['isams-api.client_id' => null, 'isams-api.client_secret' => null, 'isams-api.base_url' => null]);
+it('cannot use the default connection until its client id, secret and base URL are configured, naming the missing setting', function (array $config, string $missing) {
+    config(['isams-api.client_id' => 'client-id', 'isams-api.client_secret' => 'client-secret', 'isams-api.base_url' => FakeIsams::BASE_URL, ...$config]);
 
-    // TODO: Characterised as-is, decide whether this is intended. A missing setting surfaces as a TypeError from the IsamsConnector constructor rather than a message naming the setting. (src/IsamsService.php, __call())
-    expect(fn () => Isams::get('/api/school/terms'))->toThrow(TypeError::class);
-})->group('as-is');
+    expect(fn () => Isams::get('/api/school/terms'))->toThrow(InvalidArgumentException::class, "The default iSAMS connection needs a $missing.");
+})->with([
+    'no client id' => [['isams-api.client_id' => null], 'client_id'],
+    'no client secret' => [['isams-api.client_secret' => null], 'client_secret'],
+    'no base URL' => [['isams-api.base_url' => ''], 'base_url'],
+]);
 
 it('hints every area and connection method on the facade, so IDEs autocomplete Isams::', function () {
     $hints = (string) (new ReflectionClass(Isams::class))->getDocComment();

@@ -118,7 +118,8 @@ use spkm\IsamsApi\IsamsConnector;
 $isams = new IsamsConnector($clientId, $clientSecret, $baseUrl);
 ```
 
-The connector fetches an access token from iSAMS and caches it, encrypted, until shortly before it expires.
+The connector fetches an access token from iSAMS and caches it, encrypted, until shortly before it expires. A connector
+that outlives its token, as one in a queue worker does, fetches a new one before its next request.
 
 ### Resources
 
@@ -381,13 +382,15 @@ All of these are off unless you configure them (see `config/isams-api.php`):
 
 - **Timeouts:** `ISAMS_CONNECT_TIMEOUT` and `ISAMS_REQUEST_TIMEOUT` (seconds; 10 and 30 by default). Lower them for
   web requests so pages don't hang.
-- **Circuit breaker:** `ISAMS_CIRCUIT_BREAKER=true`. After repeated failures, requests fail instantly with an
-  `IsamsUnavailable` exception for a cooldown period instead of waiting for timeouts. `Isams::isAvailable()` tells you,
-  without contacting iSAMS, whether requests are currently paused.
-- **Retries:** `ISAMS_RETRIES=3` retries GET requests that fail with a server error, rate limit or connection error.
-  Writes are never retried, and nor are the few GETs that make iSAMS do something, such as running wellbeing workflows.
+- **Circuit breaker:** `ISAMS_CIRCUIT_BREAKER=true`. After repeated connection failures or 502, 503 and 504 responses,
+  requests fail instantly with an `IsamsUnavailable` exception for a cooldown period instead of waiting for timeouts.
+  500s count neither way, since iSAMS also sends them for a filter it can't apply. `Isams::isAvailable()` tells you, without
+  contacting iSAMS, whether requests are currently paused.
+- **Retries:** `ISAMS_RETRIES=3` retries reads (GET requests and Batch API calls) that fail with a server error, rate
+  limit or connection error. Writes are never retried, and nor are the few GETs that make iSAMS do something, such as
+  running wellbeing workflows.
 - **Re-authentication:** `ISAMS_REAUTHENTICATE=true` fetches a new token and repeats the request once when iSAMS rejects
-  a cached token.
+  a cached token, but not when it refuses for want of a permission.
 - **Caching:** `ISAMS_CACHE=true` caches slow-changing reference lists (terms, houses, year groups, forms, divisions,
   departments, buildings, rooms and the timetable structure) in your Laravel cache, for an hour by default.
 

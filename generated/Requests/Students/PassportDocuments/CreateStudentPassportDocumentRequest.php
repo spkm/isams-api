@@ -49,6 +49,6 @@ class CreateStudentPassportDocumentRequest extends IsamsRequest implements HasBo
      */
     protected function defaultBody(): array
     {
-        return [$this->binary, new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
+        return [new MultipartValue('binary', $this->binary->value, $this->binary->filename, $this->binary->headers), new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
     }
 }

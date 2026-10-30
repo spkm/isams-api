@@ -42,6 +42,6 @@ class CreateStudentCommunicationHistoryAttachmentsRequest extends IsamsRequest i
      */
     protected function defaultBody(): array
     {
-        return [$this->attachment];
+        return [new MultipartValue('attachment', $this->attachment->value, $this->attachment->filename, $this->attachment->headers)];
     }
 }

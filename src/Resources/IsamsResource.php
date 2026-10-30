@@ -37,8 +37,8 @@ abstract class IsamsResource extends BaseResource
 
         return LazyCollection::make(function () use ($paginator, $model) {
             try {
-                foreach ($paginator->collect() as $item) {
-                    yield $model::from($item);
+                foreach ($paginator->models($model) as $item) {
+                    yield $item;
                 }
             } catch (RequestException $exception) {
                 throw $exception instanceof IsamsApiException ? $exception : IsamsApiException::fromResponse($exception->getResponse());

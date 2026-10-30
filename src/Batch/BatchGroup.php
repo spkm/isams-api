@@ -24,7 +24,7 @@ abstract class BatchGroup
     protected function run(string $method, string $model, ?array $filter = null): LazyCollection
     {
         $filters = BatchFilters::make()->methods($method);
-        $attributes = array_filter($filter['attributes'] ?? [], fn (mixed $value) => $value !== null);
+        $attributes = array_filter($filter['attributes'] ?? [], fn (mixed $value) => $value !== null && $value !== []);
 
         if ($filter !== null && $filter['required'] && $attributes === []) {
             $names = array_keys($filter['attributes']);

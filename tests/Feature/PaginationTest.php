@@ -1,6 +1,7 @@
 <?php
 
 use Saloon\Http\Faking\MockResponse;
+use spkm\IsamsApi\IsamsConnector;
 use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 use spkm\IsamsApi\Requests\Teaching\GetSubjectsRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
@@ -79,6 +80,16 @@ it('uses each value of the whole response as an item when the result key is miss
 
     expect($items)->toBe([[['id' => 1]], 1]);
 });
+
+it('says which list is missing when a page doesn\'t have it, rather than failing on the page\'s other values', function (Closure $models) {
+    FakeIsams::respondWith([GetStudentsRequest::class => MockResponse::make(['pupils' => [['id' => 1]], 'totalPages' => 1])]);
+
+    expect(fn () => $models(FakeIsams::connector())->all())
+        ->toThrow(UnexpectedValueException::class, 'iSAMS\'s response to GET /api/students has no "students" list of Student records.');
+})->with([
+    'through a resource' => [fn (IsamsConnector $isams) => $isams->students()->all()],
+    'through the paginator' => [fn (IsamsConnector $isams) => $isams->paginate(new GetStudentsRequest)->dtos()],
+]);
 
 it('keeps the request\'s expand and filter on every page, but uses its own page size', function () {
     $isams = FakeIsams::respondWith(threePagesOfStudents());

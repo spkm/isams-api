@@ -73,11 +73,11 @@ function sandboxErrorText(Response $response): string
 
 /**
  * iSAMS's text, shortened, without tags or extra spacing, and with quoted values left out so that the same error reads
- * the same for any record (double-quoted ones too, for the package's own messages, which quote the API client).
+ * the same for any record.
  */
-function sandboxRedact(string $text, bool $doubleQuoted = false): string
+function sandboxRedact(string $text): string
 {
-    $text = (string) preg_replace(['/\s+/', "/'[^']*'/", ...($doubleQuoted ? ['/"[^"]*"/'] : [])], [' ', "'…'", ...($doubleQuoted ? ['"…"'] : [])], strip_tags($text));
+    $text = (string) preg_replace(['/\s+/', "/'[^']*'/"], [' ', "'…'"], strip_tags($text));
 
     return mb_substr(trim($text), 0, 240);
 }
@@ -288,7 +288,7 @@ it('reads Cloud Portals lists when the credentials have the Cloud Portals scope'
     try {
         $portals = Sandbox::connector(['iSAMS.CloudPortals.Api']);
     } catch (Throwable $exception) {
-        Sandbox::line('Cloud Portals: the token request was refused: '.class_basename($exception).': '.sandboxRedact($exception->getMessage(), doubleQuoted: true));
+        Sandbox::line('Cloud Portals: the token request was refused: '.class_basename($exception).': '.sandboxRedact($exception->getMessage()));
         expect(true)->toBeTrue();
 
         return;
@@ -354,7 +354,7 @@ it('shows what iSAMS sends for REST errors, and what the package makes of them',
         new IsamsConnector('made-up-client', 'made-up-secret', (string) getenv('ISAMS_SANDBOX_BASE_URL'));
         Sandbox::line('ERROR PROBE made-up client credentials: a token was issued');
     } catch (Throwable $exception) {
-        Sandbox::line('ERROR PROBE made-up client credentials: package: '.$exception::class.': '.sandboxRedact($exception->getMessage(), doubleQuoted: true));
+        Sandbox::line('ERROR PROBE made-up client credentials: package: '.$exception::class.': '.sandboxRedact($exception->getMessage()));
     }
 
     expect(true)->toBeTrue();

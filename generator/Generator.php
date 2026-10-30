@@ -797,7 +797,7 @@ final class Generator
             $method->addComment('@param  '.match ($body['kind']) {
                 'patch' => '\\spkm\\IsamsApi\\Support\\JsonPatch|list<array<string, mixed>>',
                 'model' => '\\'.$body['model'].'|array<string, mixed>',
-                'models' => 'list<\\'.$body['model'].'|array<string, mixed>>',
+                'models' => 'array<int, \\'.$body['model'].'|array<string, mixed>>',
                 default => 'array<mixed>',
             }.'  $'.$body['php']);
         }
@@ -874,10 +874,11 @@ final class Generator
         $class->addTrait('Saloon\Traits\Body\HasJsonBody');
         $namespace->addUse('spkm\IsamsApi\Data\Data');
 
-        $code = match ($body['kind']) {
-            'patch' => "return $value instanceof JsonPatch ? {$value}->toArray() : $value;",
-            'model' => "return $value instanceof Data ? {$value}->toArray() : $value;",
-            'models' => "return array_map(fn (mixed \$item) => \$item instanceof Data ? \$item->toArray() : \$item, $value);",
+        $code = match (true) {
+            $body['kind'] === 'patch' => "return $value instanceof JsonPatch ? {$value}->toArray() : $value;",
+            $body['kind'] === 'model' => "return $value instanceof Data ? {$value}->toArray() : $value;",
+            $body['kind'] === 'models' => "return array_values(array_map(fn (mixed \$item) => \$item instanceof Data ? \$item->toArray() : \$item, $value));",
+            $body['list'] => "return array_values($value);",
             default => "return $value;",
         };
 
@@ -901,7 +902,9 @@ final class Generator
 
         foreach ($parts as $name => $part) {
             $value = '$this->'.$part['php'];
-            $code = $part['file'] ? $value : "new MultipartValue('$name', (string) json_encode($value instanceof Data ? {$value}->toArray() : $value))";
+            $code = $part['file']
+                ? "new MultipartValue('$name', {$value}->value, {$value}->filename, {$value}->headers)"
+                : "new MultipartValue('$name', (string) json_encode($value instanceof Data ? {$value}->toArray() : $value))";
 
             if ($part['required']) {
                 $required[] = $code;

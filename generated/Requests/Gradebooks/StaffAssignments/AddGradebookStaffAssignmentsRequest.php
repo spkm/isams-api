@@ -45,6 +45,6 @@ class AddGradebookStaffAssignmentsRequest extends IsamsRequest implements HasBod
      */
     protected function defaultBody(): array
     {
-        return $this->staffIds;
+        return array_values($this->staffIds);
     }
 }

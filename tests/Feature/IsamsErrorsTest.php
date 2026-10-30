@@ -2,6 +2,7 @@
 
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
+use spkm\IsamsApi\Batch\IsamsBatchConnector;
 use spkm\IsamsApi\Exceptions\MissingPermissionException;
 use spkm\IsamsApi\Exceptions\NotFoundException;
 use spkm\IsamsApi\Exceptions\ServerErrorException;
@@ -93,9 +94,16 @@ it('explains a refused token request as rejected credentials, with OAuth\'s reas
     expect(fn () => new IsamsConnector('made-up-client', 'made-up-secret', FakeIsams::BASE_URL, $scopes))
         ->toThrow(UnauthorizedException::class, $expected);
 })->with([
-    'a wrong client id or secret' => ['invalid_client', ['restapi'], 'iSAMS refused the token request for API client "made-up-client": invalid_client, the client id or secret is wrong'],
-    'a scope the client is not allowed' => ['invalid_scope', ['iSAMS.CloudPortals.Api'], 'iSAMS refused the token request for API client "made-up-client": invalid_scope, the client isn\'t allowed the scope it asked for (iSAMS.CloudPortals.Api)'],
+    'a wrong client id or secret' => ['invalid_client', ['restapi'], 'iSAMS refused the token request: invalid_client, the client id or secret is wrong'],
+    'a scope the client is not allowed' => ['invalid_scope', ['iSAMS.CloudPortals.Api'], 'iSAMS refused the token request: invalid_scope, the client isn\'t allowed the scope it asked for (iSAMS.CloudPortals.Api)'],
 ]);
+
+it('keeps the Batch API key, which iSAMS takes as the client id, out of a refused token request\'s message', function () {
+    FakeIsams::respondWith([GetClientCredentialsTokenRequest::class => MockResponse::make(['error' => 'invalid_client'], 400)]);
+
+    expect(fn () => new IsamsBatchConnector('MADE-UP-BATCH-KEY', 'made-up-secret', FakeIsams::BASE_URL))
+        ->toThrow(fn (UnauthorizedException $exception) => expect($exception->getMessage())->not->toContain('MADE-UP-BATCH-KEY'));
+});
 
 it('keeps a separate token for each set of scopes, so a Cloud Portals connection never borrows a REST token', function () {
     $isams = FakeIsams::respondWith();

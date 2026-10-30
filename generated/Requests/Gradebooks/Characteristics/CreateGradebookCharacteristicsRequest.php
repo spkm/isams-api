@@ -45,6 +45,6 @@ class CreateGradebookCharacteristicsRequest extends IsamsRequest implements HasB
      */
     protected function defaultBody(): array
     {
-        return $this->characteristics;
+        return array_values($this->characteristics);
     }
 }

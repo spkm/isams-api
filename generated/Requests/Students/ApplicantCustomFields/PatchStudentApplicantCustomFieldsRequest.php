@@ -27,7 +27,7 @@ class PatchStudentApplicantCustomFieldsRequest extends IsamsRequest implements H
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @param  array<int, \spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
      */
     public function __construct(
         protected string $schoolId,
@@ -45,6 +45,6 @@ class PatchStudentApplicantCustomFieldsRequest extends IsamsRequest implements H
      */
     protected function defaultBody(): array
     {
-        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->customFields);
+        return array_values(array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->customFields));
     }
 }

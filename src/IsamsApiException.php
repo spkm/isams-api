@@ -24,17 +24,25 @@ class IsamsApiException extends RequestException
     public static function fromResponse(Response $response): self
     {
         $status = $response->status();
-        $refusal = $status === 403 || ($status === 401 && preg_match('/permissions? (are|is) required/i', (string) self::field($response, 'message')) === 1);
 
         return match (true) {
             $response->getRequest() instanceof GetClientCredentialsTokenRequest => new UnauthorizedException($response),
-            $refusal => new MissingPermissionException($response),
+            self::refusesPermission($response) => new MissingPermissionException($response),
             $status === 404 => new NotFoundException($response),
             in_array($status, [400, 409, 412, 415, 422], true) => new InvalidRequestException($response),
             $status === 401 => new UnauthorizedException($response),
             $status === 408 || $response->serverError() => new ServerErrorException($response),
             default => new self($response),
         };
+    }
+
+    /**
+     * Whether iSAMS refused for want of a permission: a 403, or a 401 saying which permission is required.
+     */
+    public static function refusesPermission(Response $response): bool
+    {
+        return $response->status() === 403
+            || ($response->status() === 401 && preg_match('/permissions? (are|is) required/i', (string) self::field($response, 'message')) === 1);
     }
 
     public function isamsMessage(): ?string

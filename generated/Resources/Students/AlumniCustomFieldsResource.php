@@ -47,7 +47,7 @@ class AlumniCustomFieldsResource extends IsamsResource
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @param  array<int, \spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\Students\AlumniCustomFields\PatchAlumniCustomFieldsRequest
      */
     public function patchMany(string $schoolId, array $customFields): bool

@@ -46,6 +46,6 @@ class CreateExternalInvoiceCommunicationRequest extends IsamsRequest implements 
      */
     protected function defaultBody(): array
     {
-        return [$this->email, new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
+        return [new MultipartValue('email', $this->email->value, $this->email->filename, $this->email->headers), new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
     }
 }
