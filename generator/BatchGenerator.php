@@ -86,7 +86,7 @@ final class BatchGenerator
         $sections = [];
 
         foreach ($this->groups() as $group => ['accessor' => $accessor, 'calls' => $calls]) {
-            $rows = array_map(fn (array $call) => '| `Isams::batch()->'.$accessor.'()->'.$call['name'].'('.implode(', ', array_map(fn (array $parameter) => $parameter['signature'], $call['parameters'])).')` | `Collection<'.class_basename($call['model']).'>` |', $calls);
+            $rows = array_map(fn (array $call) => '| `Isams::batch()->'.$accessor.'()->'.$call['name'].'('.implode(', ', array_map(fn (array $parameter) => $parameter['signature'], $call['parameters'])).')` | `LazyCollection<'.class_basename($call['model']).'>` |', $calls);
             sort($rows);
             $contents[] = "  - [$group](#batch-".strtolower($group).') ('.count($rows).')';
             $sections[] = "### Batch: $group\n\n| Call | Returns |\n|---|---|\n".implode("\n", $rows)."\n";
@@ -105,13 +105,13 @@ final class BatchGenerator
         $section = implode("\n", [
             '## Batch API',
             '',
-            'Each call runs one Batch API method and returns its records as models, taking the method\'s filters as named',
+            'Each call runs one Batch API method and returns its records as a lazy collection of models, taking the method\'s filters as named',
             'parameters; a failure throws a `BatchApiException`. Pass a key\'s name to `Isams::batch()` to use a key other than the',
             'default. To run several methods in one request, send a `BatchRequest` and read each method from the response; see',
             '[Batch API](README.md#batch-api).',
             '',
             '```php',
-            '$students = Isams::batch()->pupil()->currentPupils(); // Collection<Pupil>',
+            '$students = Isams::batch()->pupil()->currentPupils(); // LazyCollection<Pupil>',
             '',
             '// Mother and father contacts, at their work and company locations, of students with system status 0 or 1',
             '// who live at home and enrol in 2026 or 2027',
@@ -121,7 +121,7 @@ final class BatchGenerator
             '    studentHome: true,',
             '    systemStatusesToInclude: [0, 1],',
             '    enrolmentSchoolYearsToInclude: [2026, 2027],',
-            '); // Collection<Contact>',
+            '); // LazyCollection<Contact>',
             '',
             '// Several methods in one request, each filtered under the names iSAMS documents for its filter',
             '$batch = Isams::batch()->send(new BatchRequest(',
@@ -185,7 +185,7 @@ final class BatchGenerator
             $file = new PhpFile;
             $file->addComment(self::MARKER);
             $namespace = $file->addNamespace('spkm\\IsamsApi\\Batch\\Groups');
-            $namespace->addUse('Illuminate\\Support\\Collection');
+            $namespace->addUse('Illuminate\\Support\\LazyCollection');
             $namespace->addUse('spkm\\IsamsApi\\Batch\\BatchGroup');
             $groupClass = $namespace->addClass($group.'Group')->setExtends('spkm\\IsamsApi\\Batch\\BatchGroup');
             $shortNames = array_count_values(array_map(fn (array $call) => class_basename($call['model']), $calls));
@@ -197,7 +197,7 @@ final class BatchGenerator
                     $namespace->addUse($call['model']);
                 }
 
-                $method = $groupClass->addMethod($call['name'])->setPublic()->setReturnType('Illuminate\\Support\\Collection');
+                $method = $groupClass->addMethod($call['name'])->setPublic()->setReturnType('Illuminate\\Support\\LazyCollection');
                 $attributes = [];
 
                 foreach ($call['parameters'] as $parameter) {
@@ -218,7 +218,7 @@ final class BatchGenerator
                     $attributes[] = var_export($parameter['attribute'], true).' => $'.$parameter['name'];
                 }
 
-                $method->addComment("@return Collection<int, $model>");
+                $method->addComment("@return LazyCollection<int, $model>");
                 $filter = $call['filter'] === null ? '' : ", ['module' => ".var_export($call['filter']['module'], true).", 'element' => ".var_export($call['filter']['element'], true).", 'attributes' => [".implode(', ', $attributes)."], 'required' => ".var_export($call['filter']['required'], true).']';
                 $method->setBody('return $this->run('.var_export($call['method'], true).", $model::class$filter);");
             }
@@ -379,8 +379,9 @@ final class BatchGenerator
                 continue;
             }
 
-            $child = trim($type, '<>');
-            $item = $this->listItem($child, $nodes);
+            $repeated = str_ends_with($type, '[]');
+            $child = trim(substr($type, 0, $repeated ? -2 : null), '<>');
+            $item = $repeated ? $child : $this->listItem($child, $nodes);
 
             if ($item !== null && isset($nodes[$item])) {
                 $itemClass = $this->emitNode($namespace, $item, $nodes);

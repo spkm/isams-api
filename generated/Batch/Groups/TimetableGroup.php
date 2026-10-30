@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\TimetableManager\PrepTimetable\PrepTimetable;
 use spkm\IsamsApi\Data\Batch\TimetableManager\Structure\Week;
@@ -16,65 +16,65 @@ use spkm\IsamsApi\Data\Batch\TimetableManager\TimetableAllocations\TimetableAllo
 class TimetableGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\ArchivedTimetables\Timetable>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\ArchivedTimetables\Timetable>
      */
-    public function archived(): Collection
+    public function archived(): LazyCollection
     {
         return $this->run('Timetable_GetArchivedTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\ArchivedTimetables\Timetable::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\DevelopmentTimetables\Timetable>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\DevelopmentTimetables\Timetable>
      */
-    public function development(): Collection
+    public function development(): LazyCollection
     {
         return $this->run('Timetable_GetDevelopmentTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\DevelopmentTimetables\Timetable::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\PreliminaryTimetables\Timetable>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\PreliminaryTimetables\Timetable>
      */
-    public function preliminary(): Collection
+    public function preliminary(): LazyCollection
     {
         return $this->run('Timetable_GetPreliminaryTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\PreliminaryTimetables\Timetable::class);
     }
 
     /**
-     * @return Collection<int, PrepTimetable>
+     * @return LazyCollection<int, PrepTimetable>
      */
-    public function prep(): Collection
+    public function prep(): LazyCollection
     {
         return $this->run('Timetable_GetPrepTimetables', PrepTimetable::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\PublishedTimetables\Timetable>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\PublishedTimetables\Timetable>
      */
-    public function published(): Collection
+    public function published(): LazyCollection
     {
         return $this->run('Timetable_GetPublishedTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\PublishedTimetables\Timetable::class);
     }
 
     /**
-     * @return Collection<int, Pupils>
+     * @return LazyCollection<int, Pupils>
      */
-    public function pupils(): Collection
+    public function pupils(): LazyCollection
     {
         return $this->run('Timetable_GetPupilTimetables', Pupils::class);
     }
 
     /**
-     * @return Collection<int, Week>
+     * @return LazyCollection<int, Week>
      */
-    public function structure(): Collection
+    public function structure(): LazyCollection
     {
         return $this->run('Timetable_GetTimetableStructure', Week::class);
     }
 
     /**
-     * @return Collection<int, TimetableAllocation>
+     * @return LazyCollection<int, TimetableAllocation>
      */
-    public function weekAllocations(): Collection
+    public function weekAllocations(): LazyCollection
     {
         return $this->run('Timetable_GetTimetableWeekAllocations', TimetableAllocation::class);
     }

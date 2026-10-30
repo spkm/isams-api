@@ -21,7 +21,7 @@ readonly class Data extends BatchData
         public ?bool $active = null,
         public ?CarbonImmutable $startDate = null,
         public ?CarbonImmutable $endDate = null,
-        public ?bool $ordinal = null,
+        public ?int $ordinal = null,
         public ?string $directory = null,
         public ?string $filename = null,
         public ?string $author = null,

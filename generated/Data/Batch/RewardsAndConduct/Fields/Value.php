@@ -20,6 +20,7 @@ readonly class Value extends BatchData
         public ?bool $active = null,
         public ?string $author = null,
         public ?CarbonImmutable $lastUpdated = null,
+        public ?CarbonImmutable $lastEdited = null,
     ) {
     }
 }

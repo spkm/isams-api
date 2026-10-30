@@ -111,7 +111,7 @@ abstract readonly class Data implements JsonSerializable
         }
 
         try {
-            return CarbonImmutable::parse($value);
+            return preg_match('#^\d{2}/\d{2}/\d{4}$#', $value) ? CarbonImmutable::createFromFormat('!d/m/Y', $value) ?: null : CarbonImmutable::parse($value);
         } catch (InvalidFormatException) {
             return null;
         }

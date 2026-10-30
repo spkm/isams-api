@@ -14,7 +14,7 @@ readonly class ExamResult extends BatchData
     public function __construct(
         public ?int $id = null,
         public ?int $pupilId = null,
-        public ?int $cycleId = null,
+        public ?int $cycle = null,
         public ?int $authorId = null,
         public ?int $resultTypeId = null,
         public ?string $resultType = null,

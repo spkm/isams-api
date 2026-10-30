@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 
 class ContactAdvancedGroup extends BatchGroup
@@ -17,7 +17,7 @@ class ContactAdvancedGroup extends BatchGroup
      * @param  list<int|string>|null  $systemStatusesToInclude
      * @param  list<int|string>|null  $admissionsStatusesToInclude
      * @param  list<int|string>|null  $enrolmentSchoolYearsToInclude
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\PupilManager\Contacts\Contact>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\PupilManager\Contacts\Contact>
      */
     public function contacts(
         ?array $contactTypes = null,
@@ -27,7 +27,7 @@ class ContactAdvancedGroup extends BatchGroup
         ?array $systemStatusesToInclude = null,
         ?array $admissionsStatusesToInclude = null,
         ?array $enrolmentSchoolYearsToInclude = null,
-    ): Collection {
+    ): LazyCollection {
         return $this->run('ContactAdvanced_GetContacts', \spkm\IsamsApi\Data\Batch\PupilManager\Contacts\Contact::class, ['module' => 'StudentManager', 'element' => 'Contacts', 'attributes' => ['ContactTypes' => $contactTypes, 'ContactOnly' => $contactOnly, 'ContactLocations' => $contactLocations, 'StudentHome' => $studentHome, 'SystemStatusesToInclude' => $systemStatusesToInclude, 'AdmissionsStatusesToInclude' => $admissionsStatusesToInclude, 'EnrolmentSchoolYearsToInclude' => $enrolmentSchoolYearsToInclude], 'required' => true]);
     }
 
@@ -37,7 +37,7 @@ class ContactAdvancedGroup extends BatchGroup
      * @param  list<int|string>|null  $systemStatusesToInclude
      * @param  list<int|string>|null  $admissionsStatusesToInclude
      * @param  list<int|string>|null  $enrolmentSchoolYearsToInclude
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\PupilManager\Contacts\Contact>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\PupilManager\Contacts\Contact>
      */
     public function contactsWithCustomFields(
         ?array $contactTypes = null,
@@ -47,7 +47,7 @@ class ContactAdvancedGroup extends BatchGroup
         ?array $systemStatusesToInclude = null,
         ?array $admissionsStatusesToInclude = null,
         ?array $enrolmentSchoolYearsToInclude = null,
-    ): Collection {
+    ): LazyCollection {
         return $this->run('ContactAdvanced_GetContactsWithCustomFields', \spkm\IsamsApi\Data\Batch\PupilManager\Contacts\Contact::class, ['module' => 'StudentManager', 'element' => 'ContactsWithCustomFields', 'attributes' => ['ContactTypes' => $contactTypes, 'ContactOnly' => $contactOnly, 'ContactLocations' => $contactLocations, 'StudentHome' => $studentHome, 'SystemStatusesToInclude' => $systemStatusesToInclude, 'AdmissionsStatusesToInclude' => $admissionsStatusesToInclude, 'EnrolmentSchoolYearsToInclude' => $enrolmentSchoolYearsToInclude], 'required' => true]);
     }
 }

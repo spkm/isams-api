@@ -7,7 +7,8 @@ use spkm\IsamsApi\Data\Data;
 abstract readonly class BatchData extends Data
 {
     /**
-     * Lists arrive inside their container node ({"Type": [...]}), and as a lone object when there is only one item.
+     * Lists arrive inside their container node ({"Type": [...]}), and as a lone object when there is only one item. A
+     * single value can arrive as a list with empty entries (iSAMS sends some ids twice, once empty): the value is kept.
      *
      * @param  array<string, mixed>  $attributes
      */
@@ -21,6 +22,12 @@ abstract readonly class BatchData extends Data
             }
 
             $attributes[$name] = is_array($value) && ! array_is_list($value) ? [$value] : $value;
+        }
+
+        foreach ($attributes as $name => $value) {
+            if (! isset(static::LISTS[$name]) && is_array($value) && array_is_list($value) && $value !== [] && array_filter($value, fn (mixed $item) => is_array($item)) === []) {
+                $attributes[$name] = array_values(array_filter($value, fn (mixed $item) => $item !== null && $item !== ''))[0] ?? null;
+            }
         }
 
         return parent::from($attributes);

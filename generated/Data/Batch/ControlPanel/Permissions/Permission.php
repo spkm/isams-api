@@ -21,6 +21,7 @@ readonly class Permission extends BatchData
         public ?bool $modify = null,
         public ?bool $full = null,
         public ?CarbonImmutable $lastUpdated = null,
+        public ?string $author = null,
     ) {
     }
 }

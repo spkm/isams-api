@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Batch\Groups;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\CoverManager\Agencies\Agency;
 use spkm\IsamsApi\Data\Batch\CoverManager\CoverStaff\Teacher;
@@ -17,65 +17,65 @@ use spkm\IsamsApi\Data\Batch\CoverManager\RoomClosures\RoomClosure;
 class CoverGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CoverManager\AbsenceReasons\Reason>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\AbsenceReasons\Reason>
      */
-    public function absenceReasons(): Collection
+    public function absenceReasons(): LazyCollection
     {
         return $this->run('Cover_GetAllAbsenceReasons', \spkm\IsamsApi\Data\Batch\CoverManager\AbsenceReasons\Reason::class);
     }
 
     /**
-     * @return Collection<int, Agency>
+     * @return LazyCollection<int, Agency>
      */
-    public function agencies(): Collection
+    public function agencies(): LazyCollection
     {
         return $this->run('Cover_GetAllAgencies', Agency::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CoverManager\EventReasons\Reason>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\EventReasons\Reason>
      */
-    public function eventReasons(): Collection
+    public function eventReasons(): LazyCollection
     {
         return $this->run('Cover_GetAllEventReasons', \spkm\IsamsApi\Data\Batch\CoverManager\EventReasons\Reason::class);
     }
 
     /**
-     * @return Collection<int, LessonSuspension>
+     * @return LazyCollection<int, LessonSuspension>
      */
-    public function lessonSuspensions(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function lessonSuspensions(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('Cover_GetAllLessonSuspensions', LessonSuspension::class, ['module' => 'CoverManager', 'element' => 'AllLessonSuspensions', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CoverManager\RoomClosureReasons\Reason>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\RoomClosureReasons\Reason>
      */
-    public function roomClosureReasons(): Collection
+    public function roomClosureReasons(): LazyCollection
     {
         return $this->run('Cover_GetAllRoomClosureReasons', \spkm\IsamsApi\Data\Batch\CoverManager\RoomClosureReasons\Reason::class);
     }
 
     /**
-     * @return Collection<int, RoomClosure>
+     * @return LazyCollection<int, RoomClosure>
      */
-    public function roomClosuresAndCover(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function roomClosuresAndCover(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('Cover_GetAllRoomClosuresAndCover', RoomClosure::class, ['module' => 'CoverManager', 'element' => 'AllRoomClosuresAndCover', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
-     * @return Collection<int, Teacher>
+     * @return LazyCollection<int, Teacher>
      */
-    public function staff(): Collection
+    public function staff(): LazyCollection
     {
         return $this->run('Cover_GetAllCoverStaff', Teacher::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CoverManager\UnavailableReasons\Reason>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\UnavailableReasons\Reason>
      */
-    public function unavailableReasons(): Collection
+    public function unavailableReasons(): LazyCollection
     {
         return $this->run('Cover_GetAllUnavailableReasons', \spkm\IsamsApi\Data\Batch\CoverManager\UnavailableReasons\Reason::class);
     }

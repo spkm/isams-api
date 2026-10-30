@@ -13,7 +13,7 @@ readonly class CustomPupilGroup extends BatchData
 {
     public function __construct(
         public ?int $id = null,
-        public ?int $authorId = null,
+        public ?int $authorID = null,
         public ?string $author = null,
         public ?string $name = null,
         public ?string $description = null,

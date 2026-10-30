@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\SchoolManager\Forms\Form;
 use spkm\IsamsApi\Data\Batch\SchoolManager\PastoralTutors\StaffMember;
@@ -17,57 +17,57 @@ use spkm\IsamsApi\Data\Batch\SchoolManager\Years\Year;
 class SchoolGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\SchoolManager\AcademicHouses\House>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\SchoolManager\AcademicHouses\House>
      */
-    public function academicHouses(): Collection
+    public function academicHouses(): LazyCollection
     {
         return $this->run('School_GetAcademicHouses', \spkm\IsamsApi\Data\Batch\SchoolManager\AcademicHouses\House::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\SchoolManager\BoardingHouses\House>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\SchoolManager\BoardingHouses\House>
      */
-    public function boardingHouses(): Collection
+    public function boardingHouses(): LazyCollection
     {
         return $this->run('School_GetBoardingHouses', \spkm\IsamsApi\Data\Batch\SchoolManager\BoardingHouses\House::class);
     }
 
     /**
-     * @return Collection<int, SchoolDivision>
+     * @return LazyCollection<int, SchoolDivision>
      */
-    public function divisions(): Collection
+    public function divisions(): LazyCollection
     {
         return $this->run('School_GetSchoolDivisions', SchoolDivision::class);
     }
 
     /**
-     * @return Collection<int, Form>
+     * @return LazyCollection<int, Form>
      */
-    public function forms(): Collection
+    public function forms(): LazyCollection
     {
         return $this->run('School_GetSchoolForms', Form::class);
     }
 
     /**
-     * @return Collection<int, StaffMember>
+     * @return LazyCollection<int, StaffMember>
      */
-    public function pastoralTutors(): Collection
+    public function pastoralTutors(): LazyCollection
     {
         return $this->run('School_GetPastoralTutors', StaffMember::class);
     }
 
     /**
-     * @return Collection<int, Term>
+     * @return LazyCollection<int, Term>
      */
-    public function terms(): Collection
+    public function terms(): LazyCollection
     {
         return $this->run('School_GetSchoolTerms', Term::class);
     }
 
     /**
-     * @return Collection<int, Year>
+     * @return LazyCollection<int, Year>
      */
-    public function years(): Collection
+    public function years(): LazyCollection
     {
         return $this->run('School_GetAllYears', Year::class);
     }

@@ -12,9 +12,10 @@ use spkm\IsamsApi\Batch\BatchData;
 
 readonly class Department extends BatchData
 {
-    protected const LISTS = ['subjects' => Subject::class];
+    protected const LISTS = ['divisions' => Division::class, 'subjects' => Subject::class];
 
     /**
+     * @param  Collection<int, Division>  $divisions
      * @param  Collection<int, Subject>  $subjects
      */
     public function __construct(
@@ -24,7 +25,7 @@ readonly class Department extends BatchData
         public ?string $name = null,
         public ?int $ordinal = null,
         public ?CarbonImmutable $lastUpdated = null,
-        public ?Divisions $divisions = null,
+        public Collection $divisions = new Collection,
         public Collection $subjects = new Collection,
     ) {
     }

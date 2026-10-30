@@ -6,23 +6,23 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 
 class HumanResourcesGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\HRManager\CurrentStaff\StaffMember>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\HRManager\CurrentStaff\StaffMember>
      */
-    public function currentStaff(): Collection
+    public function currentStaff(): LazyCollection
     {
         return $this->run('HumanResources_GetCurrentStaff', \spkm\IsamsApi\Data\Batch\HRManager\CurrentStaff\StaffMember::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\HRManager\CurrentStaff\StaffMember>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\HRManager\CurrentStaff\StaffMember>
      */
-    public function currentStaffWithCustomFields(): Collection
+    public function currentStaffWithCustomFields(): LazyCollection
     {
         return $this->run('HumanResources_GetCurrentStaffWithCustomFields', \spkm\IsamsApi\Data\Batch\HRManager\CurrentStaff\StaffMember::class);
     }

@@ -22,7 +22,7 @@ readonly class ExamArrangement extends BatchData
         public ?bool $dictionary = null,
         public ?bool $prompter = null,
         public ?bool $reader = null,
-        public ?bool $separateInvigilation = null,
+        public ?bool $seperateInvigilation = null,
         public ?bool $scribe = null,
         public ?bool $colourNaming = null,
         public ?string $notes = null,

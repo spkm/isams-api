@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Batch\Groups;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\RewardsAndConduct\Fields\Field;
 use spkm\IsamsApi\Data\Batch\RewardsAndConduct\Records\Record;
@@ -16,25 +16,25 @@ use spkm\IsamsApi\Data\Batch\RewardsAndConduct\Types\Type;
 class RewardsAndConductGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, Field>
+     * @return LazyCollection<int, Field>
      */
-    public function fields(): Collection
+    public function fields(): LazyCollection
     {
         return $this->run('RewardsAndConduct_GetFields', Field::class);
     }
 
     /**
-     * @return Collection<int, Record>
+     * @return LazyCollection<int, Record>
      */
-    public function records(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function records(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('RewardsAndConduct_GetRecords', Record::class, ['module' => 'RewardsAndConduct', 'element' => 'Records', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
-     * @return Collection<int, Type>
+     * @return LazyCollection<int, Type>
      */
-    public function rewardsTypes(): Collection
+    public function rewardsTypes(): LazyCollection
     {
         return $this->run('RewardsAndConduct_GetRewardsTypes', Type::class);
     }

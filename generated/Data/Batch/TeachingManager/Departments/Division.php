@@ -8,10 +8,10 @@ namespace spkm\IsamsApi\Data\Batch\TeachingManager\Departments;
 
 use spkm\IsamsApi\Batch\BatchData;
 
-readonly class Divisions extends BatchData
+readonly class Division extends BatchData
 {
     public function __construct(
-        public ?string $divisionName = null,
+        public ?int $id = null,
     ) {
     }
 }

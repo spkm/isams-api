@@ -6,23 +6,23 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 
 class AgentGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\AgencyManager\ActiveAgencies\Agency>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\AgencyManager\ActiveAgencies\Agency>
      */
-    public function active(): Collection
+    public function active(): LazyCollection
     {
         return $this->run('Agent_GetActive', \spkm\IsamsApi\Data\Batch\AgencyManager\ActiveAgencies\Agency::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\AgencyManager\InactiveAgencies\Agency>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\AgencyManager\InactiveAgencies\Agency>
      */
-    public function inactive(): Collection
+    public function inactive(): LazyCollection
     {
         return $this->run('Agent_GetInactive', \spkm\IsamsApi\Data\Batch\AgencyManager\InactiveAgencies\Agency::class);
     }

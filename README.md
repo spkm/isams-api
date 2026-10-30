@@ -290,12 +290,15 @@ ISAMS_BATCH_CLIENT_SECRET=your-batch-api-client-secret
 If your school uses separate keys, add them by name to `batch_keys` in `config/isams-api.php` (the published file
 has a commented-out example), at the top level for the default school or under a named connection.
 
-As with REST, there are two ways to call it. Each Batch API method is one call that returns its records as models,
-grouped by the part of the method's name before the underscore (`Pupil_GetCurrentPupils` is `pupil()->currentPupils()`),
-with the method's filters as named parameters. A call throws a `BatchApiException` when iSAMS refuses:
+As with REST, there are two ways to call it. Each Batch API method is one call that returns its records as a lazy
+collection of models, grouped by the part of the method's name before the underscore (`Pupil_GetCurrentPupils` is
+`pupil()->currentPupils()`), with the method's filters as named parameters. iSAMS sends the whole export in one
+response, and each model is built as the loop reaches it, so a large export (tens of thousands of exam results) doesn't
+hold every model at once. A call throws a `BatchApiException` when iSAMS refuses, and an `InvalidArgumentException`,
+without asking iSAMS, when a filter iSAMS requires is given no values:
 
 ```php
-$students = Isams::batch()->pupil()->currentPupils();                             // Collection of Pupil models
+$students = Isams::batch()->pupil()->currentPupils();                             // LazyCollection of Pupil models
 $passports = Isams::batch()->pupil()->passports(systemStatusesToInclude: [0, 1]);  // filtered by system status
 $terms = Isams::batch()->school()->terms();
 $staff = Isams::batch()->humanResources()->currentStaff();
@@ -322,6 +325,9 @@ $passports = $batch->method('Pupil_GetPassports');
 
 $everything = Isams::batch()->send(new BatchRequest)->dto(); // every method allocated to the key
 ```
+
+Running every method at once only works for a key whose methods need no filters: iSAMS refuses the whole request
+(`FiltersRequiredException`) if any allocated method requires one, such as `Calendar_GetEvents`.
 
 `method()` returns a collection of models (`Data\Batch\{Module}\{RootNode}\{Node}`); `models($module, $rootNode)`
 does the same by node name, and `get($module, $rootNode)` returns plain arrays for anything the package has no model

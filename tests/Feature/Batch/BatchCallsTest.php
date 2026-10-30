@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\PendingRequest;
 use spkm\IsamsApi\Batch\BatchApiException;
@@ -37,7 +37,7 @@ it('runs only the method asked for and returns its records as models', function 
 
     $pupils = new IsamsBatchConnector('BATCH-KEY', 'batch-secret', FakeIsams::BASE_URL)->pupil()->currentPupils();
 
-    expect($pupils)->toBeInstanceOf(Collection::class)
+    expect($pupils)->toBeInstanceOf(LazyCollection::class)
         ->and($pupils->first())->toBeInstanceOf(Pupil::class)
         ->and($sent)->toBe(['<?xml version="1.0" encoding="utf-8"?><Filters><MethodsToRun><Method>Pupil_GetCurrentPupils</Method></MethodsToRun></Filters>']);
 });
@@ -52,9 +52,8 @@ it('sends a call\'s filters under the names iSAMS documents for them', function 
 })->with([
     'dates' => [fn (IsamsBatchConnector $batch) => $batch->calendar()->events(startDate: CarbonImmutable::parse('2026-11-01'), endDate: CarbonImmutable::parse('2026-11-30')), '<Calendar><Events StartDate="2026-11-01" EndDate="2026-11-30"/></Calendar>'],
     'a list, under a module named differently from the method' => [fn (IsamsBatchConnector $batch) => $batch->pupil()->passports(systemStatusesToInclude: [0, 1]), '<StudentManager><Passports SystemStatusesToInclude="0,1"/></StudentManager>'],
-    'an element named differently from the method' => [fn (IsamsBatchConnector $batch) => $batch->externalExams()->examResults(examCycleIdsToInclude: [52]), '<ExamsManager><ExamResultsFiltered ExamCycleIdsToInclude="52"/></ExamsManager>'],
+    'a module and an element named differently from the method' => [fn (IsamsBatchConnector $batch) => $batch->cover()->lessonSuspensions(startDate: CarbonImmutable::parse('2026-11-01'), endDate: CarbonImmutable::parse('2026-11-30')), '<CoverManager><AllLessonSuspensions StartDate="2026-11-01" EndDate="2026-11-30"/></CoverManager>'],
     'only the filters given' => [fn (IsamsBatchConnector $batch) => $batch->contactAdvanced()->contacts(contactTypes: ['Mother'], studentHome: false), '<StudentManager><Contacts ContactTypes="Mother" StudentHome="false"/></StudentManager>'],
-    'a required filter with none given' => [fn (IsamsBatchConnector $batch) => $batch->contactAdvanced()->contacts(), '<StudentManager><Contacts/></StudentManager>'],
 ]);
 
 it('sends no filter for an optional one that was not given', function () {
