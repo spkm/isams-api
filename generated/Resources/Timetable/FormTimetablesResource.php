@@ -6,14 +6,17 @@
 
 namespace spkm\IsamsApi\Resources\Timetable;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Timetable\FormTimetable;
 use spkm\IsamsApi\Requests\Timetable\FormTimetables\GetFormTimetableRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FormTimetablesResource extends BaseResource
+class FormTimetablesResource extends IsamsResource
 {
-    public function get(string $formCode): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Timetable\FormTimetables\GetFormTimetableRequest
+     */
+    public function get(string $formCode): FormTimetable
     {
-        return $this->connector->send(new GetFormTimetableRequest($formCode));
+        return $this->fetch(new GetFormTimetableRequest(formCode: $formCode));
     }
 }

@@ -6,40 +6,51 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\Absence;
 use spkm\IsamsApi\Data\HumanResources\AbsenceForCreate;
 use spkm\IsamsApi\Data\HumanResources\AbsenceForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\CreateEmployeeAbsenceRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\GetEmployeeAbsenceRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\GetEmployeeAbsencesRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\UpdateEmployeeAbsenceRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeAbsencesResource extends BaseResource
+class EmployeeAbsencesResource extends IsamsResource
 {
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\Absence>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\GetEmployeeAbsencesRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeAbsencesRequest($employeeId));
+        return $this->fetch(new GetEmployeeAbsencesRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForCreate|array<string, mixed>  $absence
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\CreateEmployeeAbsenceRequest
      */
-    public function create(int $employeeId, AbsenceForCreate|array $absence): Response
+    public function create(int $employeeId, AbsenceForCreate|array $absence): Created
     {
-        return $this->connector->send(new CreateEmployeeAbsenceRequest($employeeId, $absence));
+        return $this->fetch(new CreateEmployeeAbsenceRequest(employeeId: $employeeId, absence: $absence));
     }
 
-    public function get(int $employeeId, int $absenceId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\GetEmployeeAbsenceRequest
+     */
+    public function get(int $employeeId, int $absenceId): Absence
     {
-        return $this->connector->send(new GetEmployeeAbsenceRequest($employeeId, $absenceId));
+        return $this->fetch(new GetEmployeeAbsenceRequest(employeeId: $employeeId, absenceId: $absenceId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForUpdate|array<string, mixed>  $absence
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\UpdateEmployeeAbsenceRequest
      */
-    public function update(int $employeeId, int $id, AbsenceForUpdate|array $absence): Response
+    public function update(int $employeeId, int $id, AbsenceForUpdate|array $absence): void
     {
-        return $this->connector->send(new UpdateEmployeeAbsenceRequest($employeeId, $id, $absence));
+        $this->fetch(new UpdateEmployeeAbsenceRequest(employeeId: $employeeId, id: $id, absence: $absence));
     }
 }

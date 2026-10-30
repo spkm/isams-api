@@ -6,38 +6,58 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitArriveFromRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitDepartToRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitLocationsRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitReasonsRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitTransportOptionsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class VisitResource extends BaseResource
+class VisitResource extends IsamsResource
 {
-    public function getArriveFrom(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VisitArriveFrom>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitArriveFromRequest
+     */
+    public function getArriveFrom(): Collection
     {
-        return $this->connector->send(new GetMedicalVisitArriveFromRequest());
+        return $this->fetch(new GetMedicalVisitArriveFromRequest());
     }
 
-    public function getDepartTo(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VisitDepartTo>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitDepartToRequest
+     */
+    public function getDepartTo(): Collection
     {
-        return $this->connector->send(new GetMedicalVisitDepartToRequest());
+        return $this->fetch(new GetMedicalVisitDepartToRequest());
     }
 
-    public function getLocations(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VisitLocation>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitLocationsRequest
+     */
+    public function getLocations(): Collection
     {
-        return $this->connector->send(new GetMedicalVisitLocationsRequest());
+        return $this->fetch(new GetMedicalVisitLocationsRequest());
     }
 
-    public function getReasons(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VisitReason>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitReasonsRequest
+     */
+    public function getReasons(): Collection
     {
-        return $this->connector->send(new GetMedicalVisitReasonsRequest());
+        return $this->fetch(new GetMedicalVisitReasonsRequest());
     }
 
-    public function getTransportOptions(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VisitTransportOption>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Visit\GetMedicalVisitTransportOptionsRequest
+     */
+    public function getTransportOptions(): Collection
     {
-        return $this->connector->send(new GetMedicalVisitTransportOptionsRequest());
+        return $this->fetch(new GetMedicalVisitTransportOptionsRequest());
     }
 }

@@ -6,8 +6,10 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\CloudPortals\SystemNotificationSettings;
+use spkm\IsamsApi\Data\SystemConfiguration\PortalSystemConfiguration;
+use spkm\IsamsApi\Data\SystemConfiguration\SecurityOptions;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationLanguagesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationSecurityOptionsRequest;
@@ -15,8 +17,9 @@ use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurati
 use spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration\ListGroupResource;
 use spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration\ListResource;
 use spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration\StaffContactsResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SystemConfigurationResource extends BaseResource
+class SystemConfigurationResource extends IsamsResource
 {
     public function list(): ListResource
     {
@@ -33,23 +36,36 @@ class SystemConfigurationResource extends BaseResource
         return new StaffContactsResource($this->connector);
     }
 
-    public function get(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationRequest
+     */
+    public function get(): PortalSystemConfiguration
     {
-        return $this->connector->send(new GetSystemConfigurationRequest());
+        return $this->fetch(new GetSystemConfigurationRequest());
     }
 
-    public function getLanguages(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\Language>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationLanguagesRequest
+     */
+    public function getLanguages(): Collection
     {
-        return $this->connector->send(new GetSystemConfigurationLanguagesRequest());
+        return $this->fetch(new GetSystemConfigurationLanguagesRequest());
     }
 
-    public function getNotificationSettings(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationSystemNotificationSettingsRequest
+     */
+    public function getNotificationSettings(): SystemNotificationSettings
     {
-        return $this->connector->send(new GetSystemConfigurationSystemNotificationSettingsRequest());
+        return $this->fetch(new GetSystemConfigurationSystemNotificationSettingsRequest());
     }
 
-    public function getSecurityOptions(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationSecurityOptionsRequest
+     */
+    public function getSecurityOptions(): SecurityOptions
     {
-        return $this->connector->send(new GetSystemConfigurationSecurityOptionsRequest());
+        return $this->fetch(new GetSystemConfigurationSecurityOptionsRequest());
     }
 }

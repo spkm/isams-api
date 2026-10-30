@@ -6,34 +6,41 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Students\PortalContactUpdateRequestForCreate;
 use spkm\IsamsApi\Requests\CloudPortals\School\Contacts\GetStudentContactsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Contacts\PatchStudentContactRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Contacts\SubmitContactUpdateRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ContactsResource extends BaseResource
+class ContactsResource extends IsamsResource
 {
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\PortalStudentContact>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Contacts\GetStudentContactsRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetStudentContactsRequest($schoolId));
+        return $this->fetch(new GetStudentContactsRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Contacts\PatchStudentContactRequest
      */
-    public function patch(string $schoolId, int $contactId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $contactId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentContactRequest($schoolId, $contactId, $patch));
+        $this->fetch(new PatchStudentContactRequest(schoolId: $schoolId, contactId: $contactId, patch: $patch));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\PortalContactUpdateRequestForCreate|array<string, mixed>  $portalContactUpdateRequest
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Contacts\SubmitContactUpdateRequest
      */
-    public function submitUpdate(PortalContactUpdateRequestForCreate|array $portalContactUpdateRequest): Response
+    public function submitUpdate(PortalContactUpdateRequestForCreate|array $portalContactUpdateRequest): Created
     {
-        return $this->connector->send(new SubmitContactUpdateRequest($portalContactUpdateRequest));
+        return $this->fetch(new SubmitContactUpdateRequest(portalContactUpdateRequest: $portalContactUpdateRequest));
     }
 }

@@ -7,12 +7,16 @@
 namespace spkm\IsamsApi\Resources\Timetable;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Timetable\Structures\GetTimetableStructuresRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StructuresResource extends BaseResource
+class StructuresResource extends IsamsResource
 {
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Timetable\TimetableWeek>
+     * @see \spkm\IsamsApi\Requests\Timetable\Structures\GetTimetableStructuresRequest
+     */
     public function all(
         ?int $academicYear = null,
         DateTimeInterface|string|null $calendarEndDate = null,
@@ -21,7 +25,7 @@ class StructuresResource extends BaseResource
         ?string $divisionCode = null,
         ?string $termName = null,
         ?string $timetableWeekShortName = null,
-    ): Response {
-        return $this->connector->send(new GetTimetableStructuresRequest($academicYear, $calendarEndDate, $calendarStartDate, $calendarWeek, $divisionCode, $termName, $timetableWeekShortName));
+    ): Collection {
+        return $this->fetch(new GetTimetableStructuresRequest(academicYear: $academicYear, calendarEndDate: $calendarEndDate, calendarStartDate: $calendarStartDate, calendarWeek: $calendarWeek, divisionCode: $divisionCode, termName: $termName, timetableWeekShortName: $timetableWeekShortName));
     }
 }

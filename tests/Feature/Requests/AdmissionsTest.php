@@ -53,7 +53,7 @@ it('pages through applicants matching a filter as models', function () {
 it('moves an applicant to the current students with a command', function () {
     $isams = FakeIsams::respondWith([MoveApplicantToCurrentRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/students/A1001'])]);
 
-    $created = FakeIsams::connector()->admissions()->moveToCurrent('A1001')->dto();
+    $created = FakeIsams::connector()->admissions()->moveToCurrent('A1001');
 
     expect($created->id)->toBe('A1001')
         ->and((string) FakeIsams::received($isams, MoveApplicantToCurrentRequest::class)->createPsrRequest()->getBody())->toBe('');
@@ -77,7 +77,7 @@ it('serves admissions reference lists from the cache once caching is on, but not
 
     foreach ([1, 2] as $time) {
         $admissions->enquiryTypes()->all();
-        $admissions->all();
+        $admissions->all()->all();
     }
 
     expect(FakeIsams::queriesReceived($isams, GetEnquiryTypesRequest::class))->toHaveCount(1)

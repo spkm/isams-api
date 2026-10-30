@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\DisciplineRecords\GetDisciplineRecordDetentionRecordsForStudentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DisciplineRecordsResource extends BaseResource
+class DisciplineRecordsResource extends IsamsResource
 {
-    public function getDetentionRecordsForStudent(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\DetentionRecord>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\DisciplineRecords\GetDisciplineRecordDetentionRecordsForStudentRequest
+     */
+    public function getDetentionRecordsForStudent(string $schoolId): Collection
     {
-        return $this->connector->send(new GetDisciplineRecordDetentionRecordsForStudentRequest($schoolId));
+        return $this->fetch(new GetDisciplineRecordDetentionRecordsForStudentRequest(schoolId: $schoolId));
     }
 }

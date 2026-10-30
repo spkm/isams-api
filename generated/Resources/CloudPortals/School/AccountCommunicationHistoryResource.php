@@ -6,38 +6,58 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Students\EmailMessage;
+use spkm\IsamsApi\Data\Students\SmsMessage;
 use spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistoryEmailByIdRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistoryEmailCommunicationHistoryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistoryEmailConversationHistoryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistorySmsCommunicationHistoryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistorySmsHistoryMessageByIdRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AccountCommunicationHistoryResource extends BaseResource
+class AccountCommunicationHistoryResource extends IsamsResource
 {
-    public function getEmail(int $emailId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistoryEmailByIdRequest
+     */
+    public function getEmail(int $emailId): EmailMessage
     {
-        return $this->connector->send(new GetAccountCommunicationHistoryEmailByIdRequest($emailId));
+        return $this->fetch(new GetAccountCommunicationHistoryEmailByIdRequest(emailId: $emailId));
     }
 
-    public function getEmailCommunicationHistory(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\EmailMessage>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistoryEmailCommunicationHistoryRequest
+     */
+    public function getEmailCommunicationHistory(): Collection
     {
-        return $this->connector->send(new GetAccountCommunicationHistoryEmailCommunicationHistoryRequest());
+        return $this->fetch(new GetAccountCommunicationHistoryEmailCommunicationHistoryRequest());
     }
 
-    public function getEmailConversationHistory(string $conversationGuid): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\EmailConversationMessage>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistoryEmailConversationHistoryRequest
+     */
+    public function getEmailConversationHistory(string $conversationGuid): Collection
     {
-        return $this->connector->send(new GetAccountCommunicationHistoryEmailConversationHistoryRequest($conversationGuid));
+        return $this->fetch(new GetAccountCommunicationHistoryEmailConversationHistoryRequest(conversationGuid: $conversationGuid));
     }
 
-    public function getSms(int $smsId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistorySmsHistoryMessageByIdRequest
+     */
+    public function getSms(int $smsId): SmsMessage
     {
-        return $this->connector->send(new GetAccountCommunicationHistorySmsHistoryMessageByIdRequest($smsId));
+        return $this->fetch(new GetAccountCommunicationHistorySmsHistoryMessageByIdRequest(smsId: $smsId));
     }
 
-    public function getSmsCommunicationHistory(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\SmsMessage>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AccountCommunicationHistory\GetAccountCommunicationHistorySmsCommunicationHistoryRequest
+     */
+    public function getSmsCommunicationHistory(): Collection
     {
-        return $this->connector->send(new GetAccountCommunicationHistorySmsCommunicationHistoryRequest());
+        return $this->fetch(new GetAccountCommunicationHistorySmsCommunicationHistoryRequest());
     }
 }

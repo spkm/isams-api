@@ -7,53 +7,73 @@
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\CloudPortals\LeaveRequest;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\CancelLeaveRequestRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestDocumentRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestTypesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\SubmitLeaveRequestRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class LeaveRequestsResource extends BaseResource
+class LeaveRequestsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>|null  $status
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\CloudPortals\LeaveRequest>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestsRequest
      */
     public function all(
         string $schoolId,
         ?array $status = null,
         DateTimeInterface|string|null $startDate = null,
         DateTimeInterface|string|null $endDate = null,
-        ?int $page = null,
-        ?int $pageSize = null,
-    ): Response {
-        return $this->connector->send(new GetLeaveRequestsRequest($schoolId, $status, $startDate, $endDate, $page, $pageSize));
+    ): LazyCollection {
+        return $this->each(new GetLeaveRequestsRequest(schoolId: $schoolId, status: $status, startDate: $startDate, endDate: $endDate), LeaveRequest::class);
     }
 
-    public function cancel(int $id, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\CancelLeaveRequestRequest
+     */
+    public function cancel(int $id, string $schoolId): Created
     {
-        return $this->connector->send(new CancelLeaveRequestRequest($id, $schoolId));
+        return $this->fetch(new CancelLeaveRequestRequest(id: $id, schoolId: $schoolId));
     }
 
-    public function get(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestRequest
+     */
+    public function get(string $schoolId, int $id): LeaveRequest
     {
-        return $this->connector->send(new GetLeaveRequestRequest($schoolId, $id));
+        return $this->fetch(new GetLeaveRequestRequest(schoolId: $schoolId, id: $id));
     }
 
-    public function getDocument(string $schoolId, int $requestId, int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestDocumentRequest
+     */
+    public function getDocument(string $schoolId, int $requestId, int $documentId): File
     {
-        return $this->connector->send(new GetLeaveRequestDocumentRequest($schoolId, $requestId, $documentId));
+        return $this->fetch(new GetLeaveRequestDocumentRequest(schoolId: $schoolId, requestId: $requestId, documentId: $documentId));
     }
 
-    public function getTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\LeaveRequestType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\GetLeaveRequestTypesRequest
+     */
+    public function getTypes(): Collection
     {
-        return $this->connector->send(new GetLeaveRequestTypesRequest());
+        return $this->fetch(new GetLeaveRequestTypesRequest());
     }
 
-    public function submit(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LeaveRequests\SubmitLeaveRequestRequest
+     */
+    public function submit(): Created
     {
-        return $this->connector->send(new SubmitLeaveRequestRequest());
+        return $this->fetch(new SubmitLeaveRequestRequest());
     }
 }

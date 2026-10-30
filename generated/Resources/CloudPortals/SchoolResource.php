@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\CloudPortals\School\AccountCommunicationHistoryResource;
 use spkm\IsamsApi\Resources\CloudPortals\School\AccountResource;
 use spkm\IsamsApi\Resources\CloudPortals\School\ActivitiesResource;
@@ -41,8 +40,9 @@ use spkm\IsamsApi\Resources\CloudPortals\School\SmsSubscriptionsResource;
 use spkm\IsamsApi\Resources\CloudPortals\School\TeachingGroupsResource;
 use spkm\IsamsApi\Resources\CloudPortals\School\TermsResource;
 use spkm\IsamsApi\Resources\CloudPortals\School\YearGroupsResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SchoolResource extends BaseResource
+class SchoolResource extends IsamsResource
 {
     public function account(): AccountResource
     {

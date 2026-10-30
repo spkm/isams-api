@@ -6,18 +6,22 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Requests\Students\ContactGroupContacts\GetContactGroupContactsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ContactGroupContactsResource extends BaseResource
+class ContactGroupContactsResource extends IsamsResource
 {
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ContactGroupContact>
+     * @see \spkm\IsamsApi\Requests\Students\ContactGroupContacts\GetContactGroupContactsRequest
+     */
     public function all(
         int $contactGroupId,
         ?bool $includeDeceased = null,
         string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetContactGroupContactsRequest($contactGroupId, $includeDeceased, $filter));
+    ): Collection {
+        return $this->fetch(new GetContactGroupContactsRequest(contactGroupId: $contactGroupId, includeDeceased: $includeDeceased, filter: $filter));
     }
 }

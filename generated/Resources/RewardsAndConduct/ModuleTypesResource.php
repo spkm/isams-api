@@ -6,15 +6,19 @@
 
 namespace spkm\IsamsApi\Resources\RewardsAndConduct;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Requests\RewardsAndConduct\ModuleTypes\GetModuleTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ModuleTypesResource extends BaseResource
+class ModuleTypesResource extends IsamsResource
 {
-    public function all(string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\RewardsAndConduct\ModuleType>
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\ModuleTypes\GetModuleTypesRequest
+     */
+    public function all(string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetModuleTypesRequest($filter));
+        return $this->fetch(new GetModuleTypesRequest(filter: $filter));
     }
 }

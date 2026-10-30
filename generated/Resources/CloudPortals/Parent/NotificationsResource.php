@@ -6,24 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Parent;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Notifications\NotificationSetting;
 use spkm\IsamsApi\Data\Notifications\NotificationSettingPublic;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\Notifications\GetUserNotificationSettingByUserCodeRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\Notifications\SetUserNotificationSettingByUserCodeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class NotificationsResource extends BaseResource
+class NotificationsResource extends IsamsResource
 {
-    public function getUserSettingByUserCode(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\Notifications\GetUserNotificationSettingByUserCodeRequest
+     */
+    public function getUserSettingByUserCode(): NotificationSetting
     {
-        return $this->connector->send(new GetUserNotificationSettingByUserCodeRequest());
+        return $this->fetch(new GetUserNotificationSettingByUserCodeRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Notifications\NotificationSettingPublic|array<string, mixed>  $notificationSettingPublic
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\Notifications\SetUserNotificationSettingByUserCodeRequest
      */
-    public function setUserSettingByUserCode(NotificationSettingPublic|array $notificationSettingPublic): Response
+    public function setUserSettingByUserCode(NotificationSettingPublic|array $notificationSettingPublic): void
     {
-        return $this->connector->send(new SetUserNotificationSettingByUserCodeRequest($notificationSettingPublic));
+        $this->fetch(new SetUserNotificationSettingByUserCodeRequest(notificationSettingPublic: $notificationSettingPublic));
     }
 }

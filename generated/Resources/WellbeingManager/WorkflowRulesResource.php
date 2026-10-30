@@ -6,8 +6,7 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\WellbeingManager\RuleForCreate;
 use spkm\IsamsApi\Data\WellbeingManager\RuleForUpdate;
 use spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\CreateWorkflowRuleRequest;
@@ -16,42 +15,57 @@ use spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\GetWorkflowRuleParamet
 use spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\GetWorkflowRuleRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\GetWorkflowRuleTypesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\UpdateWorkflowRuleRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class WorkflowRulesResource extends BaseResource
+class WorkflowRulesResource extends IsamsResource
 {
-    public function all(string $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\GetWorkflowRuleParametersRequest
+     */
+    public function all(string $id): mixed
     {
-        return $this->connector->send(new GetWorkflowRuleParametersRequest($id));
+        return $this->fetch(new GetWorkflowRuleParametersRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\RuleForCreate|array<string, mixed>  $rule
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\CreateWorkflowRuleRequest
      */
-    public function create(RuleForCreate|array $rule): Response
+    public function create(RuleForCreate|array $rule): Created
     {
-        return $this->connector->send(new CreateWorkflowRuleRequest($rule));
+        return $this->fetch(new CreateWorkflowRuleRequest(rule: $rule));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\DeleteWorkflowRuleRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteWorkflowRuleRequest($id));
+        $this->fetch(new DeleteWorkflowRuleRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\GetWorkflowRuleRequest
+     */
+    public function get(int $id): mixed
     {
-        return $this->connector->send(new GetWorkflowRuleRequest($id));
+        return $this->fetch(new GetWorkflowRuleRequest(id: $id));
     }
 
-    public function getTypes(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\GetWorkflowRuleTypesRequest
+     */
+    public function getTypes(): mixed
     {
-        return $this->connector->send(new GetWorkflowRuleTypesRequest());
+        return $this->fetch(new GetWorkflowRuleTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\RuleForUpdate|array<string, mixed>  $rule
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\UpdateWorkflowRuleRequest
      */
-    public function update(RuleForUpdate|array $rule): Response
+    public function update(RuleForUpdate|array $rule): void
     {
-        return $this->connector->send(new UpdateWorkflowRuleRequest($rule));
+        $this->fetch(new UpdateWorkflowRuleRequest(rule: $rule));
     }
 }

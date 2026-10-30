@@ -6,8 +6,7 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Parent;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\PushNotifications\UserMessage;
 use spkm\IsamsApi\Data\PushNotifications\UserMessageStatusUpdate;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\GetPushNotificationMessagesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAllMessagesAsDeletedRequest;
@@ -15,39 +14,56 @@ use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPush
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAsDeletedRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAsReadRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\UpdatePushNotificationMessageStatusRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PushNotificationMessagesResource extends BaseResource
+class PushNotificationMessagesResource extends IsamsResource
 {
-    public function all(?string $read = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\GetPushNotificationMessagesRequest
+     */
+    public function all(?string $read = null): UserMessage
     {
-        return $this->connector->send(new GetPushNotificationMessagesRequest($read));
+        return $this->fetch(new GetPushNotificationMessagesRequest(read: $read));
     }
 
-    public function markAllMessagesAsDeleted(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAllMessagesAsDeletedRequest
+     */
+    public function markAllMessagesAsDeleted(): void
     {
-        return $this->connector->send(new MarkPushNotificationMessageAllMessagesAsDeletedRequest());
+        $this->fetch(new MarkPushNotificationMessageAllMessagesAsDeletedRequest());
     }
 
-    public function markAllMessagesAsRead(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAllMessagesAsReadRequest
+     */
+    public function markAllMessagesAsRead(): void
     {
-        return $this->connector->send(new MarkPushNotificationMessageAllMessagesAsReadRequest());
+        $this->fetch(new MarkPushNotificationMessageAllMessagesAsReadRequest());
     }
 
-    public function markAsDeleted(string $messageId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAsDeletedRequest
+     */
+    public function markAsDeleted(string $messageId): void
     {
-        return $this->connector->send(new MarkPushNotificationMessageAsDeletedRequest($messageId));
+        $this->fetch(new MarkPushNotificationMessageAsDeletedRequest(messageId: $messageId));
     }
 
-    public function markAsRead(string $messageId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAsReadRequest
+     */
+    public function markAsRead(string $messageId): void
     {
-        return $this->connector->send(new MarkPushNotificationMessageAsReadRequest($messageId));
+        $this->fetch(new MarkPushNotificationMessageAsReadRequest(messageId: $messageId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\PushNotifications\UserMessageStatusUpdate|array<string, mixed>  $userMessageStatusUpdate
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\UpdatePushNotificationMessageStatusRequest
      */
-    public function updateStatus(int $messageId, UserMessageStatusUpdate|array $userMessageStatusUpdate): Response
+    public function updateStatus(int $messageId, UserMessageStatusUpdate|array $userMessageStatusUpdate): void
     {
-        return $this->connector->send(new UpdatePushNotificationMessageStatusRequest($messageId, $userMessageStatusUpdate));
+        $this->fetch(new UpdatePushNotificationMessageStatusRequest(messageId: $messageId, userMessageStatusUpdate: $userMessageStatusUpdate));
     }
 }

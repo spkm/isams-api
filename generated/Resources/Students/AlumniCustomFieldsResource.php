@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Data\Students\CustomFieldForPatch;
 use spkm\IsamsApi\Requests\Students\AlumniCustomFields\GetAlumniCustomFieldRequest;
 use spkm\IsamsApi\Requests\Students\AlumniCustomFields\GetAlumniCustomFieldsRequest;
 use spkm\IsamsApi\Requests\Students\AlumniCustomFields\PatchAlumniCustomFieldRequest;
 use spkm\IsamsApi\Requests\Students\AlumniCustomFields\PatchAlumniCustomFieldsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AlumniCustomFieldsResource extends BaseResource
+class AlumniCustomFieldsResource extends IsamsResource
 {
-    public function all(string $schoolId, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\CustomField>
+     * @see \spkm\IsamsApi\Requests\Students\AlumniCustomFields\GetAlumniCustomFieldsRequest
+     */
+    public function all(string $schoolId, string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetAlumniCustomFieldsRequest($schoolId, $filter));
+        return $this->fetch(new GetAlumniCustomFieldsRequest(schoolId: $schoolId, filter: $filter));
     }
 
-    public function get(string $schoolId, int $customFieldId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\CustomField>
+     * @see \spkm\IsamsApi\Requests\Students\AlumniCustomFields\GetAlumniCustomFieldRequest
+     */
+    public function get(string $schoolId, int $customFieldId): Collection
     {
-        return $this->connector->send(new GetAlumniCustomFieldRequest($schoolId, $customFieldId));
+        return $this->fetch(new GetAlumniCustomFieldRequest(schoolId: $schoolId, customFieldId: $customFieldId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>  $customField
+     * @see \spkm\IsamsApi\Requests\Students\AlumniCustomFields\PatchAlumniCustomFieldRequest
      */
-    public function patch(string $schoolId, int $customFieldId, CustomFieldForPatch|array $customField): Response
+    public function patch(string $schoolId, int $customFieldId, CustomFieldForPatch|array $customField): void
     {
-        return $this->connector->send(new PatchAlumniCustomFieldRequest($schoolId, $customFieldId, $customField));
+        $this->fetch(new PatchAlumniCustomFieldRequest(schoolId: $schoolId, customFieldId: $customFieldId, customField: $customField));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @see \spkm\IsamsApi\Requests\Students\AlumniCustomFields\PatchAlumniCustomFieldsRequest
      */
-    public function patchMany(string $schoolId, array $customFields): Response
+    public function patchMany(string $schoolId, array $customFields): void
     {
-        return $this->connector->send(new PatchAlumniCustomFieldsRequest($schoolId, $customFields));
+        $this->fetch(new PatchAlumniCustomFieldsRequest(schoolId: $schoolId, customFields: $customFields));
     }
 }

@@ -5,6 +5,7 @@ use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use spkm\IsamsApi\Facades\Isams;
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
 use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
+use spkm\IsamsApi\Resources\HasResources;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 beforeEach(function () {
@@ -58,3 +59,13 @@ it('cannot use the default connection until its client id, secret and base URL a
     // TODO: Characterised as-is, decide whether this is intended. A missing setting surfaces as a TypeError from the IsamsConnector constructor rather than a message naming the setting. (src/IsamsService.php, __call())
     expect(fn () => Isams::get('/api/school/terms'))->toThrow(TypeError::class);
 })->group('as-is');
+
+it('hints every area and connection method on the facade, so IDEs autocomplete Isams::', function () {
+    $hints = (string) (new ReflectionClass(Isams::class))->getDocComment();
+    $areas = array_map(fn (ReflectionMethod $method) => $method->getName(), (new ReflectionClass(HasResources::class))->getMethods());
+    $methods = [...$areas, 'connection', 'batch', 'isAvailable', 'send', 'paginate', 'get', 'post', 'put', 'patch', 'delete', 'paginateEndpoint'];
+
+    foreach ($methods as $method) {
+        expect($hints)->toMatch('/@method static \\S+ '.$method.'\(/');
+    }
+});

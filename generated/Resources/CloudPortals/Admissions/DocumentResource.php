@@ -6,44 +6,68 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\DownloadPortalDocumentRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetDocumentFolderRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetDocumentsDownloadHistoryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetDocumentsInFolderRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetLatestDocumentsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\SearchDocumentsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DocumentResource extends BaseResource
+class DocumentResource extends IsamsResource
 {
-    public function download(int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\DownloadPortalDocumentRequest
+     */
+    public function download(int $documentId): File
     {
-        return $this->connector->send(new DownloadPortalDocumentRequest($documentId));
+        return $this->fetch(new DownloadPortalDocumentRequest(documentId: $documentId));
     }
 
-    public function getDownloadHistory(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\DocumentDownloadHistory>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetDocumentsDownloadHistoryRequest
+     */
+    public function getDownloadHistory(): Collection
     {
-        return $this->connector->send(new GetDocumentsDownloadHistoryRequest());
+        return $this->fetch(new GetDocumentsDownloadHistoryRequest());
     }
 
-    public function getFolder(int $selectedFolder): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\Folder>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetDocumentFolderRequest
+     */
+    public function getFolder(int $selectedFolder): Collection
     {
-        return $this->connector->send(new GetDocumentFolderRequest($selectedFolder));
+        return $this->fetch(new GetDocumentFolderRequest(selectedFolder: $selectedFolder));
     }
 
-    public function getInFolder(int $selectedFolder): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\Folder>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetDocumentsInFolderRequest
+     */
+    public function getInFolder(int $selectedFolder): Collection
     {
-        return $this->connector->send(new GetDocumentsInFolderRequest($selectedFolder));
+        return $this->fetch(new GetDocumentsInFolderRequest(selectedFolder: $selectedFolder));
     }
 
-    public function getLatest(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\Document>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\GetLatestDocumentsRequest
+     */
+    public function getLatest(): Collection
     {
-        return $this->connector->send(new GetLatestDocumentsRequest());
+        return $this->fetch(new GetLatestDocumentsRequest());
     }
 
-    public function search(string $searchTerm): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\Document>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Document\SearchDocumentsRequest
+     */
+    public function search(string $searchTerm): Collection
     {
-        return $this->connector->send(new SearchDocumentsRequest($searchTerm));
+        return $this->fetch(new SearchDocumentsRequest(searchTerm: $searchTerm));
     }
 }

@@ -6,47 +6,57 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Students\CustomStudentGroupStudentForCreate;
 use spkm\IsamsApi\Data\Students\CustomStudentGroupStudentForUpdate;
 use spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\CreateCustomStudentGroupStudentRequest;
 use spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\DeleteCustomStudentGroupStudentRequest;
 use spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\GetCustomStudentGroupStudentsRequest;
 use spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\UpdateCustomStudentGroupStudentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CustomStudentGroupStudentsResource extends BaseResource
+class CustomStudentGroupStudentsResource extends IsamsResource
 {
-    public function all(int $customGroupId, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\CustomStudentGroupStudent>
+     * @see \spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\GetCustomStudentGroupStudentsRequest
+     */
+    public function all(int $customGroupId, string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetCustomStudentGroupStudentsRequest($customGroupId, $filter));
+        return $this->fetch(new GetCustomStudentGroupStudentsRequest(customGroupId: $customGroupId, filter: $filter));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\CustomStudentGroupStudentForCreate|array<string, mixed>  $customStudentGroupStudent
+     * @see \spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\CreateCustomStudentGroupStudentRequest
      */
     public function create(
         int $customGroupId,
         string $schoolId,
         CustomStudentGroupStudentForCreate|array $customStudentGroupStudent,
-    ): Response {
-        return $this->connector->send(new CreateCustomStudentGroupStudentRequest($customGroupId, $schoolId, $customStudentGroupStudent));
+    ): Created {
+        return $this->fetch(new CreateCustomStudentGroupStudentRequest(customGroupId: $customGroupId, schoolId: $schoolId, customStudentGroupStudent: $customStudentGroupStudent));
     }
 
-    public function delete(int $customGroupId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\DeleteCustomStudentGroupStudentRequest
+     */
+    public function delete(int $customGroupId, string $schoolId): void
     {
-        return $this->connector->send(new DeleteCustomStudentGroupStudentRequest($customGroupId, $schoolId));
+        $this->fetch(new DeleteCustomStudentGroupStudentRequest(customGroupId: $customGroupId, schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\CustomStudentGroupStudentForUpdate|array<string, mixed>  $customStudentGroupStudent
+     * @see \spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\UpdateCustomStudentGroupStudentRequest
      */
     public function update(
         int $customGroupId,
         string $schoolId,
         CustomStudentGroupStudentForUpdate|array $customStudentGroupStudent,
-    ): Response {
-        return $this->connector->send(new UpdateCustomStudentGroupStudentRequest($customGroupId, $schoolId, $customStudentGroupStudent));
+    ): void {
+        $this->fetch(new UpdateCustomStudentGroupStudentRequest(customGroupId: $customGroupId, schoolId: $schoolId, customStudentGroupStudent: $customStudentGroupStudent));
     }
 }

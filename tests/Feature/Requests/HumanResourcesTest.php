@@ -21,7 +21,7 @@ use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 it('asks for iSAMS\'s newest version of the contract endpoints, 2.0, without being told, and reads its contracts as models', function () {
     $isams = FakeIsams::respondWith([GetEmployeeContractsRequest::class => MockResponse::make(['contracts' => [['id' => 6]]])]);
 
-    $contracts = FakeIsams::connector()->humanResources()->employeeContracts()->all(40)->dto();
+    $contracts = FakeIsams::connector()->humanResources()->employeeContracts()->all(40);
 
     expect($contracts->first())->toBeInstanceOf(Contract::class)
         ->and(FakeIsams::queriesReceived($isams, GetEmployeeContractsRequest::class)[0])->toBe(['api-version' => '2.0']);

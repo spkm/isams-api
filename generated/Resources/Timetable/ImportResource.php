@@ -6,42 +6,57 @@
 
 namespace spkm\IsamsApi\Resources\Timetable;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Timetable\TimetableImport;
 use spkm\IsamsApi\Data\Timetable\TimetableImportRequestForCreate;
+use spkm\IsamsApi\Data\Timetable\TimetableImportResult;
 use spkm\IsamsApi\Requests\Timetable\Import\CompleteTimetableImportRequest;
 use spkm\IsamsApi\Requests\Timetable\Import\CreateTimetableImportRequest;
 use spkm\IsamsApi\Requests\Timetable\Import\DeleteActiveTimetableImportRequest;
 use spkm\IsamsApi\Requests\Timetable\Import\GetActiveTimetableImportRequest;
 use spkm\IsamsApi\Requests\Timetable\Import\GetTimetableImportResultRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ImportResource extends BaseResource
+class ImportResource extends IsamsResource
 {
-    public function complete(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Timetable\Import\CompleteTimetableImportRequest
+     */
+    public function complete(): Created
     {
-        return $this->connector->send(new CompleteTimetableImportRequest());
+        return $this->fetch(new CompleteTimetableImportRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Timetable\TimetableImportRequestForCreate|array<string, mixed>  $timetableImportRequest
+     * @see \spkm\IsamsApi\Requests\Timetable\Import\CreateTimetableImportRequest
      */
-    public function create(TimetableImportRequestForCreate|array $timetableImportRequest): Response
+    public function create(TimetableImportRequestForCreate|array $timetableImportRequest): Created
     {
-        return $this->connector->send(new CreateTimetableImportRequest($timetableImportRequest));
+        return $this->fetch(new CreateTimetableImportRequest(timetableImportRequest: $timetableImportRequest));
     }
 
-    public function deleteActive(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Timetable\Import\DeleteActiveTimetableImportRequest
+     */
+    public function deleteActive(): void
     {
-        return $this->connector->send(new DeleteActiveTimetableImportRequest());
+        $this->fetch(new DeleteActiveTimetableImportRequest());
     }
 
-    public function getActive(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Timetable\Import\GetActiveTimetableImportRequest
+     */
+    public function getActive(): TimetableImport
     {
-        return $this->connector->send(new GetActiveTimetableImportRequest());
+        return $this->fetch(new GetActiveTimetableImportRequest());
     }
 
-    public function getResult(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Timetable\Import\GetTimetableImportResultRequest
+     */
+    public function getResult(int $id): TimetableImportResult
     {
-        return $this->connector->send(new GetTimetableImportResultRequest($id));
+        return $this->fetch(new GetTimetableImportResultRequest(id: $id));
     }
 }

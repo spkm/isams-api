@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\OtherSchools\OtherSchool;
 use spkm\IsamsApi\Data\OtherSchools\OtherSchoolForCreate;
 use spkm\IsamsApi\Data\OtherSchools\OtherSchoolForUpdate;
 use spkm\IsamsApi\Requests\OtherSchools\CreateOtherSchoolRequest;
@@ -16,36 +17,45 @@ use spkm\IsamsApi\Requests\OtherSchools\GetOtherSchoolsRequest;
 use spkm\IsamsApi\Requests\OtherSchools\UpdateOtherSchoolRequest;
 use spkm\IsamsApi\Resources\OtherSchools\ProfessionsResource;
 
-class OtherSchoolsResource extends BaseResource
+class OtherSchoolsResource extends IsamsResource
 {
     public function professions(): ProfessionsResource
     {
         return new ProfessionsResource($this->connector);
     }
 
-    public function all(?int $page = null, ?int $pageSize = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\OtherSchools\OtherSchool>
+     * @see \spkm\IsamsApi\Requests\OtherSchools\GetOtherSchoolsRequest
+     */
+    public function all(): LazyCollection
     {
-        return $this->connector->send(new GetOtherSchoolsRequest($page, $pageSize));
+        return $this->each(new GetOtherSchoolsRequest(), OtherSchool::class);
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\OtherSchools\OtherSchoolForCreate|array<string, mixed>  $otherSchool
+     * @see \spkm\IsamsApi\Requests\OtherSchools\CreateOtherSchoolRequest
      */
-    public function create(OtherSchoolForCreate|array $otherSchool): Response
+    public function create(OtherSchoolForCreate|array $otherSchool): Created
     {
-        return $this->connector->send(new CreateOtherSchoolRequest($otherSchool));
+        return $this->fetch(new CreateOtherSchoolRequest(otherSchool: $otherSchool));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\OtherSchools\GetOtherSchoolRequest
+     */
+    public function get(int $id): OtherSchool
     {
-        return $this->connector->send(new GetOtherSchoolRequest($id));
+        return $this->fetch(new GetOtherSchoolRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\OtherSchools\OtherSchoolForUpdate|array<string, mixed>  $otherSchool
+     * @see \spkm\IsamsApi\Requests\OtherSchools\UpdateOtherSchoolRequest
      */
-    public function update(int $id, OtherSchoolForUpdate|array $otherSchool): Response
+    public function update(int $id, OtherSchoolForUpdate|array $otherSchool): void
     {
-        return $this->connector->send(new UpdateOtherSchoolRequest($id, $otherSchool));
+        $this->fetch(new UpdateOtherSchoolRequest(id: $id, otherSchool: $otherSchool));
     }
 }

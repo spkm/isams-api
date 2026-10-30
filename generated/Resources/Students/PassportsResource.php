@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Students\StudentPassport;
 use spkm\IsamsApi\Data\Students\StudentPassportForCreate;
 use spkm\IsamsApi\Data\Students\StudentPassportForUpdate;
 use spkm\IsamsApi\Requests\Students\Passports\CreateStudentPassportRequest;
@@ -16,45 +17,59 @@ use spkm\IsamsApi\Requests\Students\Passports\GetStudentPassportRequest;
 use spkm\IsamsApi\Requests\Students\Passports\GetStudentPassportsRequest;
 use spkm\IsamsApi\Requests\Students\Passports\UpdateStudentPassportRequest;
 use spkm\IsamsApi\Requests\Students\Passports\UpdateStudentPassportsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PassportsResource extends BaseResource
+class PassportsResource extends IsamsResource
 {
-    public function all(string $schoolId, ?string $expand = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\StudentPassport>
+     * @see \spkm\IsamsApi\Requests\Students\Passports\GetStudentPassportsRequest
+     */
+    public function all(string $schoolId, ?string $expand = null): Collection
     {
-        return $this->connector->send(new GetStudentPassportsRequest($schoolId, $expand));
+        return $this->fetch(new GetStudentPassportsRequest(schoolId: $schoolId, expand: $expand));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentPassportForCreate|array<string, mixed>  $studentPassport
+     * @see \spkm\IsamsApi\Requests\Students\Passports\CreateStudentPassportRequest
      */
-    public function create(string $schoolId, StudentPassportForCreate|array $studentPassport): Response
+    public function create(string $schoolId, StudentPassportForCreate|array $studentPassport): Created
     {
-        return $this->connector->send(new CreateStudentPassportRequest($schoolId, $studentPassport));
+        return $this->fetch(new CreateStudentPassportRequest(schoolId: $schoolId, studentPassport: $studentPassport));
     }
 
-    public function delete(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Passports\DeleteStudentPassportRequest
+     */
+    public function delete(string $schoolId, int $id): void
     {
-        return $this->connector->send(new DeleteStudentPassportRequest($schoolId, $id));
+        $this->fetch(new DeleteStudentPassportRequest(schoolId: $schoolId, id: $id));
     }
 
-    public function get(string $schoolId, int $id, ?string $expand = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Passports\GetStudentPassportRequest
+     */
+    public function get(string $schoolId, int $id, ?string $expand = null): StudentPassport
     {
-        return $this->connector->send(new GetStudentPassportRequest($schoolId, $id, $expand));
+        return $this->fetch(new GetStudentPassportRequest(schoolId: $schoolId, id: $id, expand: $expand));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentPassportForUpdate|array<string, mixed>  $studentPassport
+     * @see \spkm\IsamsApi\Requests\Students\Passports\UpdateStudentPassportRequest
      */
-    public function update(string $schoolId, int $id, StudentPassportForUpdate|array $studentPassport): Response
+    public function update(string $schoolId, int $id, StudentPassportForUpdate|array $studentPassport): void
     {
-        return $this->connector->send(new UpdateStudentPassportRequest($schoolId, $id, $studentPassport));
+        $this->fetch(new UpdateStudentPassportRequest(schoolId: $schoolId, id: $id, studentPassport: $studentPassport));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Students\StudentPassportForUpdate|array<string, mixed>>  $studentPassports
+     * @see \spkm\IsamsApi\Requests\Students\Passports\UpdateStudentPassportsRequest
      */
-    public function updateMany(string $schoolId, array $studentPassports): Response
+    public function updateMany(string $schoolId, array $studentPassports): void
     {
-        return $this->connector->send(new UpdateStudentPassportsRequest($schoolId, $studentPassports));
+        $this->fetch(new UpdateStudentPassportsRequest(schoolId: $schoolId, studentPassports: $studentPassports));
     }
 }

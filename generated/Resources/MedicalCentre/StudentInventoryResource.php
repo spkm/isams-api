@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\MedicalCentre\Inventory;
 use spkm\IsamsApi\Data\MedicalCentre\InventoryForCreate;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\ArchiveStudentInventoryRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\CreateStudentInventoryRequest;
@@ -16,48 +17,67 @@ use spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\GetStudentInventoriesR
 use spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\GetStudentInventoryRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\PatchStudentInventoryRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\RestoreStudentInventoryRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentInventoryResource extends BaseResource
+class StudentInventoryResource extends IsamsResource
 {
-    public function all(string $schoolId, ?bool $includeArchive = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\Inventory>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\GetStudentInventoriesRequest
+     */
+    public function all(string $schoolId, ?bool $includeArchive = null): Collection
     {
-        return $this->connector->send(new GetStudentInventoriesRequest($schoolId, $includeArchive));
+        return $this->fetch(new GetStudentInventoriesRequest(schoolId: $schoolId, includeArchive: $includeArchive));
     }
 
-    public function archive(string $schoolId, string $inventoryId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\ArchiveStudentInventoryRequest
+     */
+    public function archive(string $schoolId, string $inventoryId): Created
     {
-        return $this->connector->send(new ArchiveStudentInventoryRequest($schoolId, $inventoryId));
+        return $this->fetch(new ArchiveStudentInventoryRequest(schoolId: $schoolId, inventoryId: $inventoryId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\InventoryForCreate|array<string, mixed>  $inventory
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\CreateStudentInventoryRequest
      */
-    public function create(string $schoolId, InventoryForCreate|array $inventory): Response
+    public function create(string $schoolId, InventoryForCreate|array $inventory): Created
     {
-        return $this->connector->send(new CreateStudentInventoryRequest($schoolId, $inventory));
+        return $this->fetch(new CreateStudentInventoryRequest(schoolId: $schoolId, inventory: $inventory));
     }
 
-    public function delete(string $schoolId, string $inventoryId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\DeleteStudentInventoryRequest
+     */
+    public function delete(string $schoolId, string $inventoryId): void
     {
-        return $this->connector->send(new DeleteStudentInventoryRequest($schoolId, $inventoryId));
+        $this->fetch(new DeleteStudentInventoryRequest(schoolId: $schoolId, inventoryId: $inventoryId));
     }
 
-    public function get(string $schoolId, string $inventoryId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\GetStudentInventoryRequest
+     */
+    public function get(string $schoolId, string $inventoryId): Inventory
     {
-        return $this->connector->send(new GetStudentInventoryRequest($schoolId, $inventoryId));
+        return $this->fetch(new GetStudentInventoryRequest(schoolId: $schoolId, inventoryId: $inventoryId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\PatchStudentInventoryRequest
      */
-    public function patch(string $schoolId, string $inventoryId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $inventoryId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentInventoryRequest($schoolId, $inventoryId, $patch));
+        $this->fetch(new PatchStudentInventoryRequest(schoolId: $schoolId, inventoryId: $inventoryId, patch: $patch));
     }
 
-    public function restore(string $schoolId, string $inventoryId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\RestoreStudentInventoryRequest
+     */
+    public function restore(string $schoolId, string $inventoryId): Created
     {
-        return $this->connector->send(new RestoreStudentInventoryRequest($schoolId, $inventoryId));
+        return $this->fetch(new RestoreStudentInventoryRequest(schoolId: $schoolId, inventoryId: $inventoryId));
     }
 }

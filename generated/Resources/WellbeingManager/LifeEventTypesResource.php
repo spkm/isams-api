@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\LifeEventType;
 use spkm\IsamsApi\Data\WellbeingManager\LifeEventTypeForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\CreateLifeEventTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\DeleteLifeEventTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\GetLifeEventTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\GetLifeEventTypesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\PatchLifeEventTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class LifeEventTypesResource extends BaseResource
+class LifeEventTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\LifeEventType>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\GetLifeEventTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetLifeEventTypesRequest());
+        return $this->fetch(new GetLifeEventTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\LifeEventTypeForCreate|array<string, mixed>  $lifeEventType
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\CreateLifeEventTypeRequest
      */
-    public function create(LifeEventTypeForCreate|array $lifeEventType): Response
+    public function create(LifeEventTypeForCreate|array $lifeEventType): Created
     {
-        return $this->connector->send(new CreateLifeEventTypeRequest($lifeEventType));
+        return $this->fetch(new CreateLifeEventTypeRequest(lifeEventType: $lifeEventType));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\DeleteLifeEventTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteLifeEventTypeRequest($id));
+        $this->fetch(new DeleteLifeEventTypeRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\GetLifeEventTypeRequest
+     */
+    public function get(int $id): LifeEventType
     {
-        return $this->connector->send(new GetLifeEventTypeRequest($id));
+        return $this->fetch(new GetLifeEventTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEventTypes\PatchLifeEventTypeRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchLifeEventTypeRequest($id, $patch));
+        $this->fetch(new PatchLifeEventTypeRequest(id: $id, patch: $patch));
     }
 }

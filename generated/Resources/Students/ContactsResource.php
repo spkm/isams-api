@@ -6,29 +6,35 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Students\StudentsContact;
 use spkm\IsamsApi\Requests\Students\Contacts\GetAllStudentContactsRequest;
 use spkm\IsamsApi\Requests\Students\Contacts\GetStudentContactsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ContactsResource extends BaseResource
+class ContactsResource extends IsamsResource
 {
-    public function all(
-        ?int $page = null,
-        ?int $pageSize = null,
-        ?string $expand = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetAllStudentContactsRequest($page, $pageSize, $expand, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Students\StudentsContact>
+     * @see \spkm\IsamsApi\Requests\Students\Contacts\GetAllStudentContactsRequest
+     */
+    public function all(?string $expand = null, string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetAllStudentContactsRequest(expand: $expand, filter: $filter), StudentsContact::class);
     }
 
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\StudentContact>
+     * @see \spkm\IsamsApi\Requests\Students\Contacts\GetStudentContactsRequest
+     */
     public function forStudent(
         string $schoolId,
         ?bool $includeDeceased = null,
         ?string $expand = null,
         string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetStudentContactsRequest($schoolId, $includeDeceased, $expand, $filter));
+    ): Collection {
+        return $this->fetch(new GetStudentContactsRequest(schoolId: $schoolId, includeDeceased: $includeDeceased, expand: $expand, filter: $filter));
     }
 }

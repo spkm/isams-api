@@ -35,6 +35,14 @@ class BatchApiException extends RequestException
     }
 
     /**
+     * Whether iSAMS refused because of the key itself: unknown, revoked, or not allocated the methods asked for.
+     */
+    public function isPermissionError(): bool
+    {
+        return in_array($this->name(), ['InvalidApiKey', 'RevokedApiKey', 'MethodsNotAllocatedToKeyException'], true);
+    }
+
+    /**
      * @return array{MessageId?: string, MessageName?: string, Title?: string, Description?: string}
      */
     private static function details(Response $response): array

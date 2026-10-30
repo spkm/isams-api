@@ -6,9 +6,10 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\Employee;
 use spkm\IsamsApi\Data\HumanResources\EmployeeForCreate;
 use spkm\IsamsApi\Data\HumanResources\EmployeeForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\Employees\CreateEmployeeRequest;
@@ -16,41 +17,50 @@ use spkm\IsamsApi\Requests\HumanResources\Employees\GetEmployeeByUserCodeRequest
 use spkm\IsamsApi\Requests\HumanResources\Employees\GetEmployeeRequest;
 use spkm\IsamsApi\Requests\HumanResources\Employees\GetEmployeesRequest;
 use spkm\IsamsApi\Requests\HumanResources\Employees\UpdateEmployeeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeesResource extends BaseResource
+class EmployeesResource extends IsamsResource
 {
-    public function all(
-        ?int $page = null,
-        ?int $pageSize = null,
-        ?string $expand = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetEmployeesRequest($page, $pageSize, $expand, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\HumanResources\Employee>
+     * @see \spkm\IsamsApi\Requests\HumanResources\Employees\GetEmployeesRequest
+     */
+    public function all(?string $expand = null, string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetEmployeesRequest(expand: $expand, filter: $filter), Employee::class);
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeForCreate|array<string, mixed>  $employee
+     * @see \spkm\IsamsApi\Requests\HumanResources\Employees\CreateEmployeeRequest
      */
-    public function create(EmployeeForCreate|array $employee): Response
+    public function create(EmployeeForCreate|array $employee): Created
     {
-        return $this->connector->send(new CreateEmployeeRequest($employee));
+        return $this->fetch(new CreateEmployeeRequest(employee: $employee));
     }
 
-    public function get(int $id, ?string $expand = null, string|Stringable|null $filter = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\Employees\GetEmployeeRequest
+     */
+    public function get(int $id, ?string $expand = null, string|Stringable|null $filter = null): Employee
     {
-        return $this->connector->send(new GetEmployeeRequest($id, $expand, $filter));
+        return $this->fetch(new GetEmployeeRequest(id: $id, expand: $expand, filter: $filter));
     }
 
-    public function getByUserCode(string $userCode): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\Employees\GetEmployeeByUserCodeRequest
+     */
+    public function getByUserCode(string $userCode): Employee
     {
-        return $this->connector->send(new GetEmployeeByUserCodeRequest($userCode));
+        return $this->fetch(new GetEmployeeByUserCodeRequest(userCode: $userCode));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeForUpdate|array<string, mixed>  $employee
+     * @see \spkm\IsamsApi\Requests\HumanResources\Employees\UpdateEmployeeRequest
      */
-    public function update(int $id, EmployeeForUpdate|array $employee): Response
+    public function update(int $id, EmployeeForUpdate|array $employee): void
     {
-        return $this->connector->send(new UpdateEmployeeRequest($id, $employee));
+        $this->fetch(new UpdateEmployeeRequest(id: $id, employee: $employee));
     }
 }

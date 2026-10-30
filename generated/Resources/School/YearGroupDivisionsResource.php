@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\School\YearGroupDivisions\GetYearGroupDivisionsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class YearGroupDivisionsResource extends BaseResource
+class YearGroupDivisionsResource extends IsamsResource
 {
-    public function all(int $id): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\YearGroupDivision>
+     * @see \spkm\IsamsApi\Requests\School\YearGroupDivisions\GetYearGroupDivisionsRequest
+     */
+    public function all(int $id): Collection
     {
-        return $this->connector->send(new GetYearGroupDivisionsRequest($id));
+        return $this->fetch(new GetYearGroupDivisionsRequest(id: $id));
     }
 }

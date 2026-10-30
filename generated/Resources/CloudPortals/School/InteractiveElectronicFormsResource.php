@@ -6,9 +6,11 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\CloudPortals\ElectronicForm;
+use spkm\IsamsApi\Data\CloudPortals\ElectronicFormResponse;
 use spkm\IsamsApi\Data\CloudPortals\ElectronicFormResponseForCreate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormAvailableElectronicFormDetailsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormPendingElectronicFormsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormRequest;
@@ -16,44 +18,68 @@ use spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInt
 use spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormsHistoryForFormRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormsHistoryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\SaveInteractiveElectronicFormResponseRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class InteractiveElectronicFormsResource extends BaseResource
+class InteractiveElectronicFormsResource extends IsamsResource
 {
-    public function get(int $formId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormRequest
+     */
+    public function get(int $formId): ElectronicForm
     {
-        return $this->connector->send(new GetInteractiveElectronicFormRequest($formId));
+        return $this->fetch(new GetInteractiveElectronicFormRequest(formId: $formId));
     }
 
-    public function getAvailableElectronicFormDetails(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\AvailableElectronicFormDetails>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormAvailableElectronicFormDetailsRequest
+     */
+    public function getAvailableElectronicFormDetails(): Collection
     {
-        return $this->connector->send(new GetInteractiveElectronicFormAvailableElectronicFormDetailsRequest());
+        return $this->fetch(new GetInteractiveElectronicFormAvailableElectronicFormDetailsRequest());
     }
 
-    public function getHistory(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\ElectronicFormDetails>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormsHistoryRequest
+     */
+    public function getHistory(): Collection
     {
-        return $this->connector->send(new GetInteractiveElectronicFormsHistoryRequest());
+        return $this->fetch(new GetInteractiveElectronicFormsHistoryRequest());
     }
 
-    public function getHistoryForForm(int $formId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\ElectronicFormDetails>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormsHistoryForFormRequest
+     */
+    public function getHistoryForForm(int $formId): Collection
     {
-        return $this->connector->send(new GetInteractiveElectronicFormsHistoryForFormRequest($formId));
+        return $this->fetch(new GetInteractiveElectronicFormsHistoryForFormRequest(formId: $formId));
     }
 
-    public function getPending(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\ElectronicFormDetails>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormPendingElectronicFormsRequest
+     */
+    public function getPending(): Collection
     {
-        return $this->connector->send(new GetInteractiveElectronicFormPendingElectronicFormsRequest());
+        return $this->fetch(new GetInteractiveElectronicFormPendingElectronicFormsRequest());
     }
 
-    public function getResponses(int $formId, int $formResponseDetailsId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\GetInteractiveElectronicFormResponsesRequest
+     */
+    public function getResponses(int $formId, int $formResponseDetailsId): ElectronicFormResponse
     {
-        return $this->connector->send(new GetInteractiveElectronicFormResponsesRequest($formId, $formResponseDetailsId));
+        return $this->fetch(new GetInteractiveElectronicFormResponsesRequest(formId: $formId, formResponseDetailsId: $formResponseDetailsId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\CloudPortals\ElectronicFormResponseForCreate|array<string, mixed>  $electronicFormResponse
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InteractiveElectronicForms\SaveInteractiveElectronicFormResponseRequest
      */
-    public function saveResponse(int $formId, ElectronicFormResponseForCreate|array $electronicFormResponse): Response
+    public function saveResponse(int $formId, ElectronicFormResponseForCreate|array $electronicFormResponse): Created
     {
-        return $this->connector->send(new SaveInteractiveElectronicFormResponseRequest($formId, $electronicFormResponse));
+        return $this->fetch(new SaveInteractiveElectronicFormResponseRequest(formId: $formId, electronicFormResponse: $electronicFormResponse));
     }
 }

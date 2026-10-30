@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\RewardsAndConduct\GetRewardsAndConductRewardTypesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\RewardsAndConduct\GetRewardsAndConductRewardsByTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class RewardsAndConductResource extends BaseResource
+class RewardsAndConductResource extends IsamsResource
 {
-    public function getByType(string $schoolId, int $typeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\Reward>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\RewardsAndConduct\GetRewardsAndConductRewardsByTypeRequest
+     */
+    public function getByType(string $schoolId, int $typeId): Collection
     {
-        return $this->connector->send(new GetRewardsAndConductRewardsByTypeRequest($schoolId, $typeId));
+        return $this->fetch(new GetRewardsAndConductRewardsByTypeRequest(schoolId: $schoolId, typeId: $typeId));
     }
 
-    public function getTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\RewardType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\RewardsAndConduct\GetRewardsAndConductRewardTypesRequest
+     */
+    public function getTypes(): Collection
     {
-        return $this->connector->send(new GetRewardsAndConductRewardTypesRequest());
+        return $this->fetch(new GetRewardsAndConductRewardTypesRequest());
     }
 }

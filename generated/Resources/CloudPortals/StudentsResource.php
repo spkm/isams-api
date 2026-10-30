@@ -6,15 +6,16 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Students\PrivateStudentDetailed;
 use spkm\IsamsApi\Requests\CloudPortals\Students\GetPortalStudentRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Students\GetPortalStudentsByPortalTypeRequest;
 use spkm\IsamsApi\Resources\CloudPortals\Students\ModulesResource;
 use spkm\IsamsApi\Resources\CloudPortals\Students\SelfRegistrationResource;
 use spkm\IsamsApi\Resources\CloudPortals\Students\TimetableResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StudentsResource extends BaseResource
+class StudentsResource extends IsamsResource
 {
     public function modules(): ModulesResource
     {
@@ -31,13 +32,20 @@ class StudentsResource extends BaseResource
         return new TimetableResource($this->connector);
     }
 
-    public function get(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\GetPortalStudentRequest
+     */
+    public function get(string $schoolId): PrivateStudentDetailed
     {
-        return $this->connector->send(new GetPortalStudentRequest($schoolId));
+        return $this->fetch(new GetPortalStudentRequest(schoolId: $schoolId));
     }
 
-    public function getByPortalType(string $portalType, string $divisionIdsCommaSeparated): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\PrivateStudent>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\GetPortalStudentsByPortalTypeRequest
+     */
+    public function getByPortalType(string $portalType, string $divisionIdsCommaSeparated): Collection
     {
-        return $this->connector->send(new GetPortalStudentsByPortalTypeRequest($portalType, $divisionIdsCommaSeparated));
+        return $this->fetch(new GetPortalStudentsByPortalTypeRequest(portalType: $portalType, divisionIdsCommaSeparated: $divisionIdsCommaSeparated));
     }
 }

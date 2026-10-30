@@ -6,40 +6,51 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\Role;
 use spkm\IsamsApi\Data\HumanResources\RoleForCreate;
 use spkm\IsamsApi\Data\HumanResources\RoleForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\Roles\CreateRoleRequest;
 use spkm\IsamsApi\Requests\HumanResources\Roles\GetRoleRequest;
 use spkm\IsamsApi\Requests\HumanResources\Roles\GetRolesRequest;
 use spkm\IsamsApi\Requests\HumanResources\Roles\UpdateRoleRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class RolesResource extends BaseResource
+class RolesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\Role>
+     * @see \spkm\IsamsApi\Requests\HumanResources\Roles\GetRolesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetRolesRequest());
+        return $this->fetch(new GetRolesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\RoleForCreate|array<string, mixed>  $role
+     * @see \spkm\IsamsApi\Requests\HumanResources\Roles\CreateRoleRequest
      */
-    public function create(RoleForCreate|array $role): Response
+    public function create(RoleForCreate|array $role): Created
     {
-        return $this->connector->send(new CreateRoleRequest($role));
+        return $this->fetch(new CreateRoleRequest(role: $role));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\Roles\GetRoleRequest
+     */
+    public function get(int $id): Role
     {
-        return $this->connector->send(new GetRoleRequest($id));
+        return $this->fetch(new GetRoleRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\RoleForUpdate|array<string, mixed>  $role
+     * @see \spkm\IsamsApi\Requests\HumanResources\Roles\UpdateRoleRequest
      */
-    public function update(int $id, RoleForUpdate|array $role): Response
+    public function update(int $id, RoleForUpdate|array $role): void
     {
-        return $this->connector->send(new UpdateRoleRequest($id, $role));
+        $this->fetch(new UpdateRoleRequest(id: $id, role: $role));
     }
 }

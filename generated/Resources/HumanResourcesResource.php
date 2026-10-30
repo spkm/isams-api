@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\HumanResources\AbsenceTypesResource;
 use spkm\IsamsApi\Resources\HumanResources\AdditionalPaymentTypesResource;
 use spkm\IsamsApi\Resources\HumanResources\ContractEmployeeLevelsResource;
@@ -45,7 +44,7 @@ use spkm\IsamsApi\Resources\HumanResources\SalaryAdditionalPaymentsResource;
 use spkm\IsamsApi\Resources\HumanResources\SalaryPayScalesResource;
 use spkm\IsamsApi\Resources\HumanResources\TeachingSkillsResource;
 
-class HumanResourcesResource extends BaseResource
+class HumanResourcesResource extends IsamsResource
 {
     public function absenceTypes(): AbsenceTypesResource
     {

@@ -6,24 +6,31 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\CloudPortals\Bookmark;
+use spkm\IsamsApi\Data\CloudPortals\BookmarkGroups;
 use spkm\IsamsApi\Requests\CloudPortals\School\Bookmark\GetBookmarkGroupsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Bookmark\GetBookmarksRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class BookmarkResource extends BaseResource
+class BookmarkResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\CloudPortals\Bookmark>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Bookmark\GetBookmarksRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetBookmarksRequest($page, $pageSize, $filter));
+        return $this->each(new GetBookmarksRequest(filter: $filter), Bookmark::class);
     }
 
-    public function getGroups(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetBookmarkGroupsRequest($page, $pageSize, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\CloudPortals\BookmarkGroups>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Bookmark\GetBookmarkGroupsRequest
+     */
+    public function getGroups(string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetBookmarkGroupsRequest(filter: $filter), BookmarkGroups::class);
     }
 }

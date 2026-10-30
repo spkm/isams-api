@@ -6,40 +6,49 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\LifeEvent;
 use spkm\IsamsApi\Data\WellbeingManager\LifeEventForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\CreateLifeEventRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\DeleteLifeEventRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\GetLifeEventRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\PatchLifeEventRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class LifeEventsResource extends BaseResource
+class LifeEventsResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\LifeEventForCreate|array<string, mixed>  $lifeEvent
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\CreateLifeEventRequest
      */
-    public function create(string $schoolId, LifeEventForCreate|array $lifeEvent): Response
+    public function create(string $schoolId, LifeEventForCreate|array $lifeEvent): Created
     {
-        return $this->connector->send(new CreateLifeEventRequest($schoolId, $lifeEvent));
+        return $this->fetch(new CreateLifeEventRequest(schoolId: $schoolId, lifeEvent: $lifeEvent));
     }
 
-    public function delete(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\DeleteLifeEventRequest
+     */
+    public function delete(string $schoolId, int $id): void
     {
-        return $this->connector->send(new DeleteLifeEventRequest($schoolId, $id));
+        $this->fetch(new DeleteLifeEventRequest(schoolId: $schoolId, id: $id));
     }
 
-    public function get(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\GetLifeEventRequest
+     */
+    public function get(string $schoolId, int $id): LifeEvent
     {
-        return $this->connector->send(new GetLifeEventRequest($schoolId, $id));
+        return $this->fetch(new GetLifeEventRequest(schoolId: $schoolId, id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\PatchLifeEventRequest
      */
-    public function patch(string $schoolId, int $id, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchLifeEventRequest($schoolId, $id, $patch));
+        $this->fetch(new PatchLifeEventRequest(schoolId: $schoolId, id: $id, patch: $patch));
     }
 }

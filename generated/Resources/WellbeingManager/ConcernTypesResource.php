@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ConcernType;
 use spkm\IsamsApi\Data\WellbeingManager\ConcernTypeForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\CreateConcernTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\DeleteConcernTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\GetConcernTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\GetConcernTypesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\PatchConcernTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernTypesResource extends BaseResource
+class ConcernTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ConcernType>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\GetConcernTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernTypesRequest());
+        return $this->fetch(new GetConcernTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernTypeForCreate|array<string, mixed>  $concernType
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\CreateConcernTypeRequest
      */
-    public function create(ConcernTypeForCreate|array $concernType): Response
+    public function create(ConcernTypeForCreate|array $concernType): Created
     {
-        return $this->connector->send(new CreateConcernTypeRequest($concernType));
+        return $this->fetch(new CreateConcernTypeRequest(concernType: $concernType));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\DeleteConcernTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteConcernTypeRequest($id));
+        $this->fetch(new DeleteConcernTypeRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\GetConcernTypeRequest
+     */
+    public function get(int $id): ConcernType
     {
-        return $this->connector->send(new GetConcernTypeRequest($id));
+        return $this->fetch(new GetConcernTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernTypes\PatchConcernTypeRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernTypeRequest($id, $patch));
+        $this->fetch(new PatchConcernTypeRequest(id: $id, patch: $patch));
     }
 }

@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\MedicalCentre\ConditionResource;
 use spkm\IsamsApi\Resources\MedicalCentre\ConsentResource;
 use spkm\IsamsApi\Resources\MedicalCentre\DoctorsResource;
@@ -29,7 +28,7 @@ use spkm\IsamsApi\Resources\MedicalCentre\SurgeriesResource;
 use spkm\IsamsApi\Resources\MedicalCentre\VaccinationResource;
 use spkm\IsamsApi\Resources\MedicalCentre\VisitResource;
 
-class MedicalCentreResource extends BaseResource
+class MedicalCentreResource extends IsamsResource
 {
     public function condition(): ConditionResource
     {

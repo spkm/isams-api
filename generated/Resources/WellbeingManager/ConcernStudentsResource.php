@@ -6,43 +6,53 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\WellbeingManager\ConcernStudentForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\AssociateConcernStudentRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\DisassociateConcernStudentRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\GetConcernStudentsRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\PatchConcernStudentRoleRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernStudentsResource extends BaseResource
+class ConcernStudentsResource extends IsamsResource
 {
-    public function all(string $schoolId, int $concernId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ConcernStudentSummary>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\GetConcernStudentsRequest
+     */
+    public function all(string $schoolId, int $concernId): Collection
     {
-        return $this->connector->send(new GetConcernStudentsRequest($schoolId, $concernId));
+        return $this->fetch(new GetConcernStudentsRequest(schoolId: $schoolId, concernId: $concernId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernStudentForCreate|array<string, mixed>  $concernStudent
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\AssociateConcernStudentRequest
      */
     public function associate(
         string $schoolId,
         int $concernId,
         ConcernStudentForCreate|array $concernStudent,
-    ): Response {
-        return $this->connector->send(new AssociateConcernStudentRequest($schoolId, $concernId, $concernStudent));
+    ): Created {
+        return $this->fetch(new AssociateConcernStudentRequest(schoolId: $schoolId, concernId: $concernId, concernStudent: $concernStudent));
     }
 
-    public function disassociate(string $schoolId, int $concernId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\DisassociateConcernStudentRequest
+     */
+    public function disassociate(string $schoolId, int $concernId, int $id): void
     {
-        return $this->connector->send(new DisassociateConcernStudentRequest($schoolId, $concernId, $id));
+        $this->fetch(new DisassociateConcernStudentRequest(schoolId: $schoolId, concernId: $concernId, id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\PatchConcernStudentRoleRequest
      */
-    public function patchRole(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): Response
+    public function patchRole(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernStudentRoleRequest($schoolId, $concernId, $id, $patch));
+        $this->fetch(new PatchConcernStudentRoleRequest(schoolId: $schoolId, concernId: $concernId, id: $id, patch: $patch));
     }
 }

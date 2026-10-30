@@ -6,26 +6,37 @@
 
 namespace spkm\IsamsApi\Resources\Teaching;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\AddSubjectTeachingDepartmentRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\GetSubjectTeachingDepartmentsRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\RemoveSubjectTeachingDepartmentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SubjectTeachingDepartmentsResource extends BaseResource
+class SubjectTeachingDepartmentsResource extends IsamsResource
 {
-    public function add(int $subjectId, int $departmentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\AddSubjectTeachingDepartmentRequest
+     */
+    public function add(int $subjectId, int $departmentId): Created
     {
-        return $this->connector->send(new AddSubjectTeachingDepartmentRequest($subjectId, $departmentId));
+        return $this->fetch(new AddSubjectTeachingDepartmentRequest(subjectId: $subjectId, departmentId: $departmentId));
     }
 
-    public function all(int $subjectId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Teaching\TeachingDepartment>
+     * @see \spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\GetSubjectTeachingDepartmentsRequest
+     */
+    public function all(int $subjectId): Collection
     {
-        return $this->connector->send(new GetSubjectTeachingDepartmentsRequest($subjectId));
+        return $this->fetch(new GetSubjectTeachingDepartmentsRequest(subjectId: $subjectId));
     }
 
-    public function remove(int $subjectId, int $departmentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\RemoveSubjectTeachingDepartmentRequest
+     */
+    public function remove(int $subjectId, int $departmentId): void
     {
-        return $this->connector->send(new RemoveSubjectTeachingDepartmentRequest($subjectId, $departmentId));
+        $this->fetch(new RemoveSubjectTeachingDepartmentRequest(subjectId: $subjectId, departmentId: $departmentId));
     }
 }

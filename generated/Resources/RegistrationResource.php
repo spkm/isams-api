@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Registration\AbsenceCodesResource;
 use spkm\IsamsApi\Resources\Registration\NatureOfAbsenceResource;
 use spkm\IsamsApi\Resources\Registration\OffGamesResource;
@@ -17,7 +16,7 @@ use spkm\IsamsApi\Resources\Registration\RulesResource;
 use spkm\IsamsApi\Resources\Registration\StatusResource;
 use spkm\IsamsApi\Resources\Registration\StatusStudentsResource;
 
-class RegistrationResource extends BaseResource
+class RegistrationResource extends IsamsResource
 {
     public function absenceCodes(): AbsenceCodesResource
     {

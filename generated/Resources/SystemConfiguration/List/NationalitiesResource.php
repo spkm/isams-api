@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\CreateNationalityRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\DeleteNationalityRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\GetNationalitiesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\UpdateNationalityRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class NationalitiesResource extends BaseResource
+class NationalitiesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemWithCensusData>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\GetNationalitiesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetNationalitiesRequest());
+        return $this->fetch(new GetNationalitiesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\CreateNationalityRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateNationalityRequest($listItem));
+        return $this->fetch(new CreateNationalityRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\DeleteNationalityRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteNationalityRequest($id));
+        $this->fetch(new DeleteNationalityRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Nationalities\UpdateNationalityRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateNationalityRequest($id, $listItem));
+        $this->fetch(new UpdateNationalityRequest(id: $id, listItem: $listItem));
     }
 }

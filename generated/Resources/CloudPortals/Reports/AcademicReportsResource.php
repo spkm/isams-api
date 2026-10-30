@@ -6,29 +6,30 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Reports;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Reports\Report;
 use spkm\IsamsApi\Requests\CloudPortals\Reports\AcademicReports\GetAcademicReportSchoolAssessmentsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Reports\AcademicReports\GetAcademicReportSchoolReportsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AcademicReportsResource extends BaseResource
+class AcademicReportsResource extends IsamsResource
 {
-    public function getSchoolAssessments(
-        string $schoolId,
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetAcademicReportSchoolAssessmentsRequest($schoolId, $page, $pageSize, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Reports\Report>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Reports\AcademicReports\GetAcademicReportSchoolAssessmentsRequest
+     */
+    public function getSchoolAssessments(string $schoolId, string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetAcademicReportSchoolAssessmentsRequest(schoolId: $schoolId, filter: $filter), Report::class);
     }
 
-    public function getSchoolReports(
-        string $schoolId,
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetAcademicReportSchoolReportsRequest($schoolId, $page, $pageSize, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Reports\Report>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Reports\AcademicReports\GetAcademicReportSchoolReportsRequest
+     */
+    public function getSchoolReports(string $schoolId, string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetAcademicReportSchoolReportsRequest(schoolId: $schoolId, filter: $filter), Report::class);
     }
 }

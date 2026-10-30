@@ -6,32 +6,44 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\ConvertLinkMigrationPortalLinkRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\DeleteLinkMigrationPortalLinkRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\GetLinkMigrationInvalidPortalLinksRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\MigrateLinkMigrationPortalLinkRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class LinkMigrationResource extends BaseResource
+class LinkMigrationResource extends IsamsResource
 {
-    public function convert(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\ConvertLinkMigrationPortalLinkRequest
+     */
+    public function convert(int $id): Created
     {
-        return $this->connector->send(new ConvertLinkMigrationPortalLinkRequest($id));
+        return $this->fetch(new ConvertLinkMigrationPortalLinkRequest(id: $id));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\DeleteLinkMigrationPortalLinkRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteLinkMigrationPortalLinkRequest($id));
+        $this->fetch(new DeleteLinkMigrationPortalLinkRequest(id: $id));
     }
 
-    public function getInvalidPortalLinks(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\GetLinkMigrationInvalidPortalLinksRequest
+     */
+    public function getInvalidPortalLinks(): mixed
     {
-        return $this->connector->send(new GetLinkMigrationInvalidPortalLinksRequest());
+        return $this->fetch(new GetLinkMigrationInvalidPortalLinksRequest());
     }
 
-    public function migrate(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\MigrateLinkMigrationPortalLinkRequest
+     */
+    public function migrate(int $id): Created
     {
-        return $this->connector->send(new MigrateLinkMigrationPortalLinkRequest($id));
+        return $this->fetch(new MigrateLinkMigrationPortalLinkRequest(id: $id));
     }
 }

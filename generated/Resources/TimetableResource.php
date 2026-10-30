@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Timetable\DepartmentTimetablesResource;
 use spkm\IsamsApi\Resources\Timetable\EmployeeTimetablesResource;
 use spkm\IsamsApi\Resources\Timetable\FormTimetablesResource;
@@ -17,7 +16,7 @@ use spkm\IsamsApi\Resources\Timetable\StructuresResource;
 use spkm\IsamsApi\Resources\Timetable\StudentTimetablesResource;
 use spkm\IsamsApi\Resources\Timetable\SubjectTimetablesResource;
 
-class TimetableResource extends BaseResource
+class TimetableResource extends IsamsResource
 {
     public function departmentTimetables(): DepartmentTimetablesResource
     {

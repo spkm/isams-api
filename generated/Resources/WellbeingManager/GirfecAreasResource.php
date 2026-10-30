@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\WellbeingManager\GirfecAreas\GetGirfecAreasRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class GirfecAreasResource extends BaseResource
+class GirfecAreasResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\PastoralConcernArea>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\GirfecAreas\GetGirfecAreasRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetGirfecAreasRequest());
+        return $this->fetch(new GetGirfecAreasRequest());
     }
 }

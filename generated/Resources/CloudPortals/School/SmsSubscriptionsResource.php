@@ -6,24 +6,29 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\SmsSubscriptions\GetSmsSubscriptionsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\SmsSubscriptions\PatchSmsSubscriptionToSmsCategoriesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class SmsSubscriptionsResource extends BaseResource
+class SmsSubscriptionsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\SmsSubscriptionCategory>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\SmsSubscriptions\GetSmsSubscriptionsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetSmsSubscriptionsRequest());
+        return $this->fetch(new GetSmsSubscriptionsRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\SmsSubscriptions\PatchSmsSubscriptionToSmsCategoriesRequest
      */
-    public function patchToSmsCategories(JsonPatch|array $patch): Response
+    public function patchToSmsCategories(JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchSmsSubscriptionToSmsCategoriesRequest($patch));
+        $this->fetch(new PatchSmsSubscriptionToSmsCategoriesRequest(patch: $patch));
     }
 }

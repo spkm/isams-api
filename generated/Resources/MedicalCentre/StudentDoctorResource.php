@@ -6,40 +6,49 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\MedicalCentre\PersonDoctorAndSurgery;
 use spkm\IsamsApi\Data\MedicalCentre\PersonDoctorAndSurgeryForCreate;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\CreateStudentDoctorRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\DeleteStudentDoctorRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\GetStudentDoctorRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\PatchStudentDoctorRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentDoctorResource extends BaseResource
+class StudentDoctorResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\PersonDoctorAndSurgeryForCreate|array<string, mixed>  $personDoctorAndSurgery
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\CreateStudentDoctorRequest
      */
-    public function create(string $schoolId, PersonDoctorAndSurgeryForCreate|array $personDoctorAndSurgery): Response
+    public function create(string $schoolId, PersonDoctorAndSurgeryForCreate|array $personDoctorAndSurgery): Created
     {
-        return $this->connector->send(new CreateStudentDoctorRequest($schoolId, $personDoctorAndSurgery));
+        return $this->fetch(new CreateStudentDoctorRequest(schoolId: $schoolId, personDoctorAndSurgery: $personDoctorAndSurgery));
     }
 
-    public function delete(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\DeleteStudentDoctorRequest
+     */
+    public function delete(string $schoolId): void
     {
-        return $this->connector->send(new DeleteStudentDoctorRequest($schoolId));
+        $this->fetch(new DeleteStudentDoctorRequest(schoolId: $schoolId));
     }
 
-    public function get(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\GetStudentDoctorRequest
+     */
+    public function get(string $schoolId): PersonDoctorAndSurgery
     {
-        return $this->connector->send(new GetStudentDoctorRequest($schoolId));
+        return $this->fetch(new GetStudentDoctorRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\PatchStudentDoctorRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentDoctorRequest($schoolId, $patch));
+        $this->fetch(new PatchStudentDoctorRequest(schoolId: $schoolId, patch: $patch));
     }
 }

@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\MedicalCentre\Consent;
 use spkm\IsamsApi\Data\MedicalCentre\ConsentForCreate;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\ArchiveStudentConsentRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\CreateStudentConsentRequest;
@@ -16,48 +17,67 @@ use spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\GetStudentConsentReques
 use spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\GetStudentConsentsRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\PatchStudentConsentRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\RestoreStudentConsentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentConsentsResource extends BaseResource
+class StudentConsentsResource extends IsamsResource
 {
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\Consent>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\GetStudentConsentsRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetStudentConsentsRequest($schoolId));
+        return $this->fetch(new GetStudentConsentsRequest(schoolId: $schoolId));
     }
 
-    public function archive(string $schoolId, string $consentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\ArchiveStudentConsentRequest
+     */
+    public function archive(string $schoolId, string $consentId): Created
     {
-        return $this->connector->send(new ArchiveStudentConsentRequest($schoolId, $consentId));
+        return $this->fetch(new ArchiveStudentConsentRequest(schoolId: $schoolId, consentId: $consentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\ConsentForCreate|array<string, mixed>  $consent
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\CreateStudentConsentRequest
      */
-    public function create(string $schoolId, ConsentForCreate|array $consent): Response
+    public function create(string $schoolId, ConsentForCreate|array $consent): Created
     {
-        return $this->connector->send(new CreateStudentConsentRequest($schoolId, $consent));
+        return $this->fetch(new CreateStudentConsentRequest(schoolId: $schoolId, consent: $consent));
     }
 
-    public function delete(string $schoolId, string $consentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\DeleteStudentConsentRequest
+     */
+    public function delete(string $schoolId, string $consentId): void
     {
-        return $this->connector->send(new DeleteStudentConsentRequest($schoolId, $consentId));
+        $this->fetch(new DeleteStudentConsentRequest(schoolId: $schoolId, consentId: $consentId));
     }
 
-    public function get(string $schoolId, string $consentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\GetStudentConsentRequest
+     */
+    public function get(string $schoolId, string $consentId): Consent
     {
-        return $this->connector->send(new GetStudentConsentRequest($schoolId, $consentId));
+        return $this->fetch(new GetStudentConsentRequest(schoolId: $schoolId, consentId: $consentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\PatchStudentConsentRequest
      */
-    public function patch(string $schoolId, string $consentId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $consentId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentConsentRequest($schoolId, $consentId, $patch));
+        $this->fetch(new PatchStudentConsentRequest(schoolId: $schoolId, consentId: $consentId, patch: $patch));
     }
 
-    public function restore(string $schoolId, string $consentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\RestoreStudentConsentRequest
+     */
+    public function restore(string $schoolId, string $consentId): Created
     {
-        return $this->connector->send(new RestoreStudentConsentRequest($schoolId, $consentId));
+        return $this->fetch(new RestoreStudentConsentRequest(schoolId: $schoolId, consentId: $consentId));
     }
 }

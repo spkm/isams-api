@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\CreateOfferTypeRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\DeleteOfferTypeRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\GetOfferTypesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\UpdateOfferTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class OfferTypesResource extends BaseResource
+class OfferTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\GetOfferTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetOfferTypesRequest());
+        return $this->fetch(new GetOfferTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\CreateOfferTypeRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateOfferTypeRequest($listItem));
+        return $this->fetch(new CreateOfferTypeRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\DeleteOfferTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteOfferTypeRequest($id));
+        $this->fetch(new DeleteOfferTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\UpdateOfferTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateOfferTypeRequest($id, $listItem));
+        $this->fetch(new UpdateOfferTypeRequest(id: $id, listItem: $listItem));
     }
 }

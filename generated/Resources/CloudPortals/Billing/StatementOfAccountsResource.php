@@ -7,23 +7,30 @@
 namespace spkm\IsamsApi\Resources\CloudPortals\Billing;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Billing\BillingCycle;
+use spkm\IsamsApi\Data\Integrations\Statement;
 use spkm\IsamsApi\Requests\CloudPortals\Billing\StatementOfAccounts\GetStatementOfAccountCurrentBillingCycleRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Billing\StatementOfAccounts\GetStatementOfAccountsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StatementOfAccountsResource extends BaseResource
+class StatementOfAccountsResource extends IsamsResource
 {
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\StatementOfAccounts\GetStatementOfAccountsRequest
+     */
     public function all(
         DateTimeInterface|string|null $startDate = null,
         DateTimeInterface|string|null $endDate = null,
         ?string $studentName = null,
-    ): Response {
-        return $this->connector->send(new GetStatementOfAccountsRequest($startDate, $endDate, $studentName));
+    ): Statement {
+        return $this->fetch(new GetStatementOfAccountsRequest(startDate: $startDate, endDate: $endDate, studentName: $studentName));
     }
 
-    public function getCurrentBillingCycle(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\StatementOfAccounts\GetStatementOfAccountCurrentBillingCycleRequest
+     */
+    public function getCurrentBillingCycle(): BillingCycle
     {
-        return $this->connector->send(new GetStatementOfAccountCurrentBillingCycleRequest());
+        return $this->fetch(new GetStatementOfAccountCurrentBillingCycleRequest());
     }
 }

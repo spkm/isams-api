@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\MedicalCentre\Document\GetMedicalDocumentCategoriesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DocumentResource extends BaseResource
+class DocumentResource extends IsamsResource
 {
-    public function getCategories(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\DocumentCategory>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Document\GetMedicalDocumentCategoriesRequest
+     */
+    public function getCategories(): Collection
     {
-        return $this->connector->send(new GetMedicalDocumentCategoriesRequest());
+        return $this->fetch(new GetMedicalDocumentCategoriesRequest());
     }
 }

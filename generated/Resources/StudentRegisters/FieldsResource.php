@@ -6,33 +6,39 @@
 
 namespace spkm\IsamsApi\Resources\StudentRegisters;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\StudentRegisters\FieldCollection;
+use spkm\IsamsApi\Data\StudentRegisters\StudentFields;
 use spkm\IsamsApi\Requests\StudentRegisters\Fields\GetFieldsRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\Fields\GetStudentFieldsRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\Fields\PatchStudentFieldsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FieldsResource extends BaseResource
+class FieldsResource extends IsamsResource
 {
-    public function all(
-        int $registerId,
-        ?string $systemStatus = null,
-        ?int $page = null,
-        ?int $pageSize = null,
-    ): Response {
-        return $this->connector->send(new GetFieldsRequest($registerId, $systemStatus, $page, $pageSize));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\StudentRegisters\StudentFields>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Fields\GetFieldsRequest
+     */
+    public function all(int $registerId, ?string $systemStatus = null): LazyCollection
+    {
+        return $this->each(new GetFieldsRequest(registerId: $registerId, systemStatus: $systemStatus), StudentFields::class);
     }
 
-    public function forStudent(int $registerId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Fields\GetStudentFieldsRequest
+     */
+    public function forStudent(int $registerId, string $schoolId): FieldCollection
     {
-        return $this->connector->send(new GetStudentFieldsRequest($registerId, $schoolId));
+        return $this->fetch(new GetStudentFieldsRequest(registerId: $registerId, schoolId: $schoolId));
     }
 
     /**
      * @param  array<mixed>  $values
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Fields\PatchStudentFieldsRequest
      */
-    public function patchMany(int $registerId, string $schoolId, array $values): Response
+    public function patchMany(int $registerId, string $schoolId, array $values): void
     {
-        return $this->connector->send(new PatchStudentFieldsRequest($registerId, $schoolId, $values));
+        $this->fetch(new PatchStudentFieldsRequest(registerId: $registerId, schoolId: $schoolId, values: $values));
     }
 }

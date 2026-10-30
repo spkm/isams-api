@@ -6,30 +6,40 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\SystemConfiguration\University;
 use spkm\IsamsApi\Data\SystemConfiguration\UniversityForCreate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Universities\CreateUniversityRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Universities\GetUniversitiesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Universities\GetUniversityRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class UniversitiesResource extends BaseResource
+class UniversitiesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\University>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Universities\GetUniversitiesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetUniversitiesRequest());
+        return $this->fetch(new GetUniversitiesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\UniversityForCreate|array<string, mixed>  $university
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Universities\CreateUniversityRequest
      */
-    public function create(UniversityForCreate|array $university): Response
+    public function create(UniversityForCreate|array $university): Created
     {
-        return $this->connector->send(new CreateUniversityRequest($university));
+        return $this->fetch(new CreateUniversityRequest(university: $university));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Universities\GetUniversityRequest
+     */
+    public function get(int $id): University
     {
-        return $this->connector->send(new GetUniversityRequest($id));
+        return $this->fetch(new GetUniversityRequest(id: $id));
     }
 }

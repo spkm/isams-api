@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Registration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Registration\AbsenceCodes\GetAbsenceCodesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AbsenceCodesResource extends BaseResource
+class AbsenceCodesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Registration\AbsenceCode>
+     * @see \spkm\IsamsApi\Requests\Registration\AbsenceCodes\GetAbsenceCodesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetAbsenceCodesRequest());
+        return $this->fetch(new GetAbsenceCodesRequest());
     }
 }

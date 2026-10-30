@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\Registration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Registration\RegistrationRule;
 use spkm\IsamsApi\Requests\Registration\Rules\GetRegistrationRuleRequest;
 use spkm\IsamsApi\Requests\Registration\Rules\GetRegistrationRulesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class RulesResource extends BaseResource
+class RulesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Registration\RegistrationRule>
+     * @see \spkm\IsamsApi\Requests\Registration\Rules\GetRegistrationRulesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetRegistrationRulesRequest());
+        return $this->fetch(new GetRegistrationRulesRequest());
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Registration\Rules\GetRegistrationRuleRequest
+     */
+    public function get(int $id): RegistrationRule
     {
-        return $this->connector->send(new GetRegistrationRuleRequest($id));
+        return $this->fetch(new GetRegistrationRuleRequest(id: $id));
     }
 }

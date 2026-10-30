@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Students\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\Students\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\Students\BoardingStatuses\CreateBoardingStatusRequest;
 use spkm\IsamsApi\Requests\Students\BoardingStatuses\DeleteBoardingStatusRequest;
 use spkm\IsamsApi\Requests\Students\BoardingStatuses\GetBoardingStatusesRequest;
 use spkm\IsamsApi\Requests\Students\BoardingStatuses\UpdateBoardingStatusRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class BoardingStatusesResource extends BaseResource
+class BoardingStatusesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\Students\BoardingStatuses\GetBoardingStatusesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetBoardingStatusesRequest());
+        return $this->fetch(new GetBoardingStatusesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\Students\BoardingStatuses\CreateBoardingStatusRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateBoardingStatusRequest($listItem));
+        return $this->fetch(new CreateBoardingStatusRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\BoardingStatuses\DeleteBoardingStatusRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteBoardingStatusRequest($id));
+        $this->fetch(new DeleteBoardingStatusRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\Students\BoardingStatuses\UpdateBoardingStatusRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateBoardingStatusRequest($id, $listItem));
+        $this->fetch(new UpdateBoardingStatusRequest(id: $id, listItem: $listItem));
     }
 }

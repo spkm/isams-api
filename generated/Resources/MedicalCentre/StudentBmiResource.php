@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\MedicalCentre\Bmi;
 use spkm\IsamsApi\Data\MedicalCentre\BmiForCreate;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\CreateStudentBmiRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\DeleteStudentBmiRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\GetStudentBmiRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\GetStudentBmisRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\PatchStudentBmiRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentBmiResource extends BaseResource
+class StudentBmiResource extends IsamsResource
 {
-    public function all(string $schoolId, ?bool $includeArchive = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\Bmi>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\GetStudentBmisRequest
+     */
+    public function all(string $schoolId, ?bool $includeArchive = null): Collection
     {
-        return $this->connector->send(new GetStudentBmisRequest($schoolId, $includeArchive));
+        return $this->fetch(new GetStudentBmisRequest(schoolId: $schoolId, includeArchive: $includeArchive));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\BmiForCreate|array<string, mixed>  $bmi
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\CreateStudentBmiRequest
      */
-    public function create(string $schoolId, BmiForCreate|array $bmi): Response
+    public function create(string $schoolId, BmiForCreate|array $bmi): Created
     {
-        return $this->connector->send(new CreateStudentBmiRequest($schoolId, $bmi));
+        return $this->fetch(new CreateStudentBmiRequest(schoolId: $schoolId, bmi: $bmi));
     }
 
-    public function delete(string $schoolId, string $bmiId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\DeleteStudentBmiRequest
+     */
+    public function delete(string $schoolId, string $bmiId): void
     {
-        return $this->connector->send(new DeleteStudentBmiRequest($schoolId, $bmiId));
+        $this->fetch(new DeleteStudentBmiRequest(schoolId: $schoolId, bmiId: $bmiId));
     }
 
-    public function get(string $schoolId, string $bmiId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\GetStudentBmiRequest
+     */
+    public function get(string $schoolId, string $bmiId): Bmi
     {
-        return $this->connector->send(new GetStudentBmiRequest($schoolId, $bmiId));
+        return $this->fetch(new GetStudentBmiRequest(schoolId: $schoolId, bmiId: $bmiId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\PatchStudentBmiRequest
      */
-    public function patch(string $schoolId, string $bmiId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $bmiId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentBmiRequest($schoolId, $bmiId, $patch));
+        $this->fetch(new PatchStudentBmiRequest(schoolId: $schoolId, bmiId: $bmiId, patch: $patch));
     }
 }

@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\CloudPortals\Admissions\ApplicantContactsResource;
 use spkm\IsamsApi\Resources\CloudPortals\Admissions\CallbackSubmissionResource;
 use spkm\IsamsApi\Resources\CloudPortals\Admissions\CommunicationsResource;
@@ -15,8 +14,9 @@ use spkm\IsamsApi\Resources\CloudPortals\Admissions\FileResource;
 use spkm\IsamsApi\Resources\CloudPortals\Admissions\FormInstanceResource;
 use spkm\IsamsApi\Resources\CloudPortals\Admissions\FormsResource;
 use spkm\IsamsApi\Resources\CloudPortals\Admissions\VisitsResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AdmissionsResource extends BaseResource
+class AdmissionsResource extends IsamsResource
 {
     public function applicantContacts(): ApplicantContactsResource
     {

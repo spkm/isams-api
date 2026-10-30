@@ -6,29 +6,37 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Gradebooks\StudentExclusion;
 use spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\CreateStudentExclusionsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\DeleteStudentExclusionRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\GetStudentExclusionsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StudentExclusionsResource extends BaseResource
+class StudentExclusionsResource extends IsamsResource
 {
-    public function all(int $gradebookId, int $columnId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\GetStudentExclusionsRequest
+     */
+    public function all(int $gradebookId, int $columnId): StudentExclusion
     {
-        return $this->connector->send(new GetStudentExclusionsRequest($gradebookId, $columnId));
+        return $this->fetch(new GetStudentExclusionsRequest(gradebookId: $gradebookId, columnId: $columnId));
     }
 
     /**
      * @param  array<mixed>  $schoolIds
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\CreateStudentExclusionsRequest
      */
-    public function createMany(int $gradebookId, int $columnId, array $schoolIds): Response
+    public function createMany(int $gradebookId, int $columnId, array $schoolIds): Created
     {
-        return $this->connector->send(new CreateStudentExclusionsRequest($gradebookId, $columnId, $schoolIds));
+        return $this->fetch(new CreateStudentExclusionsRequest(gradebookId: $gradebookId, columnId: $columnId, schoolIds: $schoolIds));
     }
 
-    public function delete(int $gradebookId, int $columnId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\DeleteStudentExclusionRequest
+     */
+    public function delete(int $gradebookId, int $columnId, string $schoolId): void
     {
-        return $this->connector->send(new DeleteStudentExclusionRequest($gradebookId, $columnId, $schoolId));
+        $this->fetch(new DeleteStudentExclusionRequest(gradebookId: $gradebookId, columnId: $columnId, schoolId: $schoolId));
     }
 }

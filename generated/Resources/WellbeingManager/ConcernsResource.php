@@ -6,15 +6,20 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\WellbeingManager\Concern;
 use spkm\IsamsApi\Requests\WellbeingManager\Concerns\GetConcernsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ConcernsResource extends BaseResource
+class ConcernsResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\WellbeingManager\Concern>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Concerns\GetConcernsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetConcernsRequest($page, $pageSize, $filter));
+        return $this->each(new GetConcernsRequest(filter: $filter), Concern::class);
     }
 }

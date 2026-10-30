@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\OutstandingTasks\GetOutstandingTasksRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class OutstandingTasksResource extends BaseResource
+class OutstandingTasksResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\OutstandingTaskSummary>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\OutstandingTasks\GetOutstandingTasksRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetOutstandingTasksRequest());
+        return $this->fetch(new GetOutstandingTasksRequest());
     }
 }

@@ -6,12 +6,11 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Billing\ExternalInvoiceCommunicationsResource;
 use spkm\IsamsApi\Resources\Billing\ExternalInvoiceResource;
 use spkm\IsamsApi\Resources\Billing\InvoicingResource;
 
-class BillingResource extends BaseResource
+class BillingResource extends IsamsResource
 {
     public function externalInvoice(): ExternalInvoiceResource
     {

@@ -6,13 +6,12 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\ListGroupResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\ListResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\SmsResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\TagsResource;
 
-class SystemConfigurationResource extends BaseResource
+class SystemConfigurationResource extends IsamsResource
 {
     public function list(): ListResource
     {

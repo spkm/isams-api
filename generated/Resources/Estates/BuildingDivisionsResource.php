@@ -6,26 +6,37 @@
 
 namespace spkm\IsamsApi\Resources\Estates;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Estates\BuildingDivisions\AddBuildingDivisionRequest;
 use spkm\IsamsApi\Requests\Estates\BuildingDivisions\GetBuildingDivisionsRequest;
 use spkm\IsamsApi\Requests\Estates\BuildingDivisions\RemoveBuildingDivisionRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class BuildingDivisionsResource extends BaseResource
+class BuildingDivisionsResource extends IsamsResource
 {
-    public function add(int $buildingId, int $divisionId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Estates\BuildingDivisions\AddBuildingDivisionRequest
+     */
+    public function add(int $buildingId, int $divisionId): Created
     {
-        return $this->connector->send(new AddBuildingDivisionRequest($buildingId, $divisionId));
+        return $this->fetch(new AddBuildingDivisionRequest(buildingId: $buildingId, divisionId: $divisionId));
     }
 
-    public function all(int $buildingId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Estates\Division>
+     * @see \spkm\IsamsApi\Requests\Estates\BuildingDivisions\GetBuildingDivisionsRequest
+     */
+    public function all(int $buildingId): Collection
     {
-        return $this->connector->send(new GetBuildingDivisionsRequest($buildingId));
+        return $this->fetch(new GetBuildingDivisionsRequest(buildingId: $buildingId));
     }
 
-    public function remove(int $buildingId, int $divisionId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Estates\BuildingDivisions\RemoveBuildingDivisionRequest
+     */
+    public function remove(int $buildingId, int $divisionId): void
     {
-        return $this->connector->send(new RemoveBuildingDivisionRequest($buildingId, $divisionId));
+        $this->fetch(new RemoveBuildingDivisionRequest(buildingId: $buildingId, divisionId: $divisionId));
     }
 }

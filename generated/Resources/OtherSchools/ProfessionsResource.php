@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\OtherSchools;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\OtherSchools\Professions\GetProfessionsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ProfessionsResource extends BaseResource
+class ProfessionsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\OtherSchools\Profession>
+     * @see \spkm\IsamsApi\Requests\OtherSchools\Professions\GetProfessionsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetProfessionsRequest());
+        return $this->fetch(new GetProfessionsRequest());
     }
 }

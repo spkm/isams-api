@@ -6,57 +6,74 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
+use Illuminate\Support\Collection;
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Admissions\ApplicantPassportDocument;
 use spkm\IsamsApi\Data\Admissions\ApplicantPassportDocumentForCreate;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\Admissions\PassportDocuments\CreateApplicantPassportDocumentRequest;
 use spkm\IsamsApi\Requests\Admissions\PassportDocuments\DeleteApplicantPassportDocumentRequest;
 use spkm\IsamsApi\Requests\Admissions\PassportDocuments\DownloadApplicantPassportDocumentRequest;
 use spkm\IsamsApi\Requests\Admissions\PassportDocuments\GetApplicantPassportDocumentRequest;
 use spkm\IsamsApi\Requests\Admissions\PassportDocuments\GetApplicantPassportDocumentsRequest;
 use spkm\IsamsApi\Requests\Admissions\PassportDocuments\PatchApplicantPassportDocumentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class PassportDocumentsResource extends BaseResource
+class PassportDocumentsResource extends IsamsResource
 {
-    public function all(string $schoolId, int $passportId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\ApplicantPassportDocument>
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportDocuments\GetApplicantPassportDocumentsRequest
+     */
+    public function all(string $schoolId, int $passportId): Collection
     {
-        return $this->connector->send(new GetApplicantPassportDocumentsRequest($schoolId, $passportId));
+        return $this->fetch(new GetApplicantPassportDocumentsRequest(schoolId: $schoolId, passportId: $passportId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantPassportDocumentForCreate|array<string, mixed>  $data
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportDocuments\CreateApplicantPassportDocumentRequest
      */
     public function create(
         string $schoolId,
         int $passportId,
         MultipartValue $binary,
         ApplicantPassportDocumentForCreate|array $data,
-    ): Response {
-        return $this->connector->send(new CreateApplicantPassportDocumentRequest($schoolId, $passportId, $binary, $data));
+    ): void {
+        $this->fetch(new CreateApplicantPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, binary: $binary, data: $data));
     }
 
-    public function delete(string $schoolId, int $passportId, int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportDocuments\DeleteApplicantPassportDocumentRequest
+     */
+    public function delete(string $schoolId, int $passportId, int $documentId): void
     {
-        return $this->connector->send(new DeleteApplicantPassportDocumentRequest($schoolId, $passportId, $documentId));
+        $this->fetch(new DeleteApplicantPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, documentId: $documentId));
     }
 
-    public function download(string $schoolId, int $passportId, int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportDocuments\DownloadApplicantPassportDocumentRequest
+     */
+    public function download(string $schoolId, int $passportId, int $documentId): File
     {
-        return $this->connector->send(new DownloadApplicantPassportDocumentRequest($schoolId, $passportId, $documentId));
+        return $this->fetch(new DownloadApplicantPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, documentId: $documentId));
     }
 
-    public function get(string $schoolId, int $passportId, int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportDocuments\GetApplicantPassportDocumentRequest
+     */
+    public function get(string $schoolId, int $passportId, int $documentId): ApplicantPassportDocument
     {
-        return $this->connector->send(new GetApplicantPassportDocumentRequest($schoolId, $passportId, $documentId));
+        return $this->fetch(new GetApplicantPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, documentId: $documentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportDocuments\PatchApplicantPassportDocumentRequest
      */
-    public function patch(string $schoolId, int $passportId, int $documentId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $passportId, int $documentId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchApplicantPassportDocumentRequest($schoolId, $passportId, $documentId, $patch));
+        $this->fetch(new PatchApplicantPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, documentId: $documentId, patch: $patch));
     }
 }

@@ -6,31 +6,40 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Admissions\Alumni;
 use spkm\IsamsApi\Requests\Admissions\Alumni\GetApplicantAlumniRequest;
 use spkm\IsamsApi\Requests\Admissions\Alumni\GetApplicantAlumnusRequest;
 use spkm\IsamsApi\Requests\Admissions\Alumni\PatchApplicantAlumnusRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class AlumniResource extends BaseResource
+class AlumniResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Admissions\Alumni>
+     * @see \spkm\IsamsApi\Requests\Admissions\Alumni\GetApplicantAlumniRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetApplicantAlumniRequest($page, $pageSize, $filter));
+        return $this->each(new GetApplicantAlumniRequest(filter: $filter), Alumni::class);
     }
 
-    public function get(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\Alumni\GetApplicantAlumnusRequest
+     */
+    public function get(string $schoolId): Alumni
     {
-        return $this->connector->send(new GetApplicantAlumnusRequest($schoolId));
+        return $this->fetch(new GetApplicantAlumnusRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Admissions\Alumni\PatchApplicantAlumnusRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchApplicantAlumnusRequest($schoolId, $patch));
+        $this->fetch(new PatchApplicantAlumnusRequest(schoolId: $schoolId, patch: $patch));
     }
 }

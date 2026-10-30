@@ -6,38 +6,58 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsEntriesForSessionRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsResultsForSessionRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsSessionsForEntriesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsSessionsForResultsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsSessionsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class InternalExamsResource extends BaseResource
+class InternalExamsResource extends IsamsResource
 {
-    public function getEntriesForSession(string $schoolId, int $sessionId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\InternalExamEntry>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsEntriesForSessionRequest
+     */
+    public function getEntriesForSession(string $schoolId, int $sessionId): Collection
     {
-        return $this->connector->send(new GetInternalExamsEntriesForSessionRequest($schoolId, $sessionId));
+        return $this->fetch(new GetInternalExamsEntriesForSessionRequest(schoolId: $schoolId, sessionId: $sessionId));
     }
 
-    public function getResultsForSession(string $schoolId, int $sessionId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\InternalExamResult>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsResultsForSessionRequest
+     */
+    public function getResultsForSession(string $schoolId, int $sessionId): Collection
     {
-        return $this->connector->send(new GetInternalExamsResultsForSessionRequest($schoolId, $sessionId));
+        return $this->fetch(new GetInternalExamsResultsForSessionRequest(schoolId: $schoolId, sessionId: $sessionId));
     }
 
-    public function getSessions(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\InternalExamSession>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsSessionsRequest
+     */
+    public function getSessions(): Collection
     {
-        return $this->connector->send(new GetInternalExamsSessionsRequest());
+        return $this->fetch(new GetInternalExamsSessionsRequest());
     }
 
-    public function getSessionsForEntries(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\InternalExamSession>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsSessionsForEntriesRequest
+     */
+    public function getSessionsForEntries(string $schoolId): Collection
     {
-        return $this->connector->send(new GetInternalExamsSessionsForEntriesRequest($schoolId));
+        return $this->fetch(new GetInternalExamsSessionsForEntriesRequest(schoolId: $schoolId));
     }
 
-    public function getSessionsForResults(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\InternalExamSession>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\InternalExams\GetInternalExamsSessionsForResultsRequest
+     */
+    public function getSessionsForResults(string $schoolId): Collection
     {
-        return $this->connector->send(new GetInternalExamsSessionsForResultsRequest($schoolId));
+        return $this->fetch(new GetInternalExamsSessionsForResultsRequest(schoolId: $schoolId));
     }
 }

@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\Forms\GetFormsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FormsResource extends BaseResource
+class FormsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\Form>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Forms\GetFormsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetFormsRequest());
+        return $this->fetch(new GetFormsRequest());
     }
 }

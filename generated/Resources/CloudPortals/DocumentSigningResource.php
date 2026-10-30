@@ -6,36 +6,48 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Integrations\CreatePortalSigningRequest;
 use spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\CreateDocumentSigningRequest;
 use spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\GetDocumentsForSigningRequest;
 use spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\GetEmbeddedSigningUrlForDocumentRequest;
 use spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\GetEmbeddedSigningUrlRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DocumentSigningResource extends BaseResource
+class DocumentSigningResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\Integrations\CreatePortalSigningRequest|array<string, mixed>  $createPortalSigningRequest
+     * @see \spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\CreateDocumentSigningRequest
      */
-    public function create(CreatePortalSigningRequest|array $createPortalSigningRequest): Response
+    public function create(CreatePortalSigningRequest|array $createPortalSigningRequest): Created
     {
-        return $this->connector->send(new CreateDocumentSigningRequest($createPortalSigningRequest));
+        return $this->fetch(new CreateDocumentSigningRequest(createPortalSigningRequest: $createPortalSigningRequest));
     }
 
-    public function getDocuments(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Document\PrivatePortalDocumentSigningDocument>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\GetDocumentsForSigningRequest
+     */
+    public function getDocuments(): Collection
     {
-        return $this->connector->send(new GetDocumentsForSigningRequest());
+        return $this->fetch(new GetDocumentsForSigningRequest());
     }
 
-    public function getEmbeddedUrl(string $signingRequestId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\GetEmbeddedSigningUrlRequest
+     */
+    public function getEmbeddedUrl(string $signingRequestId): mixed
     {
-        return $this->connector->send(new GetEmbeddedSigningUrlRequest($signingRequestId));
+        return $this->fetch(new GetEmbeddedSigningUrlRequest(signingRequestId: $signingRequestId));
     }
 
-    public function getEmbeddedUrlForDocument(string $documentGuid): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\DocumentSigning\GetEmbeddedSigningUrlForDocumentRequest
+     */
+    public function getEmbeddedUrlForDocument(string $documentGuid): mixed
     {
-        return $this->connector->send(new GetEmbeddedSigningUrlForDocumentRequest($documentGuid));
+        return $this->fetch(new GetEmbeddedSigningUrlForDocumentRequest(documentGuid: $documentGuid));
     }
 }

@@ -6,26 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\MedicalCentre\Medication\GetMedicalMedicationLocationsRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Medication\GetMedicalMedicationSuppliersRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Medication\GetMedicalMedicationTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class MedicationResource extends BaseResource
+class MedicationResource extends IsamsResource
 {
-    public function getLocations(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicationLocation>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Medication\GetMedicalMedicationLocationsRequest
+     */
+    public function getLocations(): Collection
     {
-        return $this->connector->send(new GetMedicalMedicationLocationsRequest());
+        return $this->fetch(new GetMedicalMedicationLocationsRequest());
     }
 
-    public function getSuppliers(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicationSupplier>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Medication\GetMedicalMedicationSuppliersRequest
+     */
+    public function getSuppliers(): Collection
     {
-        return $this->connector->send(new GetMedicalMedicationSuppliersRequest());
+        return $this->fetch(new GetMedicalMedicationSuppliersRequest());
     }
 
-    public function getTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicationType>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Medication\GetMedicalMedicationTypesRequest
+     */
+    public function getTypes(): Collection
     {
-        return $this->connector->send(new GetMedicalMedicationTypesRequest());
+        return $this->fetch(new GetMedicalMedicationTypesRequest());
     }
 }

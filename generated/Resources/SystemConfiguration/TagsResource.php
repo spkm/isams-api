@@ -6,11 +6,11 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration;
 
-use Saloon\Http\BaseResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\Tags\CategoriesResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\Tags\EntityTypesResource;
 
-class TagsResource extends BaseResource
+class TagsResource extends IsamsResource
 {
     public function categories(): CategoriesResource
     {

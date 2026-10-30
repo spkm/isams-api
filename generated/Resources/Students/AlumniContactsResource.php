@@ -6,15 +6,20 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Students\AlumniContact;
 use spkm\IsamsApi\Requests\Students\AlumniContacts\GetAlumniContactsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AlumniContactsResource extends BaseResource
+class AlumniContactsResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Students\AlumniContact>
+     * @see \spkm\IsamsApi\Requests\Students\AlumniContacts\GetAlumniContactsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetAlumniContactsRequest($page, $pageSize, $filter));
+        return $this->each(new GetAlumniContactsRequest(filter: $filter), AlumniContact::class);
     }
 }

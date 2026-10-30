@@ -6,47 +6,59 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Students\Alumni;
 use spkm\IsamsApi\Requests\Students\Alumni\GetAlumniBySchoolIdRequest;
 use spkm\IsamsApi\Requests\Students\Alumni\GetAlumniRequest;
 use spkm\IsamsApi\Requests\Students\Alumni\MoveAlumniToApplicantRequest;
 use spkm\IsamsApi\Requests\Students\Alumni\MoveAlumniToCurrentRequest;
 use spkm\IsamsApi\Requests\Students\Alumni\PatchAlumniRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class AlumniResource extends BaseResource
+class AlumniResource extends IsamsResource
 {
-    public function all(
-        ?int $page = null,
-        ?int $pageSize = null,
-        ?string $expand = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetAlumniRequest($page, $pageSize, $expand, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Students\Alumni>
+     * @see \spkm\IsamsApi\Requests\Students\Alumni\GetAlumniRequest
+     */
+    public function all(?string $expand = null, string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetAlumniRequest(expand: $expand, filter: $filter), Alumni::class);
     }
 
-    public function get(string $schoolId, ?string $expand = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Alumni\GetAlumniBySchoolIdRequest
+     */
+    public function get(string $schoolId, ?string $expand = null): Alumni
     {
-        return $this->connector->send(new GetAlumniBySchoolIdRequest($schoolId, $expand));
+        return $this->fetch(new GetAlumniBySchoolIdRequest(schoolId: $schoolId, expand: $expand));
     }
 
-    public function moveToApplicant(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Alumni\MoveAlumniToApplicantRequest
+     */
+    public function moveToApplicant(string $schoolId): Created
     {
-        return $this->connector->send(new MoveAlumniToApplicantRequest($schoolId));
+        return $this->fetch(new MoveAlumniToApplicantRequest(schoolId: $schoolId));
     }
 
-    public function moveToCurrent(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Alumni\MoveAlumniToCurrentRequest
+     */
+    public function moveToCurrent(string $schoolId): Created
     {
-        return $this->connector->send(new MoveAlumniToCurrentRequest($schoolId));
+        return $this->fetch(new MoveAlumniToCurrentRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Students\Alumni\PatchAlumniRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchAlumniRequest($schoolId, $patch));
+        $this->fetch(new PatchAlumniRequest(schoolId: $schoolId, patch: $patch));
     }
 }

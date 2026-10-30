@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheck;
 use spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheckForCreate;
 use spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheckForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\CreateEmployeeReferenceCheckRequest;
@@ -15,40 +16,53 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\DeleteEmployee
 use spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\GetEmployeeReferenceCheckRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\GetEmployeeReferenceChecksRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\UpdateEmployeeReferenceCheckRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeReferenceChecksResource extends BaseResource
+class EmployeeReferenceChecksResource extends IsamsResource
 {
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheck>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\GetEmployeeReferenceChecksRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeReferenceChecksRequest($employeeId));
+        return $this->fetch(new GetEmployeeReferenceChecksRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheckForCreate|array<string, mixed>  $employeeReferenceCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\CreateEmployeeReferenceCheckRequest
      */
-    public function create(int $employeeId, EmployeeReferenceCheckForCreate|array $employeeReferenceCheck): Response
+    public function create(int $employeeId, EmployeeReferenceCheckForCreate|array $employeeReferenceCheck): Created
     {
-        return $this->connector->send(new CreateEmployeeReferenceCheckRequest($employeeId, $employeeReferenceCheck));
+        return $this->fetch(new CreateEmployeeReferenceCheckRequest(employeeId: $employeeId, employeeReferenceCheck: $employeeReferenceCheck));
     }
 
-    public function delete(int $employeeId, int $referenceCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\DeleteEmployeeReferenceCheckRequest
+     */
+    public function delete(int $employeeId, int $referenceCheckId): void
     {
-        return $this->connector->send(new DeleteEmployeeReferenceCheckRequest($employeeId, $referenceCheckId));
+        $this->fetch(new DeleteEmployeeReferenceCheckRequest(employeeId: $employeeId, referenceCheckId: $referenceCheckId));
     }
 
-    public function get(int $employeeId, int $referenceCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\GetEmployeeReferenceCheckRequest
+     */
+    public function get(int $employeeId, int $referenceCheckId): EmployeeReferenceCheck
     {
-        return $this->connector->send(new GetEmployeeReferenceCheckRequest($employeeId, $referenceCheckId));
+        return $this->fetch(new GetEmployeeReferenceCheckRequest(employeeId: $employeeId, referenceCheckId: $referenceCheckId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeReferenceCheckForUpdate|array<string, mixed>  $employeeReferenceCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\UpdateEmployeeReferenceCheckRequest
      */
     public function update(
         int $employeeId,
         int $referenceCheckId,
         EmployeeReferenceCheckForUpdate|array $employeeReferenceCheck,
-    ): Response {
-        return $this->connector->send(new UpdateEmployeeReferenceCheckRequest($employeeId, $referenceCheckId, $employeeReferenceCheck));
+    ): void {
+        $this->fetch(new UpdateEmployeeReferenceCheckRequest(employeeId: $employeeId, referenceCheckId: $referenceCheckId, employeeReferenceCheck: $employeeReferenceCheck));
     }
 }

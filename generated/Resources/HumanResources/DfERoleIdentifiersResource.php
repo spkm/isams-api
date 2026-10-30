@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\HumanResources\DfERoleIdentifiers\GetDfERoleIdentifiersRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DfERoleIdentifiersResource extends BaseResource
+class DfERoleIdentifiersResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\RoleIdentifier>
+     * @see \spkm\IsamsApi\Requests\HumanResources\DfERoleIdentifiers\GetDfERoleIdentifiersRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetDfERoleIdentifiersRequest());
+        return $this->fetch(new GetDfERoleIdentifiersRequest());
     }
 }

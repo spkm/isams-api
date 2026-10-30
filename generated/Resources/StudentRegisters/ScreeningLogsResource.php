@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\StudentRegisters;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\StudentRegisters\ScreeningLogs\GetScreeningLogsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ScreeningLogsResource extends BaseResource
+class ScreeningLogsResource extends IsamsResource
 {
-    public function all(int $registerId, string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\StudentRegisters\StudentScreeningLog>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\ScreeningLogs\GetScreeningLogsRequest
+     */
+    public function all(int $registerId, string $schoolId): Collection
     {
-        return $this->connector->send(new GetScreeningLogsRequest($registerId, $schoolId));
+        return $this->fetch(new GetScreeningLogsRequest(registerId: $registerId, schoolId: $schoolId));
     }
 }

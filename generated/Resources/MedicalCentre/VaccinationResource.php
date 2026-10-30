@@ -6,32 +6,48 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationCompleteToRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationSchedulesRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationStatusesRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class VaccinationResource extends BaseResource
+class VaccinationResource extends IsamsResource
 {
-    public function getCompleteTo(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VaccinationCompleteTo>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationCompleteToRequest
+     */
+    public function getCompleteTo(): Collection
     {
-        return $this->connector->send(new GetMedicalVaccinationCompleteToRequest());
+        return $this->fetch(new GetMedicalVaccinationCompleteToRequest());
     }
 
-    public function getSchedules(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VaccinationSchedule>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationSchedulesRequest
+     */
+    public function getSchedules(): Collection
     {
-        return $this->connector->send(new GetMedicalVaccinationSchedulesRequest());
+        return $this->fetch(new GetMedicalVaccinationSchedulesRequest());
     }
 
-    public function getStatuses(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\VaccinationStatus>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationStatusesRequest
+     */
+    public function getStatuses(): Collection
     {
-        return $this->connector->send(new GetMedicalVaccinationStatusesRequest());
+        return $this->fetch(new GetMedicalVaccinationStatusesRequest());
     }
 
-    public function getTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\Vaccination>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationTypesRequest
+     */
+    public function getTypes(): Collection
     {
-        return $this->connector->send(new GetMedicalVaccinationTypesRequest());
+        return $this->fetch(new GetMedicalVaccinationTypesRequest());
     }
 }

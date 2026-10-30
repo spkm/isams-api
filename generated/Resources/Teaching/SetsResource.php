@@ -6,32 +6,47 @@
 
 namespace spkm\IsamsApi\Resources\Teaching;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Teaching\Sets\AddStudentToTeachingSetRequest;
 use spkm\IsamsApi\Requests\Teaching\Sets\GetTeachingSetStudentsRequest;
 use spkm\IsamsApi\Requests\Teaching\Sets\GetTeachingSetsRequest;
 use spkm\IsamsApi\Requests\Teaching\Sets\RemoveStudentFromTeachingSetRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SetsResource extends BaseResource
+class SetsResource extends IsamsResource
 {
-    public function addStudent(int $setId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Teaching\Sets\AddStudentToTeachingSetRequest
+     */
+    public function addStudent(int $setId, string $schoolId): Created
     {
-        return $this->connector->send(new AddStudentToTeachingSetRequest($setId, $schoolId));
+        return $this->fetch(new AddStudentToTeachingSetRequest(setId: $setId, schoolId: $schoolId));
     }
 
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Teaching\TeachingSet>
+     * @see \spkm\IsamsApi\Requests\Teaching\Sets\GetTeachingSetsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetTeachingSetsRequest());
+        return $this->fetch(new GetTeachingSetsRequest());
     }
 
-    public function getStudents(int $setId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Teaching\Student>
+     * @see \spkm\IsamsApi\Requests\Teaching\Sets\GetTeachingSetStudentsRequest
+     */
+    public function getStudents(int $setId): Collection
     {
-        return $this->connector->send(new GetTeachingSetStudentsRequest($setId));
+        return $this->fetch(new GetTeachingSetStudentsRequest(setId: $setId));
     }
 
-    public function removeStudent(int $setId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Teaching\Sets\RemoveStudentFromTeachingSetRequest
+     */
+    public function removeStudent(int $setId, string $schoolId): void
     {
-        return $this->connector->send(new RemoveStudentFromTeachingSetRequest($setId, $schoolId));
+        $this->fetch(new RemoveStudentFromTeachingSetRequest(setId: $setId, schoolId: $schoolId));
     }
 }

@@ -6,29 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\CreateGradebookStudentAllocationsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\DeleteGradebookStudentAllocationRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\GetGradebookStudentAllocationsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StudentAllocationsResource extends BaseResource
+class StudentAllocationsResource extends IsamsResource
 {
-    public function all(int $gradebookId, string $criteria): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\Allocation>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\GetGradebookStudentAllocationsRequest
+     */
+    public function all(int $gradebookId, string $criteria): Collection
     {
-        return $this->connector->send(new GetGradebookStudentAllocationsRequest($gradebookId, $criteria));
+        return $this->fetch(new GetGradebookStudentAllocationsRequest(gradebookId: $gradebookId, criteria: $criteria));
     }
 
     /**
      * @param  array<mixed>  $studentAllocations
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\CreateGradebookStudentAllocationsRequest
      */
-    public function createMany(int $gradebookId, string $criteria, array $studentAllocations): Response
+    public function createMany(int $gradebookId, string $criteria, array $studentAllocations): Created
     {
-        return $this->connector->send(new CreateGradebookStudentAllocationsRequest($gradebookId, $criteria, $studentAllocations));
+        return $this->fetch(new CreateGradebookStudentAllocationsRequest(gradebookId: $gradebookId, criteria: $criteria, studentAllocations: $studentAllocations));
     }
 
-    public function delete(int $gradebookId, string $criteria, int $allocationId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\DeleteGradebookStudentAllocationRequest
+     */
+    public function delete(int $gradebookId, string $criteria, int $allocationId): void
     {
-        return $this->connector->send(new DeleteGradebookStudentAllocationRequest($gradebookId, $criteria, $allocationId));
+        $this->fetch(new DeleteGradebookStudentAllocationRequest(gradebookId: $gradebookId, criteria: $criteria, allocationId: $allocationId));
     }
 }

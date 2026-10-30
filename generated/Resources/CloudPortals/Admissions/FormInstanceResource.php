@@ -6,26 +6,34 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\FormInstance\GetFormInstanceApplicationFormListRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\FormInstance\GetFormInstanceEnquiryFormListRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\FormInstance\GetFormInstanceRegistrationFormListRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FormInstanceResource extends BaseResource
+class FormInstanceResource extends IsamsResource
 {
-    public function getApplicationFormList(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\FormInstance\GetFormInstanceApplicationFormListRequest
+     */
+    public function getApplicationFormList(): mixed
     {
-        return $this->connector->send(new GetFormInstanceApplicationFormListRequest());
+        return $this->fetch(new GetFormInstanceApplicationFormListRequest());
     }
 
-    public function getEnquiryFormList(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\FormInstance\GetFormInstanceEnquiryFormListRequest
+     */
+    public function getEnquiryFormList(): mixed
     {
-        return $this->connector->send(new GetFormInstanceEnquiryFormListRequest());
+        return $this->fetch(new GetFormInstanceEnquiryFormListRequest());
     }
 
-    public function getRegistrationFormList(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\FormInstance\GetFormInstanceRegistrationFormListRequest
+     */
+    public function getRegistrationFormList(): mixed
     {
-        return $this->connector->send(new GetFormInstanceRegistrationFormListRequest());
+        return $this->fetch(new GetFormInstanceRegistrationFormListRequest());
     }
 }

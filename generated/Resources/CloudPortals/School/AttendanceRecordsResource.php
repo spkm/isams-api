@@ -6,44 +6,68 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceLessonRegistrationRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceOffGamesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceOutOfClassRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceOutOfSchoolRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceRegistrationRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceRegistrationSummaryRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AttendanceRecordsResource extends BaseResource
+class AttendanceRecordsResource extends IsamsResource
 {
-    public function getLessonRegistration(string $schoolId, int $termId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\AttendanceRecord>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceLessonRegistrationRequest
+     */
+    public function getLessonRegistration(string $schoolId, int $termId): Collection
     {
-        return $this->connector->send(new GetAttendanceRecordAttendanceLessonRegistrationRequest($schoolId, $termId));
+        return $this->fetch(new GetAttendanceRecordAttendanceLessonRegistrationRequest(schoolId: $schoolId, termId: $termId));
     }
 
-    public function getOffGames(string $schoolId, int $termId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\AttendanceRecord>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceOffGamesRequest
+     */
+    public function getOffGames(string $schoolId, int $termId): Collection
     {
-        return $this->connector->send(new GetAttendanceRecordAttendanceOffGamesRequest($schoolId, $termId));
+        return $this->fetch(new GetAttendanceRecordAttendanceOffGamesRequest(schoolId: $schoolId, termId: $termId));
     }
 
-    public function getOutOfClass(string $schoolId, int $termId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\AttendanceRecord>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceOutOfClassRequest
+     */
+    public function getOutOfClass(string $schoolId, int $termId): Collection
     {
-        return $this->connector->send(new GetAttendanceRecordAttendanceOutOfClassRequest($schoolId, $termId));
+        return $this->fetch(new GetAttendanceRecordAttendanceOutOfClassRequest(schoolId: $schoolId, termId: $termId));
     }
 
-    public function getOutOfSchool(string $schoolId, int $termId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\AttendanceRecord>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceOutOfSchoolRequest
+     */
+    public function getOutOfSchool(string $schoolId, int $termId): Collection
     {
-        return $this->connector->send(new GetAttendanceRecordAttendanceOutOfSchoolRequest($schoolId, $termId));
+        return $this->fetch(new GetAttendanceRecordAttendanceOutOfSchoolRequest(schoolId: $schoolId, termId: $termId));
     }
 
-    public function getRegistration(string $schoolId, int $termId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\AttendanceRecord>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceRegistrationRequest
+     */
+    public function getRegistration(string $schoolId, int $termId): Collection
     {
-        return $this->connector->send(new GetAttendanceRecordAttendanceRegistrationRequest($schoolId, $termId));
+        return $this->fetch(new GetAttendanceRecordAttendanceRegistrationRequest(schoolId: $schoolId, termId: $termId));
     }
 
-    public function getRegistrationSummary(string $schoolId, int $termId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\AttendanceRecord>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\AttendanceRecords\GetAttendanceRecordAttendanceRegistrationSummaryRequest
+     */
+    public function getRegistrationSummary(string $schoolId, int $termId): Collection
     {
-        return $this->connector->send(new GetAttendanceRecordAttendanceRegistrationSummaryRequest($schoolId, $termId));
+        return $this->fetch(new GetAttendanceRecordAttendanceRegistrationSummaryRequest(schoolId: $schoolId, termId: $termId));
     }
 }

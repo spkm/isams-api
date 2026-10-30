@@ -10,7 +10,11 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use ReflectionClass;
+use ReflectionMethod;
 use ReflectionNamedType;
+use ReflectionParameter;
+use ReflectionType;
+use ReflectionUnionType;
 use RuntimeException;
 
 /**
@@ -1205,8 +1209,7 @@ final class Generator
         $resource = $this->resourceFor($operation['namespace']);
         $requestClass = ltrim($operation['class'], '\\');
         $name = lcfirst((string) preg_replace('/Request$/', '', class_basename($requestClass)));
-        $method = (new Method($name))->setPublic()->setReturnType('Saloon\Http\Response');
-        $arguments = [];
+        $method = (new Method($name))->setPublic();
 
         if ($operation['source'] === 'generated') {
             $this->addParameters($method, $operation['parameters'], new PhpNamespace('Unused'), false);
@@ -1222,11 +1225,37 @@ final class Generator
             }
         }
 
-        foreach ($method->getParameters() as $parameter) {
-            $arguments[] = '$'.$parameter->getName();
+        $paged = $operation['paginatable'] ?? is_subclass_of($requestClass, 'Saloon\PaginationPlugin\Contracts\Paginatable');
+
+        if ($paged) {
+            $method->removeParameter('page')->removeParameter('pageSize');
         }
 
-        $method->setBody('return $this->connector->send(new \\'.$requestClass.'('.implode(', ', $arguments).'));');
+        $arguments = array_map(fn (string $parameter) => "$parameter: \$$parameter", array_keys($method->getParameters()));
+        $send = 'new \\'.$requestClass.'('.implode(', ', $arguments).')';
+        $model = $operation['response']['model'] ?? null;
+        [$returnType, $returnComment] = match (true) {
+            $paged => ['Illuminate\Support\LazyCollection', '\\Illuminate\Support\LazyCollection<int, \\'.$model.'>'],
+            $operation['response']['shape'] === 'list' => ['Illuminate\Support\Collection', '\\Illuminate\Support\Collection<int, '.($model ? '\\'.$model : 'mixed').'>'],
+            $operation['response']['shape'] === 'one' => [$model ?? 'array', $model ? null : 'array<mixed>'],
+            $operation['response']['shape'] === 'created' => ['spkm\IsamsApi\Data\Created', null],
+            $operation['response']['shape'] === 'file' => ['spkm\IsamsApi\Data\File', null],
+            $operation['response']['shape'] === 'raw' => ['mixed', null],
+            default => ['void', null],
+        };
+
+        $method->setReturnType($returnType)->setBody(match (true) {
+            $paged => "return \$this->each($send, \\{$model}::class);",
+            $returnType === 'void' => "\$this->fetch($send);",
+            default => "return \$this->fetch($send);",
+        });
+
+        if ($returnComment !== null) {
+            $method->addComment("@return $returnComment");
+        }
+
+        $method->addComment('@see \\'.$requestClass);
+
         if (isset($this->resources[$resource][$name])) {
             throw new RuntimeException("Two requests would both be {$resource}::{$name}(); add a \"class\" override for {$operation['id']}.");
         }
@@ -1340,8 +1369,8 @@ final class Generator
 
         foreach ($this->resources as $resource => $methods) {
             [$namespace, $file] = $this->file(Str::beforeLast($resource, '\\'));
-            $namespace->addUse('Saloon\Http\BaseResource');
-            $class = $namespace->addClass(class_basename($resource))->setExtends('Saloon\Http\BaseResource');
+            $namespace->addUse('spkm\IsamsApi\Resources\IsamsResource');
+            $class = $namespace->addClass(class_basename($resource))->setExtends('spkm\IsamsApi\Resources\IsamsResource');
             $childNames = $children[$resource] ?? [];
             ksort($childNames);
 
@@ -1359,10 +1388,6 @@ final class Generator
             }
 
             ksort($named);
-
-            if ($named !== []) {
-                $namespace->addUse('Saloon\Http\Response');
-            }
 
             foreach ($named as [$method, $request]) {
                 $this->useShortNames($namespace, $method, $request);
@@ -1383,11 +1408,98 @@ final class Generator
         }
 
         $this->files[$this->pathFor('spkm\IsamsApi\Resources\HasResources')] = $this->print($file);
+        $this->emitFacade($areas);
+    }
+
+    /**
+     * The Isams facade, with a hint for each area and for the service's and connector's own methods, so IDEs can
+     * autocomplete Isams::.
+     *
+     * @param  list<string>  $areas
+     */
+    private function emitFacade(array $areas): void
+    {
+        [$namespace, $file] = $this->file('spkm\IsamsApi\Facades');
+        $namespace->addUse('Illuminate\Support\Facades\Facade');
+        $class = $namespace->addClass('Isams')->setExtends('Illuminate\Support\Facades\Facade');
+
+        foreach ($areas as $area) {
+            $class->addComment('@method static \\'.$area.' '.lcfirst((string) preg_replace('/Resource$/', '', class_basename($area))).'()');
+        }
+
+        $methods = [
+            ...array_filter((new ReflectionClass('spkm\IsamsApi\IsamsService'))->getMethods(ReflectionMethod::IS_PUBLIC), fn (ReflectionMethod $method) => ! str_starts_with($method->getName(), '__')),
+            ...array_map(fn (string $name) => new ReflectionMethod('spkm\IsamsApi\IsamsConnector', $name), ['send', 'paginate', 'paginateEndpoint', 'get', 'post', 'put', 'patch', 'delete']),
+        ];
+
+        foreach ($methods as $method) {
+            $class->addComment('@method static '.$this->hintReturnType($method).' '.$method->getName().'('.implode(', ', array_map($this->hintParameter(...), $method->getParameters())).')');
+        }
+
+        $class->addMethod('getFacadeAccessor')->setProtected()->setStatic()->setReturnType('string')->setBody("return 'isams';");
+        $this->files[$this->pathFor('spkm\IsamsApi\Facades\Isams')] = $this->print($file);
+    }
+
+    private function hintReturnType(ReflectionMethod $method): string
+    {
+        return preg_match('/@return\\s+(\\S+)/', (string) $method->getDocComment(), $matches)
+            ? $this->qualify($matches[1], $method)
+            : $this->hintType($method->getReturnType());
+    }
+
+    private function hintParameter(ReflectionParameter $parameter): string
+    {
+        $method = $parameter->getDeclaringFunction();
+        $documented = $method instanceof ReflectionMethod && preg_match('/@param\\s+(.+?)\\s+\\$'.$parameter->getName().'\\b/', (string) $method->getDocComment(), $matches)
+            ? $this->qualify($matches[1], $method)
+            : null;
+        $type = $documented ?? ($parameter->getType() === null ? null : $this->hintType($parameter->getType()));
+        $default = '';
+
+        if ($parameter->isDefaultValueAvailable()) {
+            $value = $parameter->getDefaultValue();
+            $default = ' = '.match (true) {
+                $value === null => 'null',
+                $value === [] => '[]',
+                is_array($value) => '['.implode(', ', array_map(fn (mixed $item) => var_export($item, true), $value)).']',
+                default => var_export($value, true),
+            };
+        }
+
+        return ($type === null ? '' : $type.' ').'$'.$parameter->getName().$default;
+    }
+
+    private function hintType(?ReflectionType $type): string
+    {
+        $types = $type instanceof ReflectionUnionType ? $type->getTypes() : ($type === null ? [] : [$type]);
+        $names = array_map(fn (ReflectionNamedType $named) => $named->isBuiltin() ? $named->getName() : '\\'.$named->getName(), array_filter($types, fn ($named) => $named instanceof ReflectionNamedType));
+        $hint = implode('|', $names) ?: 'mixed';
+
+        return $type?->allowsNull() && ! in_array('null', $names, true) && $hint !== 'mixed' ? '?'.$hint : $hint;
+    }
+
+    /**
+     * A docblock type with its class names made absolute: they name a class in the declaring class's namespace, an
+     * imported global class, or a full name.
+     */
+    private function qualify(string $type, ReflectionMethod $method): string
+    {
+        return implode('|', array_map(function (string $part) use ($method) {
+            $name = ltrim($part, '\\');
+            $local = $method->getDeclaringClass()->getNamespaceName().'\\'.$name;
+
+            return match (true) {
+                str_contains($part, '<') || ctype_lower($part[0]) => $part,
+                class_exists($local) || interface_exists($local) => '\\'.$local,
+                default => '\\'.$name,
+            };
+        }, explode('|', $type)));
     }
 
     private function useShortNames(PhpNamespace $namespace, Method $method, string $request): void
     {
-        $classes = [$request];
+        preg_match_all('/\\\\([\\w\\\\]+)::class/', $method->getBody(), $models);
+        $classes = [$request, ...$models[1], ...array_filter([ltrim((string) $method->getReturnType(), '?')], fn (string $type) => str_contains($type, '\\'))];
 
         foreach ($method->getParameters() as $parameter) {
             foreach (explode('|', ltrim((string) $parameter->getType(), '?')) as $type) {
@@ -1403,9 +1515,7 @@ final class Generator
             if (! isset($namespace->getUses()[$short]) || $namespace->getUses()[$short] === $class) {
                 $namespace->addUse($class);
 
-                if ($class === $request) {
-                    $method->setBody(str_replace('new \\'.$class.'(', 'new '.$short.'(', $method->getBody()));
-                }
+                $method->setBody(str_replace(['new \\'.$class.'(', '\\'.$class.'::class'], ['new '.$short.'(', $short.'::class'], $method->getBody()));
             }
         }
     }

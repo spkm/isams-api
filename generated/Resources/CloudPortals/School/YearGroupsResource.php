@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\YearGroups\GetYearGroupsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class YearGroupsResource extends BaseResource
+class YearGroupsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\YearGroup>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\YearGroups\GetYearGroupsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetYearGroupsRequest());
+        return $this->fetch(new GetYearGroupsRequest());
     }
 }

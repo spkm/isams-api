@@ -6,25 +6,30 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
+use Illuminate\Support\Collection;
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Admissions\ApplicantDocumentForCreate;
 use spkm\IsamsApi\Requests\Admissions\Document\CreateApplicantDocumentRequest;
 use spkm\IsamsApi\Requests\Admissions\Document\GetApplicantDocumentsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DocumentResource extends BaseResource
+class DocumentResource extends IsamsResource
 {
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\ApplicantDocument>
+     * @see \spkm\IsamsApi\Requests\Admissions\Document\GetApplicantDocumentsRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetApplicantDocumentsRequest($schoolId));
+        return $this->fetch(new GetApplicantDocumentsRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantDocumentForCreate|array<string, mixed>  $data
+     * @see \spkm\IsamsApi\Requests\Admissions\Document\CreateApplicantDocumentRequest
      */
-    public function create(string $schoolId, MultipartValue $binary, ApplicantDocumentForCreate|array $data): Response
+    public function create(string $schoolId, MultipartValue $binary, ApplicantDocumentForCreate|array $data): void
     {
-        return $this->connector->send(new CreateApplicantDocumentRequest($schoolId, $binary, $data));
+        $this->fetch(new CreateApplicantDocumentRequest(schoolId: $schoolId, binary: $binary, data: $data));
     }
 }

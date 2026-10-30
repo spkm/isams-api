@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\CreatePassportPlaceIssuedRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\DeletePassportPlaceIssuedRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\GetPassportPlacesIssuedRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\UpdatePassportPlaceIssuedRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PassportPlaceIssuedResource extends BaseResource
+class PassportPlaceIssuedResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\CreatePassportPlaceIssuedRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreatePassportPlaceIssuedRequest($listItem));
+        return $this->fetch(new CreatePassportPlaceIssuedRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\DeletePassportPlaceIssuedRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeletePassportPlaceIssuedRequest($id));
+        $this->fetch(new DeletePassportPlaceIssuedRequest(id: $id));
     }
 
-    public function get(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\GetPassportPlacesIssuedRequest
+     */
+    public function get(): Collection
     {
-        return $this->connector->send(new GetPassportPlacesIssuedRequest());
+        return $this->fetch(new GetPassportPlacesIssuedRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\UpdatePassportPlaceIssuedRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdatePassportPlaceIssuedRequest($id, $listItem));
+        $this->fetch(new UpdatePassportPlaceIssuedRequest(id: $id, listItem: $listItem));
     }
 }

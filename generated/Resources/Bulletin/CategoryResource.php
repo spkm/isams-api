@@ -6,14 +6,16 @@
 
 namespace spkm\IsamsApi\Resources\Bulletin;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\Bulletin\Category\UpdateBulletinCategoryRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CategoryResource extends BaseResource
+class CategoryResource extends IsamsResource
 {
-    public function update(int $bulletinId, int $categoryId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Bulletin\Category\UpdateBulletinCategoryRequest
+     */
+    public function update(int $bulletinId, int $categoryId): void
     {
-        return $this->connector->send(new UpdateBulletinCategoryRequest($bulletinId, $categoryId));
+        $this->fetch(new UpdateBulletinCategoryRequest(bulletinId: $bulletinId, categoryId: $categoryId));
     }
 }

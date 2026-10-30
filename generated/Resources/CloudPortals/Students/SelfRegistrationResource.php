@@ -7,31 +7,39 @@
 namespace spkm\IsamsApi\Resources\CloudPortals\Students;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Data\Registration\SelfRegistrationRegistersForUpdate;
+use spkm\IsamsApi\Data\Registration\StudentSelfRegistrationConfiguration;
 use spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\GetSelfRegistrationConfigRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\GetSelfRegistrationRegisterPeriodsByDateRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\UpdateSelfRegistrationRegisterPeriodsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SelfRegistrationResource extends BaseResource
+class SelfRegistrationResource extends IsamsResource
 {
-    public function getConfig(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\GetSelfRegistrationConfigRequest
+     */
+    public function getConfig(): StudentSelfRegistrationConfiguration
     {
-        return $this->connector->send(new GetSelfRegistrationConfigRequest());
+        return $this->fetch(new GetSelfRegistrationConfigRequest());
     }
 
-    public function getRegisterPeriodsByDate(DateTimeInterface|string $date): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Registration\StudentSelfRegistrationRegisterPeriod>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\GetSelfRegistrationRegisterPeriodsByDateRequest
+     */
+    public function getRegisterPeriodsByDate(DateTimeInterface|string $date): Collection
     {
-        return $this->connector->send(new GetSelfRegistrationRegisterPeriodsByDateRequest($date));
+        return $this->fetch(new GetSelfRegistrationRegisterPeriodsByDateRequest(date: $date));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Registration\SelfRegistrationRegistersForUpdate|array<string, mixed>  $selfRegistrationRegisters
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\UpdateSelfRegistrationRegisterPeriodsRequest
      */
-    public function updateRegisterPeriods(
-        SelfRegistrationRegistersForUpdate|array $selfRegistrationRegisters,
-    ): Response {
-        return $this->connector->send(new UpdateSelfRegistrationRegisterPeriodsRequest($selfRegistrationRegisters));
+    public function updateRegisterPeriods(SelfRegistrationRegistersForUpdate|array $selfRegistrationRegisters): void
+    {
+        $this->fetch(new UpdateSelfRegistrationRegisterPeriodsRequest(selfRegistrationRegisters: $selfRegistrationRegisters));
     }
 }

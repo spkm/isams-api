@@ -6,25 +6,33 @@
 
 namespace spkm\IsamsApi\Resources\RewardsAndConduct;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
+use spkm\IsamsApi\Data\RewardsAndConduct\FieldValue;
 use spkm\IsamsApi\Requests\RewardsAndConduct\FieldValues\GetFieldValueRequest;
 use spkm\IsamsApi\Requests\RewardsAndConduct\FieldValues\GetFieldValuesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FieldValuesResource extends BaseResource
+class FieldValuesResource extends IsamsResource
 {
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\RewardsAndConduct\FieldValue>
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\FieldValues\GetFieldValuesRequest
+     */
     public function all(
         int $moduleTypeId,
         int $categoryId,
         int $fieldTypeId,
         string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetFieldValuesRequest($moduleTypeId, $categoryId, $fieldTypeId, $filter));
+    ): Collection {
+        return $this->fetch(new GetFieldValuesRequest(moduleTypeId: $moduleTypeId, categoryId: $categoryId, fieldTypeId: $fieldTypeId, filter: $filter));
     }
 
-    public function get(int $moduleTypeId, int $categoryId, int $fieldTypeId, int $fieldValueId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\FieldValues\GetFieldValueRequest
+     */
+    public function get(int $moduleTypeId, int $categoryId, int $fieldTypeId, int $fieldValueId): FieldValue
     {
-        return $this->connector->send(new GetFieldValueRequest($moduleTypeId, $categoryId, $fieldTypeId, $fieldValueId));
+        return $this->fetch(new GetFieldValueRequest(moduleTypeId: $moduleTypeId, categoryId: $categoryId, fieldTypeId: $fieldTypeId, fieldValueId: $fieldValueId));
     }
 }

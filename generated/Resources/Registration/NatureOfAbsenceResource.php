@@ -7,43 +7,54 @@
 namespace spkm\IsamsApi\Resources\Registration;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Registration\NatureOfAbsence;
 use spkm\IsamsApi\Requests\Registration\NatureOfAbsence\CreateRegistrationNatureOfAbsenceRequest;
 use spkm\IsamsApi\Requests\Registration\NatureOfAbsence\DeleteRegistrationNatureOfAbsenceRequest;
 use spkm\IsamsApi\Requests\Registration\NatureOfAbsence\GetRegistrationNatureOfAbsencesRequest;
 use spkm\IsamsApi\Requests\Registration\NatureOfAbsence\PatchRegistrationNatureOfAbsenceRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class NatureOfAbsenceResource extends BaseResource
+class NatureOfAbsenceResource extends IsamsResource
 {
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Registration\NatureOfAbsence>
+     * @see \spkm\IsamsApi\Requests\Registration\NatureOfAbsence\GetRegistrationNatureOfAbsencesRequest
+     */
     public function all(
         DateTimeInterface|string|null $registrationFrom = null,
         DateTimeInterface|string|null $registrationTo = null,
         ?string $code = null,
         ?bool $onlyEmptyNatureOfAbsence = null,
         ?string $orderBy = null,
-        ?int $page = null,
-        ?int $pageSize = null,
-    ): Response {
-        return $this->connector->send(new GetRegistrationNatureOfAbsencesRequest($registrationFrom, $registrationTo, $code, $onlyEmptyNatureOfAbsence, $orderBy, $page, $pageSize));
+    ): LazyCollection {
+        return $this->each(new GetRegistrationNatureOfAbsencesRequest(registrationFrom: $registrationFrom, registrationTo: $registrationTo, code: $code, onlyEmptyNatureOfAbsence: $onlyEmptyNatureOfAbsence, orderBy: $orderBy), NatureOfAbsence::class);
     }
 
-    public function create(int $registrationPupilId, string $reason): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Registration\NatureOfAbsence\CreateRegistrationNatureOfAbsenceRequest
+     */
+    public function create(int $registrationPupilId, string $reason): Created
     {
-        return $this->connector->send(new CreateRegistrationNatureOfAbsenceRequest($registrationPupilId, $reason));
+        return $this->fetch(new CreateRegistrationNatureOfAbsenceRequest(registrationPupilId: $registrationPupilId, reason: $reason));
     }
 
-    public function delete(int $registrationPupilId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Registration\NatureOfAbsence\DeleteRegistrationNatureOfAbsenceRequest
+     */
+    public function delete(int $registrationPupilId): void
     {
-        return $this->connector->send(new DeleteRegistrationNatureOfAbsenceRequest($registrationPupilId));
+        $this->fetch(new DeleteRegistrationNatureOfAbsenceRequest(registrationPupilId: $registrationPupilId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Registration\NatureOfAbsence\PatchRegistrationNatureOfAbsenceRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchRegistrationNatureOfAbsenceRequest($id, $patch));
+        $this->fetch(new PatchRegistrationNatureOfAbsenceRequest(id: $id, patch: $patch));
     }
 }

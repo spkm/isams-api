@@ -6,29 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\StaffAssignments\AddGradebookStaffAssignmentsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StaffAssignments\DeleteGradebookStaffAssignmentRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StaffAssignments\GetGradebookStaffAssignmentsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StaffAssignmentsResource extends BaseResource
+class StaffAssignmentsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>  $staffIds
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StaffAssignments\AddGradebookStaffAssignmentsRequest
      */
-    public function add(int $gradebookId, array $staffIds): Response
+    public function add(int $gradebookId, array $staffIds): Created
     {
-        return $this->connector->send(new AddGradebookStaffAssignmentsRequest($gradebookId, $staffIds));
+        return $this->fetch(new AddGradebookStaffAssignmentsRequest(gradebookId: $gradebookId, staffIds: $staffIds));
     }
 
-    public function all(int $gradebookId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\StaffAssignment>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StaffAssignments\GetGradebookStaffAssignmentsRequest
+     */
+    public function all(int $gradebookId): Collection
     {
-        return $this->connector->send(new GetGradebookStaffAssignmentsRequest($gradebookId));
+        return $this->fetch(new GetGradebookStaffAssignmentsRequest(gradebookId: $gradebookId));
     }
 
-    public function delete(int $gradebookId, string $staffId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StaffAssignments\DeleteGradebookStaffAssignmentRequest
+     */
+    public function delete(int $gradebookId, string $staffId): void
     {
-        return $this->connector->send(new DeleteGradebookStaffAssignmentRequest($gradebookId, $staffId));
+        $this->fetch(new DeleteGradebookStaffAssignmentRequest(gradebookId: $gradebookId, staffId: $staffId));
     }
 }

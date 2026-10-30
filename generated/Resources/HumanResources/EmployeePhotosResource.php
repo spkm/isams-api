@@ -7,26 +7,36 @@
 namespace spkm\IsamsApi\Resources\HumanResources;
 
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\CreateEmployeePhotoRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\GetCurrentEmployeePhotoRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\GetEmployeePhotoRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeePhotosResource extends BaseResource
+class EmployeePhotosResource extends IsamsResource
 {
-    public function create(int $employeeId, MultipartValue $photo): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\CreateEmployeePhotoRequest
+     */
+    public function create(int $employeeId, MultipartValue $photo): Created
     {
-        return $this->connector->send(new CreateEmployeePhotoRequest($employeeId, $photo));
+        return $this->fetch(new CreateEmployeePhotoRequest(employeeId: $employeeId, photo: $photo));
     }
 
-    public function get(int $employeeId, int $photoId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\GetEmployeePhotoRequest
+     */
+    public function get(int $employeeId, int $photoId): File
     {
-        return $this->connector->send(new GetEmployeePhotoRequest($employeeId, $photoId));
+        return $this->fetch(new GetEmployeePhotoRequest(employeeId: $employeeId, photoId: $photoId));
     }
 
-    public function getCurrent(int $employeeId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeePhotos\GetCurrentEmployeePhotoRequest
+     */
+    public function getCurrent(int $employeeId): File
     {
-        return $this->connector->send(new GetCurrentEmployeePhotoRequest($employeeId));
+        return $this->fetch(new GetCurrentEmployeePhotoRequest(employeeId: $employeeId));
     }
 }

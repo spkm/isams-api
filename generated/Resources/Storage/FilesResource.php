@@ -7,31 +7,41 @@
 namespace spkm\IsamsApi\Resources\Storage;
 
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\Storage\Files\DeleteFileRequest;
 use spkm\IsamsApi\Requests\Storage\Files\DownloadFileRequest;
 use spkm\IsamsApi\Requests\Storage\Files\UploadFileRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FilesResource extends BaseResource
+class FilesResource extends IsamsResource
 {
-    public function delete(string $path, string $filename): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Storage\Files\DeleteFileRequest
+     */
+    public function delete(string $path, string $filename): void
     {
-        return $this->connector->send(new DeleteFileRequest($path, $filename));
+        $this->fetch(new DeleteFileRequest(path: $path, filename: $filename));
     }
 
-    public function download(string $path, string $fileName): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Storage\Files\DownloadFileRequest
+     */
+    public function download(string $path, string $fileName): File
     {
-        return $this->connector->send(new DownloadFileRequest($path, $fileName));
+        return $this->fetch(new DownloadFileRequest(path: $path, fileName: $fileName));
     }
 
+    /**
+     * @see \spkm\IsamsApi\Requests\Storage\Files\UploadFileRequest
+     */
     public function upload(
         string $key,
         MultipartValue $file,
         string $filename,
         string $path,
         ?bool $overwrite = null,
-    ): Response {
-        return $this->connector->send(new UploadFileRequest($key, $file, $filename, $path, $overwrite));
+    ): Created {
+        return $this->fetch(new UploadFileRequest(key: $key, file: $file, filename: $filename, path: $path, overwrite: $overwrite));
     }
 }

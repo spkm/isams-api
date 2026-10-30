@@ -6,8 +6,7 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsArrangementsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsCyclesForEntriesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsCyclesForResultsRequest;
@@ -16,46 +15,79 @@ use spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsEntriesForCycleRequ
 use spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsResultsForCycleRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsTimetablesForCycleRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetPortalExamsArrangementsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ExamsResource extends BaseResource
+class ExamsResource extends IsamsResource
 {
-    public function getArrangements(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ExamArrangement>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsArrangementsRequest
+     */
+    public function getArrangements(string $schoolId): Collection
     {
-        return $this->connector->send(new GetExamsArrangementsRequest($schoolId));
+        return $this->fetch(new GetExamsArrangementsRequest(schoolId: $schoolId));
     }
 
-    public function getCycles(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ExamCycle>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsCyclesRequest
+     */
+    public function getCycles(): Collection
     {
-        return $this->connector->send(new GetExamsCyclesRequest());
+        return $this->fetch(new GetExamsCyclesRequest());
     }
 
-    public function getCyclesForEntries(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ExamCycle>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsCyclesForEntriesRequest
+     */
+    public function getCyclesForEntries(string $schoolId): Collection
     {
-        return $this->connector->send(new GetExamsCyclesForEntriesRequest($schoolId));
+        return $this->fetch(new GetExamsCyclesForEntriesRequest(schoolId: $schoolId));
     }
 
-    public function getCyclesForResults(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ExamCycle>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsCyclesForResultsRequest
+     */
+    public function getCyclesForResults(string $schoolId): Collection
     {
-        return $this->connector->send(new GetExamsCyclesForResultsRequest($schoolId));
+        return $this->fetch(new GetExamsCyclesForResultsRequest(schoolId: $schoolId));
     }
 
-    public function getEntriesForCycle(string $schoolId, int $cycleId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ExamEntry>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsEntriesForCycleRequest
+     */
+    public function getEntriesForCycle(string $schoolId, int $cycleId): Collection
     {
-        return $this->connector->send(new GetExamsEntriesForCycleRequest($schoolId, $cycleId));
+        return $this->fetch(new GetExamsEntriesForCycleRequest(schoolId: $schoolId, cycleId: $cycleId));
     }
 
-    public function getPortalArrangements(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\PortalExamArrangement>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetPortalExamsArrangementsRequest
+     */
+    public function getPortalArrangements(string $schoolId): Collection
     {
-        return $this->connector->send(new GetPortalExamsArrangementsRequest($schoolId));
+        return $this->fetch(new GetPortalExamsArrangementsRequest(schoolId: $schoolId));
     }
 
-    public function getResultsForCycle(string $schoolId, int $cycleId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ExamResult>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsResultsForCycleRequest
+     */
+    public function getResultsForCycle(string $schoolId, int $cycleId): Collection
     {
-        return $this->connector->send(new GetExamsResultsForCycleRequest($schoolId, $cycleId));
+        return $this->fetch(new GetExamsResultsForCycleRequest(schoolId: $schoolId, cycleId: $cycleId));
     }
 
-    public function getTimetablesForCycle(string $schoolId, int $cycleId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ExamTimetable>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Exams\GetExamsTimetablesForCycleRequest
+     */
+    public function getTimetablesForCycle(string $schoolId, int $cycleId): Collection
     {
-        return $this->connector->send(new GetExamsTimetablesForCycleRequest($schoolId, $cycleId));
+        return $this->fetch(new GetExamsTimetablesForCycleRequest(schoolId: $schoolId, cycleId: $cycleId));
     }
 }

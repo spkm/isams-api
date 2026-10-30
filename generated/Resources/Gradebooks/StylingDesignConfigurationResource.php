@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Gradebooks\StylingDesign;
 use spkm\IsamsApi\Requests\Gradebooks\StylingDesignConfiguration\GetStylingDesignConfigurationRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StylingDesignConfiguration\GetStylingDesignConfigurationsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StylingDesignConfigurationResource extends BaseResource
+class StylingDesignConfigurationResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\StylingDesign>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StylingDesignConfiguration\GetStylingDesignConfigurationsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetStylingDesignConfigurationsRequest());
+        return $this->fetch(new GetStylingDesignConfigurationsRequest());
     }
 
-    public function get(int $stylingDesignId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StylingDesignConfiguration\GetStylingDesignConfigurationRequest
+     */
+    public function get(int $stylingDesignId): StylingDesign
     {
-        return $this->connector->send(new GetStylingDesignConfigurationRequest($stylingDesignId));
+        return $this->fetch(new GetStylingDesignConfigurationRequest(stylingDesignId: $stylingDesignId));
     }
 }

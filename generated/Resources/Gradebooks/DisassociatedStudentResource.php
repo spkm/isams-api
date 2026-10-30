@@ -6,14 +6,16 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\Gradebooks\DisassociatedStudent\RemoveGradebookDisassociatedStudentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DisassociatedStudentResource extends BaseResource
+class DisassociatedStudentResource extends IsamsResource
 {
-    public function remove(int $gradebookId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\DisassociatedStudent\RemoveGradebookDisassociatedStudentRequest
+     */
+    public function remove(int $gradebookId, string $schoolId): void
     {
-        return $this->connector->send(new RemoveGradebookDisassociatedStudentRequest($gradebookId, $schoolId));
+        $this->fetch(new RemoveGradebookDisassociatedStudentRequest(gradebookId: $gradebookId, schoolId: $schoolId));
     }
 }

@@ -6,17 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Billing;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Billing\DepositCollection;
 use spkm\IsamsApi\Requests\CloudPortals\Billing\Deposits\GetDepositBySchoolIdsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DepositsResource extends BaseResource
+class DepositsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>|null  $schoolIds
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\Deposits\GetDepositBySchoolIdsRequest
      */
-    public function getBySchoolIds(?array $schoolIds = null): Response
+    public function getBySchoolIds(?array $schoolIds = null): DepositCollection
     {
-        return $this->connector->send(new GetDepositBySchoolIdsRequest($schoolIds));
+        return $this->fetch(new GetDepositBySchoolIdsRequest(schoolIds: $schoolIds));
     }
 }

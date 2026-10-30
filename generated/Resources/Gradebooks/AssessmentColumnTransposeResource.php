@@ -6,23 +6,27 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnTranspose\CreateAssessmentColumnTransposesRequest;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnTranspose\DeleteAssessmentColumnTransposeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AssessmentColumnTransposeResource extends BaseResource
+class AssessmentColumnTransposeResource extends IsamsResource
 {
     /**
      * @param  array<mixed>  $transposeIds
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnTranspose\CreateAssessmentColumnTransposesRequest
      */
-    public function createMany(int $gradebookId, int $columnId, array $transposeIds): Response
+    public function createMany(int $gradebookId, int $columnId, array $transposeIds): Created
     {
-        return $this->connector->send(new CreateAssessmentColumnTransposesRequest($gradebookId, $columnId, $transposeIds));
+        return $this->fetch(new CreateAssessmentColumnTransposesRequest(gradebookId: $gradebookId, columnId: $columnId, transposeIds: $transposeIds));
     }
 
-    public function delete(int $gradebookId, int $columnId, int $transposeId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnTranspose\DeleteAssessmentColumnTransposeRequest
+     */
+    public function delete(int $gradebookId, int $columnId, int $transposeId): void
     {
-        return $this->connector->send(new DeleteAssessmentColumnTransposeRequest($gradebookId, $columnId, $transposeId));
+        $this->fetch(new DeleteAssessmentColumnTransposeRequest(gradebookId: $gradebookId, columnId: $columnId, transposeId: $transposeId));
     }
 }

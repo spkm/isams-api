@@ -6,14 +6,17 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Agent\GetAgentsRequest;
 
-class AgentResource extends BaseResource
+class AgentResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Agent\Agent>
+     * @see \spkm\IsamsApi\Requests\Agent\GetAgentsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetAgentsRequest());
+        return $this->fetch(new GetAgentsRequest());
     }
 }

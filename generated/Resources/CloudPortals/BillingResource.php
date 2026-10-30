@@ -6,13 +6,13 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\CloudPortals\Billing\DepositsResource;
 use spkm\IsamsApi\Resources\CloudPortals\Billing\InvoicesResource;
 use spkm\IsamsApi\Resources\CloudPortals\Billing\PaymentGatewayResource;
 use spkm\IsamsApi\Resources\CloudPortals\Billing\StatementOfAccountsResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class BillingResource extends BaseResource
+class BillingResource extends IsamsResource
 {
     public function deposits(): DepositsResource
     {

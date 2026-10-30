@@ -6,33 +6,47 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\News\News;
 use spkm\IsamsApi\Requests\CloudPortals\News\GetNewsArticleRequest;
 use spkm\IsamsApi\Requests\CloudPortals\News\GetNewsCategoriesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\News\GetNewsOptionsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\News\GetPortalNewsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class NewsResource extends BaseResource
+class NewsResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\News\News>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\News\GetPortalNewsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetPortalNewsRequest($page, $pageSize, $filter));
+        return $this->each(new GetPortalNewsRequest(filter: $filter), News::class);
     }
 
-    public function getArticle(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\News\GetNewsArticleRequest
+     */
+    public function getArticle(int $id): mixed
     {
-        return $this->connector->send(new GetNewsArticleRequest($id));
+        return $this->fetch(new GetNewsArticleRequest(id: $id));
     }
 
-    public function getCategories(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\News\GetNewsCategoriesRequest
+     */
+    public function getCategories(): mixed
     {
-        return $this->connector->send(new GetNewsCategoriesRequest());
+        return $this->fetch(new GetNewsCategoriesRequest());
     }
 
-    public function getOptions(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\News\GetNewsOptionsRequest
+     */
+    public function getOptions(): mixed
     {
-        return $this->connector->send(new GetNewsOptionsRequest());
+        return $this->fetch(new GetNewsOptionsRequest());
     }
 }

@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\CreateStudentEntryTypeRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\DeleteStudentEntryTypeRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\GetStudentEntryTypesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\UpdateStudentEntryTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StudentEntryTypeResource extends BaseResource
+class StudentEntryTypeResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\GetStudentEntryTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetStudentEntryTypesRequest());
+        return $this->fetch(new GetStudentEntryTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\CreateStudentEntryTypeRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateStudentEntryTypeRequest($listItem));
+        return $this->fetch(new CreateStudentEntryTypeRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\DeleteStudentEntryTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteStudentEntryTypeRequest($id));
+        $this->fetch(new DeleteStudentEntryTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\UpdateStudentEntryTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateStudentEntryTypeRequest($id, $listItem));
+        $this->fetch(new UpdateStudentEntryTypeRequest(id: $id, listItem: $listItem));
     }
 }

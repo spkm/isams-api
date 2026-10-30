@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ConcernStatus;
 use spkm\IsamsApi\Data\WellbeingManager\ConcernStatusForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\CreateConcernStatusRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\DeleteConcernStatusRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\GetConcernStatusRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\GetConcernStatusesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\PatchConcernStatusRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernStatusesResource extends BaseResource
+class ConcernStatusesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ConcernStatus>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\GetConcernStatusesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernStatusesRequest());
+        return $this->fetch(new GetConcernStatusesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernStatusForCreate|array<string, mixed>  $concernStatus
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\CreateConcernStatusRequest
      */
-    public function create(ConcernStatusForCreate|array $concernStatus): Response
+    public function create(ConcernStatusForCreate|array $concernStatus): Created
     {
-        return $this->connector->send(new CreateConcernStatusRequest($concernStatus));
+        return $this->fetch(new CreateConcernStatusRequest(concernStatus: $concernStatus));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\DeleteConcernStatusRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteConcernStatusRequest($id));
+        $this->fetch(new DeleteConcernStatusRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\GetConcernStatusRequest
+     */
+    public function get(int $id): ConcernStatus
     {
-        return $this->connector->send(new GetConcernStatusRequest($id));
+        return $this->fetch(new GetConcernStatusRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStatuses\PatchConcernStatusRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernStatusRequest($id, $patch));
+        $this->fetch(new PatchConcernStatusRequest(id: $id, patch: $patch));
     }
 }

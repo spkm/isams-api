@@ -7,26 +7,29 @@
 namespace spkm\IsamsApi\Resources\Billing;
 
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Billing\ExternalAccountsInvoiceForUpdate;
 use spkm\IsamsApi\Requests\Billing\ExternalInvoice\UpdateExternalInvoiceDocumentRequest;
 use spkm\IsamsApi\Requests\Billing\ExternalInvoice\UpdateExternalInvoiceRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ExternalInvoiceResource extends BaseResource
+class ExternalInvoiceResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\Billing\ExternalAccountsInvoiceForUpdate|array<string, mixed>  $externalAccountsInvoice
+     * @see \spkm\IsamsApi\Requests\Billing\ExternalInvoice\UpdateExternalInvoiceRequest
      */
     public function update(
         string $invoiceNumber,
         ExternalAccountsInvoiceForUpdate|array $externalAccountsInvoice,
-    ): Response {
-        return $this->connector->send(new UpdateExternalInvoiceRequest($invoiceNumber, $externalAccountsInvoice));
+    ): void {
+        $this->fetch(new UpdateExternalInvoiceRequest(invoiceNumber: $invoiceNumber, externalAccountsInvoice: $externalAccountsInvoice));
     }
 
-    public function updateDocument(string $invoiceNumber, MultipartValue $document): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Billing\ExternalInvoice\UpdateExternalInvoiceDocumentRequest
+     */
+    public function updateDocument(string $invoiceNumber, MultipartValue $document): void
     {
-        return $this->connector->send(new UpdateExternalInvoiceDocumentRequest($invoiceNumber, $document));
+        $this->fetch(new UpdateExternalInvoiceDocumentRequest(invoiceNumber: $invoiceNumber, document: $document));
     }
 }

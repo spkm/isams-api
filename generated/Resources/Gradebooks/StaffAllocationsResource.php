@@ -6,29 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\StaffAllocations\CreateGradebookStaffAllocationsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StaffAllocations\DeleteGradebookStaffAllocationRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StaffAllocations\GetGradebookStaffAllocationsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StaffAllocationsResource extends BaseResource
+class StaffAllocationsResource extends IsamsResource
 {
-    public function all(int $gradebookId, string $criteria): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\Allocation>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StaffAllocations\GetGradebookStaffAllocationsRequest
+     */
+    public function all(int $gradebookId, string $criteria): Collection
     {
-        return $this->connector->send(new GetGradebookStaffAllocationsRequest($gradebookId, $criteria));
+        return $this->fetch(new GetGradebookStaffAllocationsRequest(gradebookId: $gradebookId, criteria: $criteria));
     }
 
     /**
      * @param  array<mixed>  $staffAllocations
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StaffAllocations\CreateGradebookStaffAllocationsRequest
      */
-    public function createMany(int $gradebookId, string $criteria, array $staffAllocations): Response
+    public function createMany(int $gradebookId, string $criteria, array $staffAllocations): Created
     {
-        return $this->connector->send(new CreateGradebookStaffAllocationsRequest($gradebookId, $criteria, $staffAllocations));
+        return $this->fetch(new CreateGradebookStaffAllocationsRequest(gradebookId: $gradebookId, criteria: $criteria, staffAllocations: $staffAllocations));
     }
 
-    public function delete(int $gradebookId, string $criteria, int $allocationId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StaffAllocations\DeleteGradebookStaffAllocationRequest
+     */
+    public function delete(int $gradebookId, string $criteria, int $allocationId): void
     {
-        return $this->connector->send(new DeleteGradebookStaffAllocationRequest($gradebookId, $criteria, $allocationId));
+        $this->fetch(new DeleteGradebookStaffAllocationRequest(gradebookId: $gradebookId, criteria: $criteria, allocationId: $allocationId));
     }
 }

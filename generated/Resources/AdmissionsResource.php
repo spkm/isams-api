@@ -6,11 +6,12 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Admissions\Applicant;
 use spkm\IsamsApi\Data\Admissions\ApplicantForCreate;
 use spkm\IsamsApi\Data\Admissions\ApplicantForUpdate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Admissions\CreateApplicantRequest;
 use spkm\IsamsApi\Requests\Admissions\GetApplicantRequest;
 use spkm\IsamsApi\Requests\Admissions\GetApplicantsRequest;
@@ -38,7 +39,7 @@ use spkm\IsamsApi\Resources\Admissions\VisasResource;
 use spkm\IsamsApi\Resources\Admissions\VisitsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class AdmissionsResource extends BaseResource
+class AdmissionsResource extends IsamsResource
 {
     public function agencyBranches(): AgencyBranchesResource
     {
@@ -135,46 +136,55 @@ class AdmissionsResource extends BaseResource
         return new VisitsResource($this->connector);
     }
 
-    public function all(
-        ?int $page = null,
-        ?int $pageSize = null,
-        ?string $expand = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetApplicantsRequest($page, $pageSize, $expand, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Admissions\Applicant>
+     * @see \spkm\IsamsApi\Requests\Admissions\GetApplicantsRequest
+     */
+    public function all(?string $expand = null, string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetApplicantsRequest(expand: $expand, filter: $filter), Applicant::class);
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantForCreate|array<string, mixed>  $applicant
+     * @see \spkm\IsamsApi\Requests\Admissions\CreateApplicantRequest
      */
-    public function create(ApplicantForCreate|array $applicant): Response
+    public function create(ApplicantForCreate|array $applicant): Created
     {
-        return $this->connector->send(new CreateApplicantRequest($applicant));
+        return $this->fetch(new CreateApplicantRequest(applicant: $applicant));
     }
 
-    public function get(string $schoolId, ?string $expand = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\GetApplicantRequest
+     */
+    public function get(string $schoolId, ?string $expand = null): Applicant
     {
-        return $this->connector->send(new GetApplicantRequest($schoolId, $expand));
+        return $this->fetch(new GetApplicantRequest(schoolId: $schoolId, expand: $expand));
     }
 
-    public function moveToCurrent(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\MoveApplicantToCurrentRequest
+     */
+    public function moveToCurrent(string $schoolId): Created
     {
-        return $this->connector->send(new MoveApplicantToCurrentRequest($schoolId));
+        return $this->fetch(new MoveApplicantToCurrentRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Admissions\PatchApplicantRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchApplicantRequest($schoolId, $patch));
+        $this->fetch(new PatchApplicantRequest(schoolId: $schoolId, patch: $patch));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantForUpdate|array<string, mixed>  $applicant
+     * @see \spkm\IsamsApi\Requests\Admissions\UpdateApplicantRequest
      */
-    public function update(string $schoolId, ApplicantForUpdate|array $applicant): Response
+    public function update(string $schoolId, ApplicantForUpdate|array $applicant): void
     {
-        return $this->connector->send(new UpdateApplicantRequest($schoolId, $applicant));
+        $this->fetch(new UpdateApplicantRequest(schoolId: $schoolId, applicant: $applicant));
     }
 }

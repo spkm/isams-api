@@ -6,8 +6,8 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\Workflow;
 use spkm\IsamsApi\Data\WellbeingManager\WorkflowForCreate;
 use spkm\IsamsApi\Data\WellbeingManager\WorkflowForUpdate;
 use spkm\IsamsApi\Requests\WellbeingManager\Workflows\CreateWorkflowRequest;
@@ -16,42 +16,57 @@ use spkm\IsamsApi\Requests\WellbeingManager\Workflows\GetWorkflowRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Workflows\ProcessWorkflowRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Workflows\ProcessWorkflowsRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Workflows\UpdateWorkflowRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class WorkflowsResource extends BaseResource
+class WorkflowsResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\WorkflowForCreate|array<string, mixed>  $workflow
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Workflows\CreateWorkflowRequest
      */
-    public function create(WorkflowForCreate|array $workflow): Response
+    public function create(WorkflowForCreate|array $workflow): Created
     {
-        return $this->connector->send(new CreateWorkflowRequest($workflow));
+        return $this->fetch(new CreateWorkflowRequest(workflow: $workflow));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Workflows\DeleteWorkflowRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteWorkflowRequest($id));
+        $this->fetch(new DeleteWorkflowRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Workflows\GetWorkflowRequest
+     */
+    public function get(int $id): Workflow
     {
-        return $this->connector->send(new GetWorkflowRequest($id));
+        return $this->fetch(new GetWorkflowRequest(id: $id));
     }
 
-    public function process(int $workflowId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Workflows\ProcessWorkflowRequest
+     */
+    public function process(int $workflowId): mixed
     {
-        return $this->connector->send(new ProcessWorkflowRequest($workflowId));
+        return $this->fetch(new ProcessWorkflowRequest(workflowId: $workflowId));
     }
 
-    public function processAll(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Workflows\ProcessWorkflowsRequest
+     */
+    public function processAll(): mixed
     {
-        return $this->connector->send(new ProcessWorkflowsRequest());
+        return $this->fetch(new ProcessWorkflowsRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\WorkflowForUpdate|array<string, mixed>  $workflow
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Workflows\UpdateWorkflowRequest
      */
-    public function update(WorkflowForUpdate|array $workflow): Response
+    public function update(WorkflowForUpdate|array $workflow): void
     {
-        return $this->connector->send(new UpdateWorkflowRequest($workflow));
+        $this->fetch(new UpdateWorkflowRequest(workflow: $workflow));
     }
 }

@@ -6,10 +6,12 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Gradebooks\Gradebook;
 use spkm\IsamsApi\Data\Gradebooks\GradebookForCreate;
+use spkm\IsamsApi\Data\Gradebooks\GradebookStructure;
 use spkm\IsamsApi\Requests\Gradebooks\CreateGradebookRequest;
 use spkm\IsamsApi\Requests\Gradebooks\DeleteGradebookRequest;
 use spkm\IsamsApi\Requests\Gradebooks\GetGradebookRequest;
@@ -46,7 +48,7 @@ use spkm\IsamsApi\Resources\Gradebooks\TransposeConfigurationResource;
 use spkm\IsamsApi\Resources\Gradebooks\WeightingConfigurationResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class GradebooksResource extends BaseResource
+class GradebooksResource extends IsamsResource
 {
     public function assessmentColumn(): AssessmentColumnResource
     {
@@ -188,39 +190,54 @@ class GradebooksResource extends BaseResource
         return new WeightingConfigurationResource($this->connector);
     }
 
-    public function all(string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\GradebookOverview>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\GetGradebooksRequest
+     */
+    public function all(string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetGradebooksRequest($filter));
+        return $this->fetch(new GetGradebooksRequest(filter: $filter));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Gradebooks\GradebookForCreate|array<string, mixed>  $gradebook
+     * @see \spkm\IsamsApi\Requests\Gradebooks\CreateGradebookRequest
      */
-    public function create(GradebookForCreate|array $gradebook): Response
+    public function create(GradebookForCreate|array $gradebook): Created
     {
-        return $this->connector->send(new CreateGradebookRequest($gradebook));
+        return $this->fetch(new CreateGradebookRequest(gradebook: $gradebook));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\DeleteGradebookRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteGradebookRequest($id));
+        $this->fetch(new DeleteGradebookRequest(id: $id));
     }
 
-    public function get(int $gradebookId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\GetGradebookRequest
+     */
+    public function get(int $gradebookId): Gradebook
     {
-        return $this->connector->send(new GetGradebookRequest($gradebookId));
+        return $this->fetch(new GetGradebookRequest(gradebookId: $gradebookId));
     }
 
-    public function getStructure(int $gradebookId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\GetGradebookStructureRequest
+     */
+    public function getStructure(int $gradebookId): GradebookStructure
     {
-        return $this->connector->send(new GetGradebookStructureRequest($gradebookId));
+        return $this->fetch(new GetGradebookStructureRequest(gradebookId: $gradebookId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Gradebooks\PatchGradebookRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchGradebookRequest($id, $patch));
+        $this->fetch(new PatchGradebookRequest(id: $id, patch: $patch));
     }
 }

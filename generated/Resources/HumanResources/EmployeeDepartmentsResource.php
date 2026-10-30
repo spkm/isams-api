@@ -6,26 +6,37 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\AddEmployeeDepartmentRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\GetEmployeeDepartmentsRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\RemoveEmployeeDepartmentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeDepartmentsResource extends BaseResource
+class EmployeeDepartmentsResource extends IsamsResource
 {
-    public function add(int $employeeId, string $departmentType, int $departmentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\AddEmployeeDepartmentRequest
+     */
+    public function add(int $employeeId, string $departmentType, int $departmentId): Created
     {
-        return $this->connector->send(new AddEmployeeDepartmentRequest($employeeId, $departmentType, $departmentId));
+        return $this->fetch(new AddEmployeeDepartmentRequest(employeeId: $employeeId, departmentType: $departmentType, departmentId: $departmentId));
     }
 
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\Department>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\GetEmployeeDepartmentsRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeDepartmentsRequest($employeeId));
+        return $this->fetch(new GetEmployeeDepartmentsRequest(employeeId: $employeeId));
     }
 
-    public function remove(int $employeeId, string $departmentType, int $departmentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\RemoveEmployeeDepartmentRequest
+     */
+    public function remove(int $employeeId, string $departmentType, int $departmentId): void
     {
-        return $this->connector->send(new RemoveEmployeeDepartmentRequest($employeeId, $departmentType, $departmentId));
+        $this->fetch(new RemoveEmployeeDepartmentRequest(employeeId: $employeeId, departmentType: $departmentType, departmentId: $departmentId));
     }
 }

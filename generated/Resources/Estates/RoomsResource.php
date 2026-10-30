@@ -6,40 +6,51 @@
 
 namespace spkm\IsamsApi\Resources\Estates;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Estates\Room;
 use spkm\IsamsApi\Data\Estates\RoomForCreate;
 use spkm\IsamsApi\Data\Estates\RoomForUpdate;
 use spkm\IsamsApi\Requests\Estates\Rooms\CreateRoomRequest;
 use spkm\IsamsApi\Requests\Estates\Rooms\GetRoomRequest;
 use spkm\IsamsApi\Requests\Estates\Rooms\GetRoomsRequest;
 use spkm\IsamsApi\Requests\Estates\Rooms\UpdateRoomRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class RoomsResource extends BaseResource
+class RoomsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Estates\Room>
+     * @see \spkm\IsamsApi\Requests\Estates\Rooms\GetRoomsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetRoomsRequest());
+        return $this->fetch(new GetRoomsRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Estates\RoomForCreate|array<string, mixed>  $room
+     * @see \spkm\IsamsApi\Requests\Estates\Rooms\CreateRoomRequest
      */
-    public function create(RoomForCreate|array $room): Response
+    public function create(RoomForCreate|array $room): Created
     {
-        return $this->connector->send(new CreateRoomRequest($room));
+        return $this->fetch(new CreateRoomRequest(room: $room));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Estates\Rooms\GetRoomRequest
+     */
+    public function get(int $id): Room
     {
-        return $this->connector->send(new GetRoomRequest($id));
+        return $this->fetch(new GetRoomRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Estates\RoomForUpdate|array<string, mixed>  $room
+     * @see \spkm\IsamsApi\Requests\Estates\Rooms\UpdateRoomRequest
      */
-    public function update(int $id, RoomForUpdate|array $room): Response
+    public function update(int $id, RoomForUpdate|array $room): void
     {
-        return $this->connector->send(new UpdateRoomRequest($id, $room));
+        $this->fetch(new UpdateRoomRequest(id: $id, room: $room));
     }
 }

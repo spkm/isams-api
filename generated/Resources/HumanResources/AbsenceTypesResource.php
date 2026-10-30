@@ -6,40 +6,51 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\AbsenceType;
 use spkm\IsamsApi\Data\HumanResources\AbsenceTypeForCreate;
 use spkm\IsamsApi\Data\HumanResources\AbsenceTypeForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\CreateAbsenceTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\GetAbsenceTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\GetAbsenceTypesRequest;
 use spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\UpdateAbsenceTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AbsenceTypesResource extends BaseResource
+class AbsenceTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\AbsenceType>
+     * @see \spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\GetAbsenceTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetAbsenceTypesRequest());
+        return $this->fetch(new GetAbsenceTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceTypeForCreate|array<string, mixed>  $absenceType
+     * @see \spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\CreateAbsenceTypeRequest
      */
-    public function create(AbsenceTypeForCreate|array $absenceType): Response
+    public function create(AbsenceTypeForCreate|array $absenceType): Created
     {
-        return $this->connector->send(new CreateAbsenceTypeRequest($absenceType));
+        return $this->fetch(new CreateAbsenceTypeRequest(absenceType: $absenceType));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\GetAbsenceTypeRequest
+     */
+    public function get(int $id): AbsenceType
     {
-        return $this->connector->send(new GetAbsenceTypeRequest($id));
+        return $this->fetch(new GetAbsenceTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceTypeForUpdate|array<string, mixed>  $absenceType
+     * @see \spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\UpdateAbsenceTypeRequest
      */
-    public function update(int $id, AbsenceTypeForUpdate|array $absenceType): Response
+    public function update(int $id, AbsenceTypeForUpdate|array $absenceType): void
     {
-        return $this->connector->send(new UpdateAbsenceTypeRequest($id, $absenceType));
+        $this->fetch(new UpdateAbsenceTypeRequest(id: $id, absenceType: $absenceType));
     }
 }

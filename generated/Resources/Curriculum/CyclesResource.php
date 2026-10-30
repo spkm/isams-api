@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Curriculum;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Curriculum\Cycles\GetCurriculumCyclesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CyclesResource extends BaseResource
+class CyclesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Curriculum\Cycle>
+     * @see \spkm\IsamsApi\Requests\Curriculum\Cycles\GetCurriculumCyclesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetCurriculumCyclesRequest());
+        return $this->fetch(new GetCurriculumCyclesRequest());
     }
 }

@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbation;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\CreateRegistrationEvidenceTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\DeleteRegistrationEvidenceTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\GetRegistrationEvidenceTypesRequest;
 use spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\UpdateRegistrationEvidenceTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class RegistrationEvidenceTypesResource extends BaseResource
+class RegistrationEvidenceTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\GetRegistrationEvidenceTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetRegistrationEvidenceTypesRequest());
+        return $this->fetch(new GetRegistrationEvidenceTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\CreateRegistrationEvidenceTypeRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateRegistrationEvidenceTypeRequest($listItem));
+        return $this->fetch(new CreateRegistrationEvidenceTypeRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\DeleteRegistrationEvidenceTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteRegistrationEvidenceTypeRequest($id));
+        $this->fetch(new DeleteRegistrationEvidenceTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\UpdateRegistrationEvidenceTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateRegistrationEvidenceTypeRequest($id, $listItem));
+        $this->fetch(new UpdateRegistrationEvidenceTypeRequest(id: $id, listItem: $listItem));
     }
 }

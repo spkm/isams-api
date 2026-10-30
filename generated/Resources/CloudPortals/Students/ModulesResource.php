@@ -6,14 +6,17 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Framework\PortalModuleCapabilities;
 use spkm\IsamsApi\Requests\CloudPortals\Students\Modules\GetModuleCapabilitiesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ModulesResource extends BaseResource
+class ModulesResource extends IsamsResource
 {
-    public function getCapabilities(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\Modules\GetModuleCapabilitiesRequest
+     */
+    public function getCapabilities(): PortalModuleCapabilities
     {
-        return $this->connector->send(new GetModuleCapabilitiesRequest());
+        return $this->fetch(new GetModuleCapabilitiesRequest());
     }
 }

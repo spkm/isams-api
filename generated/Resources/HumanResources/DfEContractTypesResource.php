@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\HumanResources\DfEContractTypes\GetDfEContractTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DfEContractTypesResource extends BaseResource
+class DfEContractTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\ContractType>
+     * @see \spkm\IsamsApi\Requests\HumanResources\DfEContractTypes\GetDfEContractTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetDfEContractTypesRequest());
+        return $this->fetch(new GetDfEContractTypesRequest());
     }
 }

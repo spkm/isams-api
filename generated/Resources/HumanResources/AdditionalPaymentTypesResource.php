@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\HumanResources\AdditionalPaymentTypes\GetAdditionalPaymentTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AdditionalPaymentTypesResource extends BaseResource
+class AdditionalPaymentTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\AdditionalPaymentType>
+     * @see \spkm\IsamsApi\Requests\HumanResources\AdditionalPaymentTypes\GetAdditionalPaymentTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetAdditionalPaymentTypesRequest());
+        return $this->fetch(new GetAdditionalPaymentTypesRequest());
     }
 }

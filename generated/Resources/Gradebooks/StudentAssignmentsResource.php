@@ -6,29 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\StudentAssignments\AddGradebookStudentAssignmentsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StudentAssignments\DeleteGradebookStudentAssignmentRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StudentAssignments\GetGradebookStudentAssignmentsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StudentAssignmentsResource extends BaseResource
+class StudentAssignmentsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>  $schoolIds
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAssignments\AddGradebookStudentAssignmentsRequest
      */
-    public function add(int $gradebookId, array $schoolIds): Response
+    public function add(int $gradebookId, array $schoolIds): Created
     {
-        return $this->connector->send(new AddGradebookStudentAssignmentsRequest($gradebookId, $schoolIds));
+        return $this->fetch(new AddGradebookStudentAssignmentsRequest(gradebookId: $gradebookId, schoolIds: $schoolIds));
     }
 
-    public function all(int $gradebookId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\StudentAssignment>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAssignments\GetGradebookStudentAssignmentsRequest
+     */
+    public function all(int $gradebookId): Collection
     {
-        return $this->connector->send(new GetGradebookStudentAssignmentsRequest($gradebookId));
+        return $this->fetch(new GetGradebookStudentAssignmentsRequest(gradebookId: $gradebookId));
     }
 
-    public function delete(int $gradebookId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAssignments\DeleteGradebookStudentAssignmentRequest
+     */
+    public function delete(int $gradebookId, string $schoolId): void
     {
-        return $this->connector->send(new DeleteGradebookStudentAssignmentRequest($gradebookId, $schoolId));
+        $this->fetch(new DeleteGradebookStudentAssignmentRequest(gradebookId: $gradebookId, schoolId: $schoolId));
     }
 }

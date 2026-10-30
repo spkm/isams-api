@@ -6,14 +6,16 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\WellbeingManager\WorkflowActions\GetWorkflowActionTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class WorkflowActionsResource extends BaseResource
+class WorkflowActionsResource extends IsamsResource
 {
-    public function getTypes(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowActions\GetWorkflowActionTypesRequest
+     */
+    public function getTypes(): mixed
     {
-        return $this->connector->send(new GetWorkflowActionTypesRequest());
+        return $this->fetch(new GetWorkflowActionTypesRequest());
     }
 }

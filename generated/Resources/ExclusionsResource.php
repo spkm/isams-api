@@ -6,21 +6,30 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Exclusions\IExclusion;
 use spkm\IsamsApi\Requests\Exclusions\GetExclusionCancellationReasonsRequest;
 use spkm\IsamsApi\Requests\Exclusions\GetExclusionsRequest;
 
-class ExclusionsResource extends BaseResource
+class ExclusionsResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Exclusions\IExclusion>
+     * @see \spkm\IsamsApi\Requests\Exclusions\GetExclusionsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetExclusionsRequest($page, $pageSize, $filter));
+        return $this->each(new GetExclusionsRequest(filter: $filter), IExclusion::class);
     }
 
-    public function getCancellationReasons(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Exclusions\ReasonForCancellation>
+     * @see \spkm\IsamsApi\Requests\Exclusions\GetExclusionCancellationReasonsRequest
+     */
+    public function getCancellationReasons(): Collection
     {
-        return $this->connector->send(new GetExclusionCancellationReasonsRequest());
+        return $this->fetch(new GetExclusionCancellationReasonsRequest());
     }
 }

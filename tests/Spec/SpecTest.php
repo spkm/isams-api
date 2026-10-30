@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Str;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
@@ -81,6 +82,44 @@ it('gives each hand-written request the model the spec documents for its respons
     expect($request)->toBeInstanceOf(IsamsRequest::class)
         ->and($request->dtoClass())->toBe($operation['model'] ?? null);
 })->with(fn () => array_keys(array_filter(Spec::manifest()['operations'], fn (array $operation) => $operation['source'] === 'handwritten')))->group('spec');
+
+it('gives each resource method the return type its request\'s response calls for, and points it to that request', function () {
+    $directory = dirname(__DIR__, 2).'/generated/Resources';
+    $mismatches = [];
+    $checked = 0;
+
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS)) as $file) {
+        $resource = new ReflectionClass('spkm\\IsamsApi\\Resources\\'.str_replace(['/', '.php'], ['\\', ''], substr($file->getPathname(), strlen($directory) + 1)));
+
+        foreach ($resource->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+            if ($method->getDeclaringClass()->getName() !== $resource->getName() || ! preg_match('/@see \\\\(\S+Request)/', (string) $method->getDocComment(), $see)) {
+                continue;
+            }
+
+            $request = new ReflectionClass($see[1]);
+            $shape = $request->getProperty('responseShape')->getDefaultValue();
+            $expected = match (true) {
+                $request->implementsInterface(Paginatable::class) => LazyCollection::class,
+                $shape === IsamsRequest::LIST => Collection::class,
+                $shape === IsamsRequest::ONE => $request->getProperty('dto')->getDefaultValue() ?? 'array',
+                $shape === IsamsRequest::CREATED => Created::class,
+                $shape === IsamsRequest::FILE => File::class,
+                $shape === IsamsRequest::RAW => 'mixed',
+                default => 'void',
+            };
+            $checked++;
+
+            if ((string) $method->getReturnType() !== $expected) {
+                $mismatches[] = $resource->getShortName().'::'.$method->getName().' returns '.$method->getReturnType().", not $expected";
+            }
+        }
+    }
+
+    $onResources = array_filter(Spec::manifest()['operations'], fn (array $operation) => in_array($operation['source'], ['generated', 'handwritten'], true));
+
+    expect($mismatches)->toBe([])
+        ->and($checked)->toBe(count($onResources));
+})->group('spec');
 
 it('builds each generated model from made-up data matching its definition and turns it back into the same data', function (string $definition, string $class) {
     $sample = Spec::sample($definition);

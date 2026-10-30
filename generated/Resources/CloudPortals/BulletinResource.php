@@ -6,10 +6,10 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\CloudPortals\Bulletin\DailyBulletinResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class BulletinResource extends BaseResource
+class BulletinResource extends IsamsResource
 {
     public function dailyBulletin(): DailyBulletinResource
     {

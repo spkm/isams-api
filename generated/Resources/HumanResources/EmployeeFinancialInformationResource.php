@@ -6,26 +6,30 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\HumanResources\EmployeeFinancialInformation;
 use spkm\IsamsApi\Data\HumanResources\EmployeeFinancialInformationForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeFinancialInformation\GetEmployeeFinancialInformationRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeFinancialInformation\UpdateEmployeeFinancialInformationRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeFinancialInformationResource extends BaseResource
+class EmployeeFinancialInformationResource extends IsamsResource
 {
-    public function get(int $employeeId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeFinancialInformation\GetEmployeeFinancialInformationRequest
+     */
+    public function get(int $employeeId): EmployeeFinancialInformation
     {
-        return $this->connector->send(new GetEmployeeFinancialInformationRequest($employeeId));
+        return $this->fetch(new GetEmployeeFinancialInformationRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeFinancialInformationForUpdate|array<string, mixed>  $employeeFinancialInformation
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeFinancialInformation\UpdateEmployeeFinancialInformationRequest
      */
     public function update(
         int $employeeId,
         EmployeeFinancialInformationForUpdate|array $employeeFinancialInformation,
-    ): Response {
-        return $this->connector->send(new UpdateEmployeeFinancialInformationRequest($employeeId, $employeeFinancialInformation));
+    ): void {
+        $this->fetch(new UpdateEmployeeFinancialInformationRequest(employeeId: $employeeId, employeeFinancialInformation: $employeeFinancialInformation));
     }
 }

@@ -6,14 +6,19 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\School\School;
 use spkm\IsamsApi\Requests\CloudPortals\School\Schools\GetPortalSchoolsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SchoolsResource extends BaseResource
+class SchoolsResource extends IsamsResource
 {
-    public function all(?string $queryValue = null, ?int $page = null, ?int $pageSize = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\School\School>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Schools\GetPortalSchoolsRequest
+     */
+    public function all(?string $queryValue = null): LazyCollection
     {
-        return $this->connector->send(new GetPortalSchoolsRequest($queryValue, $page, $pageSize));
+        return $this->each(new GetPortalSchoolsRequest(queryValue: $queryValue), School::class);
     }
 }

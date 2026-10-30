@@ -6,26 +6,34 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\CloudPortals\School\Address\GetAddressDetailsByIdRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Address\GetAddressListByPostcodeRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Address\GetAddressPostcodeFinderActiveRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AddressResource extends BaseResource
+class AddressResource extends IsamsResource
 {
-    public function getDetails(string $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Address\GetAddressDetailsByIdRequest
+     */
+    public function getDetails(string $id): mixed
     {
-        return $this->connector->send(new GetAddressDetailsByIdRequest($id));
+        return $this->fetch(new GetAddressDetailsByIdRequest(id: $id));
     }
 
-    public function getListByPostcode(?string $postcode = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Address\GetAddressListByPostcodeRequest
+     */
+    public function getListByPostcode(?string $postcode = null): mixed
     {
-        return $this->connector->send(new GetAddressListByPostcodeRequest($postcode));
+        return $this->fetch(new GetAddressListByPostcodeRequest(postcode: $postcode));
     }
 
-    public function getPostcodeFinderActive(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Address\GetAddressPostcodeFinderActiveRequest
+     */
+    public function getPostcodeFinderActive(): mixed
     {
-        return $this->connector->send(new GetAddressPostcodeFinderActiveRequest());
+        return $this->fetch(new GetAddressPostcodeFinderActiveRequest());
     }
 }

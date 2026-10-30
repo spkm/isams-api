@@ -13,7 +13,7 @@ use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 it('reads any of the school\'s lists by naming its type in the path', function () {
     $isams = FakeIsams::respondWith([GetListByTypeRequest::class => MockResponse::make(['items' => [['id' => 1, 'name' => 'Made-up item', 'listType' => 'Titles']]])]);
 
-    $items = FakeIsams::connector()->systemConfiguration()->list()->getByType('Titles')->dto();
+    $items = FakeIsams::connector()->systemConfiguration()->list()->getByType('Titles');
 
     expect($items->first())->toBeInstanceOf(GlobalListItemWithCensusData::class)
         ->and($items->first()->name)->toBe('Made-up item')
@@ -30,7 +30,7 @@ it('reads the contact types with the parental responsibility each one has by def
 it('adds an item to a custom list group and reports where iSAMS stored it', function () {
     $isams = FakeIsams::respondWith([CreateCustomListGroupItemRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/systemconfiguration/listgroup/custom/Example/12'])]);
 
-    $created = FakeIsams::connector()->systemConfiguration()->listGroup()->createItem('Example', new GlobalListItemForCreate(name: 'Made-up item'))->dto();
+    $created = FakeIsams::connector()->systemConfiguration()->listGroup()->createItem('Example', new GlobalListItemForCreate(name: 'Made-up item'));
 
     expect($created->id)->toBe('12')
         ->and(json_decode((string) FakeIsams::received($isams, CreateCustomListGroupItemRequest::class)->createPsrRequest()->getBody(), true))->toBe(['name' => 'Made-up item']);

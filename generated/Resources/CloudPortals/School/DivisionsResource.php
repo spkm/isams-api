@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\Divisions\GetDivisionListRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DivisionsResource extends BaseResource
+class DivisionsResource extends IsamsResource
 {
-    public function getList(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\Division>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Divisions\GetDivisionListRequest
+     */
+    public function getList(): Collection
     {
-        return $this->connector->send(new GetDivisionListRequest());
+        return $this->fetch(new GetDivisionListRequest());
     }
 }

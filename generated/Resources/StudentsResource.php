@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Students\Student;
 use spkm\IsamsApi\Data\Students\StudentForCreate;
 use spkm\IsamsApi\Data\Students\StudentForUpdate;
 use spkm\IsamsApi\Requests\Students\CreateStudentRequest;
@@ -42,7 +43,7 @@ use spkm\IsamsApi\Resources\Students\VisaDocumentsResource;
 use spkm\IsamsApi\Resources\Students\VisasResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentsResource extends BaseResource
+class StudentsResource extends IsamsResource
 {
     public function alumni(): AlumniResource
     {
@@ -159,51 +160,63 @@ class StudentsResource extends BaseResource
         return new VisasResource($this->connector);
     }
 
-    public function all(
-        mixed $page = null,
-        mixed $pageSize = null,
-        mixed $expand = null,
-        mixed $filter = null,
-    ): Response {
-        return $this->connector->send(new GetStudentsRequest($page, $pageSize, $expand, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Students\Student>
+     * @see \spkm\IsamsApi\Requests\Students\GetStudentsRequest
+     */
+    public function all(mixed $expand = null, mixed $filter = null): LazyCollection
+    {
+        return $this->each(new GetStudentsRequest(expand: $expand, filter: $filter), Student::class);
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentForCreate|array<string, mixed>  $student
+     * @see \spkm\IsamsApi\Requests\Students\CreateStudentRequest
      */
-    public function create(StudentForCreate|array $student): Response
+    public function create(StudentForCreate|array $student): Created
     {
-        return $this->connector->send(new CreateStudentRequest($student));
+        return $this->fetch(new CreateStudentRequest(student: $student));
     }
 
-    public function get(string $schoolId, mixed $expand = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\GetStudentRequest
+     */
+    public function get(string $schoolId, mixed $expand = null): Student
     {
-        return $this->connector->send(new GetStudentRequest($schoolId, $expand));
+        return $this->fetch(new GetStudentRequest(schoolId: $schoolId, expand: $expand));
     }
 
-    public function moveToAlumni(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\MoveStudentToAlumniRequest
+     */
+    public function moveToAlumni(string $schoolId): Created
     {
-        return $this->connector->send(new MoveStudentToAlumniRequest($schoolId));
+        return $this->fetch(new MoveStudentToAlumniRequest(schoolId: $schoolId));
     }
 
-    public function moveToApplicant(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\MoveStudentToApplicantRequest
+     */
+    public function moveToApplicant(string $schoolId): Created
     {
-        return $this->connector->send(new MoveStudentToApplicantRequest($schoolId));
+        return $this->fetch(new MoveStudentToApplicantRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Students\PatchStudentRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentRequest($schoolId, $patch));
+        $this->fetch(new PatchStudentRequest(schoolId: $schoolId, patch: $patch));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentForUpdate|array<string, mixed>  $student
+     * @see \spkm\IsamsApi\Requests\Students\UpdateStudentRequest
      */
-    public function update(string $schoolId, StudentForUpdate|array $student): Response
+    public function update(string $schoolId, StudentForUpdate|array $student): void
     {
-        return $this->connector->send(new UpdateStudentRequest($schoolId, $student));
+        $this->fetch(new UpdateStudentRequest(schoolId: $schoolId, student: $student));
     }
 }

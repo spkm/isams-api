@@ -6,35 +6,40 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\SystemConfiguration\PortalProfileInformation;
 use spkm\IsamsApi\Data\SystemConfiguration\ProfileInformationForUpdate;
 use spkm\IsamsApi\Data\SystemConfiguration\SecurityQuestionInformationForUpdate;
 use spkm\IsamsApi\Requests\CloudPortals\School\Account\GetAccountProfileInformationRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Account\UpdateAccountProfileInformationRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Account\UpdateAccountSecurityQuestionAnswerRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AccountResource extends BaseResource
+class AccountResource extends IsamsResource
 {
-    public function getProfileInformation(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Account\GetAccountProfileInformationRequest
+     */
+    public function getProfileInformation(): PortalProfileInformation
     {
-        return $this->connector->send(new GetAccountProfileInformationRequest());
+        return $this->fetch(new GetAccountProfileInformationRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\ProfileInformationForUpdate|array<string, mixed>  $profileInformation
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Account\UpdateAccountProfileInformationRequest
      */
-    public function updateProfileInformation(ProfileInformationForUpdate|array $profileInformation): Response
+    public function updateProfileInformation(ProfileInformationForUpdate|array $profileInformation): void
     {
-        return $this->connector->send(new UpdateAccountProfileInformationRequest($profileInformation));
+        $this->fetch(new UpdateAccountProfileInformationRequest(profileInformation: $profileInformation));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\SecurityQuestionInformationForUpdate|array<string, mixed>  $securityQuestionInformation
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Account\UpdateAccountSecurityQuestionAnswerRequest
      */
     public function updateSecurityQuestionAnswer(
         SecurityQuestionInformationForUpdate|array $securityQuestionInformation,
-    ): Response {
-        return $this->connector->send(new UpdateAccountSecurityQuestionAnswerRequest($securityQuestionInformation));
+    ): void {
+        $this->fetch(new UpdateAccountSecurityQuestionAnswerRequest(securityQuestionInformation: $securityQuestionInformation));
     }
 }

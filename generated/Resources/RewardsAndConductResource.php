@@ -6,14 +6,13 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\RewardsAndConduct\CategoriesResource;
 use spkm\IsamsApi\Resources\RewardsAndConduct\FieldTypesResource;
 use spkm\IsamsApi\Resources\RewardsAndConduct\FieldValuesResource;
 use spkm\IsamsApi\Resources\RewardsAndConduct\ModuleTypesResource;
 use spkm\IsamsApi\Resources\RewardsAndConduct\RewardsResource;
 
-class RewardsAndConductResource extends BaseResource
+class RewardsAndConductResource extends IsamsResource
 {
     public function categories(): CategoriesResource
     {

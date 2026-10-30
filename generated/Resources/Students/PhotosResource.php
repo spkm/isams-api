@@ -7,26 +7,36 @@
 namespace spkm\IsamsApi\Resources\Students;
 
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\Students\Photos\CreateStudentPhotoRequest;
 use spkm\IsamsApi\Requests\Students\Photos\GetCurrentStudentPhotoRequest;
 use spkm\IsamsApi\Requests\Students\Photos\GetStudentPhotoRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PhotosResource extends BaseResource
+class PhotosResource extends IsamsResource
 {
-    public function create(string $schoolId, MultipartValue $photo): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Photos\CreateStudentPhotoRequest
+     */
+    public function create(string $schoolId, MultipartValue $photo): Created
     {
-        return $this->connector->send(new CreateStudentPhotoRequest($schoolId, $photo));
+        return $this->fetch(new CreateStudentPhotoRequest(schoolId: $schoolId, photo: $photo));
     }
 
-    public function get(string $schoolId, int $photoId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Photos\GetStudentPhotoRequest
+     */
+    public function get(string $schoolId, int $photoId): File
     {
-        return $this->connector->send(new GetStudentPhotoRequest($schoolId, $photoId));
+        return $this->fetch(new GetStudentPhotoRequest(schoolId: $schoolId, photoId: $photoId));
     }
 
-    public function getCurrent(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Photos\GetCurrentStudentPhotoRequest
+     */
+    public function getCurrent(string $schoolId): File
     {
-        return $this->connector->send(new GetCurrentStudentPhotoRequest($schoolId));
+        return $this->fetch(new GetCurrentStudentPhotoRequest(schoolId: $schoolId));
     }
 }

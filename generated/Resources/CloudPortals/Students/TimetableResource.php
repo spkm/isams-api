@@ -7,31 +7,45 @@
 namespace spkm\IsamsApi\Resources\CloudPortals\Students;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\Students\Timetable\GetTimetableActivityCollectionRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Students\Timetable\GetTimetablePeriodCollectionRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Students\Timetable\GetTimetableWeeksRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class TimetableResource extends BaseResource
+class TimetableResource extends IsamsResource
 {
-    public function getActivityCollection(string $schoolId, DateTimeInterface|string|null $startDate = null): Response
-    {
-        return $this->connector->send(new GetTimetableActivityCollectionRequest($schoolId, $startDate));
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\TimetableActivity>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\Timetable\GetTimetableActivityCollectionRequest
+     */
+    public function getActivityCollection(
+        string $schoolId,
+        DateTimeInterface|string|null $startDate = null,
+    ): Collection {
+        return $this->fetch(new GetTimetableActivityCollectionRequest(schoolId: $schoolId, startDate: $startDate));
     }
 
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\TimetablePeriod>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\Timetable\GetTimetablePeriodCollectionRequest
+     */
     public function getPeriodCollection(
         string $schoolId,
         ?int $timetableId = null,
         ?bool $excludeExceptions = null,
         ?bool $includeMissing = null,
         ?bool $includeHiddenSubjects = null,
-    ): Response {
-        return $this->connector->send(new GetTimetablePeriodCollectionRequest($schoolId, $timetableId, $excludeExceptions, $includeMissing, $includeHiddenSubjects));
+    ): Collection {
+        return $this->fetch(new GetTimetablePeriodCollectionRequest(schoolId: $schoolId, timetableId: $timetableId, excludeExceptions: $excludeExceptions, includeMissing: $includeMissing, includeHiddenSubjects: $includeHiddenSubjects));
     }
 
-    public function getWeeks(string $schoolId, DateTimeInterface|string|null $date = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\TimetableActivity>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Students\Timetable\GetTimetableWeeksRequest
+     */
+    public function getWeeks(string $schoolId, DateTimeInterface|string|null $date = null): Collection
     {
-        return $this->connector->send(new GetTimetableWeeksRequest($schoolId, $date));
+        return $this->fetch(new GetTimetableWeeksRequest(schoolId: $schoolId, date: $date));
     }
 }

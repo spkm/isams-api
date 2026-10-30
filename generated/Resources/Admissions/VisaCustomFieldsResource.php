@@ -6,29 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Admissions\VisaCustomFields\GetApplicantVisaCustomFieldRequest;
 use spkm\IsamsApi\Requests\Admissions\VisaCustomFields\GetApplicantVisaCustomFieldsRequest;
 use spkm\IsamsApi\Requests\Admissions\VisaCustomFields\PatchApplicantVisaCustomFieldsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class VisaCustomFieldsResource extends BaseResource
+class VisaCustomFieldsResource extends IsamsResource
 {
-    public function all(string $schoolId, int $visaId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\CustomField>
+     * @see \spkm\IsamsApi\Requests\Admissions\VisaCustomFields\GetApplicantVisaCustomFieldsRequest
+     */
+    public function all(string $schoolId, int $visaId): Collection
     {
-        return $this->connector->send(new GetApplicantVisaCustomFieldsRequest($schoolId, $visaId));
+        return $this->fetch(new GetApplicantVisaCustomFieldsRequest(schoolId: $schoolId, visaId: $visaId));
     }
 
-    public function get(string $schoolId, int $visaId, int $customFieldId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\CustomField>
+     * @see \spkm\IsamsApi\Requests\Admissions\VisaCustomFields\GetApplicantVisaCustomFieldRequest
+     */
+    public function get(string $schoolId, int $visaId, int $customFieldId): Collection
     {
-        return $this->connector->send(new GetApplicantVisaCustomFieldRequest($schoolId, $visaId, $customFieldId));
+        return $this->fetch(new GetApplicantVisaCustomFieldRequest(schoolId: $schoolId, visaId: $visaId, customFieldId: $customFieldId));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @see \spkm\IsamsApi\Requests\Admissions\VisaCustomFields\PatchApplicantVisaCustomFieldsRequest
      */
-    public function patchMany(string $schoolId, int $visaId, array $customFields): Response
+    public function patchMany(string $schoolId, int $visaId, array $customFields): void
     {
-        return $this->connector->send(new PatchApplicantVisaCustomFieldsRequest($schoolId, $visaId, $customFields));
+        $this->fetch(new PatchApplicantVisaCustomFieldsRequest(schoolId: $schoolId, visaId: $visaId, customFields: $customFields));
     }
 }

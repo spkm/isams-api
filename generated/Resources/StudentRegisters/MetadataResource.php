@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\StudentRegisters;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\StudentRegisters\Metadata\GetMetadataRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class MetadataResource extends BaseResource
+class MetadataResource extends IsamsResource
 {
-    public function get(int $registerId, ?string $expand = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\StudentRegisters\MetadataField>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Metadata\GetMetadataRequest
+     */
+    public function get(int $registerId, ?string $expand = null): Collection
     {
-        return $this->connector->send(new GetMetadataRequest($registerId, $expand));
+        return $this->fetch(new GetMetadataRequest(registerId: $registerId, expand: $expand));
     }
 }
