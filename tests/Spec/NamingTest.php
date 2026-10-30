@@ -15,5 +15,6 @@ it('names generated requests after what they do', function (string $method, stri
     'a command, beside its resource\'s plural namespace' => ['POST', '/api/medical/students/{schoolId}/conditions/{conditionId}/commands/archive', 'MedicalCentre\StudentConditions\ArchiveStudentConditionRequest'],
     'a command, beside its resource\'s singular namespace' => ['POST', '/api/medical/students/{schoolId}/inventory/{inventoryId}/commands/archive', 'MedicalCentre\StudentInventory\ArchiveStudentInventoryRequest'],
     'a resource named like its parent, in the parent\'s namespace' => ['GET', '/api/systemconfiguration/list/{listType}', 'SystemConfiguration\List\GetListByTypeRequest'],
+    'a tag with a placeholder segment, left out of the namespace' => ['GET', '/api/portals/documentsigning/signingrequests', 'CloudPortals\PortalDocumentSigning\GetDocumentsForSigningRequest'],
     'an override' => ['POST', '/api/teaching/sets/{setId}/setList/{schoolId}', 'Teaching\TeachingSets\AddStudentToTeachingSetRequest'],
 ])->group('spec');

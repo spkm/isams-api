@@ -48,6 +48,9 @@ final class Generator
     /** @var array<string, mixed> */
     private array $specV2;
 
+    /** @var list<string>|null property names a generated request inherits */
+    private ?array $requestProperties = null;
+
     /** @var list<string>|null every tag in the spec, cleaned */
     private ?array $tags = null;
 
@@ -198,7 +201,7 @@ final class Generator
 
         return [
             'area' => $parts[0],
-            'middle' => array_slice($parts, 1, -1),
+            'middle' => array_values(array_diff(array_slice($parts, 1, -1), $this->overrides['ignoredTagSegments'] ?? [])),
             'resource' => $this->commandsResource($parts[0], $resource),
         ];
     }
@@ -461,7 +464,7 @@ final class Generator
                 continue;
             }
 
-            $name = lcfirst((string) preg_replace('/[^A-Za-z0-9]/', '', $parameter['name']));
+            $name = $this->phpName(lcfirst((string) preg_replace('/[^A-Za-z0-9]/', '', $parameter['name'])));
 
             match ($parameter['in']) {
                 'path' => $parameters['path'][$parameter['name']] = ['php' => $name, 'type' => ($parameter['type'] ?? 'string') === 'integer' ? 'int' : 'string'],
@@ -497,10 +500,25 @@ final class Generator
      * @param  array<string, mixed>  $parameter
      * @return array<string, mixed>
      */
+    /**
+     * A parameter's PHP name, with "Value" added where it would clash with a property of the request classes.
+     */
+    private function phpName(string $name): string
+    {
+        $this->requestProperties ??= collect([
+            'spkm\IsamsApi\Requests\IsamsRequest',
+            'Saloon\Traits\Body\HasJsonBody',
+            'Saloon\Traits\Body\HasMultipartBody',
+            'Saloon\Traits\Body\HasStringBody',
+        ])->flatMap(fn (string $class) => array_map(fn ($property) => $property->getName(), (new ReflectionClass($class))->getProperties()))->unique()->values()->all();
+
+        return in_array($name, $this->requestProperties, true) ? $name.'Value' : $name;
+    }
+
     private function body(array $parameter): array
     {
         $schema = $parameter['schema'] ?? [];
-        $name = lcfirst((string) preg_replace(['/^public(?=[A-Z])/', '/[^A-Za-z0-9]/'], '', $parameter['name']));
+        $name = $this->phpName(lcfirst((string) preg_replace(['/^public(?=[A-Z])/', '/[^A-Za-z0-9]/'], '', $parameter['name'])));
         $reference = isset($schema['$ref']) ? $this->refName($schema['$ref']) : null;
 
         return match (true) {

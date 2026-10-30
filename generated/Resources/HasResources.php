@@ -28,6 +28,11 @@ trait HasResources
         return new BulletinResource($this);
     }
 
+    public function cloudPortals(): CloudPortalsResource
+    {
+        return new CloudPortalsResource($this);
+    }
+
     public function curriculum(): CurriculumResource
     {
         return new CurriculumResource($this);
