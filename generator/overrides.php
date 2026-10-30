@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -152,9 +152,55 @@ return [
         'MedicalVisit_GetAllLocations' => ['cacheable' => true],
         'MedicalVisit_GetAllReasons' => ['cacheable' => true],
         'MedicalVisit_GetAllTransportOptions' => ['cacheable' => true],
-        'StudentDoctor_DeleteDoctorBySchoolid' => ['class' => 'DeleteStudentDoctorRequest'],
-        'StudentDoctor_UpdateDoctorBySchoolidPatch' => ['class' => 'PatchStudentDoctorRequest'],
         'StudentDocuments_DownloadBySchoolidDocumentid' => ['response' => 'file'],
+
+        // Wellbeing Manager
+        // These GETs run workflows in iSAMS: never retried or cached.
+        'Workflows_ProcessWorkflows' => ['safe' => false],
+        'Workflows_ProcessWorkflowByWorkflowid' => ['safe' => false],
+        'PastoralConfiguration_GetConfiguration' => ['class' => 'GetWellbeingConfigurationRequest'],
+        'PastoralFramework_GetAllModules' => ['class' => 'GetWellbeingFrameworkModulesRequest', 'cacheable' => true],
+        'PastoralFlag_CreateFlagBySchoolidFlag' => ['class' => 'CreateStudentFlagRequest'],
+        'PastoralFlag_DeleteBySchoolid' => ['class' => 'DeleteStudentFlagRequest'],
+        'PastoralFlag_GetFlagBySchoolid' => ['class' => 'GetStudentFlagRequest'],
+        'PastoralFlag_UpdateFlagBySchoolidPatch' => ['class' => 'PatchStudentFlagRequest'],
+        'ConcernGirfec_PostGirfecFormBySchoolidConcernidForm' => ['class' => 'CreateConcernGirfecFormRequest'],
+        'ReasonsForDismissal_CreateByReasonfordismissal' => ['class' => 'CreateReasonForDismissalRequest'],
+        'ReasonsForDismissal_DeleteById' => ['class' => 'DeleteReasonForDismissalRequest'],
+        'ReasonsForDismissal_GetAll' => ['class' => 'GetReasonsForDismissalRequest'],
+        'ReasonsForDismissal_GetById' => ['class' => 'GetReasonForDismissalRequest'],
+        'ReasonsForDismissal_UpdateByIdPatch' => ['class' => 'PatchReasonForDismissalRequest'],
+        'VisibilityGroups_GetDefaultGroupId' => ['class' => 'GetDefaultVisibilityGroupRequest'],
+        'VisibilityGroups_GetUsersInGroupByGroupid' => ['class' => 'GetVisibilityGroupUsersRequest'],
+        'WorkflowActions_Types' => ['class' => 'GetWorkflowActionTypesRequest', 'cacheable' => true],
+        'WorkflowRules_Types' => ['class' => 'GetWorkflowRuleTypesRequest', 'cacheable' => true],
+        'WorkflowRules_ParametersById' => ['class' => 'GetWorkflowRuleParametersRequest'],
+        'Agency_GetAll' => ['cacheable' => true],
+        'Agency_GetById' => ['cacheable' => true],
+        'ConcernActionOutcomes_GetAll' => ['cacheable' => true],
+        'ConcernActionOutcomes_GetById' => ['cacheable' => true],
+        'ConcernActionStatuses_GetAll' => ['cacheable' => true],
+        'ConcernActionStatuses_GetById' => ['cacheable' => true],
+        'ConcernActionTypes_GetAll' => ['cacheable' => true],
+        'ConcernActionTypes_GetById' => ['cacheable' => true],
+        'ConcernAreas_GetAllConcernAreas' => ['cacheable' => true],
+        'ConcernAreas_GetById' => ['cacheable' => true],
+        'ConcernInjuryTypes_GetAllConcernInjuryTypes' => ['cacheable' => true],
+        'ConcernInjuryTypes_GetById' => ['cacheable' => true],
+        'ConcernRoles_GetAllConcernRoles' => ['cacheable' => true],
+        'ConcernRoles_GetById' => ['cacheable' => true],
+        'ConcernSeverities_GetAllConcernSeverities' => ['cacheable' => true],
+        'ConcernSeverities_GetById' => ['cacheable' => true],
+        'ConcernStatuses_GetAll' => ['cacheable' => true],
+        'ConcernStatuses_GetById' => ['cacheable' => true],
+        'ConcernTypes_GetAll' => ['cacheable' => true],
+        'ConcernTypes_GetById' => ['cacheable' => true],
+        'FlagTypes_GetAllFlagTypes' => ['cacheable' => true],
+        'FlagTypes_GetById' => ['cacheable' => true],
+        'GirfecAreas_GetAllGirfecAreas' => ['cacheable' => true],
+        'IndicatorStatuses_GetAllIndicatorStatuses' => ['cacheable' => true],
+        'LifeEventTypes_GetAll' => ['cacheable' => true],
+        'LifeEventTypes_GetById' => ['cacheable' => true],
 
         // System Configuration
         'PaymentStatus_GetGetnetPaymentProcessingPage' => $paymentWebhook,

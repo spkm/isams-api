@@ -144,27 +144,32 @@
         "Agency_CreateByAgency": {
             "method": "POST",
             "path": "/api/wellbeing/agency",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Agency\\CreateAgencyRequest"
         },
         "Agency_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/agency/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Agency\\DeleteAgencyRequest"
         },
         "Agency_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/agency",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Agency\\GetAgenciesRequest"
         },
         "Agency_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/agency/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Agency\\GetAgencyRequest"
         },
         "Agency_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/agency/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Agency\\PatchAgencyRequest"
         },
         "Agents_GetAll": {
             "method": "GET",
@@ -911,312 +916,374 @@
         "ConcernActionOutcomes_CreateByConcernactionoutcome": {
             "method": "POST",
             "path": "/api/wellbeing/concernactionoutcomes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionOutcomes\\CreateConcernActionOutcomeRequest"
         },
         "ConcernActionOutcomes_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concernactionoutcomes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionOutcomes\\DeleteConcernActionOutcomeRequest"
         },
         "ConcernActionOutcomes_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/concernactionoutcomes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionOutcomes\\GetConcernActionOutcomesRequest"
         },
         "ConcernActionOutcomes_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concernactionoutcomes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionOutcomes\\GetConcernActionOutcomeRequest"
         },
         "ConcernActionOutcomes_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concernactionoutcomes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionOutcomes\\PatchConcernActionOutcomeRequest"
         },
         "ConcernActionStatuses_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/concernactionstatuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionStatuses\\GetConcernActionStatusesRequest"
         },
         "ConcernActionStatuses_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concernactionstatuses/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionStatuses\\GetConcernActionStatusRequest"
         },
         "ConcernActionTypes_CreateByConcernactiontype": {
             "method": "POST",
             "path": "/api/wellbeing/concernactiontypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionTypes\\CreateConcernActionTypeRequest"
         },
         "ConcernActionTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concernactiontypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionTypes\\DeleteConcernActionTypeRequest"
         },
         "ConcernActionTypes_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/concernactiontypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionTypes\\GetConcernActionTypesRequest"
         },
         "ConcernActionTypes_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concernactiontypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionTypes\\GetConcernActionTypeRequest"
         },
         "ConcernActionTypes_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concernactiontypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActionTypes\\PatchConcernActionTypeRequest"
         },
         "ConcernActions_CreateConcernActionBySchoolidConcernidConcernaction": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/actions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActions\\CreateConcernActionRequest"
         },
         "ConcernActions_DeleteConcernActionBySchoolidConcernidId": {
             "method": "DELETE",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/actions/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActions\\DeleteConcernActionRequest"
         },
         "ConcernActions_GetConcernActionBySchoolidConcernidId": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/actions/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActions\\GetConcernActionRequest"
         },
         "ConcernActions_UpdateConcernActionBySchoolidConcernidIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/actions/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernActions\\PatchConcernActionRequest"
         },
         "ConcernAreas_CreateByConcernarea": {
             "method": "POST",
             "path": "/api/wellbeing/concernareas",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernAreas\\CreateConcernAreaRequest"
         },
         "ConcernAreas_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concernareas/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernAreas\\DeleteConcernAreaRequest"
         },
         "ConcernAreas_GetAllConcernAreas": {
             "method": "GET",
             "path": "/api/wellbeing/concernareas",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernAreas\\GetConcernAreasRequest"
         },
         "ConcernAreas_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concernareas/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernAreas\\GetConcernAreaRequest"
         },
         "ConcernAreas_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concernareas/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernAreas\\PatchConcernAreaRequest"
         },
         "ConcernDocuments_CreateAsyncBySchoolidConcernid": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernDocuments\\CreateConcernDocumentRequest"
         },
         "ConcernDocuments_DeleteByIdConcernidSchoolid": {
             "method": "DELETE",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/documents/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernDocuments\\DeleteConcernDocumentRequest"
         },
         "ConcernDocuments_DownloadBySchoolidConcernidDocumentid": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/documents/{documentId}/data",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernDocuments\\DownloadConcernDocumentRequest"
         },
         "ConcernDocuments_GetAllBySchoolidConcernid": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernDocuments\\GetConcernDocumentsRequest"
         },
         "ConcernGirfec_GetGirfecFormBySchoolidConcernid": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/girfec",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernGirfec\\GetConcernGirfecFormRequest"
         },
         "ConcernGirfec_PostGirfecFormBySchoolidConcernidForm": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/girfec",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernGirfec\\CreateConcernGirfecFormRequest"
         },
         "ConcernGirfec_UpdateGirfecFormBySchoolidConcernidPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/girfec",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernGirfec\\PatchConcernGirfecFormRequest"
         },
         "ConcernInjuryTypes_CreateByConcerninjurytype": {
             "method": "POST",
             "path": "/api/wellbeing/concerninjurytypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernInjuryTypes\\CreateConcernInjuryTypeRequest"
         },
         "ConcernInjuryTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concerninjurytypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernInjuryTypes\\DeleteConcernInjuryTypeRequest"
         },
         "ConcernInjuryTypes_GetAllConcernInjuryTypes": {
             "method": "GET",
             "path": "/api/wellbeing/concerninjurytypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernInjuryTypes\\GetConcernInjuryTypesRequest"
         },
         "ConcernInjuryTypes_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concerninjurytypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernInjuryTypes\\GetConcernInjuryTypeRequest"
         },
         "ConcernInjuryTypes_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concerninjurytypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernInjuryTypes\\PatchConcernInjuryTypeRequest"
         },
         "ConcernRoles_CreateConcernRoleByConcernrole": {
             "method": "POST",
             "path": "/api/wellbeing/concernroles",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernRoles\\CreateConcernRoleRequest"
         },
         "ConcernRoles_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concernroles/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernRoles\\DeleteConcernRoleRequest"
         },
         "ConcernRoles_GetAllConcernRoles": {
             "method": "GET",
             "path": "/api/wellbeing/concernroles",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernRoles\\GetConcernRolesRequest"
         },
         "ConcernRoles_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concernroles/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernRoles\\GetConcernRoleRequest"
         },
         "ConcernRoles_UpdateConcernRoleByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concernroles/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernRoles\\PatchConcernRoleRequest"
         },
         "ConcernSeverities_CreateConcernSeverityByConcernseverity": {
             "method": "POST",
             "path": "/api/wellbeing/concernseverities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernSeverities\\CreateConcernSeverityRequest"
         },
         "ConcernSeverities_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concernseverities/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernSeverities\\DeleteConcernSeverityRequest"
         },
         "ConcernSeverities_GetAllConcernSeverities": {
             "method": "GET",
             "path": "/api/wellbeing/concernseverities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernSeverities\\GetConcernSeveritiesRequest"
         },
         "ConcernSeverities_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concernseverities/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernSeverities\\GetConcernSeverityRequest"
         },
         "ConcernSeverities_UpdateConcernSeverityByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concernseverities/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernSeverities\\PatchConcernSeverityRequest"
         },
         "ConcernStatuses_CreateByConcernstatus": {
             "method": "POST",
             "path": "/api/wellbeing/concernstatuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStatuses\\CreateConcernStatusRequest"
         },
         "ConcernStatuses_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concernstatuses/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStatuses\\DeleteConcernStatusRequest"
         },
         "ConcernStatuses_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/concernstatuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStatuses\\GetConcernStatusesRequest"
         },
         "ConcernStatuses_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concernstatuses/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStatuses\\GetConcernStatusRequest"
         },
         "ConcernStatuses_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concernstatuses/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStatuses\\PatchConcernStatusRequest"
         },
         "ConcernStudents_AssociateStudentBySchoolidConcernidConcernstudent": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/students",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStudents\\AssociateConcernStudentRequest"
         },
         "ConcernStudents_DisassociateStudentByIdConcernidSchoolid": {
             "method": "DELETE",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/students/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStudents\\DisassociateConcernStudentRequest"
         },
         "ConcernStudents_GetConcernStudentsByConcernidSchoolid": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/students",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStudents\\GetConcernStudentsRequest"
         },
         "ConcernStudents_UpdateConcernStudentRoleBySchoolidIdConcernidPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/students/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernStudents\\PatchConcernStudentRoleRequest"
         },
         "ConcernTypes_CreateByConcerntype": {
             "method": "POST",
             "path": "/api/wellbeing/concerntypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernTypes\\CreateConcernTypeRequest"
         },
         "ConcernTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/concerntypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernTypes\\DeleteConcernTypeRequest"
         },
         "ConcernTypes_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/concerntypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernTypes\\GetConcernTypesRequest"
         },
         "ConcernTypes_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/concerntypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernTypes\\GetConcernTypeRequest"
         },
         "ConcernTypes_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/concerntypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernTypes\\PatchConcernTypeRequest"
         },
         "ConcernVisibilities_GetVisibilitiesByConcernidSchoolid": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/visibilities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernVisibilities\\GetConcernVisibilitiesRequest"
         },
         "ConcernVisibilities_ResetVisibilitiesBySchoolidConcernid": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/visibilities/reset",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernVisibilities\\ResetConcernVisibilitiesRequest"
         },
         "ConcernVisibilities_SetVisibilityBySchoolidConcernidVisibility": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/visibilities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernVisibilities\\SetConcernVisibilityRequest"
         },
         "ConcernVisibilities_SetVisibilityGroupsBySchoolidConcernidVisibilitygroups": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{concernId}/visibilitygroups",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ConcernVisibilities\\SetConcernVisibilityGroupsRequest"
         },
         "Concerns_GetAllAsyncByPagePagesize": {
             "method": "GET",
             "path": "/api/wellbeing/concerns",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Concerns\\GetConcernsRequest"
         },
         "ConsentRegisters_GetConsentRegisters": {
             "method": "GET",
@@ -2136,27 +2203,32 @@
         "FlagTypes_CreateByFlagtype": {
             "method": "POST",
             "path": "/api/wellbeing/flagtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\FlagTypes\\CreateFlagTypeRequest"
         },
         "FlagTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/flagtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\FlagTypes\\DeleteFlagTypeRequest"
         },
         "FlagTypes_GetAllFlagTypes": {
             "method": "GET",
             "path": "/api/wellbeing/flagtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\FlagTypes\\GetFlagTypesRequest"
         },
         "FlagTypes_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/flagtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\FlagTypes\\GetFlagTypeRequest"
         },
         "FlagTypes_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/flagtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\FlagTypes\\PatchFlagTypeRequest"
         },
         "FormTimetables_GetByFormcode": {
             "method": "GET",
@@ -2173,7 +2245,8 @@
         "GirfecAreas_GetAllGirfecAreas": {
             "method": "GET",
             "path": "/api/wellbeing/girfecareas",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\GirfecAreas\\GetGirfecAreasRequest"
         },
         "GradebookCharacteristics_DeleteByGradebookidCharacteristic": {
             "method": "DELETE",
@@ -2400,37 +2473,44 @@
         "IndicatorStatuses_GetAllIndicatorStatuses": {
             "method": "GET",
             "path": "/api/wellbeing/indicatorstatuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\IndicatorStatuses\\GetIndicatorStatusesRequest"
         },
         "Indicators_CreateIndicatorBySchoolidIndicator": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/indicators",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Indicators\\CreateIndicatorRequest"
         },
         "Indicators_DeleteIndicatorByIdSchoolid": {
             "method": "DELETE",
             "path": "/api/wellbeing/students/{schoolId}/indicators/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Indicators\\DeleteIndicatorRequest"
         },
         "Indicators_DeleteIndicatorsByIds": {
             "method": "POST",
             "path": "/api/wellbeing/indicators/delete",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Indicators\\DeleteIndicatorsRequest"
         },
         "Indicators_DismissIndicatorsByIndicators": {
             "method": "PATCH",
             "path": "/api/wellbeing/indicators/dismiss",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Indicators\\DismissIndicatorsRequest"
         },
         "Indicators_GetIndicatorBySchoolidId": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/indicators/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Indicators\\GetIndicatorRequest"
         },
         "Indicators_UpdateIndicatorBySchoolidIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/indicators/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Indicators\\PatchIndicatorRequest"
         },
         "InteractiveElectronicForms_GetAvailableElectronicFormDetails": {
             "method": "GET",
@@ -2595,47 +2675,56 @@
         "LifeEventTypes_CreateByLifeeventtype": {
             "method": "POST",
             "path": "/api/wellbeing/lifeeventtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEventTypes\\CreateLifeEventTypeRequest"
         },
         "LifeEventTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/lifeeventtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEventTypes\\DeleteLifeEventTypeRequest"
         },
         "LifeEventTypes_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/lifeeventtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEventTypes\\GetLifeEventTypesRequest"
         },
         "LifeEventTypes_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/lifeeventtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEventTypes\\GetLifeEventTypeRequest"
         },
         "LifeEventTypes_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/lifeeventtypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEventTypes\\PatchLifeEventTypeRequest"
         },
         "LifeEvents_CreateLifeEventBySchoolidLifeevent": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/lifeevents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEvents\\CreateLifeEventRequest"
         },
         "LifeEvents_DeleteLifeEventBySchoolidId": {
             "method": "DELETE",
             "path": "/api/wellbeing/students/{schoolId}/lifeevents/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEvents\\DeleteLifeEventRequest"
         },
         "LifeEvents_GetLifeEventBySchoolidId": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/lifeevents/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEvents\\GetLifeEventRequest"
         },
         "LifeEvents_UpdateLifeEventBySchoolidIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/lifeevents/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\LifeEvents\\PatchLifeEventRequest"
         },
         "ListGroupPortals_GetAllAsync": {
             "method": "GET",
@@ -3107,32 +3196,38 @@
         "PastoralConfiguration_GetConfiguration": {
             "method": "GET",
             "path": "/api/wellbeing/configuration",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Configuration\\GetWellbeingConfigurationRequest"
         },
         "PastoralFlag_CreateFlagBySchoolidFlag": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/flag",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Flag\\CreateStudentFlagRequest"
         },
         "PastoralFlag_DeleteBySchoolid": {
             "method": "DELETE",
             "path": "/api/wellbeing/students/{schoolId}/flag",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Flag\\DeleteStudentFlagRequest"
         },
         "PastoralFlag_GetFlagBySchoolid": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/flag",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Flag\\GetStudentFlagRequest"
         },
         "PastoralFlag_UpdateFlagBySchoolidPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/flag",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Flag\\PatchStudentFlagRequest"
         },
         "PastoralFramework_GetAllModules": {
             "method": "GET",
             "path": "/api/wellbeing/framework/modules",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Framework\\GetWellbeingFrameworkModulesRequest"
         },
         "PaymentGateway_GetPaymentGatewayById": {
             "method": "GET",
@@ -3789,27 +3884,32 @@
         "ReasonsForDismissal_CreateByReasonfordismissal": {
             "method": "POST",
             "path": "/api/wellbeing/reasonsfordismissal",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ReasonsForDismissal\\CreateReasonForDismissalRequest"
         },
         "ReasonsForDismissal_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/reasonsfordismissal/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ReasonsForDismissal\\DeleteReasonForDismissalRequest"
         },
         "ReasonsForDismissal_GetAll": {
             "method": "GET",
             "path": "/api/wellbeing/reasonsfordismissal",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ReasonsForDismissal\\GetReasonsForDismissalRequest"
         },
         "ReasonsForDismissal_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/reasonsfordismissal/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ReasonsForDismissal\\GetReasonForDismissalRequest"
         },
         "ReasonsForDismissal_UpdateByIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/reasonsfordismissal/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\ReasonsForDismissal\\PatchReasonForDismissalRequest"
         },
         "RecordCollection_DeleteByRegisteridSchoolidRecordcollectionidRecordid": {
             "method": "DELETE",
@@ -4399,22 +4499,26 @@
         "StudentConcerns_CreateConcernBySchoolidConcern": {
             "method": "POST",
             "path": "/api/wellbeing/students/{schoolId}/concerns",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\StudentConcerns\\CreateStudentConcernRequest"
         },
         "StudentConcerns_DeleteConcernBySchoolidId": {
             "method": "DELETE",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\StudentConcerns\\DeleteStudentConcernRequest"
         },
         "StudentConcerns_GetConcernBySchoolidId": {
             "method": "GET",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\StudentConcerns\\GetStudentConcernRequest"
         },
         "StudentConcerns_UpdateConcernBySchoolidIdPatch": {
             "method": "PATCH",
             "path": "/api/wellbeing/students/{schoolId}/concerns/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\StudentConcerns\\PatchStudentConcernRequest"
         },
         "StudentConditionCommands_ArchiveBySchoolidConditionid": {
             "method": "POST",
@@ -5404,22 +5508,26 @@
         "VisibilityGroups_GetDefaultGroupId": {
             "method": "GET",
             "path": "/api/wellbeing/visibilitygroups/default",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\VisibilityGroups\\GetDefaultVisibilityGroupRequest"
         },
         "VisibilityGroups_GetUsersInGroupByGroupid": {
             "method": "GET",
             "path": "/api/wellbeing/visibilitygroups/{groupId}/users",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\VisibilityGroups\\GetVisibilityGroupUsersRequest"
         },
         "VisibilityGroups_GetVisibilityGroupById": {
             "method": "GET",
             "path": "/api/wellbeing/visibilitygroups/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\VisibilityGroups\\GetVisibilityGroupRequest"
         },
         "VisibilityGroups_GetVisibilityGroups": {
             "method": "GET",
             "path": "/api/wellbeing/visibilitygroups",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\VisibilityGroups\\GetVisibilityGroupsRequest"
         },
         "Visits_GetAdmissionVisitSummaryBySchoolIdsBySchoolids": {
             "method": "GET",
@@ -5439,67 +5547,80 @@
         "WorkflowActions_Types": {
             "method": "GET",
             "path": "/api/wellbeing/workflowactions/types",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\WorkflowActions\\GetWorkflowActionTypesRequest"
         },
         "WorkflowRules_CreateByRule": {
             "method": "POST",
             "path": "/api/wellbeing/workflowrules",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\WorkflowRules\\CreateWorkflowRuleRequest"
         },
         "WorkflowRules_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/workflowrules/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\WorkflowRules\\DeleteWorkflowRuleRequest"
         },
         "WorkflowRules_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/workflowrules/rule/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\WorkflowRules\\GetWorkflowRuleRequest"
         },
         "WorkflowRules_ParametersById": {
             "method": "GET",
             "path": "/api/wellbeing/workflowrules/parameters/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\WorkflowRules\\GetWorkflowRuleParametersRequest"
         },
         "WorkflowRules_Types": {
             "method": "GET",
             "path": "/api/wellbeing/workflowrules/types",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\WorkflowRules\\GetWorkflowRuleTypesRequest"
         },
         "WorkflowRules_UpdateRuleByRule": {
             "method": "PUT",
             "path": "/api/wellbeing/workflowrules",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\WorkflowRules\\UpdateWorkflowRuleRequest"
         },
         "Workflows_CreateByWorkflow": {
             "method": "POST",
             "path": "/api/wellbeing/workflows",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Workflows\\CreateWorkflowRequest"
         },
         "Workflows_DeleteById": {
             "method": "DELETE",
             "path": "/api/wellbeing/workflows/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Workflows\\DeleteWorkflowRequest"
         },
         "Workflows_GetById": {
             "method": "GET",
             "path": "/api/wellbeing/workflows/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Workflows\\GetWorkflowRequest"
         },
         "Workflows_ProcessWorkflowByWorkflowid": {
             "method": "GET",
             "path": "/api/wellbeing/workflows/run/{workflowId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Workflows\\ProcessWorkflowRequest"
         },
         "Workflows_ProcessWorkflows": {
             "method": "GET",
             "path": "/api/wellbeing/workflows/run",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Workflows\\ProcessWorkflowsRequest"
         },
         "Workflows_UpdateByWorkflow": {
             "method": "PUT",
             "path": "/api/wellbeing/workflows",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\WellbeingManager\\Workflows\\UpdateWorkflowRequest"
         },
         "YearGroupDivisions_GetById": {
             "method": "GET",
@@ -5579,6 +5700,67 @@
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Surgery": "spkm\\IsamsApi\\Data\\MedicalCentre\\SurgeryForCreate",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Vaccination": "spkm\\IsamsApi\\Data\\MedicalCentre\\VaccinationForCreate",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Visit": "spkm\\IsamsApi\\Data\\MedicalCentre\\VisitForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Common.WorkflowAction": "spkm\\IsamsApi\\Data\\WellbeingManager\\WorkflowAction",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Common.WorkflowRule": "spkm\\IsamsApi\\Data\\WellbeingManager\\WorkflowRule",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Common.WorkflowStudent": "spkm\\IsamsApi\\Data\\WellbeingManager\\WorkflowStudent",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Common.WorkflowStudentFilter": "spkm\\IsamsApi\\Data\\WellbeingManager\\WorkflowStudentFilter",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ActionOutcome": "spkm\\IsamsApi\\Data\\WellbeingManager\\ActionOutcome",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ActionStatus": "spkm\\IsamsApi\\Data\\WellbeingManager\\ActionStatus",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ActionType": "spkm\\IsamsApi\\Data\\WellbeingManager\\ActionType",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.Agency": "spkm\\IsamsApi\\Data\\WellbeingManager\\Agency",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.Concern": "spkm\\IsamsApi\\Data\\WellbeingManager\\Concern",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernAction": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernAction",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernDocument": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernDocument",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernGirfecForm": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernGirfecForm",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernInjuryType": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernInjuryType",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernRole": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernRole",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernSeverity": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernSeverity",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernStatus": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernStatus",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernStudentSummary": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernStudentSummary",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernType": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernType",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ConcernVisibility": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernVisibility",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.Configuration": "spkm\\IsamsApi\\Data\\WellbeingManager\\Configuration",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.Indicator": "spkm\\IsamsApi\\Data\\WellbeingManager\\Indicator",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.IndicatorStatus": "spkm\\IsamsApi\\Data\\WellbeingManager\\IndicatorStatus",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.LifeEvent": "spkm\\IsamsApi\\Data\\WellbeingManager\\LifeEvent",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.LifeEventType": "spkm\\IsamsApi\\Data\\WellbeingManager\\LifeEventType",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.Module": "spkm\\IsamsApi\\Data\\WellbeingManager\\Module",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.PastoralConcernArea": "spkm\\IsamsApi\\Data\\WellbeingManager\\PastoralConcernArea",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.PastoralFlag": "spkm\\IsamsApi\\Data\\WellbeingManager\\PastoralFlag",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.PastoralFlagType": "spkm\\IsamsApi\\Data\\WellbeingManager\\PastoralFlagType",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.ReasonForDismissal": "spkm\\IsamsApi\\Data\\WellbeingManager\\ReasonForDismissal",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.VisibilityGroup": "spkm\\IsamsApi\\Data\\WellbeingManager\\VisibilityGroup",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.VisibilityGroupUser": "spkm\\IsamsApi\\Data\\WellbeingManager\\VisibilityGroupUser",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Get.Workflow": "spkm\\IsamsApi\\Data\\WellbeingManager\\Workflow",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Patch.ConcernVisibilityGroups": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernVisibilityGroupsForPatch",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ActionOutcome": "spkm\\IsamsApi\\Data\\WellbeingManager\\ActionOutcomeForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.Agency": "spkm\\IsamsApi\\Data\\WellbeingManager\\AgencyForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.Concern": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernAction": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernActionForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernActionType": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernActionTypeForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernDocument": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernDocumentForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernGirfecForm": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernGirfecFormForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernInjuryType": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernInjuryTypeForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernRole": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernRoleForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernSeverity": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernSeverityForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernStatus": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernStatusForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernStudent": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernStudentForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernType": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernTypeForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ConcernVisibility": "spkm\\IsamsApi\\Data\\WellbeingManager\\ConcernVisibilityForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.FlagType": "spkm\\IsamsApi\\Data\\WellbeingManager\\FlagTypeForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.Indicator": "spkm\\IsamsApi\\Data\\WellbeingManager\\IndicatorForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.LifeEvent": "spkm\\IsamsApi\\Data\\WellbeingManager\\LifeEventForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.LifeEventType": "spkm\\IsamsApi\\Data\\WellbeingManager\\LifeEventTypeForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.PastoralConcernArea": "spkm\\IsamsApi\\Data\\WellbeingManager\\PastoralConcernAreaForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.PastoralFlag": "spkm\\IsamsApi\\Data\\WellbeingManager\\PastoralFlagForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.ReasonForDismissal": "spkm\\IsamsApi\\Data\\WellbeingManager\\ReasonForDismissalForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.Rule": "spkm\\IsamsApi\\Data\\WellbeingManager\\RuleForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.RuleParameterValue": "spkm\\IsamsApi\\Data\\WellbeingManager\\RuleParameterValueForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Post.Workflow": "spkm\\IsamsApi\\Data\\WellbeingManager\\WorkflowForCreate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Put.DismissIndicatorsCollection": "spkm\\IsamsApi\\Data\\WellbeingManager\\DismissIndicatorsCollectionForUpdate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Put.Rule": "spkm\\IsamsApi\\Data\\WellbeingManager\\RuleForUpdate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Put.RuleParameterValue": "spkm\\IsamsApi\\Data\\WellbeingManager\\RuleParameterValueForUpdate",
+        "iSAMS.Pastoral.AppServices.Objects.Resources.Put.Workflow": "spkm\\IsamsApi\\Data\\WellbeingManager\\WorkflowForUpdate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Alumni": "spkm\\IsamsApi\\Data\\Students\\Alumni",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.AlumniContact": "spkm\\IsamsApi\\Data\\Students\\AlumniContact",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Student": "spkm\\IsamsApi\\Data\\Students\\AlumniStudent",

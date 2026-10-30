@@ -160,7 +160,7 @@ All of these are off unless you configure them (see `config/isams-api.php`):
   `IsamsUnavailable` exception for a cooldown period instead of waiting for timeouts. `Isams::isAvailable()` tells you,
   without contacting iSAMS, whether requests are currently paused.
 - **Retries:** `ISAMS_RETRIES=3` retries GET requests that fail with a server error, rate limit or connection error.
-  Writes are never retried.
+  Writes are never retried, and nor are the few GETs that make iSAMS do something, such as running wellbeing workflows.
 - **Re-authentication:** `ISAMS_REAUTHENTICATE=true` fetches a new token and repeats the request once when iSAMS rejects
   a cached token.
 - **Caching:** `ISAMS_CACHE=true` caches slow-changing reference lists (terms, houses, year groups, forms, divisions,

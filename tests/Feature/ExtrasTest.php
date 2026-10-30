@@ -10,6 +10,7 @@ use spkm\IsamsApi\Facades\Isams;
 use spkm\IsamsApi\IsamsConnector;
 use spkm\IsamsApi\IsamsUnavailable;
 use spkm\IsamsApi\Requests\AdhocRequest;
+use spkm\IsamsApi\Requests\WellbeingManager\Workflows\ProcessWorkflowsRequest;
 use spkm\IsamsApi\Tests\Fixtures\ExampleRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
@@ -83,6 +84,16 @@ it('never retries a write', function () {
 
     expect($response->status())->toBe(503)
         ->and(requestsSent($isams, AdhocRequest::class))->toBe(1);
+});
+
+it('never retries a GET that makes iSAMS do something, such as running wellbeing workflows', function () {
+    config(['isams-api.retries.times' => 3]);
+    $isams = FakeIsams::respondWith([ProcessWorkflowsRequest::class => MockResponse::make([], 503)]);
+
+    $response = FakeIsams::connector()->send(new ProcessWorkflowsRequest);
+
+    expect($response->status())->toBe(503)
+        ->and(requestsSent($isams, ProcessWorkflowsRequest::class))->toBe(1);
 });
 
 it('returns a 401 as it is unless re-authentication is configured', function () {
