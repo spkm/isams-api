@@ -94,7 +94,7 @@ it('turns one student\'s contacts into StudentContact objects', function () {
         'mobileNumber' => '07700 900001',
         'nationalId' => 'N-1',
         'passportNumber' => 'P-1',
-        'postcode' => 'GU6 0AA',
+        'postcode' => 'ZZ1 1ZZ',
         'preferredPaymentMethod' => 'Direct Debit',
         'profession' => 'Engineer',
         'relationship' => 'Mother',
@@ -105,7 +105,7 @@ it('turns one student\'s contacts into StudentContact objects', function () {
         'taxRegistrationNumber' => 'T-1',
         'telephoneNumber' => '01234 000002',
         'title' => 'Mrs',
-        'town' => 'Cranleigh',
+        'town' => 'Anytown',
         'workTelephoneNumber' => '01234 000003',
     ]]])->dto();
 
@@ -141,7 +141,7 @@ it('turns one student\'s contacts into StudentContact objects', function () {
             passportNumber: 'P-1',
             personGuid: '6f1c2e9a-0b7d-4c1e-9f3a-2d8b5e7c4a10',
             personId: 701,
-            postcode: 'GU6 0AA',
+            postcode: 'ZZ1 1ZZ',
             preferredPaymentMethod: 'Direct Debit',
             private: false,
             profession: 'Engineer',
@@ -153,7 +153,7 @@ it('turns one student\'s contacts into StudentContact objects', function () {
             taxRegistrationNumber: 'T-1',
             telephoneNumber: '01234 000002',
             title: 'Mrs',
-            town: 'Cranleigh',
+            town: 'Anytown',
             workTelephoneNumber: '01234 000003',
         )]);
 });
