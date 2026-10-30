@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -56,6 +56,37 @@ return [
         // Teaching
         'TeachingSets_PostBySetidSchoolid' => ['class' => 'AddStudentToTeachingSetRequest'],
         'TeachingSets_DeleteBySetidSchoolid' => ['class' => 'RemoveStudentFromTeachingSetRequest'],
+
+        // School
+        'SchoolConfiguration_Get' => ['class' => 'GetSchoolDetailsRequest', 'cacheable' => true],
+        'Departments_GetByDepartmenttypeExpand' => ['cacheable' => true],
+        'Departments_GetByDepartmenttypeId' => ['cacheable' => true],
+        'TeachingDepartmentSubjects_GetByDepartmentid' => ['cacheable' => true],
+        'Divisions_GetAll' => ['cacheable' => true],
+        'Divisions_GetByCode' => ['cacheable' => true],
+        'Forms_Get' => ['cacheable' => true],
+        'Houses_GetByHousetype' => ['cacheable' => true],
+        'Houses_GetById' => ['cacheable' => true],
+        'Terms_GetAsync' => ['cacheable' => true],
+        'YearGroups_Get' => ['cacheable' => true],
+        'YearGroups_GetById' => ['cacheable' => true],
+        'YearGroupDivisions_GetById' => ['cacheable' => true],
+
+        // Estates
+        'Buildings_GetAll' => ['cacheable' => true],
+        'Buildings_GetById' => ['cacheable' => true],
+        'BuildingDivisions_GetByBuildingid' => ['cacheable' => true],
+        'BuildingRooms_GetByBuildingid' => ['cacheable' => true],
+        'Rooms_GetAll' => ['cacheable' => true],
+        'Rooms_GetById' => ['cacheable' => true],
+
+        // Timetable
+        'TimetableStructures_GetByAcademicyearCalendarenddateCalendarstartdateCalendarweekDivisioncodeTermnameTimetableweekshortname' => ['cacheable' => true],
+        'TimetableImport_CreateImportByRequest' => ['class' => 'CreateTimetableImportRequest'],
+        'TimetableImport_GetActiveImport' => ['class' => 'GetActiveTimetableImportRequest'],
+        'TimetableImport_DeleteActiveImport' => ['class' => 'DeleteActiveTimetableImportRequest'],
+        'TimetableImport_CompleteImport' => ['class' => 'CompleteTimetableImportRequest'],
+        'TimetableImport_GetImportResultById' => ['class' => 'GetTimetableImportResultRequest'],
 
         // System Configuration
         'PaymentStatus_GetGetnetPaymentProcessingPage' => $paymentWebhook,

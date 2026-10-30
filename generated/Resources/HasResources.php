@@ -8,6 +8,16 @@ namespace spkm\IsamsApi\Resources;
 
 trait HasResources
 {
+    public function estates(): EstatesResource
+    {
+        return new EstatesResource($this);
+    }
+
+    public function school(): SchoolResource
+    {
+        return new SchoolResource($this);
+    }
+
     public function students(): StudentsResource
     {
         return new StudentsResource($this);
@@ -16,5 +26,10 @@ trait HasResources
     public function teaching(): TeachingResource
     {
         return new TeachingResource($this);
+    }
+
+    public function timetable(): TimetableResource
+    {
+        return new TimetableResource($this);
     }
 }
