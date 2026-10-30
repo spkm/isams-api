@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead.
+ */
+
+namespace spkm\IsamsApi\Resources\MedicalCentre;
+
+use Saloon\Http\BaseResource;
+use Saloon\Http\Response;
+use spkm\IsamsApi\Data\MedicalCentre\MedicationForCreate;
+use spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\ArchiveStudentMedicationRequest;
+use spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\CreateStudentMedicationRequest;
+use spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\DeleteStudentMedicationRequest;
+use spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\GetStudentMedicationRequest;
+use spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\GetStudentMedicationsRequest;
+use spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\PatchStudentMedicationRequest;
+use spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\RestoreStudentMedicationRequest;
+use spkm\IsamsApi\Support\JsonPatch;
+
+class StudentMedicationResource extends BaseResource
+{
+    public function archiveStudentMedication(string $schoolId, string $medicationId): Response
+    {
+        return $this->connector->send(new ArchiveStudentMedicationRequest($schoolId, $medicationId));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\MedicalCentre\MedicationForCreate|array<string, mixed>  $medication
+     */
+    public function createStudentMedication(string $schoolId, MedicationForCreate|array $medication): Response
+    {
+        return $this->connector->send(new CreateStudentMedicationRequest($schoolId, $medication));
+    }
+
+    public function deleteStudentMedication(string $schoolId, string $medicationId): Response
+    {
+        return $this->connector->send(new DeleteStudentMedicationRequest($schoolId, $medicationId));
+    }
+
+    public function getStudentMedication(string $schoolId, string $medicationId): Response
+    {
+        return $this->connector->send(new GetStudentMedicationRequest($schoolId, $medicationId));
+    }
+
+    public function getStudentMedications(string $schoolId, ?bool $includeArchive = null): Response
+    {
+        return $this->connector->send(new GetStudentMedicationsRequest($schoolId, $includeArchive));
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     */
+    public function patchStudentMedication(string $schoolId, string $medicationId, JsonPatch|array $patch): Response
+    {
+        return $this->connector->send(new PatchStudentMedicationRequest($schoolId, $medicationId, $patch));
+    }
+
+    public function restoreStudentMedication(string $schoolId, string $medicationId): Response
+    {
+        return $this->connector->send(new RestoreStudentMedicationRequest($schoolId, $medicationId));
+    }
+}

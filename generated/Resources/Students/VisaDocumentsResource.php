@@ -21,13 +21,13 @@ use spkm\IsamsApi\Support\JsonPatch;
 class VisaDocumentsResource extends BaseResource
 {
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentVisaDocumentForCreate|array<string, mixed>|null  $data
+     * @param  \spkm\IsamsApi\Data\Students\StudentVisaDocumentForCreate|array<string, mixed>  $data
      */
     public function createStudentVisaDocument(
         string $schoolId,
         int $visaId,
         MultipartValue $binary,
-        StudentVisaDocumentForCreate|array|null $data = null,
+        StudentVisaDocumentForCreate|array $data,
     ): Response {
         return $this->connector->send(new CreateStudentVisaDocumentRequest($schoolId, $visaId, $binary, $data));
     }

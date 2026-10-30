@@ -2751,147 +2751,176 @@
         "MedicalCondition_GetAllSeverities": {
             "method": "GET",
             "path": "/api/medical/conditionseverities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Condition\\GetMedicalConditionSeveritiesRequest"
         },
         "MedicalCondition_GetAllTypes": {
             "method": "GET",
             "path": "/api/medical/conditiontypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Condition\\GetMedicalConditionTypesRequest"
         },
         "MedicalConsent_GetAllTypes": {
             "method": "GET",
             "path": "/api/medical/consenttypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Consent\\GetMedicalConsentTypesRequest"
         },
         "MedicalDoctors_CreateBySurgeryidDoctor": {
             "method": "POST",
             "path": "/api/medical/surgery/{surgeryId}/doctors",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Doctors\\CreateMedicalDoctorRequest"
         },
         "MedicalDoctors_DeleteByDoctoridSurgeryid": {
             "method": "DELETE",
             "path": "/api/medical/surgery/{surgeryId}/doctors/{doctorId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Doctors\\DeleteMedicalDoctorRequest"
         },
         "MedicalDoctors_GetAllBySurgeryid": {
             "method": "GET",
             "path": "/api/medical/surgery/{surgeryId}/doctors",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Doctors\\GetMedicalDoctorsRequest"
         },
         "MedicalDoctors_GetByDoctoridSurgeryid": {
             "method": "GET",
             "path": "/api/medical/surgery/{surgeryId}/doctors/{doctorId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Doctors\\GetMedicalDoctorRequest"
         },
         "MedicalDoctors_UpdateByDoctoridPatchSurgeryid": {
             "method": "PATCH",
             "path": "/api/medical/surgery/{surgeryId}/doctors/{doctorId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Doctors\\PatchMedicalDoctorRequest"
         },
         "MedicalDocument_GetAllCategories": {
             "method": "GET",
             "path": "/api/medical/documentcategories",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Document\\GetMedicalDocumentCategoriesRequest"
         },
         "MedicalInventory_GetAllTypes": {
             "method": "GET",
             "path": "/api/medical/inventorytypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Inventory\\GetMedicalInventoryTypesRequest"
         },
         "MedicalMedication_GetAllLocations": {
             "method": "GET",
             "path": "/api/medical/medicationlocations",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Medication\\GetMedicalMedicationLocationsRequest"
         },
         "MedicalMedication_GetAllSuppliers": {
             "method": "GET",
             "path": "/api/medical/medicationsuppliers",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Medication\\GetMedicalMedicationSuppliersRequest"
         },
         "MedicalMedication_GetAllTypes": {
             "method": "GET",
             "path": "/api/medical/medicationtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Medication\\GetMedicalMedicationTypesRequest"
         },
         "MedicalNote_GetAllTypes": {
             "method": "GET",
             "path": "/api/medical/notetypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Note\\GetMedicalNoteTypesRequest"
         },
         "MedicalStock_GetAllReasons": {
             "method": "GET",
             "path": "/api/medical/stockreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Stock\\GetMedicalStockReasonsRequest"
         },
         "MedicalSurgeries_CreateBySurgery": {
             "method": "POST",
             "path": "/api/medical/surgeries",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Surgeries\\CreateMedicalSurgeryRequest"
         },
         "MedicalSurgeries_DeleteBySurgeryid": {
             "method": "DELETE",
             "path": "/api/medical/surgeries/{surgeryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Surgeries\\DeleteMedicalSurgeryRequest"
         },
         "MedicalSurgeries_GetAll": {
             "method": "GET",
             "path": "/api/medical/surgeries",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Surgeries\\GetMedicalSurgeriesRequest"
         },
         "MedicalSurgeries_GetBySurgeryid": {
             "method": "GET",
             "path": "/api/medical/surgeries/{surgeryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Surgeries\\GetMedicalSurgeryRequest"
         },
         "MedicalSurgeries_UpdateBySurgeryidPatch": {
             "method": "PATCH",
             "path": "/api/medical/surgeries/{surgeryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Surgeries\\PatchMedicalSurgeryRequest"
         },
         "MedicalVaccination_GetAllCompleteTo": {
             "method": "GET",
             "path": "/api/medical/vaccinationcompleteto",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Vaccination\\GetMedicalVaccinationCompleteToRequest"
         },
         "MedicalVaccination_GetAllSchedules": {
             "method": "GET",
             "path": "/api/medical/vaccinationschedules",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Vaccination\\GetMedicalVaccinationSchedulesRequest"
         },
         "MedicalVaccination_GetAllStatuses": {
             "method": "GET",
             "path": "/api/medical/vaccinationstatuses",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Vaccination\\GetMedicalVaccinationStatusesRequest"
         },
         "MedicalVaccination_GetAllTypes": {
             "method": "GET",
             "path": "/api/medical/vaccinationtypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Vaccination\\GetMedicalVaccinationTypesRequest"
         },
         "MedicalVisit_GetAllArriveFrom": {
             "method": "GET",
             "path": "/api/medical/visitarrivefrom",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Visit\\GetMedicalVisitArriveFromRequest"
         },
         "MedicalVisit_GetAllDepartTo": {
             "method": "GET",
             "path": "/api/medical/visitdepartto",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Visit\\GetMedicalVisitDepartToRequest"
         },
         "MedicalVisit_GetAllLocations": {
             "method": "GET",
             "path": "/api/medical/visitlocations",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Visit\\GetMedicalVisitLocationsRequest"
         },
         "MedicalVisit_GetAllReasons": {
             "method": "GET",
             "path": "/api/medical/visitreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Visit\\GetMedicalVisitReasonsRequest"
         },
         "MedicalVisit_GetAllTransportOptions": {
             "method": "GET",
             "path": "/api/medical/visittransportoptions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\Visit\\GetMedicalVisitTransportOptionsRequest"
         },
         "Metadata_GetMetadataByRegisteridExpand": {
             "method": "GET",
@@ -4316,27 +4345,32 @@
         "StudentBmi_CreateBySchoolidBmi": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/bmi",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentBmi\\CreateStudentBmiRequest"
         },
         "StudentBmi_DeleteBySchoolidBmiid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/bmi/{bmiId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentBmi\\DeleteStudentBmiRequest"
         },
         "StudentBmi_GetAllBySchoolidIncludearchive": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/bmi",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentBmi\\GetStudentBmisRequest"
         },
         "StudentBmi_GetBySchoolidBmiid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/bmi/{bmiId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentBmi\\GetStudentBmiRequest"
         },
         "StudentBmi_UpdateBySchoolidBmiidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/bmi/{bmiId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentBmi\\PatchStudentBmiRequest"
         },
         "StudentCommands_MoveToAlumniBySchoolid": {
             "method": "POST",
@@ -4385,72 +4419,86 @@
         "StudentConditionCommands_ArchiveBySchoolidConditionid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/conditions/{conditionId}/commands/archive",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConditions\\ArchiveStudentConditionRequest"
         },
         "StudentConditionCommands_RestoreBySchoolidConditionid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/conditions/{conditionId}/commands/restore",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConditions\\RestoreStudentConditionRequest"
         },
         "StudentConditions_CreateBySchoolidCondition": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/conditions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConditions\\CreateStudentConditionRequest"
         },
         "StudentConditions_DeleteBySchoolidConditionid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/conditions/{conditionId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConditions\\DeleteStudentConditionRequest"
         },
         "StudentConditions_GetAllBySchoolidIncludearchive": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/conditions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConditions\\GetStudentConditionsRequest"
         },
         "StudentConditions_GetBySchoolidConditionid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/conditions/{conditionId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConditions\\GetStudentConditionRequest"
         },
         "StudentConditions_UpdateBySchoolidConditionidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/conditions/{conditionId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConditions\\PatchStudentConditionRequest"
         },
         "StudentConsentsCommands_ArchiveBySchoolidConsentid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/consents/{consentId}/commands/archive",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConsents\\ArchiveStudentConsentRequest"
         },
         "StudentConsentsCommands_RestoreBySchoolidConsentid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/consents/{consentId}/commands/restore",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConsents\\RestoreStudentConsentRequest"
         },
         "StudentConsents_CreateBySchoolidConsent": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/consents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConsents\\CreateStudentConsentRequest"
         },
         "StudentConsents_DeleteBySchoolidConsentid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/consents/{consentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConsents\\DeleteStudentConsentRequest"
         },
         "StudentConsents_GetAllBySchoolid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/consents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConsents\\GetStudentConsentsRequest"
         },
         "StudentConsents_GetBySchoolidConsentid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/consents/{consentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConsents\\GetStudentConsentRequest"
         },
         "StudentConsents_UpdateBySchoolidConsentidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/consents/{consentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentConsents\\PatchStudentConsentRequest"
         },
         "StudentContacts_GetBySchoolidIncludedeceasedExpand": {
             "method": "GET",
@@ -4485,22 +4533,26 @@
         "StudentDoctor_CreateBySchoolidPersondoctorandsurgery": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/doctor",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDoctor\\CreateStudentDoctorRequest"
         },
         "StudentDoctor_DeleteDoctorBySchoolid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/doctor",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDoctor\\DeleteStudentDoctorRequest"
         },
         "StudentDoctor_GetBySchoolid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/doctor",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDoctor\\GetStudentDoctorRequest"
         },
         "StudentDoctor_UpdateDoctorBySchoolidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/doctor",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDoctor\\PatchStudentDoctorRequest"
         },
         "StudentDocumentCategory_GetAll": {
             "method": "GET",
@@ -4511,12 +4563,14 @@
         "StudentDocumentCommands_ArchiveBySchoolidDocumentid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/documents/{documentId}/commands/archive",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\ArchiveStudentDocumentRequest"
         },
         "StudentDocumentCommands_RestoreBySchoolidDocumentid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/documents/{documentId}/commands/restore",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\RestoreStudentDocumentRequest"
         },
         "StudentDocument_GetAllAsyncBySchoolid": {
             "method": "GET",
@@ -4533,32 +4587,38 @@
         "StudentDocuments_CreateAsyncBySchoolid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\CreateStudentDocumentRequest"
         },
         "StudentDocuments_DeleteBySchoolidDocumentid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\DeleteStudentDocumentRequest"
         },
         "StudentDocuments_DownloadBySchoolidDocumentid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/documents/{documentId}/download",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\DownloadStudentDocumentRequest"
         },
         "StudentDocuments_GetAllBySchoolidIncludearchive": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/documents",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\GetStudentDocumentsRequest"
         },
         "StudentDocuments_GetBySchoolidDocumentid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\GetStudentDocumentRequest"
         },
         "StudentDocuments_UpdateBySchoolidDocumentidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/documents/{documentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentDocuments\\PatchStudentDocumentRequest"
         },
         "StudentExclusions_DeleteStudentExclusionByGradebookidColumnidSchoolid": {
             "method": "DELETE",
@@ -4578,107 +4638,128 @@
         "StudentInventoryCommands_ArchiveBySchoolidInventoryid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/inventory/{inventoryId}/commands/archive",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentInventory\\ArchiveStudentInventoryRequest"
         },
         "StudentInventoryCommands_RestoreBySchoolidInventoryid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/inventory/{inventoryId}/commands/restore",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentInventory\\RestoreStudentInventoryRequest"
         },
         "StudentInventory_CreateBySchoolidInventory": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/inventory",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentInventory\\CreateStudentInventoryRequest"
         },
         "StudentInventory_DeleteBySchoolidInventoryid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/inventory/{inventoryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentInventory\\DeleteStudentInventoryRequest"
         },
         "StudentInventory_GetAllBySchoolidIncludearchive": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/inventory",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentInventory\\GetStudentInventoriesRequest"
         },
         "StudentInventory_GetBySchoolidInventoryid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/inventory/{inventoryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentInventory\\GetStudentInventoryRequest"
         },
         "StudentInventory_UpdateBySchoolidInventoryidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/inventory/{inventoryId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentInventory\\PatchStudentInventoryRequest"
         },
         "StudentMedicationCommands_ArchiveBySchoolidMedicationid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/medication/{medicationId}/commands/archive",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentMedication\\ArchiveStudentMedicationRequest"
         },
         "StudentMedicationCommands_RestoreBySchoolidMedicationid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/medication/{medicationId}/commands/restore",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentMedication\\RestoreStudentMedicationRequest"
         },
         "StudentMedication_CreateBySchoolidMedication": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/medication",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentMedication\\CreateStudentMedicationRequest"
         },
         "StudentMedication_DeleteBySchoolidMedicationid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/medication/{medicationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentMedication\\DeleteStudentMedicationRequest"
         },
         "StudentMedication_GetAllBySchoolidIncludearchive": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/medication",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentMedication\\GetStudentMedicationsRequest"
         },
         "StudentMedication_GetBySchoolidMedicationid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/medication/{medicationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentMedication\\GetStudentMedicationRequest"
         },
         "StudentMedication_UpdateBySchoolidMedicationidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/medication/{medicationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentMedication\\PatchStudentMedicationRequest"
         },
         "StudentNotesCommands_ArchiveBySchoolidNoteid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/notes/{noteId}/commands/archive",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentNotes\\ArchiveStudentNoteRequest"
         },
         "StudentNotesCommands_RestoreBySchoolidNoteid": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/notes/{noteId}/commands/restore",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentNotes\\RestoreStudentNoteRequest"
         },
         "StudentNotes_CreateBySchoolidNote": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/notes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentNotes\\CreateStudentNoteRequest"
         },
         "StudentNotes_DeleteBySchoolidNoteid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/notes/{noteId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentNotes\\DeleteStudentNoteRequest"
         },
         "StudentNotes_GetAllBySchoolid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/notes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentNotes\\GetStudentNotesRequest"
         },
         "StudentNotes_GetBySchoolidNoteid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/notes/{noteId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentNotes\\GetStudentNoteRequest"
         },
         "StudentNotes_UpdateBySchoolidNoteidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/notes/{noteId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentNotes\\PatchStudentNoteRequest"
         },
         "StudentPassportCustomFields_GetAllAsyncBySchoolidPassportid": {
             "method": "GET",
@@ -4815,27 +4896,32 @@
         "StudentVaccinations_CreateBySchoolidVaccination": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/vaccinations",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVaccinations\\CreateStudentVaccinationRequest"
         },
         "StudentVaccinations_DeleteBySchoolidVaccinationid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/vaccinations/{vaccinationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVaccinations\\DeleteStudentVaccinationRequest"
         },
         "StudentVaccinations_GetAllBySchoolid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/vaccinations",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVaccinations\\GetStudentVaccinationsRequest"
         },
         "StudentVaccinations_GetBySchoolidVaccinationid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/vaccinations/{vaccinationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVaccinations\\GetStudentVaccinationRequest"
         },
         "StudentVaccinations_UpdateBySchoolidVaccinationidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/vaccinations/{vaccinationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVaccinations\\PatchStudentVaccinationRequest"
         },
         "StudentVisaCustomFields_GetAllAsyncBySchoolidVisaid": {
             "method": "GET",
@@ -4930,27 +5016,32 @@
         "StudentVisits_CreateBySchoolidVisit": {
             "method": "POST",
             "path": "/api/medical/students/{schoolId}/visits",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVisits\\CreateStudentVisitRequest"
         },
         "StudentVisits_DeleteBySchoolidVisitid": {
             "method": "DELETE",
             "path": "/api/medical/students/{schoolId}/visits/{visitId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVisits\\DeleteStudentVisitRequest"
         },
         "StudentVisits_GetAllBySchoolid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/visits",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVisits\\GetStudentVisitsRequest"
         },
         "StudentVisits_GetBySchoolidVisitid": {
             "method": "GET",
             "path": "/api/medical/students/{schoolId}/visits/{visitId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVisits\\GetStudentVisitRequest"
         },
         "StudentVisits_UpdateBySchoolidVisitidPatch": {
             "method": "PATCH",
             "path": "/api/medical/students/{schoolId}/visits/{visitId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\MedicalCentre\\StudentVisits\\PatchStudentVisitRequest"
         },
         "StudentsContacts_GetAllAsyncByPagePagesizeExpand": {
             "method": "GET",
@@ -5445,6 +5536,49 @@
         "iSAMS.Exclusions.AppServices.Objects.Common.ExclusionType": "spkm\\IsamsApi\\Data\\Exclusions\\ExclusionType",
         "iSAMS.Exclusions.AppServices.Objects.Public.Resources.Contracts.IExclusion": "spkm\\IsamsApi\\Data\\Exclusions\\IExclusion",
         "iSAMS.Exclusions.AppServices.Objects.Public.Resources.Get.ReasonForCancellation": "spkm\\IsamsApi\\Data\\Exclusions\\ReasonForCancellation",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Contracts.IMedicalNote": "spkm\\IsamsApi\\Data\\MedicalCentre\\IMedicalNote",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Bmi": "spkm\\IsamsApi\\Data\\MedicalCentre\\Bmi",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Condition": "spkm\\IsamsApi\\Data\\MedicalCentre\\Condition",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.ConditionSeverity": "spkm\\IsamsApi\\Data\\MedicalCentre\\ConditionSeverity",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.ConditionType": "spkm\\IsamsApi\\Data\\MedicalCentre\\ConditionType",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Consent": "spkm\\IsamsApi\\Data\\MedicalCentre\\Consent",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.ConsentType": "spkm\\IsamsApi\\Data\\MedicalCentre\\ConsentType",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Doctor": "spkm\\IsamsApi\\Data\\MedicalCentre\\Doctor",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Document": "spkm\\IsamsApi\\Data\\MedicalCentre\\Document",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.DocumentCategory": "spkm\\IsamsApi\\Data\\MedicalCentre\\DocumentCategory",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Inventory": "spkm\\IsamsApi\\Data\\MedicalCentre\\Inventory",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.InventoryType": "spkm\\IsamsApi\\Data\\MedicalCentre\\InventoryType",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.MedicalNote": "spkm\\IsamsApi\\Data\\MedicalCentre\\MedicalNote",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Medication": "spkm\\IsamsApi\\Data\\MedicalCentre\\Medication",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.MedicationLocation": "spkm\\IsamsApi\\Data\\MedicalCentre\\MedicationLocation",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.MedicationSupplier": "spkm\\IsamsApi\\Data\\MedicalCentre\\MedicationSupplier",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.MedicationType": "spkm\\IsamsApi\\Data\\MedicalCentre\\MedicationType",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.NoteType": "spkm\\IsamsApi\\Data\\MedicalCentre\\NoteType",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.PersonDoctorAndSurgery": "spkm\\IsamsApi\\Data\\MedicalCentre\\PersonDoctorAndSurgery",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.StockReason": "spkm\\IsamsApi\\Data\\MedicalCentre\\StockReason",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Surgery": "spkm\\IsamsApi\\Data\\MedicalCentre\\Surgery",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Vaccination": "spkm\\IsamsApi\\Data\\MedicalCentre\\Vaccination",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VaccinationCompleteTo": "spkm\\IsamsApi\\Data\\MedicalCentre\\VaccinationCompleteTo",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VaccinationSchedule": "spkm\\IsamsApi\\Data\\MedicalCentre\\VaccinationSchedule",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VaccinationStatus": "spkm\\IsamsApi\\Data\\MedicalCentre\\VaccinationStatus",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Visit": "spkm\\IsamsApi\\Data\\MedicalCentre\\Visit",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VisitArriveFrom": "spkm\\IsamsApi\\Data\\MedicalCentre\\VisitArriveFrom",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VisitDepartTo": "spkm\\IsamsApi\\Data\\MedicalCentre\\VisitDepartTo",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VisitLocation": "spkm\\IsamsApi\\Data\\MedicalCentre\\VisitLocation",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VisitReason": "spkm\\IsamsApi\\Data\\MedicalCentre\\VisitReason",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.VisitTransportOption": "spkm\\IsamsApi\\Data\\MedicalCentre\\VisitTransportOption",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Bmi": "spkm\\IsamsApi\\Data\\MedicalCentre\\BmiForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Condition": "spkm\\IsamsApi\\Data\\MedicalCentre\\ConditionForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Consent": "spkm\\IsamsApi\\Data\\MedicalCentre\\ConsentForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Doctor": "spkm\\IsamsApi\\Data\\MedicalCentre\\DoctorForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Document": "spkm\\IsamsApi\\Data\\MedicalCentre\\DocumentForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Inventory": "spkm\\IsamsApi\\Data\\MedicalCentre\\InventoryForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.MedicalNote": "spkm\\IsamsApi\\Data\\MedicalCentre\\MedicalNoteForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Medication": "spkm\\IsamsApi\\Data\\MedicalCentre\\MedicationForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.PersonDoctorAndSurgery": "spkm\\IsamsApi\\Data\\MedicalCentre\\PersonDoctorAndSurgeryForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Surgery": "spkm\\IsamsApi\\Data\\MedicalCentre\\SurgeryForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Vaccination": "spkm\\IsamsApi\\Data\\MedicalCentre\\VaccinationForCreate",
+        "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Post.Visit": "spkm\\IsamsApi\\Data\\MedicalCentre\\VisitForCreate",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Alumni": "spkm\\IsamsApi\\Data\\Students\\Alumni",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.AlumniContact": "spkm\\IsamsApi\\Data\\Students\\AlumniContact",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Alumni.Student": "spkm\\IsamsApi\\Data\\Students\\AlumniStudent",
