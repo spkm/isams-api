@@ -14,15 +14,16 @@ A Laravel package for the [iSAMS](https://www.isams.com) REST API and Batch API,
 
 ## Requirements
 
-- PHP 8.3 or higher
+- PHP 8.5
 - Laravel 12.39 or higher, or Laravel 13
 - iSAMS REST API credentials (a client id and client secret) for your school
 
-Apps on Laravel 11, or on Laravel 12 below 12.39, need to update to Laravel 12.39 or later before updating to version 2.
+Apps on PHP 8.3 or 8.4, on Laravel 11, or on Laravel 12 below 12.39, need to update to PHP 8.5 and Laravel 12.39 or later
+before updating to version 2.
 
 ## Upgrading from version 1
 
-Code written for version 1 keeps working, apart from the Laravel minimum above and the config file's publish tag
+Code written for version 1 keeps working, apart from the PHP and Laravel minimums above and the config file's publish tag
 (below). Some changes are worth making:
 
 - The early requests whose names don't follow the package's naming are deprecated in favour of generated ones, which
