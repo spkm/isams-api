@@ -9,9 +9,10 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 class ConfigurablePaginatedRequest extends Request implements Paginatable
 {
     protected string $endpoint;
-    protected Method $method;
-    public string $resultKey;
 
+    protected Method $method;
+
+    public string $resultKey;
 
     public function __construct(
         string $endpoint,
@@ -23,10 +24,9 @@ class ConfigurablePaginatedRequest extends Request implements Paginatable
         ?string $resultKey = null,
     ) {
         $this->endpoint = $endpoint;
-        $this->method = $method;
-        $this->resultKey = $resultKey;
+        $this->method = $method ?? Method::GET;
+        $this->resultKey = $resultKey ?? '';
     }
-
 
     public function resolveEndpoint(): string
     {
@@ -36,7 +36,7 @@ class ConfigurablePaginatedRequest extends Request implements Paginatable
     public function defaultQuery(): array
     {
         return array_filter([
-            'page' => $this->page, 'pageSize' => $this->pageSize, 'expand' => $this->expand, '$filter' => $this->filter
+            'page' => $this->page, 'pageSize' => $this->pageSize, 'expand' => $this->expand, '$filter' => $this->filter,
         ]);
     }
 }

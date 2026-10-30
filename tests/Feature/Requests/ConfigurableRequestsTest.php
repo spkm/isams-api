@@ -36,6 +36,20 @@ it('pages through a configurable endpoint, collecting the items under the result
         ->and(FakeIsams::queriesReceived($isams, ConfigurablePaginatedRequest::class)[0])->toMatchArray(['expand' => 'dates', '$filter' => 'year eq 2026']);
 });
 
-it('can build a configurable paginated request without a result key')
-    ->todo(note: 'Suspected bug: the constructor defaults $resultKey to null but assigns it to a non-nullable string property, so leaving it out throws a TypeError (src/Requests/ConfigurablePaginatedRequest.php, __construct())')
-    ->group('suspected-bug');
+it('pages through a configurable endpoint without a result key, using each value of the whole response', function () {
+    FakeIsams::respondWith([ConfigurablePaginatedRequest::class => MockResponse::make([['id' => 1], ['id' => 2]])]);
+
+    $request = new ConfigurablePaginatedRequest('/api/school/terms');
+    $paginator = FakeIsams::connector()->paginate($request)->setMaxPages(1);
+
+    expect($paginator->collect()->all())->toBe([['id' => 1], ['id' => 2]]);
+});
+
+it('sends a configurable request as GET when its method is given as null', function (string $requestClass) {
+    $sent = FakeIsams::send(new $requestClass('/api/school/terms', null))->getPendingRequest();
+
+    expect($sent->getMethod())->toBe(Method::GET);
+})->with([
+    'single' => ConfigurableRequest::class,
+    'paginated' => ConfigurablePaginatedRequest::class,
+]);

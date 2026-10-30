@@ -57,7 +57,7 @@ class GetContactsBySchoolidRequest extends Request
             return $contacts;
         }
 
-        $data = $json[$this->resultKey];
+        $data = $json[$this->resultKey] ?? [];
 
         foreach ($data as $contact) {
             $contacts->add(

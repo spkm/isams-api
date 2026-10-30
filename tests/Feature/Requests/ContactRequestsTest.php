@@ -179,3 +179,29 @@ it('logs the error iSAMS gives for one student\'s contacts and returns none', fu
     expect($contacts)->toBeInstanceOf(Collection::class)->toBeEmpty();
     Log::shouldHaveReceived('error')->once()->with('Student not found', ['school_id' => '100001']);
 });
+
+it('returns no contacts when iSAMS answers without a contacts list or a message', function () {
+    $contacts = FakeIsams::send(new GetContactsBySchoolidRequest('100001'), ['unexpected' => true])->dto();
+
+    expect($contacts)->toBeInstanceOf(Collection::class)->toBeEmpty();
+});
+
+it('lets callers add their own properties to a student contact without deprecation notices', function () {
+    $contact = FakeIsams::send(new GetContactsBySchoolidRequest('100001'), ['contacts' => [aContactsRequiredDetails()]])->dto()->first();
+    $deprecations = [];
+
+    set_error_handler(function (int $level, string $message) use (&$deprecations) {
+        $deprecations[] = $message;
+
+        return true;
+    }, E_DEPRECATED);
+
+    try {
+        $contact->password = 'made-up-password';
+    } finally {
+        restore_error_handler();
+    }
+
+    expect($deprecations)->toBe([])
+        ->and($contact->password)->toBe('made-up-password');
+});

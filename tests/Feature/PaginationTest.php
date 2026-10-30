@@ -19,9 +19,13 @@ function threePagesOfStudents(): array
     }];
 }
 
-it('asks iSAMS for pages 1, 2 and 3 when it reports three pages')
-    ->todo(note: 'Suspected bug: paginate() sends the 0-based currentPage, so iSAMS is asked for pages 0, 1 and 2; iSAMS pages start at 1, as the isams-php package assumed (src/IsamsConnector.php, paginate() applyPagination())')
-    ->group('suspected-bug');
+it('asks iSAMS for pages 1, 2 and 3 when it reports three pages', function () {
+    $isams = FakeIsams::respondWith(threePagesOfStudents());
+
+    FakeIsams::connector()->paginate(new GetStudentsRequest)->collect()->all();
+
+    expect(array_column(FakeIsams::queriesReceived($isams, GetStudentsRequest::class), 'page'))->toBe([1, 2, 3]);
+});
 
 it('asks for 100 records a page', function () {
     $isams = FakeIsams::respondWith(threePagesOfStudents());
@@ -47,9 +51,14 @@ it('collects the items under the request\'s result key from every page', functio
     expect($students)->toBe([['id' => 1], ['id' => 2], ['id' => 3]]);
 });
 
-it('returns no items after one request when iSAMS reports no pages')
-    ->todo(note: 'Suspected bug: isLastPage() only stops when totalPages equals the page count, so an empty result (totalPages 0) is asked for again until Saloon throws a PaginationException after five identical pages (src/IsamsConnector.php, paginate() isLastPage())')
-    ->group('suspected-bug');
+it('returns no items after one request when iSAMS reports no pages', function () {
+    $isams = FakeIsams::respondWith([GetStudentsRequest::class => MockResponse::make(['students' => [], 'totalCount' => 0, 'totalPages' => 0])]);
+
+    $students = FakeIsams::connector()->paginate(new GetStudentsRequest)->collect()->all();
+
+    expect($students)->toBe([])
+        ->and(FakeIsams::queriesReceived($isams, GetStudentsRequest::class))->toHaveCount(1);
+});
 
 it('uses each value of the whole response as an item when the result key is missing from it', function () {
     FakeIsams::respondWith([GetStudentsRequest::class => MockResponse::make(['pupils' => [['id' => 1]], 'totalPages' => 1])]);

@@ -2,10 +2,15 @@
 
 namespace spkm\IsamsApi;
 
+use DateTimeImmutable;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
+use JsonException;
 use Saloon\Contracts\OAuthAuthenticator;
 use Saloon\Helpers\OAuth2\OAuthConfig;
+use Saloon\Http\Auth\AccessTokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -32,33 +37,48 @@ class IsamsConnector extends Connector implements HasPagination
 
     public function getCachedAccessToken(): OAuthAuthenticator|Response
     {
-        $authenticator = null;
-        if (Cache::has($this->getCacheKey())) {
-            $encryptedKey = Cache::get($this->getCacheKey());
-            $authenticator = decrypt($encryptedKey);
+        $cached = Cache::get($this->getCacheKey());
+
+        if (is_string($cached)) {
+            try {
+                $token = json_decode(Crypt::decryptString($cached), true, flags: JSON_THROW_ON_ERROR);
+            } catch (DecryptException|JsonException) {
+                $token = null;
+            }
+
+            if (is_string($token['access_token'] ?? null) && is_int($token['expires_at'] ?? null)) {
+                return new AccessTokenAuthenticator($token['access_token'], null, new DateTimeImmutable('@'.$token['expires_at']));
+            }
         }
 
-        if($authenticator == null){
-            $this->cacheAccessToken();
-            $encryptedKey = Cache::get($this->getCacheKey());
-            $authenticator = decrypt($encryptedKey);
-        }
-
-        return $authenticator;
+        return $this->cacheAccessToken();
     }
 
     private function getCacheKey(): string
     {
-        return 'bearer_token'.$this->oauthConfig()->getClientId();
+        return 'isams-api.token.'.$this->oauthConfig()->getClientId();
     }
 
-    private function cacheAccessToken(): void
+    private function cacheAccessToken(): AccessTokenAuthenticator
     {
+        /** @var AccessTokenAuthenticator $authenticator */
         $authenticator = $this->getAccessToken();
-        $tokenExpiry = Carbon::instance($authenticator->expiresAt);
-        $cacheExpires = $tokenExpiry->subMinute();
-        Cache::forget($this->getCacheKey());
-        Cache::put($this->getCacheKey(),encrypt($authenticator),$cacheExpires);
+        $expiresAt = $authenticator->getExpiresAt();
+
+        if ($expiresAt === null) {
+            return $authenticator;
+        }
+
+        Cache::put(
+            $this->getCacheKey(),
+            Crypt::encryptString(json_encode([
+                'access_token' => $authenticator->getAccessToken(),
+                'expires_at' => $expiresAt->getTimestamp(),
+            ], JSON_THROW_ON_ERROR)),
+            Carbon::instance($expiresAt)->subMinute(),
+        );
+
+        return $authenticator;
     }
 
     protected function defaultOauthConfig(): OAuthConfig
@@ -79,27 +99,26 @@ class IsamsConnector extends Connector implements HasPagination
     {
         return [
             'cache-control' => 'no-cache',
-            'Content-type' => 'application/x-www-form-urlencoded',
             'Accept' => 'application/json',
         ];
     }
 
     public function paginate(Request $request): PagedPaginator
     {
-        return new class(connector: $this, request: $request) extends PagedPaginator {
+        return new class(connector: $this, request: $request) extends PagedPaginator
+        {
             protected ?int $perPageLimit = 100;
 
             protected function isLastPage(Response $response): bool
             {
-                return $response->json('totalPages') === $this->currentPage;
+                return $this->currentPage >= (int) $response->json('totalPages');
             }
 
             protected function getPageItems(Response $response, Request $request): array
             {
                 if (property_exists($request, 'resultKey')
-                    && !empty($request->resultKey)
-                    && is_array($data = $response->json())
-                    && array_key_exists($request->resultKey, $data)) {
+                    && ! empty($request->resultKey)
+                    && array_key_exists($request->resultKey, $response->json())) {
                     return $response->json($request->resultKey) ?? [];
                 }
 
@@ -108,7 +127,7 @@ class IsamsConnector extends Connector implements HasPagination
 
             protected function applyPagination(Request $request): Request
             {
-                $request->query()->add('page', $this->currentPage);
+                $request->query()->add('page', $this->currentPage + 1);
 
                 if (isset($this->perPageLimit)) {
                     $request->query()->add('pageSize', $this->perPageLimit);

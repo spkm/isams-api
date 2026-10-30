@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
+use Saloon\Http\Auth\AccessTokenAuthenticator;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
@@ -41,20 +43,29 @@ it('sends requests to iSAMS with the bearer token and its default headers', func
     expect(FakeIsams::received($isams, GetStudentRequest::class)->createPsrRequest()->getHeaders())->toBe([
         'Host' => ['isams.example.test'],
         'cache-control' => ['no-cache'],
-        'Content-type' => ['application/x-www-form-urlencoded'],
         'Accept' => ['application/json'],
         'Authorization' => ['Bearer fake-token'],
     ]);
 });
 
-it('keeps the token in the cache under its client id, encrypted', function () {
+it('keeps the token in the cache under its client id as encrypted JSON, not a serialised object', function () {
     FakeIsams::respondWith();
 
     FakeIsams::connector('client-id');
 
-    $cached = Cache::get('bearer_tokenclient-id');
+    $cached = Cache::get('isams-api.token.client-id');
     expect($cached)->toBeString()->not->toContain('fake-token')
-        ->and(decrypt($cached)->getAccessToken())->toBe('fake-token');
+        ->and(json_decode(Crypt::decryptString($cached), true))->toHaveKey('access_token', 'fake-token');
+});
+
+it('ignores a token cached by earlier versions and asks iSAMS for a new one', function () {
+    Cache::put('bearer_tokenclient-id', encrypt(new AccessTokenAuthenticator('old-token')), now()->addHour());
+    $isams = FakeIsams::respondWith([GetStudentRequest::class => MockResponse::make(['id' => 1])]);
+
+    FakeIsams::connector('client-id')->send(new GetStudentRequest('100001'));
+
+    $isams->assertSent(GetClientCredentialsTokenRequest::class);
+    expect(FakeIsams::received($isams, GetStudentRequest::class)->headers()->get('Authorization'))->toBe('Bearer fake-token');
 });
 
 it('reuses the cached token when built again with the same client id', function () {
@@ -94,5 +105,24 @@ it('cannot be built when iSAMS refuses its credentials, and caches nothing', fun
     MockClient::global([GetClientCredentialsTokenRequest::class => MockResponse::make(['error' => 'invalid_client'], 401)]);
 
     expect(fn () => FakeIsams::connector('client-id'))->toThrow(UnauthorizedException::class)
-        ->and(Cache::has('bearer_tokenclient-id'))->toBeFalse();
+        ->and(Cache::has('isams-api.token.client-id'))->toBeFalse();
+});
+
+it('uses a token that has no expiry without caching it', function () {
+    $isams = MockClient::global([GetClientCredentialsTokenRequest::class => MockResponse::make(['access_token' => 'fake-token', 'token_type' => 'Bearer'])]);
+
+    FakeIsams::connector('client-id');
+    FakeIsams::connector('client-id');
+
+    $isams->assertSentCount(2);
+    expect(Cache::has('isams-api.token.client-id'))->toBeFalse();
+});
+
+it('asks for a new token when the cached entry is unreadable', function () {
+    Cache::put('isams-api.token.client-id', Crypt::encryptString('{"unexpected":true}'), now()->addHour());
+    $isams = FakeIsams::respondWith();
+
+    FakeIsams::connector('client-id');
+
+    $isams->assertSentCount(1);
 });
