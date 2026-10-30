@@ -9,6 +9,7 @@ namespace spkm\IsamsApi\Resources\RewardsAndConduct;
 use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\RewardsAndConduct\Reward;
 use spkm\IsamsApi\Data\RewardsAndConduct\RewardForCreate;
 use spkm\IsamsApi\Data\RewardsAndConduct\RewardForUpdate;
 use spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\CreateRewardRequest;
@@ -38,10 +39,9 @@ class RewardsResource extends IsamsResource
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\RewardsAndConduct\Category>
      * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\GetRewardRequest
      */
-    public function get(string $schoolId, int $rewardId): Collection
+    public function get(string $schoolId, int $rewardId): Reward
     {
         return $this->fetch(new GetRewardRequest(schoolId: $schoolId, rewardId: $rewardId));
     }

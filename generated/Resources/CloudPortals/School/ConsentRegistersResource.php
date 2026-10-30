@@ -18,7 +18,7 @@ class ConsentRegistersResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\GetConsentRegistersRequest
      */
-    public function all(): PortalConsentRegisterResponses
+    public function all(): ?PortalConsentRegisterResponses
     {
         return $this->fetch(new GetConsentRegistersRequest());
     }

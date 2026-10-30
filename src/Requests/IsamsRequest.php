@@ -108,6 +108,16 @@ abstract class IsamsRequest extends Request implements Cacheable
         return $this->responseShape === self::FILE ? ['Accept' => '*/*'] : [];
     }
 
+    /**
+     * One record as its model; null when iSAMS answers with null, as it does for a student with no doctor.
+     */
+    private function one(Response $response): mixed
+    {
+        $json = $response->body() === '' ? [] : json_decode($response->body(), true, flags: JSON_THROW_ON_ERROR);
+
+        return $this->dto === null ? $json : (is_array($json) ? $this->dto::from($json) : null);
+    }
+
     public function createDtoFromResponse(Response $response): mixed
     {
         if (! $response->successful()) {
@@ -115,7 +125,7 @@ abstract class IsamsRequest extends Request implements Cacheable
         }
 
         return match ($this->responseShape) {
-            self::ONE => $this->dto ? $this->dto::from($response->json()) : $response->json(),
+            self::ONE => $this->one($response),
             self::LIST => collect((array) ($this->resultKey === '' ? $response->json() : $response->json($this->resultKey)))
                 ->map(fn (mixed $item) => $this->dto && is_array($item) ? $this->dto::from($item) : $item)
                 ->values(),

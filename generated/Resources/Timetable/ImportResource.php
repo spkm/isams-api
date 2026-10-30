@@ -49,7 +49,7 @@ class ImportResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Timetable\Import\GetActiveTimetableImportRequest
      */
-    public function getActive(): TimetableImport
+    public function getActive(): ?TimetableImport
     {
         return $this->fetch(new GetActiveTimetableImportRequest());
     }
@@ -57,7 +57,7 @@ class ImportResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Timetable\Import\GetTimetableImportResultRequest
      */
-    public function getResult(int $id): TimetableImportResult
+    public function getResult(int $id): ?TimetableImportResult
     {
         return $this->fetch(new GetTimetableImportResultRequest(id: $id));
     }

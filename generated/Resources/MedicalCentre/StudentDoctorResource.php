@@ -40,7 +40,7 @@ class StudentDoctorResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDoctor\GetStudentDoctorRequest
      */
-    public function get(string $schoolId): PersonDoctorAndSurgery
+    public function get(string $schoolId): ?PersonDoctorAndSurgery
     {
         return $this->fetch(new GetStudentDoctorRequest(schoolId: $schoolId));
     }

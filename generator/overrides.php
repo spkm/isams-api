@@ -17,6 +17,14 @@ return [
     'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News', 'Gradebooks', 'Cloud Portals'],
 
     'operations' => [
+        // Where iSAMS answers differently from its spec (found by the sandbox checks)
+        'Sms_GetBatchMessagesAsyncByPagePagesize' => ['response' => ['list' => 'iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.SmsBatch', 'key' => 'smsBatches', 'paged' => true]],
+        'Gradebooks_GetAll' => ['response' => ['list' => 'iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookOverview', 'key' => '']],
+        'ApplicantAlumniCustomFields_GetAsyncBySchoolidCustomfieldid' => ['response' => ['list' => 'iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField', 'key' => 'customFields']],
+        'ApplicantCustomFields_GetAsyncBySchoolidCustomfieldid' => ['response' => ['list' => 'iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField', 'key' => 'customFields']],
+        'ApplicantStudentCustomFields_GetAsyncBySchoolidCustomfieldid' => ['response' => ['list' => 'iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField', 'key' => 'customFields']],
+        'RegistrationReasonForChange_GetAllByChangedatestartChangedateendPagePagesizeOnlyemptyreasonsOldestfirst' => ['required' => ['changeDateStart']],
+
         // Requests written by hand before the generator existed, already named as the generator names them: never
         // generated over. The other early hand-written requests are deprecated in favour of the generated ones.
         'Students_GetAllByPagePagesizeExpand' => ['handwritten' => GetStudentsRequest::class],
@@ -100,9 +108,10 @@ return [
         'RecordCollection_DeleteByRegisteridSchoolidRecordcollectionidRecordid' => ['class' => 'DeleteRecordCollectionRecordRequest'],
 
         // Rewards And Conduct
+        'Rewards_GetBySchoolidRewardid' => ['response' => ['definition' => 'iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.Reward']],
         'ModuleTypes_GetAll' => ['cacheable' => true],
         'Categories_GetAllByModuletypeid' => ['cacheable' => true],
-        'Categories_GetByModuletypeidCategoryid' => ['cacheable' => true],
+        'Categories_GetByModuletypeidCategoryid' => ['cacheable' => true, 'response' => ['definition' => 'iSAMS.RewardsAndConduct.AppServices.Objects.Public.Resources.Get.Category']],
         'FieldTypes_GetAllByModuletypeidCategoryid' => ['cacheable' => true],
         'FieldTypes_GetByModuletypeidCategoryidFieldtypeid' => ['cacheable' => true],
         'FieldValues_GetAllByModuletypeidCategoryidFieldtypeid' => ['cacheable' => true],
@@ -135,7 +144,7 @@ return [
         'MedicalVaccination_GetAllCompleteTo' => ['cacheable' => true],
         'MedicalVaccination_GetAllSchedules' => ['cacheable' => true],
         'MedicalVaccination_GetAllStatuses' => ['cacheable' => true],
-        'MedicalVaccination_GetAllTypes' => ['cacheable' => true],
+        'MedicalVaccination_GetAllTypes' => ['cacheable' => true, 'response' => ['list' => 'iSAMS.MedicalCentre.Entities.Public.Resources.Get.MedicalVaccinationType', 'key' => 'vaccinationTypes']],
         'MedicalVisit_GetAllArriveFrom' => ['cacheable' => true],
         'MedicalVisit_GetAllDepartTo' => ['cacheable' => true],
         'MedicalVisit_GetAllLocations' => ['cacheable' => true],

@@ -28,7 +28,7 @@ class FieldsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\StudentRegisters\Fields\GetStudentFieldsRequest
      */
-    public function forStudent(int $registerId, string $schoolId): FieldCollection
+    public function forStudent(int $registerId, string $schoolId): ?FieldCollection
     {
         return $this->fetch(new GetStudentFieldsRequest(registerId: $registerId, schoolId: $schoolId));
     }

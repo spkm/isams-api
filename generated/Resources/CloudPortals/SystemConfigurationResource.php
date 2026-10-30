@@ -39,7 +39,7 @@ class SystemConfigurationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationRequest
      */
-    public function get(): PortalSystemConfiguration
+    public function get(): ?PortalSystemConfiguration
     {
         return $this->fetch(new GetSystemConfigurationRequest());
     }
@@ -56,7 +56,7 @@ class SystemConfigurationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationSystemNotificationSettingsRequest
      */
-    public function getNotificationSettings(): SystemNotificationSettings
+    public function getNotificationSettings(): ?SystemNotificationSettings
     {
         return $this->fetch(new GetSystemConfigurationSystemNotificationSettingsRequest());
     }
@@ -64,7 +64,7 @@ class SystemConfigurationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\GetSystemConfigurationSecurityOptionsRequest
      */
-    public function getSecurityOptions(): SecurityOptions
+    public function getSecurityOptions(): ?SecurityOptions
     {
         return $this->fetch(new GetSystemConfigurationSecurityOptionsRequest());
     }

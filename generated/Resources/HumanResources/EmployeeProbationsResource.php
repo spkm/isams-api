@@ -17,7 +17,7 @@ class EmployeeProbationsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeProbations\GetEmployeeProbationRequest
      */
-    public function get(int $employeeId): EmployeeProbation
+    public function get(int $employeeId): ?EmployeeProbation
     {
         return $this->fetch(new GetEmployeeProbationRequest(employeeId: $employeeId));
     }

@@ -18,8 +18,9 @@ use spkm\IsamsApi\Requests\IsamsRequest;
 class GetApplicantCustomFieldRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
-    protected string $responseShape = self::ONE;
+    protected string $responseShape = self::LIST;
     protected ?string $dto = CustomField::class;
+    public string $resultKey = 'customFields';
 
     public function __construct(
         protected string $schoolId,

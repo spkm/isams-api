@@ -25,7 +25,7 @@ class ReasonForChangeResource extends IsamsResource
      * @see \spkm\IsamsApi\Requests\Registration\ReasonForChange\GetRegistrationReasonForChangesRequest
      */
     public function all(
-        DateTimeInterface|string|null $changeDateStart = null,
+        DateTimeInterface|string $changeDateStart,
         DateTimeInterface|string|null $changeDateEnd = null,
         ?bool $onlyEmptyReasons = null,
         ?bool $oldestFirst = null,

@@ -15,7 +15,7 @@ class ModulesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Students\Modules\GetModuleCapabilitiesRequest
      */
-    public function getCapabilities(): PortalModuleCapabilities
+    public function getCapabilities(): ?PortalModuleCapabilities
     {
         return $this->fetch(new GetModuleCapabilitiesRequest());
     }

@@ -15,7 +15,7 @@ class ConfigurationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\School\Configuration\GetSchoolDetailsRequest
      */
-    public function getSchoolDetails(): SchoolDetails
+    public function getSchoolDetails(): ?SchoolDetails
     {
         return $this->fetch(new GetSchoolDetailsRequest());
     }

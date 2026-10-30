@@ -36,7 +36,7 @@ class OutstandingFormsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\StartOutstandingFormFillRequest
      */
-    public function startFill(string $formId, ?string $studentId = null): OutstandingFormInstance
+    public function startFill(string $formId, ?string $studentId = null): ?OutstandingFormInstance
     {
         return $this->fetch(new StartOutstandingFormFillRequest(formId: $formId, studentId: $studentId));
     }

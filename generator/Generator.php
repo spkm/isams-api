@@ -134,7 +134,7 @@ final class Generator
         $areas = array_unique(array_column($tags, 0));
         $segments = array_unique(array_merge(...array_map(fn (array $parts) => array_slice($parts, 1, -1), $tags)));
         $modules = array_unique(array_map(fn (string $definition) => explode('.', $definition)[1] ?? '', array_keys($this->spec['definitions'])));
-        $settings = ['class', 'method', 'handwritten', 'skip', 'response', 'multipart', 'cacheable', 'safe', 'paginatable'];
+        $settings = ['class', 'method', 'handwritten', 'skip', 'response', 'multipart', 'cacheable', 'safe', 'paginatable', 'required'];
         $problems = [];
 
         foreach ($this->overrides['operations'] as $id => $override) {
@@ -144,6 +144,18 @@ final class Generator
 
             foreach (array_diff(array_keys($override), $settings) as $setting) {
                 $problems[] = "operations.$id.$setting: no such setting";
+            }
+
+            $query = array_column(array_filter($operations[array_search($id, $ids, true)]['spec']['parameters'] ?? [], fn (array $parameter) => ($parameter['in'] ?? null) === 'query'), 'name');
+
+            foreach (array_diff($override['required'] ?? [], in_array($id, $ids, true) ? $query : []) as $parameter) {
+                $problems[] = "operations.$id.required: no query parameter $parameter";
+            }
+
+            foreach (array_filter([$override['response']['definition'] ?? null, $override['response']['list'] ?? null]) as $definition) {
+                if (! isset($this->spec['definitions'][$definition])) {
+                    $problems[] = "operations.$id.response: no such definition $definition";
+                }
             }
 
             if (isset($override['handwritten']) && ! class_exists($override['handwritten'])) {
@@ -514,6 +526,7 @@ final class Generator
 
         $response = match (true) {
             isset($override['response']['definition']) => $this->responseForDefinition($override['response']['definition']),
+            isset($override['response']['list']) => ['shape' => 'list', 'model' => $override['response']['list'], 'resultKey' => $override['response']['key'] ?? '', 'paged' => $override['response']['paged'] ?? false],
             isset($override['response']) => [...$none, 'shape' => $override['response']],
             $code === 201 => [...$none, 'shape' => 'created'],
             ($schema['type'] ?? null) === 'file', str_contains($produces, 'image/') || str_contains($produces, 'octet-stream') => [...$none, 'shape' => 'file'],
@@ -582,7 +595,7 @@ final class Generator
 
             match ($parameter['in']) {
                 'path' => $parameters['path'][$parameter['name']] = ['php' => $name, 'type' => ($parameter['type'] ?? 'string') === 'integer' ? 'int' : 'string'],
-                'query' => $parameters['query'][$parameter['name']] = ['php' => $name, 'type' => $this->queryType($parameter), 'required' => $parameter['required'] ?? false],
+                'query' => $parameters['query'][$parameter['name']] = ['php' => $name, 'type' => $this->queryType($parameter), 'required' => ($parameter['required'] ?? false) || in_array($parameter['name'], $override['required'] ?? [], true)],
                 'body' => $parameters['body'] = $this->body($parameter),
                 'formData' => $parameters['multipart'][$parameter['name']] = ['php' => $name, 'file' => ($parameter['type'] ?? null) === 'file', 'model' => $this->multipartModel($override['multipart'][$parameter['name']] ?? (isset($parameter['schema']['$ref']) ? $this->refName($parameter['schema']['$ref']) : null)), 'required' => $parameter['required'] ?? false],
                 default => null,
@@ -1238,7 +1251,7 @@ final class Generator
         [$returnType, $returnComment] = match (true) {
             $paged => ['Illuminate\Support\LazyCollection', '\\Illuminate\Support\LazyCollection<int, \\'.$model.'>'],
             $operation['response']['shape'] === 'list' => ['Illuminate\Support\Collection', '\\Illuminate\Support\Collection<int, '.($model ? '\\'.$model : 'mixed').'>'],
-            $operation['response']['shape'] === 'one' => [$model ?? 'array', $model ? null : 'array<mixed>'],
+            $operation['response']['shape'] === 'one' => [($model && ! str_ends_with($operation['path'], '}') ? '?' : '').($model ?? 'array'), $model ? null : 'array<mixed>'],
             $operation['response']['shape'] === 'created' => ['spkm\IsamsApi\Data\Created', null],
             $operation['response']['shape'] === 'file' => ['spkm\IsamsApi\Data\File', null],
             $operation['response']['shape'] === 'raw' => ['mixed', null],
@@ -1490,6 +1503,7 @@ final class Generator
     private function endpointParameter(Parameter $parameter): string
     {
         $type = implode('|', array_map(fn (string $part) => (str_starts_with($part, '?') ? '?' : '').class_basename(ltrim($part, '?')), explode('|', (string) $parameter->getType())));
+        $type = $parameter->isNullable() && $type !== '' && ! str_contains($type, '|') && ! str_contains($type, 'null') && ! str_starts_with($type, '?') && $type !== 'mixed' ? "?$type" : $type;
         $default = $parameter->hasDefaultValue() ? ' = '.($parameter->getDefaultValue() === null ? 'null' : var_export($parameter->getDefaultValue(), true)) : '';
 
         return ($type === '' ? '' : "$type ").'$'.$parameter->getName().$default;
@@ -1503,7 +1517,7 @@ final class Generator
         return match (true) {
             $type === 'mixed' => 'iSAMS\'s JSON, decoded (the spec gives no model)',
             isset($item[1]) => '`'.class_basename($type).'<'.class_basename($item[1]).'>`',
-            default => '`'.class_basename($type).'`',
+            default => '`'.($method->isReturnNullable() || str_starts_with($type, '?') ? '?' : '').class_basename(ltrim($type, '?')).'`',
         };
     }
 

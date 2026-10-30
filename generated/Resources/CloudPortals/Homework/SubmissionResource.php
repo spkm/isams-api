@@ -17,7 +17,7 @@ class SubmissionResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Homework\Submission\GetHomeworkSubmissionRequest
      */
-    public function get(int $homeworkId, string $schoolId): Submission
+    public function get(int $homeworkId, string $schoolId): ?Submission
     {
         return $this->fetch(new GetHomeworkSubmissionRequest(homeworkId: $homeworkId, schoolId: $schoolId));
     }

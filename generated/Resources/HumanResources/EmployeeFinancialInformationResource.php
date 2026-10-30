@@ -17,7 +17,7 @@ class EmployeeFinancialInformationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeFinancialInformation\GetEmployeeFinancialInformationRequest
      */
-    public function get(int $employeeId): EmployeeFinancialInformation
+    public function get(int $employeeId): ?EmployeeFinancialInformation
     {
         return $this->fetch(new GetEmployeeFinancialInformationRequest(employeeId: $employeeId));
     }

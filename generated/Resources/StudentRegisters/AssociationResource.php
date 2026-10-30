@@ -29,7 +29,7 @@ class AssociationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\StudentRegisters\Association\GetRegisterAssociationRequest
      */
-    public function get(int $registerId, string $schoolId): RegisterAssociation
+    public function get(int $registerId, string $schoolId): ?RegisterAssociation
     {
         return $this->fetch(new GetRegisterAssociationRequest(registerId: $registerId, schoolId: $schoolId));
     }

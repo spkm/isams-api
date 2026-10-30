@@ -28,7 +28,7 @@ class CommunicationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\Communication\GetCommunicationSmsDetailsRequest
      */
-    public function getSmsDetails(): SmsDetails
+    public function getSmsDetails(): ?SmsDetails
     {
         return $this->fetch(new GetCommunicationSmsDetailsRequest());
     }

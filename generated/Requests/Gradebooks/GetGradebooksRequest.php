@@ -22,7 +22,6 @@ class GetGradebooksRequest extends IsamsRequest
     protected Method $method = Method::GET;
     protected string $responseShape = self::LIST;
     protected ?string $dto = GradebookOverview::class;
-    public string $resultKey = 'gradebooks';
 
     public function __construct(
         protected string|\Stringable|null $filter = null,

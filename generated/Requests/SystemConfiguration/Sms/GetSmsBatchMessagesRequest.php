@@ -7,6 +7,7 @@
 namespace spkm\IsamsApi\Requests\SystemConfiguration\Sms;
 
 use Saloon\Enums\Method;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 use spkm\IsamsApi\Data\SystemConfiguration\SmsBatch;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
@@ -15,12 +16,12 @@ use spkm\IsamsApi\Requests\IsamsRequest;
  *
  * GET /api/systemconfiguration/sms/batch
  */
-class GetSmsBatchMessagesRequest extends IsamsRequest
+class GetSmsBatchMessagesRequest extends IsamsRequest implements Paginatable
 {
     protected Method $method = Method::GET;
     protected string $responseShape = self::LIST;
     protected ?string $dto = SmsBatch::class;
-    public string $resultKey = 'batches';
+    public string $resultKey = 'smsBatches';
 
     public function __construct(
         protected ?int $page = null,

@@ -38,7 +38,7 @@ class TeachingGroupsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupsHistoryRequest
      */
-    public function getHistory(string $schoolId): TeachingGroupsHistoryCollection
+    public function getHistory(string $schoolId): ?TeachingGroupsHistoryCollection
     {
         return $this->fetch(new GetTeachingGroupsHistoryRequest(schoolId: $schoolId));
     }

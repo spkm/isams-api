@@ -18,9 +18,8 @@ use spkm\IsamsApi\Requests\IsamsRequest;
 class GetCategoryRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
-    protected string $responseShape = self::LIST;
+    protected string $responseShape = self::ONE;
     protected ?string $dto = Category::class;
-    public string $resultKey = 'categories';
     protected bool $cacheable = true;
 
     public function __construct(

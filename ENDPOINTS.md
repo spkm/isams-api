@@ -71,20 +71,20 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::admissions()->agencyBranches()->add(string $schoolId, int $agencyBranchId)` | `Created` |
 | `Isams::admissions()->agencyBranches()->all(string $schoolId)` | `Collection<Branch>` |
 | `Isams::admissions()->agencyBranches()->remove(string $schoolId, int $agencyBranchId)` | `bool` |
-| `Isams::admissions()->all(string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Applicant>` |
+| `Isams::admissions()->all(?string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Applicant>` |
 | `Isams::admissions()->alumni()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Alumni>` |
 | `Isams::admissions()->alumni()->get(string $schoolId)` | `Alumni` |
 | `Isams::admissions()->alumni()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::admissions()->alumniCustomFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
-| `Isams::admissions()->alumniCustomFields()->get(string $schoolId, int $customFieldId)` | `CustomField` |
+| `Isams::admissions()->alumniCustomFields()->get(string $schoolId, int $customFieldId)` | `Collection<CustomField>` |
 | `Isams::admissions()->alumniCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
 | `Isams::admissions()->alumniCustomFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::admissions()->contacts()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<ApplicantsContact>` |
-| `Isams::admissions()->contacts()->forApplicant(string $schoolId, bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
-| `Isams::admissions()->contacts()->studentContacts(string $schoolId, bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
+| `Isams::admissions()->contacts()->forApplicant(string $schoolId, ?bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
+| `Isams::admissions()->contacts()->studentContacts(string $schoolId, ?bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
 | `Isams::admissions()->create(ApplicantForCreate\|array $applicant)` | `Created` |
 | `Isams::admissions()->customFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
-| `Isams::admissions()->customFields()->get(string $schoolId, int $customFieldId)` | `CustomField` |
+| `Isams::admissions()->customFields()->get(string $schoolId, int $customFieldId)` | `Collection<CustomField>` |
 | `Isams::admissions()->customFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
 | `Isams::admissions()->customFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::admissions()->document()->all(string $schoolId)` | `Collection<ApplicantDocument>` |
@@ -98,7 +98,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::admissions()->enquiryTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
 | `Isams::admissions()->enquiryTypes()->delete(int $id)` | `bool` |
 | `Isams::admissions()->enquiryTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
-| `Isams::admissions()->get(string $schoolId, string $expand = null)` | `Applicant` |
+| `Isams::admissions()->get(string $schoolId, ?string $expand = null)` | `Applicant` |
 | `Isams::admissions()->moveToCurrent(string $schoolId)` | `Created` |
 | `Isams::admissions()->passportCustomFields()->all(string $schoolId, int $passportId)` | `Collection<CustomField>` |
 | `Isams::admissions()->passportCustomFields()->get(string $schoolId, int $passportId, int $customFieldId)` | `Collection<CustomField>` |
@@ -109,10 +109,10 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::admissions()->passportDocuments()->download(string $schoolId, int $passportId, int $documentId)` | `File` |
 | `Isams::admissions()->passportDocuments()->get(string $schoolId, int $passportId, int $documentId)` | `ApplicantPassportDocument` |
 | `Isams::admissions()->passportDocuments()->patch(string $schoolId, int $passportId, int $documentId, JsonPatch\|array $patch)` | `bool` |
-| `Isams::admissions()->passports()->all(string $schoolId, string $expand = null)` | `Collection<ApplicantPassport>` |
+| `Isams::admissions()->passports()->all(string $schoolId, ?string $expand = null)` | `Collection<ApplicantPassport>` |
 | `Isams::admissions()->passports()->create(string $schoolId, ApplicantPassportForCreate\|array $applicantPassport)` | `Created` |
 | `Isams::admissions()->passports()->delete(string $schoolId, int $id)` | `bool` |
-| `Isams::admissions()->passports()->get(string $schoolId, int $id, string $expand = null)` | `ApplicantPassport` |
+| `Isams::admissions()->passports()->get(string $schoolId, int $id, ?string $expand = null)` | `ApplicantPassport` |
 | `Isams::admissions()->passports()->update(string $schoolId, int $id, ApplicantPassportForUpdate\|array $applicantPassport)` | `bool` |
 | `Isams::admissions()->passports()->updateMany(string $schoolId, array $applicantPassports)` | `bool` |
 | `Isams::admissions()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
@@ -121,7 +121,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::admissions()->statuses()->delete(int $id)` | `bool` |
 | `Isams::admissions()->statuses()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::admissions()->studentCustomFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
-| `Isams::admissions()->studentCustomFields()->get(string $schoolId, int $customFieldId)` | `CustomField` |
+| `Isams::admissions()->studentCustomFields()->get(string $schoolId, int $customFieldId)` | `Collection<CustomField>` |
 | `Isams::admissions()->studentCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
 | `Isams::admissions()->studentCustomFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::admissions()->students()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Student>` |
@@ -137,10 +137,10 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::admissions()->visaDocuments()->download(string $schoolId, int $visaId, int $documentId)` | `File` |
 | `Isams::admissions()->visaDocuments()->get(string $schoolId, int $visaId, int $documentId)` | `ApplicantVisaDocument` |
 | `Isams::admissions()->visaDocuments()->patch(string $schoolId, int $visaId, int $documentId, JsonPatch\|array $patch)` | `bool` |
-| `Isams::admissions()->visas()->all(string $schoolId, string $expand = null)` | `Collection<ApplicantVisa>` |
+| `Isams::admissions()->visas()->all(string $schoolId, ?string $expand = null)` | `Collection<ApplicantVisa>` |
 | `Isams::admissions()->visas()->create(string $schoolId, ApplicantVisaForCreate\|array $applicantVisa)` | `Created` |
 | `Isams::admissions()->visas()->delete(string $schoolId, int $id)` | `bool` |
-| `Isams::admissions()->visas()->get(string $schoolId, int $id, string $expand = null)` | `ApplicantVisa` |
+| `Isams::admissions()->visas()->get(string $schoolId, int $id, ?string $expand = null)` | `ApplicantVisa` |
 | `Isams::admissions()->visas()->update(string $schoolId, int $id, ApplicantVisaForUpdate\|array $applicantVisa)` | `bool` |
 | `Isams::admissions()->visas()->updateMany(string $schoolId, array $applicantVisas)` | `bool` |
 | `Isams::admissions()->visits()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Visit>` |
@@ -178,15 +178,15 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 
 | Call | Returns |
 |---|---|
-| `Isams::cloudPortals()->admissions()->applicantContacts()->all(string $schoolId, bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
+| `Isams::cloudPortals()->admissions()->applicantContacts()->all(string $schoolId, ?bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
 | `Isams::cloudPortals()->admissions()->callbackSubmission()->save(CallbackSubmissionForCreate\|array $callbackSubmission)` | `Created` |
-| `Isams::cloudPortals()->admissions()->communications()->getEmail(int $id, array $schoolIds = null)` | `AdmissionsCommunicationMessage` |
-| `Isams::cloudPortals()->admissions()->communications()->getEmailsBySchoolIds(array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
-| `Isams::cloudPortals()->admissions()->communications()->getEmailsForUser(string $divisionIdsCommaSeparated = null, int $pupilStatus = null, array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
-| `Isams::cloudPortals()->admissions()->communications()->getLetter(int $id, array $schoolIds = null)` | `AdmissionsCommunicationMessage` |
-| `Isams::cloudPortals()->admissions()->communications()->getLettersBySchoolIds(array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
-| `Isams::cloudPortals()->admissions()->communications()->getSMS(int $id, array $schoolIds = null)` | `AdmissionsCommunicationMessage` |
-| `Isams::cloudPortals()->admissions()->communications()->getSMSsBySchoolIds(array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
+| `Isams::cloudPortals()->admissions()->communications()->getEmail(int $id, ?array $schoolIds = null)` | `?AdmissionsCommunicationMessage` |
+| `Isams::cloudPortals()->admissions()->communications()->getEmailsBySchoolIds(?array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
+| `Isams::cloudPortals()->admissions()->communications()->getEmailsForUser(?string $divisionIdsCommaSeparated = null, ?int $pupilStatus = null, ?array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
+| `Isams::cloudPortals()->admissions()->communications()->getLetter(int $id, ?array $schoolIds = null)` | `?AdmissionsCommunicationMessage` |
+| `Isams::cloudPortals()->admissions()->communications()->getLettersBySchoolIds(?array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
+| `Isams::cloudPortals()->admissions()->communications()->getSMS(int $id, ?array $schoolIds = null)` | `?AdmissionsCommunicationMessage` |
+| `Isams::cloudPortals()->admissions()->communications()->getSMSsBySchoolIds(?array $schoolIds = null)` | `Collection<AdmissionsCommunicationMessage>` |
 | `Isams::cloudPortals()->admissions()->document()->download(int $documentId)` | `File` |
 | `Isams::cloudPortals()->admissions()->document()->getDownloadHistory()` | `Collection<DocumentDownloadHistory>` |
 | `Isams::cloudPortals()->admissions()->document()->getFolder(int $selectedFolder)` | `Collection<Folder>` |
@@ -212,19 +212,19 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->admissions()->forms()->getRegistrationSummary(array $codes)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->admissions()->forms()->getSubmission(int $id)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->admissions()->forms()->getSubmissionByGlobalReferenceId(string $formSubmissionGlobalId)` | iSAMS's JSON, decoded (the spec gives no model) |
-| `Isams::cloudPortals()->admissions()->forms()->getSubmissionsByUserCode(string $type = null, string $tempGuestUser = null)` | iSAMS's JSON, decoded (the spec gives no model) |
+| `Isams::cloudPortals()->admissions()->forms()->getSubmissionsByUserCode(?string $type = null, ?string $tempGuestUser = null)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->admissions()->forms()->saveSubmittedForm(AdmissionsFormOrchardFormForCreate\|array $admissionsFormOrchardForm)` | `Created` |
 | `Isams::cloudPortals()->admissions()->forms()->updateSubmissionOwner(SubmissionOwner\|array $submissionOwner)` | `Created` |
-| `Isams::cloudPortals()->admissions()->visits()->getSummaryBySchoolIds(array $schoolIds = null)` | `Collection<AdmissionsVisitSummary>` |
-| `Isams::cloudPortals()->billing()->deposits()->getBySchoolIds(array $schoolIds = null)` | `DepositCollection` |
-| `Isams::cloudPortals()->billing()->invoices()->all(bool $excludeCopyBills = null)` | `Collection<Invoice>` |
+| `Isams::cloudPortals()->admissions()->visits()->getSummaryBySchoolIds(?array $schoolIds = null)` | `Collection<AdmissionsVisitSummary>` |
+| `Isams::cloudPortals()->billing()->deposits()->getBySchoolIds(?array $schoolIds = null)` | `?DepositCollection` |
+| `Isams::cloudPortals()->billing()->invoices()->all(?bool $excludeCopyBills = null)` | `Collection<Invoice>` |
 | `Isams::cloudPortals()->billing()->invoices()->getDocument(string $centralFileServiceId)` | `File` |
 | `Isams::cloudPortals()->billing()->paymentGateway()->get(int $id)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->billing()->paymentGateway()->getProvider()` | iSAMS's JSON, decoded (the spec gives no model) |
-| `Isams::cloudPortals()->billing()->statementOfAccounts()->all(DateTimeInterface\|string\|null $startDate = null, DateTimeInterface\|string\|null $endDate = null, string $studentName = null)` | `Statement` |
-| `Isams::cloudPortals()->billing()->statementOfAccounts()->getCurrentBillingCycle()` | `BillingCycle` |
+| `Isams::cloudPortals()->billing()->statementOfAccounts()->all(DateTimeInterface\|string\|null $startDate = null, DateTimeInterface\|string\|null $endDate = null, ?string $studentName = null)` | `?Statement` |
+| `Isams::cloudPortals()->billing()->statementOfAccounts()->getCurrentBillingCycle()` | `?BillingCycle` |
 | `Isams::cloudPortals()->bulletin()->dailyBulletin()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Bulletin>` |
-| `Isams::cloudPortals()->bulletin()->dailyBulletin()->getByYear(DateTimeInterface\|string $date, string $yearGroups = null)` | `LazyCollection<Bulletin>` |
+| `Isams::cloudPortals()->bulletin()->dailyBulletin()->getByYear(DateTimeInterface\|string $date, ?string $yearGroups = null)` | `LazyCollection<Bulletin>` |
 | `Isams::cloudPortals()->documentSigning()->create(CreatePortalSigningRequest\|array $createPortalSigningRequest)` | `Created` |
 | `Isams::cloudPortals()->documentSigning()->getDocuments()` | `Collection<PrivatePortalDocumentSigningDocument>` |
 | `Isams::cloudPortals()->documentSigning()->getEmbeddedUrl(string $signingRequestId)` | iSAMS's JSON, decoded (the spec gives no model) |
@@ -234,23 +234,23 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->homework()->get(int $id)` | `Homework` |
 | `Isams::cloudPortals()->homework()->getInitialFeedback(int $homeworkId, string $schoolId)` | `Collection<SubmissionFeedback>` |
 | `Isams::cloudPortals()->homework()->getResources(int $homeworkId)` | `Collection<Resource>` |
-| `Isams::cloudPortals()->homework()->submission()->get(int $homeworkId, string $schoolId)` | `Submission` |
+| `Isams::cloudPortals()->homework()->submission()->get(int $homeworkId, string $schoolId)` | `?Submission` |
 | `Isams::cloudPortals()->homework()->submission()->patch(int $homeworkId, string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->news()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<News>` |
 | `Isams::cloudPortals()->news()->getArticle(int $id)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->news()->getCategories()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->news()->getOptions()` | iSAMS's JSON, decoded (the spec gives no model) |
-| `Isams::cloudPortals()->parent()->notifications()->getUserSettingByUserCode()` | `NotificationSetting` |
+| `Isams::cloudPortals()->parent()->notifications()->getUserSettingByUserCode()` | `?NotificationSetting` |
 | `Isams::cloudPortals()->parent()->notifications()->setUserSettingByUserCode(NotificationSettingPublic\|array $notificationSettingPublic)` | `bool` |
 | `Isams::cloudPortals()->parent()->pushNotification()->getChannels()` | `Collection<NotificationChannel>` |
-| `Isams::cloudPortals()->parent()->pushNotification()->getConfig()` | `PushConfigurationMapped` |
+| `Isams::cloudPortals()->parent()->pushNotification()->getConfig()` | `?PushConfigurationMapped` |
 | `Isams::cloudPortals()->parent()->pushNotification()->getUserChannelSubscriptions()` | `Collection<NotificationUserSubscription>` |
-| `Isams::cloudPortals()->parent()->pushNotification()->getUserPushDeviceToken()` | `PrivateNotificationDeviceTokenMapped` |
+| `Isams::cloudPortals()->parent()->pushNotification()->getUserPushDeviceToken()` | `?PrivateNotificationDeviceTokenMapped` |
 | `Isams::cloudPortals()->parent()->pushNotification()->sendDebug()` | `Created` |
 | `Isams::cloudPortals()->parent()->pushNotification()->subscribeUserToChannel(NotificationSubscription\|array $notificationSubscription)` | `bool` |
 | `Isams::cloudPortals()->parent()->pushNotification()->unsubscribeUserFromChannel(NotificationSubscription\|array $notificationSubscription)` | `bool` |
 | `Isams::cloudPortals()->parent()->pushNotification()->updateUserPushDeviceToken(NotificationUpdateDevicePrivate\|array $notificationUpdateDevicePrivate)` | `bool` |
-| `Isams::cloudPortals()->parent()->pushNotificationMessages()->all(string $read = null)` | `UserMessage` |
+| `Isams::cloudPortals()->parent()->pushNotificationMessages()->all(?string $read = null)` | `?UserMessage` |
 | `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAllMessagesAsDeleted()` | `bool` |
 | `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAllMessagesAsRead()` | `bool` |
 | `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAsDeleted(string $messageId)` | `bool` |
@@ -261,7 +261,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->parent()->schoolDirectory()->getTeachingStaff(string\|Stringable\|null $filter = null)` | `LazyCollection<Staff>` |
 | `Isams::cloudPortals()->reports()->academicReports()->getSchoolAssessments(string $schoolId, string\|Stringable\|null $filter = null)` | `LazyCollection<Report>` |
 | `Isams::cloudPortals()->reports()->academicReports()->getSchoolReports(string $schoolId, string\|Stringable\|null $filter = null)` | `LazyCollection<Report>` |
-| `Isams::cloudPortals()->school()->account()->getProfileInformation()` | `PortalProfileInformation` |
+| `Isams::cloudPortals()->school()->account()->getProfileInformation()` | `?PortalProfileInformation` |
 | `Isams::cloudPortals()->school()->account()->updateProfileInformation(ProfileInformationForUpdate\|array $profileInformation)` | `bool` |
 | `Isams::cloudPortals()->school()->account()->updateSecurityQuestionAnswer(SecurityQuestionInformationForUpdate\|array $securityQuestionInformation)` | `bool` |
 | `Isams::cloudPortals()->school()->accountCommunicationHistory()->getEmail(int $emailId)` | `EmailMessage` |
@@ -274,7 +274,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->school()->activities()->getGroupsForStudent(string $schoolId, int $activityId)` | `Collection<ActivityGroup>` |
 | `Isams::cloudPortals()->school()->activities()->getSchedulesForStudent(string $schoolId, int $activityId)` | `Collection<ActivitySchedule>` |
 | `Isams::cloudPortals()->school()->address()->getDetails(string $id)` | iSAMS's JSON, decoded (the spec gives no model) |
-| `Isams::cloudPortals()->school()->address()->getListByPostcode(string $postcode = null)` | iSAMS's JSON, decoded (the spec gives no model) |
+| `Isams::cloudPortals()->school()->address()->getListByPostcode(?string $postcode = null)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->school()->address()->getPostcodeFinderActive()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->school()->addresses()->get(int $id)` | `SchoolAddress` |
 | `Isams::cloudPortals()->school()->addresses()->getList()` | `Collection<SchoolAddress>` |
@@ -286,15 +286,15 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->school()->attendanceRecords()->getRegistrationSummary(string $schoolId, int $termId)` | `Collection<AttendanceRecord>` |
 | `Isams::cloudPortals()->school()->bookmark()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Bookmark>` |
 | `Isams::cloudPortals()->school()->bookmark()->getGroups(string\|Stringable\|null $filter = null)` | `LazyCollection<BookmarkGroups>` |
-| `Isams::cloudPortals()->school()->calendar()->getPublishedEvents(int $targetId = null, DateTimeInterface\|string\|null $startDate = null, DateTimeInterface\|string\|null $endDate = null)` | `Collection<CalendarEvent>` |
-| `Isams::cloudPortals()->school()->calendar()->getPublishedEventsByKeyPhrase(string $keyphrase, int $targetId = null)` | `Collection<CalendarEvent>` |
+| `Isams::cloudPortals()->school()->calendar()->getPublishedEvents(?int $targetId = null, DateTimeInterface\|string\|null $startDate = null, DateTimeInterface\|string\|null $endDate = null)` | `Collection<CalendarEvent>` |
+| `Isams::cloudPortals()->school()->calendar()->getPublishedEventsByKeyPhrase(string $keyphrase, ?int $targetId = null)` | `Collection<CalendarEvent>` |
 | `Isams::cloudPortals()->school()->communication()->deleteSmsDetails()` | `bool` |
-| `Isams::cloudPortals()->school()->communication()->getSmsDetails()` | `SmsDetails` |
+| `Isams::cloudPortals()->school()->communication()->getSmsDetails()` | `?SmsDetails` |
 | `Isams::cloudPortals()->school()->communication()->updateSmsDetails(string $mobileNumber)` | `Created` |
 | `Isams::cloudPortals()->school()->communicationHistory()->getMessage(int $emailId)` | `EmailMessage` |
 | `Isams::cloudPortals()->school()->communicationHistory()->getPortalEmail()` | `Collection<EmailMessage>` |
 | `Isams::cloudPortals()->school()->communicationHistory()->getPortalSms()` | `Collection<SmsMessage>` |
-| `Isams::cloudPortals()->school()->consentRegisters()->all()` | `PortalConsentRegisterResponses` |
+| `Isams::cloudPortals()->school()->consentRegisters()->all()` | `?PortalConsentRegisterResponses` |
 | `Isams::cloudPortals()->school()->consentRegisters()->patchContactResponses(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->consentRegisters()->patchResponses(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->contacts()->all(string $schoolId)` | `Collection<PortalStudentContact>` |
@@ -303,7 +303,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->school()->disciplineRecords()->getDetentionRecordsForStudent(string $schoolId)` | `Collection<DetentionRecord>` |
 | `Isams::cloudPortals()->school()->divisions()->getList()` | `Collection<Division>` |
 | `Isams::cloudPortals()->school()->emailOptions()->cancelDetailsVerification()` | `Created` |
-| `Isams::cloudPortals()->school()->emailOptions()->getDetails()` | `PortalEmailDetails` |
+| `Isams::cloudPortals()->school()->emailOptions()->getDetails()` | `?PortalEmailDetails` |
 | `Isams::cloudPortals()->school()->emailOptions()->patchDetails(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->emailOptions()->verifyDetails(string $verificationGuid, bool $updateUsername)` | `Created` |
 | `Isams::cloudPortals()->school()->emailSubscriptions()->all()` | `Collection<EmailSubscriptionCategory>` |
@@ -325,7 +325,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->school()->gradebooks()->getPublishedColumnDetailForMarkbookForParentUser(int $markbookId, string $schoolId, string $viewedAsUserCode, int $columnId)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->school()->gradebooks()->getPublishedColumnsForMarkbook(int $markbookId, string $schoolId)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->school()->gradebooks()->getPublishedColumnsForMarkbookForParentUser(int $markbookId, string $schoolId, string $viewedAsUserCode)` | iSAMS's JSON, decoded (the spec gives no model) |
-| `Isams::cloudPortals()->school()->houses()->all(string $houseType = null)` | `Collection<House>` |
+| `Isams::cloudPortals()->school()->houses()->all(?string $houseType = null)` | `Collection<House>` |
 | `Isams::cloudPortals()->school()->interactiveElectronicForms()->get(int $formId)` | `ElectronicForm` |
 | `Isams::cloudPortals()->school()->interactiveElectronicForms()->getAvailableElectronicFormDetails()` | `Collection<AvailableElectronicFormDetails>` |
 | `Isams::cloudPortals()->school()->interactiveElectronicForms()->getHistory()` | `Collection<ElectronicFormDetails>` |
@@ -338,7 +338,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->school()->internalExams()->getSessions()` | `Collection<InternalExamSession>` |
 | `Isams::cloudPortals()->school()->internalExams()->getSessionsForEntries(string $schoolId)` | `Collection<InternalExamSession>` |
 | `Isams::cloudPortals()->school()->internalExams()->getSessionsForResults(string $schoolId)` | `Collection<InternalExamSession>` |
-| `Isams::cloudPortals()->school()->leaveRequests()->all(string $schoolId, array $status = null, DateTimeInterface\|string\|null $startDate = null, DateTimeInterface\|string\|null $endDate = null)` | `LazyCollection<LeaveRequest>` |
+| `Isams::cloudPortals()->school()->leaveRequests()->all(string $schoolId, ?array $status = null, DateTimeInterface\|string\|null $startDate = null, DateTimeInterface\|string\|null $endDate = null)` | `LazyCollection<LeaveRequest>` |
 | `Isams::cloudPortals()->school()->leaveRequests()->cancel(int $id, string $schoolId)` | `Created` |
 | `Isams::cloudPortals()->school()->leaveRequests()->get(string $schoolId, int $id)` | `LeaveRequest` |
 | `Isams::cloudPortals()->school()->leaveRequests()->getDocument(string $schoolId, int $requestId, int $documentId)` | `File` |
@@ -348,11 +348,11 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->school()->linkMigration()->delete(int $id)` | `bool` |
 | `Isams::cloudPortals()->school()->linkMigration()->getInvalidPortalLinks()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->school()->linkMigration()->migrate(int $id)` | `Created` |
-| `Isams::cloudPortals()->school()->notifications()->getUserSettings()` | `UserNotificationSettings` |
+| `Isams::cloudPortals()->school()->notifications()->getUserSettings()` | `?UserNotificationSettings` |
 | `Isams::cloudPortals()->school()->notifications()->patchSettings(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->outstandingForms()->continueFill(string $formId, string $instanceId)` | `OutstandingFormInstance` |
 | `Isams::cloudPortals()->school()->outstandingForms()->saveDraft(string $formId, string $fillId, array $bodyValue)` | `Created` |
-| `Isams::cloudPortals()->school()->outstandingForms()->startFill(string $formId, string $studentId = null)` | `OutstandingFormInstance` |
+| `Isams::cloudPortals()->school()->outstandingForms()->startFill(string $formId, ?string $studentId = null)` | `?OutstandingFormInstance` |
 | `Isams::cloudPortals()->school()->outstandingForms()->submit(string $formId, string $fillId, array $bodyValue)` | `Created` |
 | `Isams::cloudPortals()->school()->outstandingTasks()->all()` | `Collection<OutstandingTaskSummary>` |
 | `Isams::cloudPortals()->school()->photoGalleries()->all()` | `Collection<PhotoGallery>` |
@@ -360,28 +360,28 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::cloudPortals()->school()->photoGalleries()->getImage(int $galleryId, int $imageId)` | `File` |
 | `Isams::cloudPortals()->school()->rewardsAndConduct()->getByType(string $schoolId, int $typeId)` | `Collection<Reward>` |
 | `Isams::cloudPortals()->school()->rewardsAndConduct()->getTypes()` | `Collection<RewardType>` |
-| `Isams::cloudPortals()->school()->schools()->all(string $queryValue = null)` | `LazyCollection<School>` |
+| `Isams::cloudPortals()->school()->schools()->all(?string $queryValue = null)` | `LazyCollection<School>` |
 | `Isams::cloudPortals()->school()->smsSubscriptions()->all()` | `Collection<SmsSubscriptionCategory>` |
 | `Isams::cloudPortals()->school()->smsSubscriptions()->patchToSmsCategories(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->teachingGroups()->all(string $schoolId)` | `Collection<TeachingGroup>` |
 | `Isams::cloudPortals()->school()->teachingGroups()->getForm(string $schoolId, int $id)` | `TeachingGroupForm` |
-| `Isams::cloudPortals()->school()->teachingGroups()->getHistory(string $schoolId)` | `TeachingGroupsHistoryCollection` |
+| `Isams::cloudPortals()->school()->teachingGroups()->getHistory(string $schoolId)` | `?TeachingGroupsHistoryCollection` |
 | `Isams::cloudPortals()->school()->teachingGroups()->getSet(string $schoolId, int $id)` | `TeachingGroupSet` |
 | `Isams::cloudPortals()->school()->terms()->all(string\|Stringable\|null $filter = null)` | `Collection<Term>` |
 | `Isams::cloudPortals()->school()->yearGroups()->all()` | `Collection<YearGroup>` |
 | `Isams::cloudPortals()->students()->get(string $schoolId)` | `PrivateStudentDetailed` |
 | `Isams::cloudPortals()->students()->getByPortalType(string $portalType, string $divisionIdsCommaSeparated)` | `Collection<PrivateStudent>` |
-| `Isams::cloudPortals()->students()->modules()->getCapabilities()` | `PortalModuleCapabilities` |
-| `Isams::cloudPortals()->students()->selfRegistration()->getConfig()` | `StudentSelfRegistrationConfiguration` |
+| `Isams::cloudPortals()->students()->modules()->getCapabilities()` | `?PortalModuleCapabilities` |
+| `Isams::cloudPortals()->students()->selfRegistration()->getConfig()` | `?StudentSelfRegistrationConfiguration` |
 | `Isams::cloudPortals()->students()->selfRegistration()->getRegisterPeriodsByDate(DateTimeInterface\|string $date)` | `Collection<StudentSelfRegistrationRegisterPeriod>` |
 | `Isams::cloudPortals()->students()->selfRegistration()->updateRegisterPeriods(SelfRegistrationRegistersForUpdate\|array $selfRegistrationRegisters)` | `bool` |
 | `Isams::cloudPortals()->students()->timetable()->getActivityCollection(string $schoolId, DateTimeInterface\|string\|null $startDate = null)` | `Collection<TimetableActivity>` |
-| `Isams::cloudPortals()->students()->timetable()->getPeriodCollection(string $schoolId, int $timetableId = null, bool $excludeExceptions = null, bool $includeMissing = null, bool $includeHiddenSubjects = null)` | `Collection<TimetablePeriod>` |
+| `Isams::cloudPortals()->students()->timetable()->getPeriodCollection(string $schoolId, ?int $timetableId = null, ?bool $excludeExceptions = null, ?bool $includeMissing = null, ?bool $includeHiddenSubjects = null)` | `Collection<TimetablePeriod>` |
 | `Isams::cloudPortals()->students()->timetable()->getWeeks(string $schoolId, DateTimeInterface\|string\|null $date = null)` | `Collection<TimetableActivity>` |
-| `Isams::cloudPortals()->systemConfiguration()->get()` | `PortalSystemConfiguration` |
+| `Isams::cloudPortals()->systemConfiguration()->get()` | `?PortalSystemConfiguration` |
 | `Isams::cloudPortals()->systemConfiguration()->getLanguages()` | `Collection<Language>` |
-| `Isams::cloudPortals()->systemConfiguration()->getNotificationSettings()` | `SystemNotificationSettings` |
-| `Isams::cloudPortals()->systemConfiguration()->getSecurityOptions()` | `SecurityOptions` |
+| `Isams::cloudPortals()->systemConfiguration()->getNotificationSettings()` | `?SystemNotificationSettings` |
+| `Isams::cloudPortals()->systemConfiguration()->getSecurityOptions()` | `?SecurityOptions` |
 | `Isams::cloudPortals()->systemConfiguration()->list()->getByType(string $listType)` | `Collection<GlobalListItem>` |
 | `Isams::cloudPortals()->systemConfiguration()->list()->getCounties()` | `Collection<GlobalListItem>` |
 | `Isams::cloudPortals()->systemConfiguration()->list()->getCountries()` | `Collection<GlobalListItem>` |
@@ -483,7 +483,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::gradebooks()->delete(int $id)` | `bool` |
 | `Isams::gradebooks()->disassociatedStudent()->remove(int $gradebookId, string $schoolId)` | `bool` |
 | `Isams::gradebooks()->get(int $gradebookId)` | `Gradebook` |
-| `Isams::gradebooks()->getStructure(int $gradebookId)` | `GradebookStructure` |
+| `Isams::gradebooks()->getStructure(int $gradebookId)` | `?GradebookStructure` |
 | `Isams::gradebooks()->gradesetConfiguration()->all()` | `Collection<Gradeset>` |
 | `Isams::gradebooks()->gradesetConfiguration()->get(int $gradesetId)` | `Gradeset` |
 | `Isams::gradebooks()->group()->create(int $gradebookId, GroupStructureForCreate\|array $groupStructure)` | `Created` |
@@ -514,7 +514,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::gradebooks()->studentAssignments()->add(int $gradebookId, array $schoolIds)` | `Created` |
 | `Isams::gradebooks()->studentAssignments()->all(int $gradebookId)` | `Collection<StudentAssignment>` |
 | `Isams::gradebooks()->studentAssignments()->delete(int $gradebookId, string $schoolId)` | `bool` |
-| `Isams::gradebooks()->studentExclusions()->all(int $gradebookId, int $columnId)` | `StudentExclusion` |
+| `Isams::gradebooks()->studentExclusions()->all(int $gradebookId, int $columnId)` | `?StudentExclusion` |
 | `Isams::gradebooks()->studentExclusions()->createMany(int $gradebookId, int $columnId, array $schoolIds)` | `Created` |
 | `Isams::gradebooks()->studentExclusions()->delete(int $gradebookId, int $columnId, string $schoolId)` | `bool` |
 | `Isams::gradebooks()->stylingDesignConfiguration()->all()` | `Collection<StylingDesign>` |
@@ -567,7 +567,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::humanResources()->employeeAbsences()->get(int $employeeId, int $absenceId)` | `Absence` |
 | `Isams::humanResources()->employeeAbsences()->update(int $employeeId, int $id, AbsenceForUpdate\|array $absence)` | `bool` |
 | `Isams::humanResources()->employeeChildrensBarredListChecks()->create(int $employeeId, ChildrensBarredListCheckForCreate\|array $childrensBarredListCheck)` | `Created` |
-| `Isams::humanResources()->employeeChildrensBarredListChecks()->get(int $employeeId)` | `ChildrensBarredListCheck` |
+| `Isams::humanResources()->employeeChildrensBarredListChecks()->get(int $employeeId)` | `?ChildrensBarredListCheck` |
 | `Isams::humanResources()->employeeChildrensBarredListChecks()->update(int $employeeId, ChildrensBarredListCheckForUpdate\|array $childrensBarredListCheck)` | `bool` |
 | `Isams::humanResources()->employeeContacts()->all(int $employeeId)` | `Collection<EmployeeContact>` |
 | `Isams::humanResources()->employeeContracts()->all(int $employeeId)` | `Collection<Contract>` |
@@ -587,12 +587,12 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::humanResources()->employeeDepartments()->all(int $employeeId)` | `Collection<Department>` |
 | `Isams::humanResources()->employeeDepartments()->remove(int $employeeId, string $departmentType, int $departmentId)` | `bool` |
 | `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->create(int $employeeId, DisclosureBarringServiceCheckForCreate\|array $disclosureBarringServiceCheck)` | `Created` |
-| `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->get(int $employeeId)` | `DisclosureBarringServiceCheck` |
+| `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->get(int $employeeId)` | `?DisclosureBarringServiceCheck` |
 | `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->update(int $employeeId, DisclosureBarringServiceCheckForUpdate\|array $disclosureBarringServiceCheck)` | `bool` |
-| `Isams::humanResources()->employeeFinancialInformation()->get(int $employeeId)` | `EmployeeFinancialInformation` |
+| `Isams::humanResources()->employeeFinancialInformation()->get(int $employeeId)` | `?EmployeeFinancialInformation` |
 | `Isams::humanResources()->employeeFinancialInformation()->update(int $employeeId, EmployeeFinancialInformationForUpdate\|array $employeeFinancialInformation)` | `bool` |
 | `Isams::humanResources()->employeeHouses()->add(int $employeeId, int $houseId)` | `Created` |
-| `Isams::humanResources()->employeeHouses()->all(int $employeeId)` | `EmployeeHouses` |
+| `Isams::humanResources()->employeeHouses()->all(int $employeeId)` | `?EmployeeHouses` |
 | `Isams::humanResources()->employeeHouses()->remove(int $employeeId, int $houseId)` | `bool` |
 | `Isams::humanResources()->employeeIdentityChecks()->all(int $employeeId)` | `Collection<EmployeeIdentityCheck>` |
 | `Isams::humanResources()->employeeIdentityChecks()->create(int $employeeId, EmployeeIdentityCheckForCreate\|array $employeeIdentityCheck)` | `Created` |
@@ -602,7 +602,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::humanResources()->employeePhotos()->create(int $employeeId, MultipartValue $photo)` | `Created` |
 | `Isams::humanResources()->employeePhotos()->get(int $employeeId, int $photoId)` | `File` |
 | `Isams::humanResources()->employeePhotos()->getCurrent(int $employeeId)` | `File` |
-| `Isams::humanResources()->employeeProbations()->get(int $employeeId)` | `EmployeeProbation` |
+| `Isams::humanResources()->employeeProbations()->get(int $employeeId)` | `?EmployeeProbation` |
 | `Isams::humanResources()->employeeProbations()->update(int $employeeId, EmployeeProbationForUpdate\|array $employeeProbation)` | `bool` |
 | `Isams::humanResources()->employeeQualificationChecks()->all(int $employeeId)` | `Collection<EmployeeQualificationCheck>` |
 | `Isams::humanResources()->employeeQualificationChecks()->create(int $employeeId, EmployeeQualificationCheckForCreate\|array $employeeQualificationCheck)` | `Created` |
@@ -626,11 +626,11 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::humanResources()->employeeRoles()->add(int $employeeId, int $roleId)` | `Created` |
 | `Isams::humanResources()->employeeRoles()->all(int $employeeId)` | `Collection<Role>` |
 | `Isams::humanResources()->employeeRoles()->remove(int $employeeId, int $roleId)` | `bool` |
-| `Isams::humanResources()->employeeTeachingProhibitionChecks()->get(int $employeeId)` | `EmployeeTeachingProhibitionCheck` |
+| `Isams::humanResources()->employeeTeachingProhibitionChecks()->get(int $employeeId)` | `?EmployeeTeachingProhibitionCheck` |
 | `Isams::humanResources()->employeeTeachingProhibitionChecks()->update(int $employeeId, EmployeeTeachingProhibitionCheckForUpdate\|array $employeeTeachingProhibitionCheck)` | `bool` |
-| `Isams::humanResources()->employees()->all(string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Employee>` |
+| `Isams::humanResources()->employees()->all(?string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Employee>` |
 | `Isams::humanResources()->employees()->create(EmployeeForCreate\|array $employee)` | `Created` |
-| `Isams::humanResources()->employees()->get(int $id, string $expand = null, string\|Stringable\|null $filter = null)` | `Employee` |
+| `Isams::humanResources()->employees()->get(int $id, ?string $expand = null, string\|Stringable\|null $filter = null)` | `Employee` |
 | `Isams::humanResources()->employees()->getByUserCode(string $userCode)` | `Employee` |
 | `Isams::humanResources()->employees()->update(int $id, EmployeeForUpdate\|array $employee)` | `bool` |
 | `Isams::humanResources()->employmentTypes()->all()` | `Collection<GlobalListItem>` |
@@ -696,12 +696,12 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::medicalCentre()->medication()->getTypes()` | `Collection<MedicationType>` |
 | `Isams::medicalCentre()->note()->getTypes()` | `Collection<NoteType>` |
 | `Isams::medicalCentre()->stock()->getReasons()` | `Collection<StockReason>` |
-| `Isams::medicalCentre()->studentBmi()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Bmi>` |
+| `Isams::medicalCentre()->studentBmi()->all(string $schoolId, ?bool $includeArchive = null)` | `Collection<Bmi>` |
 | `Isams::medicalCentre()->studentBmi()->create(string $schoolId, BmiForCreate\|array $bmi)` | `Created` |
 | `Isams::medicalCentre()->studentBmi()->delete(string $schoolId, string $bmiId)` | `bool` |
 | `Isams::medicalCentre()->studentBmi()->get(string $schoolId, string $bmiId)` | `Bmi` |
 | `Isams::medicalCentre()->studentBmi()->patch(string $schoolId, string $bmiId, JsonPatch\|array $patch)` | `bool` |
-| `Isams::medicalCentre()->studentConditions()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Condition>` |
+| `Isams::medicalCentre()->studentConditions()->all(string $schoolId, ?bool $includeArchive = null)` | `Collection<Condition>` |
 | `Isams::medicalCentre()->studentConditions()->archive(string $schoolId, string $conditionId)` | `Created` |
 | `Isams::medicalCentre()->studentConditions()->create(string $schoolId, ConditionForCreate\|array $condition)` | `Created` |
 | `Isams::medicalCentre()->studentConditions()->delete(string $schoolId, string $conditionId)` | `bool` |
@@ -717,9 +717,9 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::medicalCentre()->studentConsents()->restore(string $schoolId, string $consentId)` | `Created` |
 | `Isams::medicalCentre()->studentDoctor()->create(string $schoolId, PersonDoctorAndSurgeryForCreate\|array $personDoctorAndSurgery)` | `Created` |
 | `Isams::medicalCentre()->studentDoctor()->delete(string $schoolId)` | `bool` |
-| `Isams::medicalCentre()->studentDoctor()->get(string $schoolId)` | `PersonDoctorAndSurgery` |
+| `Isams::medicalCentre()->studentDoctor()->get(string $schoolId)` | `?PersonDoctorAndSurgery` |
 | `Isams::medicalCentre()->studentDoctor()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
-| `Isams::medicalCentre()->studentDocuments()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Document>` |
+| `Isams::medicalCentre()->studentDocuments()->all(string $schoolId, ?bool $includeArchive = null)` | `Collection<Document>` |
 | `Isams::medicalCentre()->studentDocuments()->archive(string $schoolId, string $documentId)` | `Created` |
 | `Isams::medicalCentre()->studentDocuments()->create(string $schoolId, MultipartValue $binary, DocumentForCreate\|array $data)` | `Created` |
 | `Isams::medicalCentre()->studentDocuments()->delete(string $schoolId, string $documentId)` | `bool` |
@@ -727,14 +727,14 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::medicalCentre()->studentDocuments()->get(string $schoolId, string $documentId)` | `Document` |
 | `Isams::medicalCentre()->studentDocuments()->patch(string $schoolId, string $documentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentDocuments()->restore(string $schoolId, string $documentId)` | `Created` |
-| `Isams::medicalCentre()->studentInventory()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Inventory>` |
+| `Isams::medicalCentre()->studentInventory()->all(string $schoolId, ?bool $includeArchive = null)` | `Collection<Inventory>` |
 | `Isams::medicalCentre()->studentInventory()->archive(string $schoolId, string $inventoryId)` | `Created` |
 | `Isams::medicalCentre()->studentInventory()->create(string $schoolId, InventoryForCreate\|array $inventory)` | `Created` |
 | `Isams::medicalCentre()->studentInventory()->delete(string $schoolId, string $inventoryId)` | `bool` |
 | `Isams::medicalCentre()->studentInventory()->get(string $schoolId, string $inventoryId)` | `Inventory` |
 | `Isams::medicalCentre()->studentInventory()->patch(string $schoolId, string $inventoryId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentInventory()->restore(string $schoolId, string $inventoryId)` | `Created` |
-| `Isams::medicalCentre()->studentMedication()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Medication>` |
+| `Isams::medicalCentre()->studentMedication()->all(string $schoolId, ?bool $includeArchive = null)` | `Collection<Medication>` |
 | `Isams::medicalCentre()->studentMedication()->archive(string $schoolId, string $medicationId)` | `Created` |
 | `Isams::medicalCentre()->studentMedication()->create(string $schoolId, MedicationForCreate\|array $medication)` | `Created` |
 | `Isams::medicalCentre()->studentMedication()->delete(string $schoolId, string $medicationId)` | `bool` |
@@ -766,7 +766,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::medicalCentre()->vaccination()->getCompleteTo()` | `Collection<VaccinationCompleteTo>` |
 | `Isams::medicalCentre()->vaccination()->getSchedules()` | `Collection<VaccinationSchedule>` |
 | `Isams::medicalCentre()->vaccination()->getStatuses()` | `Collection<VaccinationStatus>` |
-| `Isams::medicalCentre()->vaccination()->getTypes()` | `Collection<Vaccination>` |
+| `Isams::medicalCentre()->vaccination()->getTypes()` | `Collection<MedicalVaccinationType>` |
 | `Isams::medicalCentre()->visit()->getArriveFrom()` | `Collection<VisitArriveFrom>` |
 | `Isams::medicalCentre()->visit()->getDepartTo()` | `Collection<VisitDepartTo>` |
 | `Isams::medicalCentre()->visit()->getLocations()` | `Collection<VisitLocation>` |
@@ -794,16 +794,16 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | Call | Returns |
 |---|---|
 | `Isams::registration()->absenceCodes()->all()` | `Collection<AbsenceCode>` |
-| `Isams::registration()->natureOfAbsence()->all(DateTimeInterface\|string\|null $registrationFrom = null, DateTimeInterface\|string\|null $registrationTo = null, string $code = null, bool $onlyEmptyNatureOfAbsence = null, string $orderBy = null)` | `LazyCollection<NatureOfAbsence>` |
+| `Isams::registration()->natureOfAbsence()->all(DateTimeInterface\|string\|null $registrationFrom = null, DateTimeInterface\|string\|null $registrationTo = null, ?string $code = null, ?bool $onlyEmptyNatureOfAbsence = null, ?string $orderBy = null)` | `LazyCollection<NatureOfAbsence>` |
 | `Isams::registration()->natureOfAbsence()->create(int $registrationPupilId, string $reason)` | `Created` |
 | `Isams::registration()->natureOfAbsence()->delete(int $registrationPupilId)` | `bool` |
 | `Isams::registration()->natureOfAbsence()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::registration()->offGames()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<RegistrationOffGame>` |
 | `Isams::registration()->offGames()->create(RegistrationOffGameForCreate\|array $registrationOffGame)` | `Created` |
-| `Isams::registration()->periods()->all(DateTimeInterface\|string\|null $endDate = null, DateTimeInterface\|string\|null $startDate = null, int $divisionId = null, string $userCode = null)` | `Collection<RegistrationPeriod>` |
+| `Isams::registration()->periods()->all(DateTimeInterface\|string\|null $endDate = null, DateTimeInterface\|string\|null $startDate = null, ?int $divisionId = null, ?string $userCode = null)` | `Collection<RegistrationPeriod>` |
 | `Isams::registration()->periods()->get(int $id)` | `RegistrationPeriod` |
 | `Isams::registration()->presentCodes()->all()` | `Collection<PresentCode>` |
-| `Isams::registration()->reasonForChange()->all(DateTimeInterface\|string\|null $changeDateStart = null, DateTimeInterface\|string\|null $changeDateEnd = null, bool $onlyEmptyReasons = null, bool $oldestFirst = null)` | `LazyCollection<AttendanceCodeReasonForChange>` |
+| `Isams::registration()->reasonForChange()->all(DateTimeInterface\|string $changeDateStart, DateTimeInterface\|string\|null $changeDateEnd = null, ?bool $onlyEmptyReasons = null, ?bool $oldestFirst = null)` | `LazyCollection<AttendanceCodeReasonForChange>` |
 | `Isams::registration()->reasonForChange()->create(int $periodId, string $schoolId, AttendanceCodeReasonForChangeForCreate\|array $attendanceCodeReasonForChange)` | `Created` |
 | `Isams::registration()->reasonForChange()->delete(int $periodId, string $schoolId, int $codeChangeId)` | `bool` |
 | `Isams::registration()->reasonForChange()->patch(int $periodId, string $schoolId, int $codeChangeId, JsonPatch\|array $patch)` | `bool` |
@@ -818,7 +818,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | Call | Returns |
 |---|---|
 | `Isams::rewardsAndConduct()->categories()->all(int $moduleTypeId, string\|Stringable\|null $filter = null)` | `Collection<Category>` |
-| `Isams::rewardsAndConduct()->categories()->get(int $moduleTypeId, int $categoryId)` | `Collection<Category>` |
+| `Isams::rewardsAndConduct()->categories()->get(int $moduleTypeId, int $categoryId)` | `Category` |
 | `Isams::rewardsAndConduct()->fieldTypes()->all(int $moduleTypeId, int $categoryId, string\|Stringable\|null $filter = null)` | `Collection<FieldType>` |
 | `Isams::rewardsAndConduct()->fieldTypes()->get(int $moduleTypeId, int $categoryId, int $fieldTypeId)` | `FieldType` |
 | `Isams::rewardsAndConduct()->fieldValues()->all(int $moduleTypeId, int $categoryId, int $fieldTypeId, string\|Stringable\|null $filter = null)` | `Collection<FieldValue>` |
@@ -826,21 +826,21 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::rewardsAndConduct()->moduleTypes()->all(string\|Stringable\|null $filter = null)` | `Collection<ModuleType>` |
 | `Isams::rewardsAndConduct()->rewards()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<Reward>` |
 | `Isams::rewardsAndConduct()->rewards()->create(string $schoolId, RewardForCreate\|array $reward)` | `Created` |
-| `Isams::rewardsAndConduct()->rewards()->get(string $schoolId, int $rewardId)` | `Collection<Category>` |
+| `Isams::rewardsAndConduct()->rewards()->get(string $schoolId, int $rewardId)` | `Reward` |
 | `Isams::rewardsAndConduct()->rewards()->update(string $schoolId, int $rewardId, RewardForUpdate\|array $reward)` | `bool` |
 
 ### School
 
 | Call | Returns |
 |---|---|
-| `Isams::school()->configuration()->getSchoolDetails()` | `SchoolDetails` |
+| `Isams::school()->configuration()->getSchoolDetails()` | `?SchoolDetails` |
 | `Isams::school()->departmentEmployees()->all(string $departmentType, int $departmentId)` | `Collection<Employee>` |
-| `Isams::school()->departments()->all(string $departmentType, string $expand = null)` | `Collection<mixed>` |
+| `Isams::school()->departments()->all(string $departmentType, ?string $expand = null)` | `Collection<mixed>` |
 | `Isams::school()->departments()->get(string $departmentType, int $id)` | `Department` |
 | `Isams::school()->divisions()->all(string\|Stringable\|null $filter = null)` | `Collection<Division>` |
 | `Isams::school()->divisions()->get(string $code)` | `Division` |
 | `Isams::school()->forms()->all()` | `Collection<Form>` |
-| `Isams::school()->houses()->all(string $houseType = null)` | `Collection<House>` |
+| `Isams::school()->houses()->all(?string $houseType = null)` | `Collection<House>` |
 | `Isams::school()->houses()->get(int $id)` | `House` |
 | `Isams::school()->teachingDepartmentSubjects()->add(int $departmentId, int $subjectId)` | `Created` |
 | `Isams::school()->teachingDepartmentSubjects()->all(int $departmentId)` | `Collection<Subject>` |
@@ -856,28 +856,28 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 |---|---|
 | `Isams::storage()->files()->delete(string $path, string $filename)` | `bool` |
 | `Isams::storage()->files()->download(string $path, string $fileName)` | `File` |
-| `Isams::storage()->files()->upload(string $key, MultipartValue $file, string $filename, string $path, bool $overwrite = null)` | `Created` |
+| `Isams::storage()->files()->upload(string $key, MultipartValue $file, string $filename, string $path, ?bool $overwrite = null)` | `Created` |
 
 ### Student Registers
 
 | Call | Returns |
 |---|---|
 | `Isams::studentRegisters()->all()` | `LazyCollection<Register>` |
-| `Isams::studentRegisters()->association()->all(int $registerId, string $systemStatus = null)` | `LazyCollection<StudentRegisterAssociation>` |
-| `Isams::studentRegisters()->association()->get(int $registerId, string $schoolId)` | `RegisterAssociation` |
+| `Isams::studentRegisters()->association()->all(int $registerId, ?string $systemStatus = null)` | `LazyCollection<StudentRegisterAssociation>` |
+| `Isams::studentRegisters()->association()->get(int $registerId, string $schoolId)` | `?RegisterAssociation` |
 | `Isams::studentRegisters()->association()->update(int $registerId, string $schoolId, RegisterAssociationForCreate\|array $registerAssociation)` | `bool` |
-| `Isams::studentRegisters()->dateRanges()->all(int $registerId, string $systemStatus = null)` | `LazyCollection<StudentDateRanges>` |
+| `Isams::studentRegisters()->dateRanges()->all(int $registerId, ?string $systemStatus = null)` | `LazyCollection<StudentDateRanges>` |
 | `Isams::studentRegisters()->dateRanges()->create(int $registerId, string $schoolId, DateRangeForCreate\|array $dateRange)` | `Created` |
 | `Isams::studentRegisters()->dateRanges()->delete(int $registerId, string $schoolId, int $dateRangeId)` | `bool` |
 | `Isams::studentRegisters()->dateRanges()->forStudent(int $registerId, string $schoolId)` | `Collection<DateRange>` |
 | `Isams::studentRegisters()->dateRanges()->update(int $registerId, string $schoolId, int $dateRangeId, DateRangeForUpdate\|array $dateRange)` | `bool` |
-| `Isams::studentRegisters()->fields()->all(int $registerId, string $systemStatus = null)` | `LazyCollection<StudentFields>` |
-| `Isams::studentRegisters()->fields()->forStudent(int $registerId, string $schoolId)` | `FieldCollection` |
+| `Isams::studentRegisters()->fields()->all(int $registerId, ?string $systemStatus = null)` | `LazyCollection<StudentFields>` |
+| `Isams::studentRegisters()->fields()->forStudent(int $registerId, string $schoolId)` | `?FieldCollection` |
 | `Isams::studentRegisters()->fields()->patchMany(int $registerId, string $schoolId, array $values)` | `bool` |
 | `Isams::studentRegisters()->getRecordCollectionElements(int $registerId)` | `Collection<RecordCollectionElement>` |
 | `Isams::studentRegisters()->lists()->getItems(int $listId)` | `Collection<ListItem>` |
-| `Isams::studentRegisters()->metadata()->get(int $registerId, string $expand = null)` | `Collection<MetadataField>` |
-| `Isams::studentRegisters()->recordCollection()->all(int $registerId, int $recordCollectionId, string $systemStatus = null)` | `LazyCollection<StudentRecords>` |
+| `Isams::studentRegisters()->metadata()->get(int $registerId, ?string $expand = null)` | `Collection<MetadataField>` |
+| `Isams::studentRegisters()->recordCollection()->all(int $registerId, int $recordCollectionId, ?string $systemStatus = null)` | `LazyCollection<StudentRecords>` |
 | `Isams::studentRegisters()->recordCollection()->create(int $registerId, string $schoolId, int $recordCollectionId, array $values)` | `Created` |
 | `Isams::studentRegisters()->recordCollection()->delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId)` | `bool` |
 | `Isams::studentRegisters()->recordCollection()->forStudent(int $registerId, string $schoolId, int $recordCollectionId)` | `Collection<Record>` |
@@ -889,8 +889,8 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | Call | Returns |
 |---|---|
 | `Isams::students()->all(mixed $expand = null, mixed $filter = null)` | `LazyCollection<Student>` |
-| `Isams::students()->alumni()->all(string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Alumni>` |
-| `Isams::students()->alumni()->get(string $schoolId, string $expand = null)` | `Alumni` |
+| `Isams::students()->alumni()->all(?string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Alumni>` |
+| `Isams::students()->alumni()->get(string $schoolId, ?string $expand = null)` | `Alumni` |
 | `Isams::students()->alumni()->moveToApplicant(string $schoolId)` | `Created` |
 | `Isams::students()->alumni()->moveToCurrent(string $schoolId)` | `Created` |
 | `Isams::students()->alumni()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
@@ -912,10 +912,10 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::students()->boardingStatuses()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::students()->communicationHistory()->create(string $schoolId, StudentCommunicationHistoryForCreate\|array $studentCommunicationHistory)` | `Created` |
 | `Isams::students()->communicationHistory()->createAttachments(string $schoolId, int $id, MultipartValue $attachment)` | `Created` |
-| `Isams::students()->contactGroupContacts()->all(int $contactGroupId, bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<ContactGroupContact>` |
+| `Isams::students()->contactGroupContacts()->all(int $contactGroupId, ?bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<ContactGroupContact>` |
 | `Isams::students()->contactGroups()->all()` | `Collection<ContactGroup>` |
-| `Isams::students()->contacts()->all(string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<StudentsContact>` |
-| `Isams::students()->contacts()->forStudent(string $schoolId, bool $includeDeceased = null, string $expand = null, string\|Stringable\|null $filter = null)` | `Collection<StudentContact>` |
+| `Isams::students()->contacts()->all(?string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<StudentsContact>` |
+| `Isams::students()->contacts()->forStudent(string $schoolId, ?bool $includeDeceased = null, ?string $expand = null, string\|Stringable\|null $filter = null)` | `Collection<StudentContact>` |
 | `Isams::students()->create(StudentForCreate\|array $student)` | `Created` |
 | `Isams::students()->customFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::students()->customFields()->get(string $schoolId, int $customFieldId)` | `Collection<CustomField>` |
@@ -945,10 +945,10 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::students()->passportDocuments()->download(string $schoolId, int $passportId, int $documentId)` | `File` |
 | `Isams::students()->passportDocuments()->get(string $schoolId, int $passportId, int $documentId)` | `StudentPassportDocument` |
 | `Isams::students()->passportDocuments()->patch(string $schoolId, int $passportId, int $documentId, JsonPatch\|array $patch)` | `bool` |
-| `Isams::students()->passports()->all(string $schoolId, string $expand = null)` | `Collection<StudentPassport>` |
+| `Isams::students()->passports()->all(string $schoolId, ?string $expand = null)` | `Collection<StudentPassport>` |
 | `Isams::students()->passports()->create(string $schoolId, StudentPassportForCreate\|array $studentPassport)` | `Created` |
 | `Isams::students()->passports()->delete(string $schoolId, int $id)` | `bool` |
-| `Isams::students()->passports()->get(string $schoolId, int $id, string $expand = null)` | `StudentPassport` |
+| `Isams::students()->passports()->get(string $schoolId, int $id, ?string $expand = null)` | `StudentPassport` |
 | `Isams::students()->passports()->update(string $schoolId, int $id, StudentPassportForUpdate\|array $studentPassport)` | `bool` |
 | `Isams::students()->passports()->updateMany(string $schoolId, array $studentPassports)` | `bool` |
 | `Isams::students()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
@@ -966,10 +966,10 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::students()->visaDocuments()->download(string $schoolId, int $visaId, int $documentId)` | `File` |
 | `Isams::students()->visaDocuments()->get(string $schoolId, int $visaId, int $documentId)` | `StudentVisaDocument` |
 | `Isams::students()->visaDocuments()->patch(string $schoolId, int $visaId, int $documentId, JsonPatch\|array $patch)` | `bool` |
-| `Isams::students()->visas()->all(string $schoolId, string $expand = null)` | `Collection<StudentVisa>` |
+| `Isams::students()->visas()->all(string $schoolId, ?string $expand = null)` | `Collection<StudentVisa>` |
 | `Isams::students()->visas()->create(string $schoolId, StudentVisaForCreate\|array $studentVisa)` | `Created` |
 | `Isams::students()->visas()->delete(string $schoolId, int $id)` | `bool` |
-| `Isams::students()->visas()->get(string $schoolId, int $id, string $expand = null)` | `StudentVisa` |
+| `Isams::students()->visas()->get(string $schoolId, int $id, ?string $expand = null)` | `StudentVisa` |
 | `Isams::students()->visas()->update(string $schoolId, int $id, StudentVisaForUpdate\|array $studentVisa)` | `bool` |
 | `Isams::students()->visas()->updateMany(string $schoolId, array $studentVisas)` | `bool` |
 
@@ -1046,7 +1046,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::systemConfiguration()->listGroup()->createItem(string $listType, GlobalListItemForCreate\|array $listItem)` | `Created` |
 | `Isams::systemConfiguration()->listGroup()->getCustom()` | `Collection<GlobalListGroup>` |
 | `Isams::systemConfiguration()->listGroup()->getItems(string $listType)` | `Collection<GlobalListItem>` |
-| `Isams::systemConfiguration()->sms()->getBatchMessages(int $page = null, int $pageSize = null, string\|Stringable\|null $filter = null)` | `Collection<SmsBatch>` |
+| `Isams::systemConfiguration()->sms()->getBatchMessages(string\|Stringable\|null $filter = null)` | `LazyCollection<SmsBatch>` |
 | `Isams::systemConfiguration()->tags()->categories()->all()` | `Collection<PrivateCategory>` |
 | `Isams::systemConfiguration()->tags()->categories()->getTags(int $id)` | `Collection<PrivateTag>` |
 | `Isams::systemConfiguration()->tags()->entityTypes()->all()` | `Collection<PrivateEntityType>` |
@@ -1082,11 +1082,11 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::timetable()->import()->complete()` | `Created` |
 | `Isams::timetable()->import()->create(TimetableImportRequestForCreate\|array $timetableImportRequest)` | `Created` |
 | `Isams::timetable()->import()->deleteActive()` | `bool` |
-| `Isams::timetable()->import()->getActive()` | `TimetableImport` |
-| `Isams::timetable()->import()->getResult(int $id)` | `TimetableImportResult` |
+| `Isams::timetable()->import()->getActive()` | `?TimetableImport` |
+| `Isams::timetable()->import()->getResult(int $id)` | `?TimetableImportResult` |
 | `Isams::timetable()->roomTimetables()->get(int $roomId)` | `RoomTimetable` |
 | `Isams::timetable()->setTimetables()->get(int $setId)` | `SetTimetable` |
-| `Isams::timetable()->structures()->all(int $academicYear = null, DateTimeInterface\|string\|null $calendarEndDate = null, DateTimeInterface\|string\|null $calendarStartDate = null, int $calendarWeek = null, string $divisionCode = null, string $termName = null, string $timetableWeekShortName = null)` | `Collection<TimetableWeek>` |
+| `Isams::timetable()->structures()->all(?int $academicYear = null, DateTimeInterface\|string\|null $calendarEndDate = null, DateTimeInterface\|string\|null $calendarStartDate = null, ?int $calendarWeek = null, ?string $divisionCode = null, ?string $termName = null, ?string $timetableWeekShortName = null)` | `Collection<TimetableWeek>` |
 | `Isams::timetable()->studentTimetables()->get(string $schoolId)` | `StudentTimetable` |
 | `Isams::timetable()->subjectTimetables()->get(int $subjectId)` | `SubjectTimetable` |
 
@@ -1125,7 +1125,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::wellbeingManager()->concernDocuments()->delete(string $schoolId, int $concernId, int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernDocuments()->download(string $schoolId, int $concernId, int $documentId)` | `File` |
 | `Isams::wellbeingManager()->concernGirfec()->createForm(string $schoolId, int $concernId, ConcernGirfecFormForCreate\|array $concernGirfecForm)` | `Created` |
-| `Isams::wellbeingManager()->concernGirfec()->getForm(string $schoolId, int $concernId)` | `ConcernGirfecForm` |
+| `Isams::wellbeingManager()->concernGirfec()->getForm(string $schoolId, int $concernId)` | `?ConcernGirfecForm` |
 | `Isams::wellbeingManager()->concernGirfec()->patchForm(string $schoolId, int $concernId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernInjuryTypes()->all()` | `Collection<ConcernInjuryType>` |
 | `Isams::wellbeingManager()->concernInjuryTypes()->create(ConcernInjuryTypeForCreate\|array $concernInjuryType)` | `Created` |
@@ -1161,10 +1161,10 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 | `Isams::wellbeingManager()->concernVisibilities()->set(string $schoolId, int $concernId, ConcernVisibilityForCreate\|array $concernVisibility)` | `Created` |
 | `Isams::wellbeingManager()->concernVisibilities()->setGroups(string $schoolId, int $concernId, ConcernVisibilityGroupsForPatch\|array $concernVisibilityGroups)` | `bool` |
 | `Isams::wellbeingManager()->concerns()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Concern>` |
-| `Isams::wellbeingManager()->configuration()->get()` | `Configuration` |
+| `Isams::wellbeingManager()->configuration()->get()` | `?Configuration` |
 | `Isams::wellbeingManager()->flag()->create(string $schoolId, PastoralFlagForCreate\|array $pastoralFlag)` | `Created` |
 | `Isams::wellbeingManager()->flag()->delete(string $schoolId)` | `bool` |
-| `Isams::wellbeingManager()->flag()->get(string $schoolId)` | `PastoralFlag` |
+| `Isams::wellbeingManager()->flag()->get(string $schoolId)` | `?PastoralFlag` |
 | `Isams::wellbeingManager()->flag()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->flagTypes()->all()` | `Collection<PastoralFlagType>` |
 | `Isams::wellbeingManager()->flagTypes()->create(FlagTypeForCreate\|array $flagType)` | `Created` |

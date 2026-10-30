@@ -47,7 +47,7 @@ class GetStudentsRequest extends IsamsRequest implements Paginatable
     public function defaultQuery(): array
     {
         return array_filter([
-            'page' => $this->page, 'pageSize' => $this->pageSize, 'expand' => $this->expand, '$filter' => $this->filter,
+            'page' => $this->page, 'pageSize' => $this->pageSize, 'expand' => $this->expand, '$filter' => $this->filter === null ? null : (string) $this->filter,
         ]);
     }
 }

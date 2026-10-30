@@ -31,7 +31,7 @@ class EmployeeChildrensBarredListChecksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeChildrensBarredListChecks\GetEmployeeChildrensBarredListCheckRequest
      */
-    public function get(int $employeeId): ChildrensBarredListCheck
+    public function get(int $employeeId): ?ChildrensBarredListCheck
     {
         return $this->fetch(new GetEmployeeChildrensBarredListCheckRequest(employeeId: $employeeId));
     }

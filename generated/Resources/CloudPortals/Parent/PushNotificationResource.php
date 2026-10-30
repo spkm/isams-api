@@ -36,7 +36,7 @@ class PushNotificationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationConfigRequest
      */
-    public function getConfig(): PushConfigurationMapped
+    public function getConfig(): ?PushConfigurationMapped
     {
         return $this->fetch(new GetPushNotificationConfigRequest());
     }
@@ -53,7 +53,7 @@ class PushNotificationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationUserPushDeviceTokenRequest
      */
-    public function getUserPushDeviceToken(): PrivateNotificationDeviceTokenMapped
+    public function getUserPushDeviceToken(): ?PrivateNotificationDeviceTokenMapped
     {
         return $this->fetch(new GetPushNotificationUserPushDeviceTokenRequest());
     }
