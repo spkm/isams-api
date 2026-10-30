@@ -49,8 +49,10 @@ class BuildingsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Estates\BuildingForUpdate|array<string, mixed>  $building
      * @see \spkm\IsamsApi\Requests\Estates\Buildings\UpdateBuildingRequest
      */
-    public function update(int $id, BuildingForUpdate|array $building): void
+    public function update(int $id, BuildingForUpdate|array $building): bool
     {
         $this->fetch(new UpdateBuildingRequest(id: $id, building: $building));
+
+        return true;
     }
 }

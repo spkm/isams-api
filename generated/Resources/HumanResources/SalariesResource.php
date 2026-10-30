@@ -41,9 +41,11 @@ class SalariesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\Salaries\DeleteSalaryRequest
      */
-    public function delete(int $contractId, int $salaryId): void
+    public function delete(int $contractId, int $salaryId): bool
     {
         $this->fetch(new DeleteSalaryRequest(contractId: $contractId, salaryId: $salaryId));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class SalariesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\HumanResources\Salaries\PatchSalaryRequest
      */
-    public function patch(int $contractId, int $salaryId, JsonPatch|array $patch): void
+    public function patch(int $contractId, int $salaryId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchSalaryRequest(contractId: $contractId, salaryId: $salaryId, patch: $patch));
+
+        return true;
     }
 }

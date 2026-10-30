@@ -39,17 +39,21 @@ class EnquiryReasonsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Admissions\EnquiryReasons\DeleteEnquiryReasonRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteEnquiryReasonRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\Admissions\EnquiryReasons\UpdateEnquiryReasonRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateEnquiryReasonRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

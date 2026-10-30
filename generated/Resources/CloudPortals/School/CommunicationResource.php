@@ -18,9 +18,11 @@ class CommunicationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\Communication\DeleteCommunicationSmsDetailsRequest
      */
-    public function deleteSmsDetails(): void
+    public function deleteSmsDetails(): bool
     {
         $this->fetch(new DeleteCommunicationSmsDetailsRequest());
+
+        return true;
     }
 
     /**

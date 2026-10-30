@@ -49,8 +49,10 @@ class SubjectsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Teaching\SubjectForUpdate|array<string, mixed>  $subject
      * @see \spkm\IsamsApi\Requests\Teaching\Subjects\UpdateSubjectRequest
      */
-    public function update(int $id, SubjectForUpdate|array $subject): void
+    public function update(int $id, SubjectForUpdate|array $subject): bool
     {
         $this->fetch(new UpdateSubjectRequest(id: $id, subject: $subject));
+
+        return true;
     }
 }

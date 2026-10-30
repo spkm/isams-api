@@ -35,8 +35,10 @@ class EmployeeDepartmentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeDepartments\RemoveEmployeeDepartmentRequest
      */
-    public function remove(int $employeeId, string $departmentType, int $departmentId): void
+    public function remove(int $employeeId, string $departmentType, int $departmentId): bool
     {
         $this->fetch(new RemoveEmployeeDepartmentRequest(employeeId: $employeeId, departmentType: $departmentType, departmentId: $departmentId));
+
+        return true;
     }
 }

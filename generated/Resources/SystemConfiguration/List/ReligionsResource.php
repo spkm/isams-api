@@ -39,17 +39,21 @@ class ReligionsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\DeleteReligionRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteReligionRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\UpdateReligionRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateReligionRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

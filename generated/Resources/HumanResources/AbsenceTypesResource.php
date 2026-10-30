@@ -49,8 +49,10 @@ class AbsenceTypesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceTypeForUpdate|array<string, mixed>  $absenceType
      * @see \spkm\IsamsApi\Requests\HumanResources\AbsenceTypes\UpdateAbsenceTypeRequest
      */
-    public function update(int $id, AbsenceTypeForUpdate|array $absenceType): void
+    public function update(int $id, AbsenceTypeForUpdate|array $absenceType): bool
     {
         $this->fetch(new UpdateAbsenceTypeRequest(id: $id, absenceType: $absenceType));
+
+        return true;
     }
 }

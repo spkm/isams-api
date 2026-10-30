@@ -37,8 +37,10 @@ class MarksResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Gradebooks\MarkCollectionForPatch|array<string, mixed>  $markCollection
      * @see \spkm\IsamsApi\Requests\Gradebooks\Marks\UpdateGradebookMarksRequest
      */
-    public function updateMany(int $gradebookId, MarkCollectionForPatch|array $markCollection): void
+    public function updateMany(int $gradebookId, MarkCollectionForPatch|array $markCollection): bool
     {
         $this->fetch(new UpdateGradebookMarksRequest(gradebookId: $gradebookId, markCollection: $markCollection));
+
+        return true;
     }
 }

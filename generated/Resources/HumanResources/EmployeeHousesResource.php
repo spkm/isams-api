@@ -34,8 +34,10 @@ class EmployeeHousesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\RemoveEmployeeHouseRequest
      */
-    public function remove(int $employeeId, int $houseId): void
+    public function remove(int $employeeId, int $houseId): bool
     {
         $this->fetch(new RemoveEmployeeHouseRequest(employeeId: $employeeId, houseId: $houseId));
+
+        return true;
     }
 }

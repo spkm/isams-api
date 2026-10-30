@@ -35,8 +35,10 @@ class BuildingDivisionsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Estates\BuildingDivisions\RemoveBuildingDivisionRequest
      */
-    public function remove(int $buildingId, int $divisionId): void
+    public function remove(int $buildingId, int $divisionId): bool
     {
         $this->fetch(new RemoveBuildingDivisionRequest(buildingId: $buildingId, divisionId: $divisionId));
+
+        return true;
     }
 }

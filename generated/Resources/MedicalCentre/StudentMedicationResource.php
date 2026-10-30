@@ -51,9 +51,11 @@ class StudentMedicationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\DeleteStudentMedicationRequest
      */
-    public function delete(string $schoolId, string $medicationId): void
+    public function delete(string $schoolId, string $medicationId): bool
     {
         $this->fetch(new DeleteStudentMedicationRequest(schoolId: $schoolId, medicationId: $medicationId));
+
+        return true;
     }
 
     /**
@@ -68,9 +70,11 @@ class StudentMedicationResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentMedication\PatchStudentMedicationRequest
      */
-    public function patch(string $schoolId, string $medicationId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $medicationId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentMedicationRequest(schoolId: $schoolId, medicationId: $medicationId, patch: $patch));
+
+        return true;
     }
 
     /**

@@ -40,16 +40,20 @@ class VisaDocumentsResource extends IsamsResource
         int $visaId,
         MultipartValue $binary,
         ApplicantVisaDocumentForCreate|array $data,
-    ): void {
+    ): bool {
         $this->fetch(new CreateApplicantVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, binary: $binary, data: $data));
+
+        return true;
     }
 
     /**
      * @see \spkm\IsamsApi\Requests\Admissions\VisaDocuments\DeleteApplicantVisaDocumentRequest
      */
-    public function delete(string $schoolId, int $visaId, int $documentId): void
+    public function delete(string $schoolId, int $visaId, int $documentId): bool
     {
         $this->fetch(new DeleteApplicantVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, documentId: $documentId));
+
+        return true;
     }
 
     /**
@@ -72,8 +76,10 @@ class VisaDocumentsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Admissions\VisaDocuments\PatchApplicantVisaDocumentRequest
      */
-    public function patch(string $schoolId, int $visaId, int $documentId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, int $visaId, int $documentId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchApplicantVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, documentId: $documentId, patch: $patch));
+
+        return true;
     }
 }

@@ -41,9 +41,11 @@ class ConcernAreasResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\DeleteConcernAreaRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteConcernAreaRequest(id: $id));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class ConcernAreasResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\PatchConcernAreaRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): void
+    public function patch(int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchConcernAreaRequest(id: $id, patch: $patch));
+
+        return true;
     }
 }

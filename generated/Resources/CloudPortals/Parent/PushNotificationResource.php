@@ -70,18 +70,22 @@ class PushNotificationResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\PushNotifications\NotificationSubscription|array<string, mixed>  $notificationSubscription
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\SubscribePushNotificationUserToChannelRequest
      */
-    public function subscribeUserToChannel(NotificationSubscription|array $notificationSubscription): void
+    public function subscribeUserToChannel(NotificationSubscription|array $notificationSubscription): bool
     {
         $this->fetch(new SubscribePushNotificationUserToChannelRequest(notificationSubscription: $notificationSubscription));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\PushNotifications\NotificationSubscription|array<string, mixed>  $notificationSubscription
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\UnsubscribePushNotificationUserFromChannelRequest
      */
-    public function unsubscribeUserFromChannel(NotificationSubscription|array $notificationSubscription): void
+    public function unsubscribeUserFromChannel(NotificationSubscription|array $notificationSubscription): bool
     {
         $this->fetch(new UnsubscribePushNotificationUserFromChannelRequest(notificationSubscription: $notificationSubscription));
+
+        return true;
     }
 
     /**
@@ -90,7 +94,9 @@ class PushNotificationResource extends IsamsResource
      */
     public function updateUserPushDeviceToken(
         NotificationUpdateDevicePrivate|array $notificationUpdateDevicePrivate,
-    ): void {
+    ): bool {
         $this->fetch(new UpdatePushNotificationUserPushDeviceTokenRequest(notificationUpdateDevicePrivate: $notificationUpdateDevicePrivate));
+
+        return true;
     }
 }

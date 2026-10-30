@@ -45,8 +45,10 @@ class SetsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Teaching\Sets\RemoveStudentFromTeachingSetRequest
      */
-    public function removeStudent(int $setId, string $schoolId): void
+    public function removeStudent(int $setId, string $schoolId): bool
     {
         $this->fetch(new RemoveStudentFromTeachingSetRequest(setId: $setId, schoolId: $schoolId));
+
+        return true;
     }
 }

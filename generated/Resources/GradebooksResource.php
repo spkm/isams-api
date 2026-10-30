@@ -211,9 +211,11 @@ class GradebooksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\DeleteGradebookRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteGradebookRequest(id: $id));
+
+        return true;
     }
 
     /**
@@ -236,8 +238,10 @@ class GradebooksResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Gradebooks\PatchGradebookRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): void
+    public function patch(int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchGradebookRequest(id: $id, patch: $patch));
+
+        return true;
     }
 }

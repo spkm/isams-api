@@ -41,9 +41,11 @@ class EmployeeReferenceChecksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeReferenceChecks\DeleteEmployeeReferenceCheckRequest
      */
-    public function delete(int $employeeId, int $referenceCheckId): void
+    public function delete(int $employeeId, int $referenceCheckId): bool
     {
         $this->fetch(new DeleteEmployeeReferenceCheckRequest(employeeId: $employeeId, referenceCheckId: $referenceCheckId));
+
+        return true;
     }
 
     /**
@@ -62,7 +64,9 @@ class EmployeeReferenceChecksResource extends IsamsResource
         int $employeeId,
         int $referenceCheckId,
         EmployeeReferenceCheckForUpdate|array $employeeReferenceCheck,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateEmployeeReferenceCheckRequest(employeeId: $employeeId, referenceCheckId: $referenceCheckId, employeeReferenceCheck: $employeeReferenceCheck));
+
+        return true;
     }
 }

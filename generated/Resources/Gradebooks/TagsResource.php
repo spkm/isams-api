@@ -25,8 +25,10 @@ class TagsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\Tags\DeleteGradebookTagRequest
      */
-    public function delete(int $gradebookId, int $categoryId, int $categoryEntityId): void
+    public function delete(int $gradebookId, int $categoryId, int $categoryEntityId): bool
     {
         $this->fetch(new DeleteGradebookTagRequest(gradebookId: $gradebookId, categoryId: $categoryId, categoryEntityId: $categoryEntityId));
+
+        return true;
     }
 }

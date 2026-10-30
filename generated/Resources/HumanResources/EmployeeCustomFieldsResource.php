@@ -39,17 +39,21 @@ class EmployeeCustomFieldsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>  $customField
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldRequest
      */
-    public function patch(int $employeeId, int $customFieldId, CustomFieldForPatch|array $customField): void
+    public function patch(int $employeeId, int $customFieldId, CustomFieldForPatch|array $customField): bool
     {
         $this->fetch(new PatchEmployeeCustomFieldRequest(employeeId: $employeeId, customFieldId: $customFieldId, customField: $customField));
+
+        return true;
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldsRequest
      */
-    public function patchMany(int $employeeId, array $customFields): void
+    public function patchMany(int $employeeId, array $customFields): bool
     {
         $this->fetch(new PatchEmployeeCustomFieldsRequest(employeeId: $employeeId, customFields: $customFields));
+
+        return true;
     }
 }

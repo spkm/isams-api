@@ -41,9 +41,11 @@ class SalaryAdditionalPaymentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\DeleteSalaryAdditionalPaymentRequest
      */
-    public function delete(int $salaryId, int $additionalPaymentId): void
+    public function delete(int $salaryId, int $additionalPaymentId): bool
     {
         $this->fetch(new DeleteSalaryAdditionalPaymentRequest(salaryId: $salaryId, additionalPaymentId: $additionalPaymentId));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class SalaryAdditionalPaymentsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\PatchSalaryAdditionalPaymentRequest
      */
-    public function patch(int $salaryId, int $additionalPaymentId, JsonPatch|array $patch): void
+    public function patch(int $salaryId, int $additionalPaymentId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchSalaryAdditionalPaymentRequest(salaryId: $salaryId, additionalPaymentId: $additionalPaymentId, patch: $patch));
+
+        return true;
     }
 }

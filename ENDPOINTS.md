@@ -3,9 +3,11 @@
 <!-- Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead. -->
 
 Every call the package's resources provide, as you write it, and what it returns. Lists come back as a
-`Collection` of models, lists iSAMS sends in pages as a `LazyCollection` that fetches each page as you loop, and
-a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#two-ways-to-call-isams) and
-[Errors](README.md#errors). Each call's docblock names the request it sends, for `Isams::send()`.
+`Collection` of models, and lists iSAMS sends in pages as a `LazyCollection` that fetches each page as you loop.
+Writes iSAMS answers without a body return `true` (`bool`), as Eloquent's `update()` and `delete()` do. A
+failure never returns `false`: it throws an `IsamsApiException`. See [Two ways to call
+iSAMS](README.md#two-ways-to-call-isams) and [Errors](README.md#errors). Each call's docblock names the request
+it sends, for `Isams::send()`.
 
 - [Admissions](#admissions) (76)
 - [Agent](#agent) (1)
@@ -38,79 +40,79 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 |---|---|
 | `Isams::admissions()->agencyBranches()->add(string $schoolId, int $agencyBranchId)` | `Created` |
 | `Isams::admissions()->agencyBranches()->all(string $schoolId)` | `Collection<Branch>` |
-| `Isams::admissions()->agencyBranches()->remove(string $schoolId, int $agencyBranchId)` | nothing |
+| `Isams::admissions()->agencyBranches()->remove(string $schoolId, int $agencyBranchId)` | `bool` |
 | `Isams::admissions()->all(string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Applicant>` |
 | `Isams::admissions()->alumni()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Alumni>` |
 | `Isams::admissions()->alumni()->get(string $schoolId)` | `Alumni` |
-| `Isams::admissions()->alumni()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::admissions()->alumni()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::admissions()->alumniCustomFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::admissions()->alumniCustomFields()->get(string $schoolId, int $customFieldId)` | `CustomField` |
-| `Isams::admissions()->alumniCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | nothing |
-| `Isams::admissions()->alumniCustomFields()->patchMany(string $schoolId, array $customFields)` | nothing |
+| `Isams::admissions()->alumniCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
+| `Isams::admissions()->alumniCustomFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::admissions()->contacts()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<ApplicantsContact>` |
 | `Isams::admissions()->contacts()->forApplicant(string $schoolId, bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
 | `Isams::admissions()->contacts()->studentContacts(string $schoolId, bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<Contact>` |
 | `Isams::admissions()->create(ApplicantForCreate\|array $applicant)` | `Created` |
 | `Isams::admissions()->customFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::admissions()->customFields()->get(string $schoolId, int $customFieldId)` | `CustomField` |
-| `Isams::admissions()->customFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | nothing |
-| `Isams::admissions()->customFields()->patchMany(string $schoolId, array $customFields)` | nothing |
+| `Isams::admissions()->customFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
+| `Isams::admissions()->customFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::admissions()->document()->all(string $schoolId)` | `Collection<ApplicantDocument>` |
-| `Isams::admissions()->document()->create(string $schoolId, MultipartValue $binary, ApplicantDocumentForCreate\|array $data)` | nothing |
+| `Isams::admissions()->document()->create(string $schoolId, MultipartValue $binary, ApplicantDocumentForCreate\|array $data)` | `bool` |
 | `Isams::admissions()->documentCategory()->all()` | `Collection<DocumentCategory>` |
 | `Isams::admissions()->enquiryReasons()->all()` | `Collection<GlobalListItem>` |
 | `Isams::admissions()->enquiryReasons()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::admissions()->enquiryReasons()->delete(int $id)` | nothing |
-| `Isams::admissions()->enquiryReasons()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::admissions()->enquiryReasons()->delete(int $id)` | `bool` |
+| `Isams::admissions()->enquiryReasons()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::admissions()->enquiryTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::admissions()->enquiryTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::admissions()->enquiryTypes()->delete(int $id)` | nothing |
-| `Isams::admissions()->enquiryTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::admissions()->enquiryTypes()->delete(int $id)` | `bool` |
+| `Isams::admissions()->enquiryTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::admissions()->get(string $schoolId, string $expand = null)` | `Applicant` |
 | `Isams::admissions()->moveToCurrent(string $schoolId)` | `Created` |
 | `Isams::admissions()->passportCustomFields()->all(string $schoolId, int $passportId)` | `Collection<CustomField>` |
 | `Isams::admissions()->passportCustomFields()->get(string $schoolId, int $passportId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::admissions()->passportCustomFields()->patchMany(string $schoolId, int $passportId, array $customFields)` | nothing |
+| `Isams::admissions()->passportCustomFields()->patchMany(string $schoolId, int $passportId, array $customFields)` | `bool` |
 | `Isams::admissions()->passportDocuments()->all(string $schoolId, int $passportId)` | `Collection<ApplicantPassportDocument>` |
-| `Isams::admissions()->passportDocuments()->create(string $schoolId, int $passportId, MultipartValue $binary, ApplicantPassportDocumentForCreate\|array $data)` | nothing |
-| `Isams::admissions()->passportDocuments()->delete(string $schoolId, int $passportId, int $documentId)` | nothing |
+| `Isams::admissions()->passportDocuments()->create(string $schoolId, int $passportId, MultipartValue $binary, ApplicantPassportDocumentForCreate\|array $data)` | `bool` |
+| `Isams::admissions()->passportDocuments()->delete(string $schoolId, int $passportId, int $documentId)` | `bool` |
 | `Isams::admissions()->passportDocuments()->download(string $schoolId, int $passportId, int $documentId)` | `File` |
 | `Isams::admissions()->passportDocuments()->get(string $schoolId, int $passportId, int $documentId)` | `ApplicantPassportDocument` |
-| `Isams::admissions()->passportDocuments()->patch(string $schoolId, int $passportId, int $documentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::admissions()->passportDocuments()->patch(string $schoolId, int $passportId, int $documentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::admissions()->passports()->all(string $schoolId, string $expand = null)` | `Collection<ApplicantPassport>` |
 | `Isams::admissions()->passports()->create(string $schoolId, ApplicantPassportForCreate\|array $applicantPassport)` | `Created` |
-| `Isams::admissions()->passports()->delete(string $schoolId, int $id)` | nothing |
+| `Isams::admissions()->passports()->delete(string $schoolId, int $id)` | `bool` |
 | `Isams::admissions()->passports()->get(string $schoolId, int $id, string $expand = null)` | `ApplicantPassport` |
-| `Isams::admissions()->passports()->update(string $schoolId, int $id, ApplicantPassportForUpdate\|array $applicantPassport)` | nothing |
-| `Isams::admissions()->passports()->updateMany(string $schoolId, array $applicantPassports)` | nothing |
-| `Isams::admissions()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::admissions()->passports()->update(string $schoolId, int $id, ApplicantPassportForUpdate\|array $applicantPassport)` | `bool` |
+| `Isams::admissions()->passports()->updateMany(string $schoolId, array $applicantPassports)` | `bool` |
+| `Isams::admissions()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::admissions()->statuses()->all()` | `Collection<GlobalListItem>` |
 | `Isams::admissions()->statuses()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::admissions()->statuses()->delete(int $id)` | nothing |
-| `Isams::admissions()->statuses()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::admissions()->statuses()->delete(int $id)` | `bool` |
+| `Isams::admissions()->statuses()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::admissions()->studentCustomFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::admissions()->studentCustomFields()->get(string $schoolId, int $customFieldId)` | `CustomField` |
-| `Isams::admissions()->studentCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | nothing |
-| `Isams::admissions()->studentCustomFields()->patchMany(string $schoolId, array $customFields)` | nothing |
+| `Isams::admissions()->studentCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
+| `Isams::admissions()->studentCustomFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::admissions()->students()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Student>` |
 | `Isams::admissions()->students()->get(string $schoolId)` | `Student` |
-| `Isams::admissions()->students()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
-| `Isams::admissions()->update(string $schoolId, ApplicantForUpdate\|array $applicant)` | nothing |
+| `Isams::admissions()->students()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
+| `Isams::admissions()->update(string $schoolId, ApplicantForUpdate\|array $applicant)` | `bool` |
 | `Isams::admissions()->visaCustomFields()->all(string $schoolId, int $visaId)` | `Collection<CustomField>` |
 | `Isams::admissions()->visaCustomFields()->get(string $schoolId, int $visaId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::admissions()->visaCustomFields()->patchMany(string $schoolId, int $visaId, array $customFields)` | nothing |
+| `Isams::admissions()->visaCustomFields()->patchMany(string $schoolId, int $visaId, array $customFields)` | `bool` |
 | `Isams::admissions()->visaDocuments()->all(string $schoolId, int $visaId)` | `Collection<ApplicantVisaDocument>` |
-| `Isams::admissions()->visaDocuments()->create(string $schoolId, int $visaId, MultipartValue $binary, ApplicantVisaDocumentForCreate\|array $data)` | nothing |
-| `Isams::admissions()->visaDocuments()->delete(string $schoolId, int $visaId, int $documentId)` | nothing |
+| `Isams::admissions()->visaDocuments()->create(string $schoolId, int $visaId, MultipartValue $binary, ApplicantVisaDocumentForCreate\|array $data)` | `bool` |
+| `Isams::admissions()->visaDocuments()->delete(string $schoolId, int $visaId, int $documentId)` | `bool` |
 | `Isams::admissions()->visaDocuments()->download(string $schoolId, int $visaId, int $documentId)` | `File` |
 | `Isams::admissions()->visaDocuments()->get(string $schoolId, int $visaId, int $documentId)` | `ApplicantVisaDocument` |
-| `Isams::admissions()->visaDocuments()->patch(string $schoolId, int $visaId, int $documentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::admissions()->visaDocuments()->patch(string $schoolId, int $visaId, int $documentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::admissions()->visas()->all(string $schoolId, string $expand = null)` | `Collection<ApplicantVisa>` |
 | `Isams::admissions()->visas()->create(string $schoolId, ApplicantVisaForCreate\|array $applicantVisa)` | `Created` |
-| `Isams::admissions()->visas()->delete(string $schoolId, int $id)` | nothing |
+| `Isams::admissions()->visas()->delete(string $schoolId, int $id)` | `bool` |
 | `Isams::admissions()->visas()->get(string $schoolId, int $id, string $expand = null)` | `ApplicantVisa` |
-| `Isams::admissions()->visas()->update(string $schoolId, int $id, ApplicantVisaForUpdate\|array $applicantVisa)` | nothing |
-| `Isams::admissions()->visas()->updateMany(string $schoolId, array $applicantVisas)` | nothing |
+| `Isams::admissions()->visas()->update(string $schoolId, int $id, ApplicantVisaForUpdate\|array $applicantVisa)` | `bool` |
+| `Isams::admissions()->visas()->updateMany(string $schoolId, array $applicantVisas)` | `bool` |
 | `Isams::admissions()->visits()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Visit>` |
 
 ## Agent
@@ -123,8 +125,8 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 
 | Call | Returns |
 |---|---|
-| `Isams::billing()->externalInvoice()->update(string $invoiceNumber, ExternalAccountsInvoiceForUpdate\|array $externalAccountsInvoice)` | nothing |
-| `Isams::billing()->externalInvoice()->updateDocument(string $invoiceNumber, MultipartValue $document)` | nothing |
+| `Isams::billing()->externalInvoice()->update(string $invoiceNumber, ExternalAccountsInvoiceForUpdate\|array $externalAccountsInvoice)` | `bool` |
+| `Isams::billing()->externalInvoice()->updateDocument(string $invoiceNumber, MultipartValue $document)` | `bool` |
 | `Isams::billing()->externalInvoiceCommunications()->create(int $invoiceId, MultipartValue $email, InvoiceCommunicationForUpdate\|array $data)` | `Created` |
 | `Isams::billing()->invoicing()->downloadInvoiceRunReport(int $id)` | `File` |
 | `Isams::billing()->invoicing()->getBillingCycleInvoiceRuns(int $id)` | `Collection<InvoiceRun>` |
@@ -136,7 +138,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | Call | Returns |
 |---|---|
 | `Isams::bulletin()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Bulletin>` |
-| `Isams::bulletin()->category()->update(int $bulletinId, int $categoryId)` | nothing |
+| `Isams::bulletin()->category()->update(int $bulletinId, int $categoryId)` | `bool` |
 | `Isams::bulletin()->create(BulletinForCreate\|array $bulletin)` | `Created` |
 | `Isams::bulletin()->divisions()->createMany(int $bulletinId, BulletinDivisionsForCreate\|array $bulletinDivisions)` | `Created` |
 | `Isams::bulletin()->getByGroup(int $groupId)` | `Collection<Bulletin>` |
@@ -203,35 +205,35 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::cloudPortals()->homework()->getInitialFeedback(int $homeworkId, string $schoolId)` | `Collection<SubmissionFeedback>` |
 | `Isams::cloudPortals()->homework()->getResources(int $homeworkId)` | `Collection<Resource>` |
 | `Isams::cloudPortals()->homework()->submission()->get(int $homeworkId, string $schoolId)` | `Submission` |
-| `Isams::cloudPortals()->homework()->submission()->patch(int $homeworkId, string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::cloudPortals()->homework()->submission()->patch(int $homeworkId, string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->news()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<News>` |
 | `Isams::cloudPortals()->news()->getArticle(int $id)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->news()->getCategories()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->news()->getOptions()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->parent()->notifications()->getUserSettingByUserCode()` | `NotificationSetting` |
-| `Isams::cloudPortals()->parent()->notifications()->setUserSettingByUserCode(NotificationSettingPublic\|array $notificationSettingPublic)` | nothing |
+| `Isams::cloudPortals()->parent()->notifications()->setUserSettingByUserCode(NotificationSettingPublic\|array $notificationSettingPublic)` | `bool` |
 | `Isams::cloudPortals()->parent()->pushNotification()->getChannels()` | `Collection<NotificationChannel>` |
 | `Isams::cloudPortals()->parent()->pushNotification()->getConfig()` | `PushConfigurationMapped` |
 | `Isams::cloudPortals()->parent()->pushNotification()->getUserChannelSubscriptions()` | `Collection<NotificationUserSubscription>` |
 | `Isams::cloudPortals()->parent()->pushNotification()->getUserPushDeviceToken()` | `PrivateNotificationDeviceTokenMapped` |
 | `Isams::cloudPortals()->parent()->pushNotification()->sendDebug()` | `Created` |
-| `Isams::cloudPortals()->parent()->pushNotification()->subscribeUserToChannel(NotificationSubscription\|array $notificationSubscription)` | nothing |
-| `Isams::cloudPortals()->parent()->pushNotification()->unsubscribeUserFromChannel(NotificationSubscription\|array $notificationSubscription)` | nothing |
-| `Isams::cloudPortals()->parent()->pushNotification()->updateUserPushDeviceToken(NotificationUpdateDevicePrivate\|array $notificationUpdateDevicePrivate)` | nothing |
+| `Isams::cloudPortals()->parent()->pushNotification()->subscribeUserToChannel(NotificationSubscription\|array $notificationSubscription)` | `bool` |
+| `Isams::cloudPortals()->parent()->pushNotification()->unsubscribeUserFromChannel(NotificationSubscription\|array $notificationSubscription)` | `bool` |
+| `Isams::cloudPortals()->parent()->pushNotification()->updateUserPushDeviceToken(NotificationUpdateDevicePrivate\|array $notificationUpdateDevicePrivate)` | `bool` |
 | `Isams::cloudPortals()->parent()->pushNotificationMessages()->all(string $read = null)` | `UserMessage` |
-| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAllMessagesAsDeleted()` | nothing |
-| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAllMessagesAsRead()` | nothing |
-| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAsDeleted(string $messageId)` | nothing |
-| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAsRead(string $messageId)` | nothing |
-| `Isams::cloudPortals()->parent()->pushNotificationMessages()->updateStatus(int $messageId, UserMessageStatusUpdate\|array $userMessageStatusUpdate)` | nothing |
+| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAllMessagesAsDeleted()` | `bool` |
+| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAllMessagesAsRead()` | `bool` |
+| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAsDeleted(string $messageId)` | `bool` |
+| `Isams::cloudPortals()->parent()->pushNotificationMessages()->markAsRead(string $messageId)` | `bool` |
+| `Isams::cloudPortals()->parent()->pushNotificationMessages()->updateStatus(int $messageId, UserMessageStatusUpdate\|array $userMessageStatusUpdate)` | `bool` |
 | `Isams::cloudPortals()->parent()->schoolDirectory()->getDepartments(string\|Stringable\|null $filter = null)` | `LazyCollection<Department>` |
 | `Isams::cloudPortals()->parent()->schoolDirectory()->getNonTeachingStaff(string\|Stringable\|null $filter = null)` | `LazyCollection<Staff>` |
 | `Isams::cloudPortals()->parent()->schoolDirectory()->getTeachingStaff(string\|Stringable\|null $filter = null)` | `LazyCollection<Staff>` |
 | `Isams::cloudPortals()->reports()->academicReports()->getSchoolAssessments(string $schoolId, string\|Stringable\|null $filter = null)` | `LazyCollection<Report>` |
 | `Isams::cloudPortals()->reports()->academicReports()->getSchoolReports(string $schoolId, string\|Stringable\|null $filter = null)` | `LazyCollection<Report>` |
 | `Isams::cloudPortals()->school()->account()->getProfileInformation()` | `PortalProfileInformation` |
-| `Isams::cloudPortals()->school()->account()->updateProfileInformation(ProfileInformationForUpdate\|array $profileInformation)` | nothing |
-| `Isams::cloudPortals()->school()->account()->updateSecurityQuestionAnswer(SecurityQuestionInformationForUpdate\|array $securityQuestionInformation)` | nothing |
+| `Isams::cloudPortals()->school()->account()->updateProfileInformation(ProfileInformationForUpdate\|array $profileInformation)` | `bool` |
+| `Isams::cloudPortals()->school()->account()->updateSecurityQuestionAnswer(SecurityQuestionInformationForUpdate\|array $securityQuestionInformation)` | `bool` |
 | `Isams::cloudPortals()->school()->accountCommunicationHistory()->getEmail(int $emailId)` | `EmailMessage` |
 | `Isams::cloudPortals()->school()->accountCommunicationHistory()->getEmailCommunicationHistory()` | `Collection<EmailMessage>` |
 | `Isams::cloudPortals()->school()->accountCommunicationHistory()->getEmailConversationHistory(string $conversationGuid)` | `Collection<EmailConversationMessage>` |
@@ -256,26 +258,26 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::cloudPortals()->school()->bookmark()->getGroups(string\|Stringable\|null $filter = null)` | `LazyCollection<BookmarkGroups>` |
 | `Isams::cloudPortals()->school()->calendar()->getPublishedEvents(int $targetId = null, DateTimeInterface\|string\|null $startDate = null, DateTimeInterface\|string\|null $endDate = null)` | `Collection<CalendarEvent>` |
 | `Isams::cloudPortals()->school()->calendar()->getPublishedEventsByKeyPhrase(string $keyphrase, int $targetId = null)` | `Collection<CalendarEvent>` |
-| `Isams::cloudPortals()->school()->communication()->deleteSmsDetails()` | nothing |
+| `Isams::cloudPortals()->school()->communication()->deleteSmsDetails()` | `bool` |
 | `Isams::cloudPortals()->school()->communication()->getSmsDetails()` | `SmsDetails` |
 | `Isams::cloudPortals()->school()->communication()->updateSmsDetails(string $mobileNumber)` | `Created` |
 | `Isams::cloudPortals()->school()->communicationHistory()->getMessage(int $emailId)` | `EmailMessage` |
 | `Isams::cloudPortals()->school()->communicationHistory()->getPortalEmail()` | `Collection<EmailMessage>` |
 | `Isams::cloudPortals()->school()->communicationHistory()->getPortalSms()` | `Collection<SmsMessage>` |
 | `Isams::cloudPortals()->school()->consentRegisters()->all()` | `PortalConsentRegisterResponses` |
-| `Isams::cloudPortals()->school()->consentRegisters()->patchContactResponses(JsonPatch\|array $patch)` | nothing |
-| `Isams::cloudPortals()->school()->consentRegisters()->patchResponses(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::cloudPortals()->school()->consentRegisters()->patchContactResponses(JsonPatch\|array $patch)` | `bool` |
+| `Isams::cloudPortals()->school()->consentRegisters()->patchResponses(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->contacts()->all(string $schoolId)` | `Collection<PortalStudentContact>` |
-| `Isams::cloudPortals()->school()->contacts()->patch(string $schoolId, int $contactId, JsonPatch\|array $patch)` | nothing |
+| `Isams::cloudPortals()->school()->contacts()->patch(string $schoolId, int $contactId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->contacts()->submitUpdate(PortalContactUpdateRequestForCreate\|array $portalContactUpdateRequest)` | `Created` |
 | `Isams::cloudPortals()->school()->disciplineRecords()->getDetentionRecordsForStudent(string $schoolId)` | `Collection<DetentionRecord>` |
 | `Isams::cloudPortals()->school()->divisions()->getList()` | `Collection<Division>` |
 | `Isams::cloudPortals()->school()->emailOptions()->cancelDetailsVerification()` | `Created` |
 | `Isams::cloudPortals()->school()->emailOptions()->getDetails()` | `PortalEmailDetails` |
-| `Isams::cloudPortals()->school()->emailOptions()->patchDetails(JsonPatch\|array $patch)` | nothing |
+| `Isams::cloudPortals()->school()->emailOptions()->patchDetails(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->emailOptions()->verifyDetails(string $verificationGuid, bool $updateUsername)` | `Created` |
 | `Isams::cloudPortals()->school()->emailSubscriptions()->all()` | `Collection<EmailSubscriptionCategory>` |
-| `Isams::cloudPortals()->school()->emailSubscriptions()->patchToEmailCategories(JsonPatch\|array $patch)` | nothing |
+| `Isams::cloudPortals()->school()->emailSubscriptions()->patchToEmailCategories(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->exams()->getArrangements(string $schoolId)` | `Collection<ExamArrangement>` |
 | `Isams::cloudPortals()->school()->exams()->getCycles()` | `Collection<ExamCycle>` |
 | `Isams::cloudPortals()->school()->exams()->getCyclesForEntries(string $schoolId)` | `Collection<ExamCycle>` |
@@ -313,11 +315,11 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::cloudPortals()->school()->leaveRequests()->getTypes()` | `Collection<LeaveRequestType>` |
 | `Isams::cloudPortals()->school()->leaveRequests()->submit()` | `Created` |
 | `Isams::cloudPortals()->school()->linkMigration()->convert(int $id)` | `Created` |
-| `Isams::cloudPortals()->school()->linkMigration()->delete(int $id)` | nothing |
+| `Isams::cloudPortals()->school()->linkMigration()->delete(int $id)` | `bool` |
 | `Isams::cloudPortals()->school()->linkMigration()->getInvalidPortalLinks()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::cloudPortals()->school()->linkMigration()->migrate(int $id)` | `Created` |
 | `Isams::cloudPortals()->school()->notifications()->getUserSettings()` | `UserNotificationSettings` |
-| `Isams::cloudPortals()->school()->notifications()->patchSettings(JsonPatch\|array $patch)` | nothing |
+| `Isams::cloudPortals()->school()->notifications()->patchSettings(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->outstandingForms()->continueFill(string $formId, string $instanceId)` | `OutstandingFormInstance` |
 | `Isams::cloudPortals()->school()->outstandingForms()->saveDraft(string $formId, string $fillId, array $bodyValue)` | `Created` |
 | `Isams::cloudPortals()->school()->outstandingForms()->startFill(string $formId, string $studentId = null)` | `OutstandingFormInstance` |
@@ -330,7 +332,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::cloudPortals()->school()->rewardsAndConduct()->getTypes()` | `Collection<RewardType>` |
 | `Isams::cloudPortals()->school()->schools()->all(string $queryValue = null)` | `LazyCollection<School>` |
 | `Isams::cloudPortals()->school()->smsSubscriptions()->all()` | `Collection<SmsSubscriptionCategory>` |
-| `Isams::cloudPortals()->school()->smsSubscriptions()->patchToSmsCategories(JsonPatch\|array $patch)` | nothing |
+| `Isams::cloudPortals()->school()->smsSubscriptions()->patchToSmsCategories(JsonPatch\|array $patch)` | `bool` |
 | `Isams::cloudPortals()->school()->teachingGroups()->all(string $schoolId)` | `Collection<TeachingGroup>` |
 | `Isams::cloudPortals()->school()->teachingGroups()->getForm(string $schoolId, int $id)` | `TeachingGroupForm` |
 | `Isams::cloudPortals()->school()->teachingGroups()->getHistory(string $schoolId)` | `TeachingGroupsHistoryCollection` |
@@ -342,7 +344,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::cloudPortals()->students()->modules()->getCapabilities()` | `PortalModuleCapabilities` |
 | `Isams::cloudPortals()->students()->selfRegistration()->getConfig()` | `StudentSelfRegistrationConfiguration` |
 | `Isams::cloudPortals()->students()->selfRegistration()->getRegisterPeriodsByDate(DateTimeInterface\|string $date)` | `Collection<StudentSelfRegistrationRegisterPeriod>` |
-| `Isams::cloudPortals()->students()->selfRegistration()->updateRegisterPeriods(SelfRegistrationRegistersForUpdate\|array $selfRegistrationRegisters)` | nothing |
+| `Isams::cloudPortals()->students()->selfRegistration()->updateRegisterPeriods(SelfRegistrationRegistersForUpdate\|array $selfRegistrationRegisters)` | `bool` |
 | `Isams::cloudPortals()->students()->timetable()->getActivityCollection(string $schoolId, DateTimeInterface\|string\|null $startDate = null)` | `Collection<TimetableActivity>` |
 | `Isams::cloudPortals()->students()->timetable()->getPeriodCollection(string $schoolId, int $timetableId = null, bool $excludeExceptions = null, bool $includeMissing = null, bool $includeHiddenSubjects = null)` | `Collection<TimetablePeriod>` |
 | `Isams::cloudPortals()->students()->timetable()->getWeeks(string $schoolId, DateTimeInterface\|string\|null $date = null)` | `Collection<TimetableActivity>` |
@@ -400,16 +402,16 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 |---|---|
 | `Isams::estates()->buildingDivisions()->add(int $buildingId, int $divisionId)` | `Created` |
 | `Isams::estates()->buildingDivisions()->all(int $buildingId)` | `Collection<Division>` |
-| `Isams::estates()->buildingDivisions()->remove(int $buildingId, int $divisionId)` | nothing |
+| `Isams::estates()->buildingDivisions()->remove(int $buildingId, int $divisionId)` | `bool` |
 | `Isams::estates()->buildingRooms()->all(int $buildingId)` | `Collection<Room>` |
 | `Isams::estates()->buildings()->all()` | `Collection<Building>` |
 | `Isams::estates()->buildings()->create(BuildingForCreate\|array $building)` | `Created` |
 | `Isams::estates()->buildings()->get(int $id)` | `Building` |
-| `Isams::estates()->buildings()->update(int $id, BuildingForUpdate\|array $building)` | nothing |
+| `Isams::estates()->buildings()->update(int $id, BuildingForUpdate\|array $building)` | `bool` |
 | `Isams::estates()->rooms()->all()` | `Collection<Room>` |
 | `Isams::estates()->rooms()->create(RoomForCreate\|array $room)` | `Created` |
 | `Isams::estates()->rooms()->get(int $id)` | `Room` |
-| `Isams::estates()->rooms()->update(int $id, RoomForUpdate\|array $room)` | nothing |
+| `Isams::estates()->rooms()->update(int $id, RoomForUpdate\|array $room)` | `bool` |
 
 ## Exclusions
 
@@ -424,73 +426,73 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 |---|---|
 | `Isams::gradebooks()->all(string\|Stringable\|null $filter = null)` | `Collection<GradebookOverview>` |
 | `Isams::gradebooks()->assessmentColumn()->create(int $gradebookId, AssessmentColumnStructureForCreate\|array $assessmentColumnStructure)` | `Created` |
-| `Isams::gradebooks()->assessmentColumn()->delete(int $gradebookId, int $columnId)` | nothing |
+| `Isams::gradebooks()->assessmentColumn()->delete(int $gradebookId, int $columnId)` | `bool` |
 | `Isams::gradebooks()->assessmentColumn()->get(int $gradebookId, int $columnId)` | `AssessmentColumnStructure` |
-| `Isams::gradebooks()->assessmentColumn()->patch(int $gradebookId, int $columnId, JsonPatch\|array $patch)` | nothing |
+| `Isams::gradebooks()->assessmentColumn()->patch(int $gradebookId, int $columnId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::gradebooks()->assessmentColumnIndicators()->createMany(int $gradebookId, int $columnId, array $indicators)` | `Created` |
-| `Isams::gradebooks()->assessmentColumnIndicators()->delete(int $gradebookId, int $columnId, int $indicatorId)` | nothing |
+| `Isams::gradebooks()->assessmentColumnIndicators()->delete(int $gradebookId, int $columnId, int $indicatorId)` | `bool` |
 | `Isams::gradebooks()->assessmentColumnTranspose()->createMany(int $gradebookId, int $columnId, array $transposeIds)` | `Created` |
-| `Isams::gradebooks()->assessmentColumnTranspose()->delete(int $gradebookId, int $columnId, int $transposeId)` | nothing |
+| `Isams::gradebooks()->assessmentColumnTranspose()->delete(int $gradebookId, int $columnId, int $transposeId)` | `bool` |
 | `Isams::gradebooks()->assessmentColumnWeightings()->createMany(int $gradebookId, int $columnId, array $weightingElementIds)` | `Created` |
-| `Isams::gradebooks()->assessmentColumnWeightings()->delete(int $gradebookId, int $columnId, int $weightingId)` | nothing |
+| `Isams::gradebooks()->assessmentColumnWeightings()->delete(int $gradebookId, int $columnId, int $weightingId)` | `bool` |
 | `Isams::gradebooks()->calculationColumn()->create(int $gradebookId, CalculationColumnStructureForCreate\|array $calculationColumnStructure)` | `Created` |
-| `Isams::gradebooks()->calculationColumn()->delete(int $gradebookId, int $columnId)` | nothing |
+| `Isams::gradebooks()->calculationColumn()->delete(int $gradebookId, int $columnId)` | `bool` |
 | `Isams::gradebooks()->calculationColumn()->get(int $gradebookId, int $columnId)` | `CalculationColumnStructure` |
-| `Isams::gradebooks()->calculationColumn()->patch(int $gradebookId, int $columnId, JsonPatch\|array $patch)` | nothing |
+| `Isams::gradebooks()->calculationColumn()->patch(int $gradebookId, int $columnId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::gradebooks()->calculationColumnTranspose()->createMany(int $gradebookId, int $columnId, array $transposeIds)` | `Created` |
-| `Isams::gradebooks()->calculationColumnTranspose()->delete(int $gradebookId, int $columnId, int $transposeId)` | nothing |
+| `Isams::gradebooks()->calculationColumnTranspose()->delete(int $gradebookId, int $columnId, int $transposeId)` | `bool` |
 | `Isams::gradebooks()->calculationColumnWeightings()->createMany(int $gradebookId, int $columnId, array $weightingElementIds)` | `Created` |
-| `Isams::gradebooks()->calculationColumnWeightings()->delete(int $gradebookId, int $columnId, int $weightingId)` | nothing |
+| `Isams::gradebooks()->calculationColumnWeightings()->delete(int $gradebookId, int $columnId, int $weightingId)` | `bool` |
 | `Isams::gradebooks()->characteristics()->createMany(int $gradebookId, array $characteristics)` | `Created` |
-| `Isams::gradebooks()->characteristics()->delete(int $gradebookId, string $characteristic)` | nothing |
-| `Isams::gradebooks()->columnMarks()->patch(int $gradebookId, int $columnId, string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::gradebooks()->characteristics()->delete(int $gradebookId, string $characteristic)` | `bool` |
+| `Isams::gradebooks()->columnMarks()->patch(int $gradebookId, int $columnId, string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::gradebooks()->columnReportMappings()->all(int $gradebookId, int $columnId)` | `Collection<ReportMapping>` |
 | `Isams::gradebooks()->columnReportMappings()->createMany(int $gradebookId, int $columnId, array $reportMappings)` | `Created` |
-| `Isams::gradebooks()->columnReportMappings()->delete(int $gradebookId, int $columnId, int $reportMappingId)` | nothing |
+| `Isams::gradebooks()->columnReportMappings()->delete(int $gradebookId, int $columnId, int $reportMappingId)` | `bool` |
 | `Isams::gradebooks()->create(GradebookForCreate\|array $gradebook)` | `Created` |
-| `Isams::gradebooks()->delete(int $id)` | nothing |
-| `Isams::gradebooks()->disassociatedStudent()->remove(int $gradebookId, string $schoolId)` | nothing |
+| `Isams::gradebooks()->delete(int $id)` | `bool` |
+| `Isams::gradebooks()->disassociatedStudent()->remove(int $gradebookId, string $schoolId)` | `bool` |
 | `Isams::gradebooks()->get(int $gradebookId)` | `Gradebook` |
 | `Isams::gradebooks()->getStructure(int $gradebookId)` | `GradebookStructure` |
 | `Isams::gradebooks()->gradesetConfiguration()->all()` | `Collection<Gradeset>` |
 | `Isams::gradebooks()->gradesetConfiguration()->get(int $gradesetId)` | `Gradeset` |
 | `Isams::gradebooks()->group()->create(int $gradebookId, GroupStructureForCreate\|array $groupStructure)` | `Created` |
-| `Isams::gradebooks()->group()->delete(int $gradebookId, int $groupId)` | nothing |
+| `Isams::gradebooks()->group()->delete(int $gradebookId, int $groupId)` | `bool` |
 | `Isams::gradebooks()->group()->get(int $gradebookId, int $groupId)` | `GroupStructure` |
-| `Isams::gradebooks()->group()->patch(int $gradebookId, int $groupId, JsonPatch\|array $patch)` | nothing |
+| `Isams::gradebooks()->group()->patch(int $gradebookId, int $groupId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::gradebooks()->indicatorConfiguration()->all()` | `Collection<Indicator>` |
 | `Isams::gradebooks()->indicatorConfiguration()->get(int $indicatorId)` | `Indicator` |
 | `Isams::gradebooks()->markComments()->all(int $gradebookId, int $columnId, string $schoolId)` | `Collection<Comment>` |
 | `Isams::gradebooks()->markComments()->create(int $gradebookId, int $columnId, string $schoolId, CommentForCreate\|array $comment)` | `Created` |
-| `Isams::gradebooks()->markComments()->delete(int $gradebookId, int $columnId, string $schoolId, int $commentId)` | nothing |
-| `Isams::gradebooks()->markComments()->patch(int $gradebookId, int $columnId, string $schoolId, int $commentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::gradebooks()->markComments()->delete(int $gradebookId, int $columnId, string $schoolId, int $commentId)` | `bool` |
+| `Isams::gradebooks()->markComments()->patch(int $gradebookId, int $columnId, string $schoolId, int $commentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::gradebooks()->marks()->all(int $gradebookId)` | `LazyCollection<Student>` |
 | `Isams::gradebooks()->marks()->forStudent(int $gradebookId, string $schoolId)` | `Student` |
-| `Isams::gradebooks()->marks()->updateMany(int $gradebookId, MarkCollectionForPatch\|array $markCollection)` | nothing |
-| `Isams::gradebooks()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::gradebooks()->marks()->updateMany(int $gradebookId, MarkCollectionForPatch\|array $markCollection)` | `bool` |
+| `Isams::gradebooks()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::gradebooks()->staff()->get(int $gradebookId)` | `Collection<Staff>` |
 | `Isams::gradebooks()->staffAllocations()->all(int $gradebookId, string $criteria)` | `Collection<Allocation>` |
 | `Isams::gradebooks()->staffAllocations()->createMany(int $gradebookId, string $criteria, array $staffAllocations)` | `Created` |
-| `Isams::gradebooks()->staffAllocations()->delete(int $gradebookId, string $criteria, int $allocationId)` | nothing |
+| `Isams::gradebooks()->staffAllocations()->delete(int $gradebookId, string $criteria, int $allocationId)` | `bool` |
 | `Isams::gradebooks()->staffAssignments()->add(int $gradebookId, array $staffIds)` | `Created` |
 | `Isams::gradebooks()->staffAssignments()->all(int $gradebookId)` | `Collection<StaffAssignment>` |
-| `Isams::gradebooks()->staffAssignments()->delete(int $gradebookId, string $staffId)` | nothing |
+| `Isams::gradebooks()->staffAssignments()->delete(int $gradebookId, string $staffId)` | `bool` |
 | `Isams::gradebooks()->student()->all(int $gradebookId)` | `Collection<GradebookStudent>` |
 | `Isams::gradebooks()->studentAllocations()->all(int $gradebookId, string $criteria)` | `Collection<Allocation>` |
 | `Isams::gradebooks()->studentAllocations()->createMany(int $gradebookId, string $criteria, array $studentAllocations)` | `Created` |
-| `Isams::gradebooks()->studentAllocations()->delete(int $gradebookId, string $criteria, int $allocationId)` | nothing |
+| `Isams::gradebooks()->studentAllocations()->delete(int $gradebookId, string $criteria, int $allocationId)` | `bool` |
 | `Isams::gradebooks()->studentAssignments()->add(int $gradebookId, array $schoolIds)` | `Created` |
 | `Isams::gradebooks()->studentAssignments()->all(int $gradebookId)` | `Collection<StudentAssignment>` |
-| `Isams::gradebooks()->studentAssignments()->delete(int $gradebookId, string $schoolId)` | nothing |
+| `Isams::gradebooks()->studentAssignments()->delete(int $gradebookId, string $schoolId)` | `bool` |
 | `Isams::gradebooks()->studentExclusions()->all(int $gradebookId, int $columnId)` | `StudentExclusion` |
 | `Isams::gradebooks()->studentExclusions()->createMany(int $gradebookId, int $columnId, array $schoolIds)` | `Created` |
-| `Isams::gradebooks()->studentExclusions()->delete(int $gradebookId, int $columnId, string $schoolId)` | nothing |
+| `Isams::gradebooks()->studentExclusions()->delete(int $gradebookId, int $columnId, string $schoolId)` | `bool` |
 | `Isams::gradebooks()->stylingDesignConfiguration()->all()` | `Collection<StylingDesign>` |
 | `Isams::gradebooks()->stylingDesignConfiguration()->get(int $stylingDesignId)` | `StylingDesign` |
 | `Isams::gradebooks()->stylingRuleConfiguration()->all()` | `Collection<StylingRule>` |
 | `Isams::gradebooks()->stylingRuleConfiguration()->get(int $stylingRuleId)` | `StylingRule` |
 | `Isams::gradebooks()->tags()->createMany(int $gradebookId, array $tags)` | `Created` |
-| `Isams::gradebooks()->tags()->delete(int $gradebookId, int $categoryId, int $categoryEntityId)` | nothing |
+| `Isams::gradebooks()->tags()->delete(int $gradebookId, int $categoryId, int $categoryEntityId)` | `bool` |
 | `Isams::gradebooks()->transposeConfiguration()->all()` | `Collection<Transpose>` |
 | `Isams::gradebooks()->transposeConfiguration()->get(int $transposeId)` | `Transpose` |
 | `Isams::gradebooks()->weightingConfiguration()->all()` | `Collection<Weighting>` |
@@ -503,147 +505,147 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::humanResources()->absenceTypes()->all()` | `Collection<AbsenceType>` |
 | `Isams::humanResources()->absenceTypes()->create(AbsenceTypeForCreate\|array $absenceType)` | `Created` |
 | `Isams::humanResources()->absenceTypes()->get(int $id)` | `AbsenceType` |
-| `Isams::humanResources()->absenceTypes()->update(int $id, AbsenceTypeForUpdate\|array $absenceType)` | nothing |
+| `Isams::humanResources()->absenceTypes()->update(int $id, AbsenceTypeForUpdate\|array $absenceType)` | `bool` |
 | `Isams::humanResources()->additionalPaymentTypes()->all()` | `Collection<AdditionalPaymentType>` |
 | `Isams::humanResources()->contractEmployeeLevels()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->contractEmployeeLevels()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->contractEmployeeLevels()->delete(int $id)` | nothing |
-| `Isams::humanResources()->contractEmployeeLevels()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->contractEmployeeLevels()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->contractEmployeeLevels()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->dfEAbsenceCategories()->all()` | `Collection<AbsenceCategory>` |
 | `Isams::humanResources()->dfEContractTypes()->all()` | `Collection<ContractType>` |
 | `Isams::humanResources()->dfERoleIdentifiers()->all()` | `Collection<RoleIdentifier>` |
 | `Isams::humanResources()->disclosureAndProbation()->checkStatuses()->all()` | `Collection<DisclosureProbationCheckStatus>` |
 | `Isams::humanResources()->disclosureAndProbation()->identityEvidenceTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->disclosureAndProbation()->identityEvidenceTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->disclosureAndProbation()->identityEvidenceTypes()->delete(int $id)` | nothing |
-| `Isams::humanResources()->disclosureAndProbation()->identityEvidenceTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->disclosureAndProbation()->identityEvidenceTypes()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->disclosureAndProbation()->identityEvidenceTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->disclosureAndProbation()->qualificationEvidenceTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->disclosureAndProbation()->qualificationEvidenceTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->disclosureAndProbation()->qualificationEvidenceTypes()->delete(int $id)` | nothing |
-| `Isams::humanResources()->disclosureAndProbation()->qualificationEvidenceTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->disclosureAndProbation()->qualificationEvidenceTypes()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->disclosureAndProbation()->qualificationEvidenceTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->disclosureAndProbation()->registrationEvidenceTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->disclosureAndProbation()->registrationEvidenceTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->disclosureAndProbation()->registrationEvidenceTypes()->delete(int $id)` | nothing |
-| `Isams::humanResources()->disclosureAndProbation()->registrationEvidenceTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->disclosureAndProbation()->registrationEvidenceTypes()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->disclosureAndProbation()->registrationEvidenceTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->disclosureAndProbation()->rightToWorkCheckTypes()->all()` | `Collection<RightToWorkCheckType>` |
 | `Isams::humanResources()->disclosureAndProbation()->types()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->disclosureAndProbation()->types()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->disclosureAndProbation()->types()->delete(int $id)` | nothing |
-| `Isams::humanResources()->disclosureAndProbation()->types()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->disclosureAndProbation()->types()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->disclosureAndProbation()->types()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->employeeAbsences()->all(int $employeeId)` | `Collection<Absence>` |
 | `Isams::humanResources()->employeeAbsences()->create(int $employeeId, AbsenceForCreate\|array $absence)` | `Created` |
 | `Isams::humanResources()->employeeAbsences()->get(int $employeeId, int $absenceId)` | `Absence` |
-| `Isams::humanResources()->employeeAbsences()->update(int $employeeId, int $id, AbsenceForUpdate\|array $absence)` | nothing |
+| `Isams::humanResources()->employeeAbsences()->update(int $employeeId, int $id, AbsenceForUpdate\|array $absence)` | `bool` |
 | `Isams::humanResources()->employeeChildrensBarredListChecks()->create(int $employeeId, ChildrensBarredListCheckForCreate\|array $childrensBarredListCheck)` | `Created` |
 | `Isams::humanResources()->employeeChildrensBarredListChecks()->get(int $employeeId)` | `ChildrensBarredListCheck` |
-| `Isams::humanResources()->employeeChildrensBarredListChecks()->update(int $employeeId, ChildrensBarredListCheckForUpdate\|array $childrensBarredListCheck)` | nothing |
+| `Isams::humanResources()->employeeChildrensBarredListChecks()->update(int $employeeId, ChildrensBarredListCheckForUpdate\|array $childrensBarredListCheck)` | `bool` |
 | `Isams::humanResources()->employeeContacts()->all(int $employeeId)` | `Collection<EmployeeContact>` |
 | `Isams::humanResources()->employeeContracts()->all(int $employeeId)` | `Collection<Contract>` |
 | `Isams::humanResources()->employeeContracts()->create(int $employeeId, ContractForCreate\|array $contract)` | `Created` |
-| `Isams::humanResources()->employeeContracts()->delete(int $employeeId, int $contractId)` | nothing |
+| `Isams::humanResources()->employeeContracts()->delete(int $employeeId, int $contractId)` | `bool` |
 | `Isams::humanResources()->employeeContracts()->get(int $employeeId, int $contractId)` | `Contract` |
-| `Isams::humanResources()->employeeContracts()->patch(int $employeeId, int $contractId, JsonPatch\|array $patch)` | nothing |
+| `Isams::humanResources()->employeeContracts()->patch(int $employeeId, int $contractId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::humanResources()->employeeContracts()->v1()->all(int $employeeId)` | `Collection<EmployeeContract>` |
 | `Isams::humanResources()->employeeContracts()->v1()->create(int $employeeId, EmployeeContractForCreate\|array $employeeContract)` | `Created` |
 | `Isams::humanResources()->employeeContracts()->v1()->get(int $employeeId, int $contractId)` | `Collection<EmployeeContract>` |
-| `Isams::humanResources()->employeeContracts()->v1()->update(int $employeeId, int $contractId, EmployeeContractForUpdate\|array $employeeContract)` | nothing |
+| `Isams::humanResources()->employeeContracts()->v1()->update(int $employeeId, int $contractId, EmployeeContractForUpdate\|array $employeeContract)` | `bool` |
 | `Isams::humanResources()->employeeCustomFields()->all(int $employeeId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::humanResources()->employeeCustomFields()->get(int $employeeId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::humanResources()->employeeCustomFields()->patch(int $employeeId, int $customFieldId, CustomFieldForPatch\|array $customField)` | nothing |
-| `Isams::humanResources()->employeeCustomFields()->patchMany(int $employeeId, array $customFields)` | nothing |
+| `Isams::humanResources()->employeeCustomFields()->patch(int $employeeId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
+| `Isams::humanResources()->employeeCustomFields()->patchMany(int $employeeId, array $customFields)` | `bool` |
 | `Isams::humanResources()->employeeDepartments()->add(int $employeeId, string $departmentType, int $departmentId)` | `Created` |
 | `Isams::humanResources()->employeeDepartments()->all(int $employeeId)` | `Collection<Department>` |
-| `Isams::humanResources()->employeeDepartments()->remove(int $employeeId, string $departmentType, int $departmentId)` | nothing |
+| `Isams::humanResources()->employeeDepartments()->remove(int $employeeId, string $departmentType, int $departmentId)` | `bool` |
 | `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->create(int $employeeId, DisclosureBarringServiceCheckForCreate\|array $disclosureBarringServiceCheck)` | `Created` |
 | `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->get(int $employeeId)` | `DisclosureBarringServiceCheck` |
-| `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->update(int $employeeId, DisclosureBarringServiceCheckForUpdate\|array $disclosureBarringServiceCheck)` | nothing |
+| `Isams::humanResources()->employeeDisclosureBarringServiceChecks()->update(int $employeeId, DisclosureBarringServiceCheckForUpdate\|array $disclosureBarringServiceCheck)` | `bool` |
 | `Isams::humanResources()->employeeFinancialInformation()->get(int $employeeId)` | `EmployeeFinancialInformation` |
-| `Isams::humanResources()->employeeFinancialInformation()->update(int $employeeId, EmployeeFinancialInformationForUpdate\|array $employeeFinancialInformation)` | nothing |
+| `Isams::humanResources()->employeeFinancialInformation()->update(int $employeeId, EmployeeFinancialInformationForUpdate\|array $employeeFinancialInformation)` | `bool` |
 | `Isams::humanResources()->employeeHouses()->add(int $employeeId, int $houseId)` | `Created` |
 | `Isams::humanResources()->employeeHouses()->all(int $employeeId)` | `EmployeeHouses` |
-| `Isams::humanResources()->employeeHouses()->remove(int $employeeId, int $houseId)` | nothing |
+| `Isams::humanResources()->employeeHouses()->remove(int $employeeId, int $houseId)` | `bool` |
 | `Isams::humanResources()->employeeIdentityChecks()->all(int $employeeId)` | `Collection<EmployeeIdentityCheck>` |
 | `Isams::humanResources()->employeeIdentityChecks()->create(int $employeeId, EmployeeIdentityCheckForCreate\|array $employeeIdentityCheck)` | `Created` |
-| `Isams::humanResources()->employeeIdentityChecks()->delete(int $employeeId, int $identityCheckId)` | nothing |
+| `Isams::humanResources()->employeeIdentityChecks()->delete(int $employeeId, int $identityCheckId)` | `bool` |
 | `Isams::humanResources()->employeeIdentityChecks()->get(int $employeeId, int $identityCheckId)` | `EmployeeIdentityCheck` |
-| `Isams::humanResources()->employeeIdentityChecks()->update(int $employeeId, int $identityCheckId, EmployeeIdentityCheckForUpdate\|array $employeeIdentityCheck)` | nothing |
+| `Isams::humanResources()->employeeIdentityChecks()->update(int $employeeId, int $identityCheckId, EmployeeIdentityCheckForUpdate\|array $employeeIdentityCheck)` | `bool` |
 | `Isams::humanResources()->employeePhotos()->create(int $employeeId, MultipartValue $photo)` | `Created` |
 | `Isams::humanResources()->employeePhotos()->get(int $employeeId, int $photoId)` | `File` |
 | `Isams::humanResources()->employeePhotos()->getCurrent(int $employeeId)` | `File` |
 | `Isams::humanResources()->employeeProbations()->get(int $employeeId)` | `EmployeeProbation` |
-| `Isams::humanResources()->employeeProbations()->update(int $employeeId, EmployeeProbationForUpdate\|array $employeeProbation)` | nothing |
+| `Isams::humanResources()->employeeProbations()->update(int $employeeId, EmployeeProbationForUpdate\|array $employeeProbation)` | `bool` |
 | `Isams::humanResources()->employeeQualificationChecks()->all(int $employeeId)` | `Collection<EmployeeQualificationCheck>` |
 | `Isams::humanResources()->employeeQualificationChecks()->create(int $employeeId, EmployeeQualificationCheckForCreate\|array $employeeQualificationCheck)` | `Created` |
-| `Isams::humanResources()->employeeQualificationChecks()->delete(int $employeeId, int $qualificationCheckId)` | nothing |
+| `Isams::humanResources()->employeeQualificationChecks()->delete(int $employeeId, int $qualificationCheckId)` | `bool` |
 | `Isams::humanResources()->employeeQualificationChecks()->get(int $employeeId, int $qualificationCheckId)` | `EmployeeQualificationCheck` |
-| `Isams::humanResources()->employeeQualificationChecks()->update(int $employeeId, int $qualificationCheckId, EmployeeQualificationCheckForUpdate\|array $employeeQualificationCheck)` | nothing |
+| `Isams::humanResources()->employeeQualificationChecks()->update(int $employeeId, int $qualificationCheckId, EmployeeQualificationCheckForUpdate\|array $employeeQualificationCheck)` | `bool` |
 | `Isams::humanResources()->employeeQualifications()->all(int $employeeId)` | `Collection<Qualification>` |
 | `Isams::humanResources()->employeeQualifications()->create(int $employeeId, QualificationForCreate\|array $qualification)` | `Created` |
-| `Isams::humanResources()->employeeQualifications()->delete(int $employeeId, int $qualificationId)` | nothing |
-| `Isams::humanResources()->employeeQualifications()->update(int $employeeId, int $qualificationId, QualificationForUpdate\|array $qualification)` | nothing |
+| `Isams::humanResources()->employeeQualifications()->delete(int $employeeId, int $qualificationId)` | `bool` |
+| `Isams::humanResources()->employeeQualifications()->update(int $employeeId, int $qualificationId, QualificationForUpdate\|array $qualification)` | `bool` |
 | `Isams::humanResources()->employeeReferenceChecks()->all(int $employeeId)` | `Collection<EmployeeReferenceCheck>` |
 | `Isams::humanResources()->employeeReferenceChecks()->create(int $employeeId, EmployeeReferenceCheckForCreate\|array $employeeReferenceCheck)` | `Created` |
-| `Isams::humanResources()->employeeReferenceChecks()->delete(int $employeeId, int $referenceCheckId)` | nothing |
+| `Isams::humanResources()->employeeReferenceChecks()->delete(int $employeeId, int $referenceCheckId)` | `bool` |
 | `Isams::humanResources()->employeeReferenceChecks()->get(int $employeeId, int $referenceCheckId)` | `EmployeeReferenceCheck` |
-| `Isams::humanResources()->employeeReferenceChecks()->update(int $employeeId, int $referenceCheckId, EmployeeReferenceCheckForUpdate\|array $employeeReferenceCheck)` | nothing |
+| `Isams::humanResources()->employeeReferenceChecks()->update(int $employeeId, int $referenceCheckId, EmployeeReferenceCheckForUpdate\|array $employeeReferenceCheck)` | `bool` |
 | `Isams::humanResources()->employeeRightToWorkChecks()->all(int $employeeId)` | `Collection<EmployeeRightToWorkCheck>` |
 | `Isams::humanResources()->employeeRightToWorkChecks()->create(int $employeeId, EmployeeRightToWorkCheckForCreate\|array $employeeRightToWorkCheck)` | `Created` |
-| `Isams::humanResources()->employeeRightToWorkChecks()->delete(int $employeeId, int $rightToWorkCheckId)` | nothing |
+| `Isams::humanResources()->employeeRightToWorkChecks()->delete(int $employeeId, int $rightToWorkCheckId)` | `bool` |
 | `Isams::humanResources()->employeeRightToWorkChecks()->get(int $employeeId, int $rightToWorkCheckId)` | `EmployeeRightToWorkCheck` |
-| `Isams::humanResources()->employeeRightToWorkChecks()->update(int $employeeId, int $rightToWorkCheckId, EmployeeRightToWorkCheckForUpdate\|array $employeeRightToWorkCheck)` | nothing |
+| `Isams::humanResources()->employeeRightToWorkChecks()->update(int $employeeId, int $rightToWorkCheckId, EmployeeRightToWorkCheckForUpdate\|array $employeeRightToWorkCheck)` | `bool` |
 | `Isams::humanResources()->employeeRoles()->add(int $employeeId, int $roleId)` | `Created` |
 | `Isams::humanResources()->employeeRoles()->all(int $employeeId)` | `Collection<Role>` |
-| `Isams::humanResources()->employeeRoles()->remove(int $employeeId, int $roleId)` | nothing |
+| `Isams::humanResources()->employeeRoles()->remove(int $employeeId, int $roleId)` | `bool` |
 | `Isams::humanResources()->employeeTeachingProhibitionChecks()->get(int $employeeId)` | `EmployeeTeachingProhibitionCheck` |
-| `Isams::humanResources()->employeeTeachingProhibitionChecks()->update(int $employeeId, EmployeeTeachingProhibitionCheckForUpdate\|array $employeeTeachingProhibitionCheck)` | nothing |
+| `Isams::humanResources()->employeeTeachingProhibitionChecks()->update(int $employeeId, EmployeeTeachingProhibitionCheckForUpdate\|array $employeeTeachingProhibitionCheck)` | `bool` |
 | `Isams::humanResources()->employees()->all(string $expand = null, string\|Stringable\|null $filter = null)` | `LazyCollection<Employee>` |
 | `Isams::humanResources()->employees()->create(EmployeeForCreate\|array $employee)` | `Created` |
 | `Isams::humanResources()->employees()->get(int $id, string $expand = null, string\|Stringable\|null $filter = null)` | `Employee` |
 | `Isams::humanResources()->employees()->getByUserCode(string $userCode)` | `Employee` |
-| `Isams::humanResources()->employees()->update(int $id, EmployeeForUpdate\|array $employee)` | nothing |
+| `Isams::humanResources()->employees()->update(int $id, EmployeeForUpdate\|array $employee)` | `bool` |
 | `Isams::humanResources()->employmentTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->employmentTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->employmentTypes()->delete(int $id)` | nothing |
-| `Isams::humanResources()->employmentTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->employmentTypes()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->employmentTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->leavingReasons()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->leavingReasons()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->leavingReasons()->delete(int $id)` | nothing |
-| `Isams::humanResources()->leavingReasons()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->leavingReasons()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->leavingReasons()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->qualificationLevels()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->qualificationLevels()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->qualificationLevels()->delete(int $id)` | nothing |
-| `Isams::humanResources()->qualificationLevels()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->qualificationLevels()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->qualificationLevels()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->qualificationSubjects()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->qualificationSubjects()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->qualificationSubjects()->delete(int $id)` | nothing |
-| `Isams::humanResources()->qualificationSubjects()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->qualificationSubjects()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->qualificationSubjects()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->qualificationTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::humanResources()->qualificationTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::humanResources()->qualificationTypes()->delete(int $id)` | nothing |
-| `Isams::humanResources()->qualificationTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::humanResources()->qualificationTypes()->delete(int $id)` | `bool` |
+| `Isams::humanResources()->qualificationTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::humanResources()->roleEmployees()->add(int $roleId, int $employeeId)` | `Created` |
 | `Isams::humanResources()->roleEmployees()->all(int $roleId)` | `Collection<Employee>` |
-| `Isams::humanResources()->roleEmployees()->remove(int $roleId, int $employeeId)` | nothing |
+| `Isams::humanResources()->roleEmployees()->remove(int $roleId, int $employeeId)` | `bool` |
 | `Isams::humanResources()->roles()->all()` | `Collection<Role>` |
 | `Isams::humanResources()->roles()->create(RoleForCreate\|array $role)` | `Created` |
 | `Isams::humanResources()->roles()->get(int $id)` | `Role` |
-| `Isams::humanResources()->roles()->update(int $id, RoleForUpdate\|array $role)` | nothing |
+| `Isams::humanResources()->roles()->update(int $id, RoleForUpdate\|array $role)` | `bool` |
 | `Isams::humanResources()->salaries()->all(int $contractId)` | `Collection<Salary>` |
 | `Isams::humanResources()->salaries()->create(int $contractId, SalaryForCreate\|array $salary)` | `Created` |
-| `Isams::humanResources()->salaries()->delete(int $contractId, int $salaryId)` | nothing |
+| `Isams::humanResources()->salaries()->delete(int $contractId, int $salaryId)` | `bool` |
 | `Isams::humanResources()->salaries()->get(int $contractId, int $salaryId)` | `Salary` |
-| `Isams::humanResources()->salaries()->patch(int $contractId, int $salaryId, JsonPatch\|array $patch)` | nothing |
+| `Isams::humanResources()->salaries()->patch(int $contractId, int $salaryId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::humanResources()->salaryAdditionalPayments()->all(int $salaryId)` | `Collection<AdditionalPayment>` |
 | `Isams::humanResources()->salaryAdditionalPayments()->create(int $salaryId, AdditionalPaymentForCreate\|array $additionalPayment)` | `Created` |
-| `Isams::humanResources()->salaryAdditionalPayments()->delete(int $salaryId, int $additionalPaymentId)` | nothing |
+| `Isams::humanResources()->salaryAdditionalPayments()->delete(int $salaryId, int $additionalPaymentId)` | `bool` |
 | `Isams::humanResources()->salaryAdditionalPayments()->get(int $salaryId, int $additionalPaymentId)` | `AdditionalPayment` |
-| `Isams::humanResources()->salaryAdditionalPayments()->patch(int $salaryId, int $additionalPaymentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::humanResources()->salaryAdditionalPayments()->patch(int $salaryId, int $additionalPaymentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::humanResources()->salaryPayScales()->all()` | `Collection<SalaryPayScale>` |
 | `Isams::humanResources()->teachingSkills()->all()` | `Collection<TeachingSkill>` |
 | `Isams::humanResources()->teachingSkills()->create(TeachingSkillForCreate\|array $teachingSkill)` | `Created` |
-| `Isams::humanResources()->teachingSkills()->delete(int $id)` | nothing |
+| `Isams::humanResources()->teachingSkills()->delete(int $id)` | `bool` |
 | `Isams::humanResources()->teachingSkills()->get(int $id)` | `TeachingSkill` |
-| `Isams::humanResources()->teachingSkills()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::humanResources()->teachingSkills()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 
 ## Medical Centre
 
@@ -654,9 +656,9 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::medicalCentre()->consent()->getTypes()` | `Collection<ConsentType>` |
 | `Isams::medicalCentre()->doctors()->all(int $surgeryId)` | `Collection<Doctor>` |
 | `Isams::medicalCentre()->doctors()->create(int $surgeryId, DoctorForCreate\|array $doctor)` | `Created` |
-| `Isams::medicalCentre()->doctors()->delete(string $surgeryId, int $doctorId)` | nothing |
+| `Isams::medicalCentre()->doctors()->delete(string $surgeryId, int $doctorId)` | `bool` |
 | `Isams::medicalCentre()->doctors()->get(string $surgeryId, int $doctorId)` | `Doctor` |
-| `Isams::medicalCentre()->doctors()->patch(string $surgeryId, int $doctorId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->doctors()->patch(string $surgeryId, int $doctorId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->document()->getCategories()` | `Collection<DocumentCategory>` |
 | `Isams::medicalCentre()->inventory()->getTypes()` | `Collection<InventoryType>` |
 | `Isams::medicalCentre()->medication()->getLocations()` | `Collection<MedicationLocation>` |
@@ -666,71 +668,71 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::medicalCentre()->stock()->getReasons()` | `Collection<StockReason>` |
 | `Isams::medicalCentre()->studentBmi()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Bmi>` |
 | `Isams::medicalCentre()->studentBmi()->create(string $schoolId, BmiForCreate\|array $bmi)` | `Created` |
-| `Isams::medicalCentre()->studentBmi()->delete(string $schoolId, string $bmiId)` | nothing |
+| `Isams::medicalCentre()->studentBmi()->delete(string $schoolId, string $bmiId)` | `bool` |
 | `Isams::medicalCentre()->studentBmi()->get(string $schoolId, string $bmiId)` | `Bmi` |
-| `Isams::medicalCentre()->studentBmi()->patch(string $schoolId, string $bmiId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentBmi()->patch(string $schoolId, string $bmiId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentConditions()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Condition>` |
 | `Isams::medicalCentre()->studentConditions()->archive(string $schoolId, string $conditionId)` | `Created` |
 | `Isams::medicalCentre()->studentConditions()->create(string $schoolId, ConditionForCreate\|array $condition)` | `Created` |
-| `Isams::medicalCentre()->studentConditions()->delete(string $schoolId, string $conditionId)` | nothing |
+| `Isams::medicalCentre()->studentConditions()->delete(string $schoolId, string $conditionId)` | `bool` |
 | `Isams::medicalCentre()->studentConditions()->get(string $schoolId, string $conditionId)` | `Condition` |
-| `Isams::medicalCentre()->studentConditions()->patch(string $schoolId, string $conditionId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentConditions()->patch(string $schoolId, string $conditionId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentConditions()->restore(string $schoolId, string $conditionId)` | `Created` |
 | `Isams::medicalCentre()->studentConsents()->all(string $schoolId)` | `Collection<Consent>` |
 | `Isams::medicalCentre()->studentConsents()->archive(string $schoolId, string $consentId)` | `Created` |
 | `Isams::medicalCentre()->studentConsents()->create(string $schoolId, ConsentForCreate\|array $consent)` | `Created` |
-| `Isams::medicalCentre()->studentConsents()->delete(string $schoolId, string $consentId)` | nothing |
+| `Isams::medicalCentre()->studentConsents()->delete(string $schoolId, string $consentId)` | `bool` |
 | `Isams::medicalCentre()->studentConsents()->get(string $schoolId, string $consentId)` | `Consent` |
-| `Isams::medicalCentre()->studentConsents()->patch(string $schoolId, string $consentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentConsents()->patch(string $schoolId, string $consentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentConsents()->restore(string $schoolId, string $consentId)` | `Created` |
 | `Isams::medicalCentre()->studentDoctor()->create(string $schoolId, PersonDoctorAndSurgeryForCreate\|array $personDoctorAndSurgery)` | `Created` |
-| `Isams::medicalCentre()->studentDoctor()->delete(string $schoolId)` | nothing |
+| `Isams::medicalCentre()->studentDoctor()->delete(string $schoolId)` | `bool` |
 | `Isams::medicalCentre()->studentDoctor()->get(string $schoolId)` | `PersonDoctorAndSurgery` |
-| `Isams::medicalCentre()->studentDoctor()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentDoctor()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentDocuments()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Document>` |
 | `Isams::medicalCentre()->studentDocuments()->archive(string $schoolId, string $documentId)` | `Created` |
 | `Isams::medicalCentre()->studentDocuments()->create(string $schoolId, MultipartValue $binary, DocumentForCreate\|array $data)` | `Created` |
-| `Isams::medicalCentre()->studentDocuments()->delete(string $schoolId, string $documentId)` | nothing |
+| `Isams::medicalCentre()->studentDocuments()->delete(string $schoolId, string $documentId)` | `bool` |
 | `Isams::medicalCentre()->studentDocuments()->download(string $schoolId, string $documentId)` | `File` |
 | `Isams::medicalCentre()->studentDocuments()->get(string $schoolId, string $documentId)` | `Document` |
-| `Isams::medicalCentre()->studentDocuments()->patch(string $schoolId, string $documentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentDocuments()->patch(string $schoolId, string $documentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentDocuments()->restore(string $schoolId, string $documentId)` | `Created` |
 | `Isams::medicalCentre()->studentInventory()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Inventory>` |
 | `Isams::medicalCentre()->studentInventory()->archive(string $schoolId, string $inventoryId)` | `Created` |
 | `Isams::medicalCentre()->studentInventory()->create(string $schoolId, InventoryForCreate\|array $inventory)` | `Created` |
-| `Isams::medicalCentre()->studentInventory()->delete(string $schoolId, string $inventoryId)` | nothing |
+| `Isams::medicalCentre()->studentInventory()->delete(string $schoolId, string $inventoryId)` | `bool` |
 | `Isams::medicalCentre()->studentInventory()->get(string $schoolId, string $inventoryId)` | `Inventory` |
-| `Isams::medicalCentre()->studentInventory()->patch(string $schoolId, string $inventoryId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentInventory()->patch(string $schoolId, string $inventoryId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentInventory()->restore(string $schoolId, string $inventoryId)` | `Created` |
 | `Isams::medicalCentre()->studentMedication()->all(string $schoolId, bool $includeArchive = null)` | `Collection<Medication>` |
 | `Isams::medicalCentre()->studentMedication()->archive(string $schoolId, string $medicationId)` | `Created` |
 | `Isams::medicalCentre()->studentMedication()->create(string $schoolId, MedicationForCreate\|array $medication)` | `Created` |
-| `Isams::medicalCentre()->studentMedication()->delete(string $schoolId, string $medicationId)` | nothing |
+| `Isams::medicalCentre()->studentMedication()->delete(string $schoolId, string $medicationId)` | `bool` |
 | `Isams::medicalCentre()->studentMedication()->get(string $schoolId, string $medicationId)` | `Medication` |
-| `Isams::medicalCentre()->studentMedication()->patch(string $schoolId, string $medicationId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentMedication()->patch(string $schoolId, string $medicationId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentMedication()->restore(string $schoolId, string $medicationId)` | `Created` |
 | `Isams::medicalCentre()->studentNotes()->all(string $schoolId)` | `Collection<IMedicalNote>` |
 | `Isams::medicalCentre()->studentNotes()->archive(string $schoolId, string $noteId)` | `Created` |
 | `Isams::medicalCentre()->studentNotes()->create(string $schoolId, MedicalNoteForCreate\|array $medicalNote)` | `Created` |
-| `Isams::medicalCentre()->studentNotes()->delete(string $schoolId, string $noteId)` | nothing |
+| `Isams::medicalCentre()->studentNotes()->delete(string $schoolId, string $noteId)` | `bool` |
 | `Isams::medicalCentre()->studentNotes()->get(string $schoolId, string $noteId)` | `MedicalNote` |
-| `Isams::medicalCentre()->studentNotes()->patch(string $schoolId, string $noteId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentNotes()->patch(string $schoolId, string $noteId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentNotes()->restore(string $schoolId, string $noteId)` | `Created` |
 | `Isams::medicalCentre()->studentVaccinations()->all(string $schoolId)` | `Collection<Vaccination>` |
 | `Isams::medicalCentre()->studentVaccinations()->create(string $schoolId, VaccinationForCreate\|array $vaccination)` | `Created` |
-| `Isams::medicalCentre()->studentVaccinations()->delete(string $schoolId, string $vaccinationId)` | nothing |
+| `Isams::medicalCentre()->studentVaccinations()->delete(string $schoolId, string $vaccinationId)` | `bool` |
 | `Isams::medicalCentre()->studentVaccinations()->get(string $schoolId, string $vaccinationId)` | `Vaccination` |
-| `Isams::medicalCentre()->studentVaccinations()->patch(string $schoolId, string $vaccinationId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentVaccinations()->patch(string $schoolId, string $vaccinationId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->studentVisits()->all(string $schoolId)` | `Collection<Visit>` |
 | `Isams::medicalCentre()->studentVisits()->create(string $schoolId, VisitForCreate\|array $visit)` | `Created` |
-| `Isams::medicalCentre()->studentVisits()->delete(string $schoolId, string $visitId)` | nothing |
+| `Isams::medicalCentre()->studentVisits()->delete(string $schoolId, string $visitId)` | `bool` |
 | `Isams::medicalCentre()->studentVisits()->get(string $schoolId, string $visitId)` | `Visit` |
-| `Isams::medicalCentre()->studentVisits()->patch(string $schoolId, string $visitId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->studentVisits()->patch(string $schoolId, string $visitId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->surgeries()->all()` | `Collection<Surgery>` |
 | `Isams::medicalCentre()->surgeries()->create(SurgeryForCreate\|array $surgery)` | `Created` |
-| `Isams::medicalCentre()->surgeries()->delete(int $surgeryId)` | nothing |
+| `Isams::medicalCentre()->surgeries()->delete(int $surgeryId)` | `bool` |
 | `Isams::medicalCentre()->surgeries()->get(int $surgeryId)` | `Surgery` |
-| `Isams::medicalCentre()->surgeries()->patch(int $surgeryId, JsonPatch\|array $patch)` | nothing |
+| `Isams::medicalCentre()->surgeries()->patch(int $surgeryId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::medicalCentre()->vaccination()->getCompleteTo()` | `Collection<VaccinationCompleteTo>` |
 | `Isams::medicalCentre()->vaccination()->getSchedules()` | `Collection<VaccinationSchedule>` |
 | `Isams::medicalCentre()->vaccination()->getStatuses()` | `Collection<VaccinationStatus>` |
@@ -755,7 +757,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::otherSchools()->create(OtherSchoolForCreate\|array $otherSchool)` | `Created` |
 | `Isams::otherSchools()->get(int $id)` | `OtherSchool` |
 | `Isams::otherSchools()->professions()->all()` | `Collection<Profession>` |
-| `Isams::otherSchools()->update(int $id, OtherSchoolForUpdate\|array $otherSchool)` | nothing |
+| `Isams::otherSchools()->update(int $id, OtherSchoolForUpdate\|array $otherSchool)` | `bool` |
 
 ## Registration
 
@@ -764,8 +766,8 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::registration()->absenceCodes()->all()` | `Collection<AbsenceCode>` |
 | `Isams::registration()->natureOfAbsence()->all(DateTimeInterface\|string\|null $registrationFrom = null, DateTimeInterface\|string\|null $registrationTo = null, string $code = null, bool $onlyEmptyNatureOfAbsence = null, string $orderBy = null)` | `LazyCollection<NatureOfAbsence>` |
 | `Isams::registration()->natureOfAbsence()->create(int $registrationPupilId, string $reason)` | `Created` |
-| `Isams::registration()->natureOfAbsence()->delete(int $registrationPupilId)` | nothing |
-| `Isams::registration()->natureOfAbsence()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::registration()->natureOfAbsence()->delete(int $registrationPupilId)` | `bool` |
+| `Isams::registration()->natureOfAbsence()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::registration()->offGames()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<RegistrationOffGame>` |
 | `Isams::registration()->offGames()->create(RegistrationOffGameForCreate\|array $registrationOffGame)` | `Created` |
 | `Isams::registration()->periods()->all(DateTimeInterface\|string\|null $endDate = null, DateTimeInterface\|string\|null $startDate = null, int $divisionId = null, string $userCode = null)` | `Collection<RegistrationPeriod>` |
@@ -773,13 +775,13 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::registration()->presentCodes()->all()` | `Collection<PresentCode>` |
 | `Isams::registration()->reasonForChange()->all(DateTimeInterface\|string\|null $changeDateStart = null, DateTimeInterface\|string\|null $changeDateEnd = null, bool $onlyEmptyReasons = null, bool $oldestFirst = null)` | `LazyCollection<AttendanceCodeReasonForChange>` |
 | `Isams::registration()->reasonForChange()->create(int $periodId, string $schoolId, AttendanceCodeReasonForChangeForCreate\|array $attendanceCodeReasonForChange)` | `Created` |
-| `Isams::registration()->reasonForChange()->delete(int $periodId, string $schoolId, int $codeChangeId)` | nothing |
-| `Isams::registration()->reasonForChange()->patch(int $periodId, string $schoolId, int $codeChangeId, JsonPatch\|array $patch)` | nothing |
+| `Isams::registration()->reasonForChange()->delete(int $periodId, string $schoolId, int $codeChangeId)` | `bool` |
+| `Isams::registration()->reasonForChange()->patch(int $periodId, string $schoolId, int $codeChangeId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::registration()->rules()->all()` | `Collection<RegistrationRule>` |
 | `Isams::registration()->rules()->get(int $id)` | `RegistrationRule` |
 | `Isams::registration()->status()->all(int $registrationPeriodId)` | `LazyCollection<RegistrationStatus>` |
 | `Isams::registration()->statusStudents()->get(int $registrationPeriodId, string $schoolId)` | `RegistrationStatus` |
-| `Isams::registration()->statusStudents()->update(int $registrationPeriodId, string $schoolId, UpdateRegistrationStatusCommand\|array $updateRegistrationStatus)` | nothing |
+| `Isams::registration()->statusStudents()->update(int $registrationPeriodId, string $schoolId, UpdateRegistrationStatusCommand\|array $updateRegistrationStatus)` | `bool` |
 
 ## Rewards And Conduct
 
@@ -795,7 +797,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::rewardsAndConduct()->rewards()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<Reward>` |
 | `Isams::rewardsAndConduct()->rewards()->create(string $schoolId, RewardForCreate\|array $reward)` | `Created` |
 | `Isams::rewardsAndConduct()->rewards()->get(string $schoolId, int $rewardId)` | `Collection<Category>` |
-| `Isams::rewardsAndConduct()->rewards()->update(string $schoolId, int $rewardId, RewardForUpdate\|array $reward)` | nothing |
+| `Isams::rewardsAndConduct()->rewards()->update(string $schoolId, int $rewardId, RewardForUpdate\|array $reward)` | `bool` |
 
 ## School
 
@@ -812,7 +814,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::school()->houses()->get(int $id)` | `House` |
 | `Isams::school()->teachingDepartmentSubjects()->add(int $departmentId, int $subjectId)` | `Created` |
 | `Isams::school()->teachingDepartmentSubjects()->all(int $departmentId)` | `Collection<Subject>` |
-| `Isams::school()->teachingDepartmentSubjects()->remove(int $departmentId, int $subjectId)` | nothing |
+| `Isams::school()->teachingDepartmentSubjects()->remove(int $departmentId, int $subjectId)` | `bool` |
 | `Isams::school()->terms()->all(string\|Stringable\|null $filter = null)` | `Collection<Term>` |
 | `Isams::school()->yearGroupDivisions()->all(int $id)` | `Collection<YearGroupDivision>` |
 | `Isams::school()->yearGroups()->all()` | `Collection<YearGroup>` |
@@ -822,7 +824,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 
 | Call | Returns |
 |---|---|
-| `Isams::storage()->files()->delete(string $path, string $filename)` | nothing |
+| `Isams::storage()->files()->delete(string $path, string $filename)` | `bool` |
 | `Isams::storage()->files()->download(string $path, string $fileName)` | `File` |
 | `Isams::storage()->files()->upload(string $key, MultipartValue $file, string $filename, string $path, bool $overwrite = null)` | `Created` |
 
@@ -833,23 +835,23 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::studentRegisters()->all()` | `LazyCollection<Register>` |
 | `Isams::studentRegisters()->association()->all(int $registerId, string $systemStatus = null)` | `LazyCollection<StudentRegisterAssociation>` |
 | `Isams::studentRegisters()->association()->get(int $registerId, string $schoolId)` | `RegisterAssociation` |
-| `Isams::studentRegisters()->association()->update(int $registerId, string $schoolId, RegisterAssociationForCreate\|array $registerAssociation)` | nothing |
+| `Isams::studentRegisters()->association()->update(int $registerId, string $schoolId, RegisterAssociationForCreate\|array $registerAssociation)` | `bool` |
 | `Isams::studentRegisters()->dateRanges()->all(int $registerId, string $systemStatus = null)` | `LazyCollection<StudentDateRanges>` |
 | `Isams::studentRegisters()->dateRanges()->create(int $registerId, string $schoolId, DateRangeForCreate\|array $dateRange)` | `Created` |
-| `Isams::studentRegisters()->dateRanges()->delete(int $registerId, string $schoolId, int $dateRangeId)` | nothing |
+| `Isams::studentRegisters()->dateRanges()->delete(int $registerId, string $schoolId, int $dateRangeId)` | `bool` |
 | `Isams::studentRegisters()->dateRanges()->forStudent(int $registerId, string $schoolId)` | `Collection<DateRange>` |
-| `Isams::studentRegisters()->dateRanges()->update(int $registerId, string $schoolId, int $dateRangeId, DateRangeForUpdate\|array $dateRange)` | nothing |
+| `Isams::studentRegisters()->dateRanges()->update(int $registerId, string $schoolId, int $dateRangeId, DateRangeForUpdate\|array $dateRange)` | `bool` |
 | `Isams::studentRegisters()->fields()->all(int $registerId, string $systemStatus = null)` | `LazyCollection<StudentFields>` |
 | `Isams::studentRegisters()->fields()->forStudent(int $registerId, string $schoolId)` | `FieldCollection` |
-| `Isams::studentRegisters()->fields()->patchMany(int $registerId, string $schoolId, array $values)` | nothing |
+| `Isams::studentRegisters()->fields()->patchMany(int $registerId, string $schoolId, array $values)` | `bool` |
 | `Isams::studentRegisters()->getRecordCollectionElements(int $registerId)` | `Collection<RecordCollectionElement>` |
 | `Isams::studentRegisters()->lists()->getItems(int $listId)` | `Collection<ListItem>` |
 | `Isams::studentRegisters()->metadata()->get(int $registerId, string $expand = null)` | `Collection<MetadataField>` |
 | `Isams::studentRegisters()->recordCollection()->all(int $registerId, int $recordCollectionId, string $systemStatus = null)` | `LazyCollection<StudentRecords>` |
 | `Isams::studentRegisters()->recordCollection()->create(int $registerId, string $schoolId, int $recordCollectionId, array $values)` | `Created` |
-| `Isams::studentRegisters()->recordCollection()->delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId)` | nothing |
+| `Isams::studentRegisters()->recordCollection()->delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId)` | `bool` |
 | `Isams::studentRegisters()->recordCollection()->forStudent(int $registerId, string $schoolId, int $recordCollectionId)` | `Collection<Record>` |
-| `Isams::studentRegisters()->recordCollection()->patch(int $registerId, string $schoolId, int $recordCollectionId, int $recordId, array $values)` | nothing |
+| `Isams::studentRegisters()->recordCollection()->patch(int $registerId, string $schoolId, int $recordCollectionId, int $recordId, array $values)` | `bool` |
 | `Isams::studentRegisters()->screeningLogs()->all(int $registerId, string $schoolId)` | `Collection<StudentScreeningLog>` |
 
 ## Students
@@ -861,23 +863,23 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::students()->alumni()->get(string $schoolId, string $expand = null)` | `Alumni` |
 | `Isams::students()->alumni()->moveToApplicant(string $schoolId)` | `Created` |
 | `Isams::students()->alumni()->moveToCurrent(string $schoolId)` | `Created` |
-| `Isams::students()->alumni()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::students()->alumni()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::students()->alumniContacts()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<AlumniContact>` |
 | `Isams::students()->alumniCustomFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::students()->alumniCustomFields()->get(string $schoolId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::students()->alumniCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | nothing |
-| `Isams::students()->alumniCustomFields()->patchMany(string $schoolId, array $customFields)` | nothing |
+| `Isams::students()->alumniCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
+| `Isams::students()->alumniCustomFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::students()->alumniStudents()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<AlumniStudent>` |
 | `Isams::students()->alumniStudents()->get(string $schoolId)` | `AlumniStudent` |
-| `Isams::students()->alumniStudents()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::students()->alumniStudents()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::students()->applicantCustomFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::students()->applicantCustomFields()->get(string $schoolId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::students()->applicantCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | nothing |
-| `Isams::students()->applicantCustomFields()->patchMany(string $schoolId, array $customFields)` | nothing |
+| `Isams::students()->applicantCustomFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
+| `Isams::students()->applicantCustomFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::students()->boardingStatuses()->all()` | `Collection<GlobalListItem>` |
 | `Isams::students()->boardingStatuses()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::students()->boardingStatuses()->delete(int $id)` | nothing |
-| `Isams::students()->boardingStatuses()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::students()->boardingStatuses()->delete(int $id)` | `bool` |
+| `Isams::students()->boardingStatuses()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::students()->communicationHistory()->create(string $schoolId, StudentCommunicationHistoryForCreate\|array $studentCommunicationHistory)` | `Created` |
 | `Isams::students()->communicationHistory()->createAttachments(string $schoolId, int $id, MultipartValue $attachment)` | `Created` |
 | `Isams::students()->contactGroupContacts()->all(int $contactGroupId, bool $includeDeceased = null, string\|Stringable\|null $filter = null)` | `Collection<ContactGroupContact>` |
@@ -887,59 +889,59 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::students()->create(StudentForCreate\|array $student)` | `Created` |
 | `Isams::students()->customFields()->all(string $schoolId, string\|Stringable\|null $filter = null)` | `Collection<CustomField>` |
 | `Isams::students()->customFields()->get(string $schoolId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::students()->customFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | nothing |
-| `Isams::students()->customFields()->patchMany(string $schoolId, array $customFields)` | nothing |
+| `Isams::students()->customFields()->patch(string $schoolId, int $customFieldId, CustomFieldForPatch\|array $customField)` | `bool` |
+| `Isams::students()->customFields()->patchMany(string $schoolId, array $customFields)` | `bool` |
 | `Isams::students()->customStudentGroupStudents()->all(int $customGroupId, string\|Stringable\|null $filter = null)` | `Collection<CustomStudentGroupStudent>` |
 | `Isams::students()->customStudentGroupStudents()->create(int $customGroupId, string $schoolId, CustomStudentGroupStudentForCreate\|array $customStudentGroupStudent)` | `Created` |
-| `Isams::students()->customStudentGroupStudents()->delete(int $customGroupId, string $schoolId)` | nothing |
-| `Isams::students()->customStudentGroupStudents()->update(int $customGroupId, string $schoolId, CustomStudentGroupStudentForUpdate\|array $customStudentGroupStudent)` | nothing |
+| `Isams::students()->customStudentGroupStudents()->delete(int $customGroupId, string $schoolId)` | `bool` |
+| `Isams::students()->customStudentGroupStudents()->update(int $customGroupId, string $schoolId, CustomStudentGroupStudentForUpdate\|array $customStudentGroupStudent)` | `bool` |
 | `Isams::students()->customStudentGroups()->all(string\|Stringable\|null $filter = null)` | `Collection<CustomStudentGroup>` |
 | `Isams::students()->customStudentGroups()->create(CustomStudentGroupForCreate\|array $customStudentGroup)` | `Created` |
-| `Isams::students()->customStudentGroups()->delete(int $id)` | nothing |
+| `Isams::students()->customStudentGroups()->delete(int $id)` | `bool` |
 | `Isams::students()->customStudentGroups()->get(int $id)` | `CustomStudentGroup` |
-| `Isams::students()->customStudentGroups()->update(int $id, CustomStudentGroupForUpdate\|array $customStudentGroup)` | nothing |
+| `Isams::students()->customStudentGroups()->update(int $id, CustomStudentGroupForUpdate\|array $customStudentGroup)` | `bool` |
 | `Isams::students()->document()->all(string $schoolId)` | `Collection<StudentDocument>` |
-| `Isams::students()->document()->create(string $schoolId, MultipartValue $binary, StudentDocumentForCreate\|array $data)` | nothing |
+| `Isams::students()->document()->create(string $schoolId, MultipartValue $binary, StudentDocumentForCreate\|array $data)` | `bool` |
 | `Isams::students()->documentCategory()->all()` | `Collection<DocumentCategory>` |
 | `Isams::students()->get(string $schoolId, mixed $expand = null)` | `Student` |
 | `Isams::students()->moveToAlumni(string $schoolId)` | `Created` |
 | `Isams::students()->moveToApplicant(string $schoolId)` | `Created` |
 | `Isams::students()->passportCustomFields()->all(string $schoolId, int $passportId)` | `Collection<CustomField>` |
 | `Isams::students()->passportCustomFields()->get(string $schoolId, int $passportId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::students()->passportCustomFields()->patchMany(string $schoolId, int $passportId, array $customFields)` | nothing |
+| `Isams::students()->passportCustomFields()->patchMany(string $schoolId, int $passportId, array $customFields)` | `bool` |
 | `Isams::students()->passportDocuments()->all(string $schoolId, int $passportId)` | `Collection<StudentPassportDocument>` |
-| `Isams::students()->passportDocuments()->create(string $schoolId, int $passportId, MultipartValue $binary, StudentPassportDocumentForCreate\|array $data)` | nothing |
-| `Isams::students()->passportDocuments()->delete(string $schoolId, int $passportId, int $documentId)` | nothing |
+| `Isams::students()->passportDocuments()->create(string $schoolId, int $passportId, MultipartValue $binary, StudentPassportDocumentForCreate\|array $data)` | `bool` |
+| `Isams::students()->passportDocuments()->delete(string $schoolId, int $passportId, int $documentId)` | `bool` |
 | `Isams::students()->passportDocuments()->download(string $schoolId, int $passportId, int $documentId)` | `File` |
 | `Isams::students()->passportDocuments()->get(string $schoolId, int $passportId, int $documentId)` | `StudentPassportDocument` |
-| `Isams::students()->passportDocuments()->patch(string $schoolId, int $passportId, int $documentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::students()->passportDocuments()->patch(string $schoolId, int $passportId, int $documentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::students()->passports()->all(string $schoolId, string $expand = null)` | `Collection<StudentPassport>` |
 | `Isams::students()->passports()->create(string $schoolId, StudentPassportForCreate\|array $studentPassport)` | `Created` |
-| `Isams::students()->passports()->delete(string $schoolId, int $id)` | nothing |
+| `Isams::students()->passports()->delete(string $schoolId, int $id)` | `bool` |
 | `Isams::students()->passports()->get(string $schoolId, int $id, string $expand = null)` | `StudentPassport` |
-| `Isams::students()->passports()->update(string $schoolId, int $id, StudentPassportForUpdate\|array $studentPassport)` | nothing |
-| `Isams::students()->passports()->updateMany(string $schoolId, array $studentPassports)` | nothing |
-| `Isams::students()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::students()->passports()->update(string $schoolId, int $id, StudentPassportForUpdate\|array $studentPassport)` | `bool` |
+| `Isams::students()->passports()->updateMany(string $schoolId, array $studentPassports)` | `bool` |
+| `Isams::students()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::students()->photos()->create(string $schoolId, MultipartValue $photo)` | `Created` |
 | `Isams::students()->photos()->get(string $schoolId, int $photoId)` | `File` |
 | `Isams::students()->photos()->getCurrent(string $schoolId)` | `File` |
 | `Isams::students()->systemStatuses()->all()` | `Collection<StudentSystemStatus>` |
-| `Isams::students()->update(string $schoolId, StudentForUpdate\|array $student)` | nothing |
+| `Isams::students()->update(string $schoolId, StudentForUpdate\|array $student)` | `bool` |
 | `Isams::students()->visaCustomFields()->all(string $schoolId, int $visaId)` | `Collection<CustomField>` |
 | `Isams::students()->visaCustomFields()->get(string $schoolId, int $visaId, int $customFieldId)` | `Collection<CustomField>` |
-| `Isams::students()->visaCustomFields()->patchMany(string $schoolId, int $visaId, array $customFields)` | nothing |
+| `Isams::students()->visaCustomFields()->patchMany(string $schoolId, int $visaId, array $customFields)` | `bool` |
 | `Isams::students()->visaDocuments()->all(string $schoolId, int $visaId)` | `Collection<StudentVisaDocument>` |
-| `Isams::students()->visaDocuments()->create(string $schoolId, int $visaId, MultipartValue $binary, StudentVisaDocumentForCreate\|array $data)` | nothing |
-| `Isams::students()->visaDocuments()->delete(string $schoolId, int $visaId, int $documentId)` | nothing |
+| `Isams::students()->visaDocuments()->create(string $schoolId, int $visaId, MultipartValue $binary, StudentVisaDocumentForCreate\|array $data)` | `bool` |
+| `Isams::students()->visaDocuments()->delete(string $schoolId, int $visaId, int $documentId)` | `bool` |
 | `Isams::students()->visaDocuments()->download(string $schoolId, int $visaId, int $documentId)` | `File` |
 | `Isams::students()->visaDocuments()->get(string $schoolId, int $visaId, int $documentId)` | `StudentVisaDocument` |
-| `Isams::students()->visaDocuments()->patch(string $schoolId, int $visaId, int $documentId, JsonPatch\|array $patch)` | nothing |
+| `Isams::students()->visaDocuments()->patch(string $schoolId, int $visaId, int $documentId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::students()->visas()->all(string $schoolId, string $expand = null)` | `Collection<StudentVisa>` |
 | `Isams::students()->visas()->create(string $schoolId, StudentVisaForCreate\|array $studentVisa)` | `Created` |
-| `Isams::students()->visas()->delete(string $schoolId, int $id)` | nothing |
+| `Isams::students()->visas()->delete(string $schoolId, int $id)` | `bool` |
 | `Isams::students()->visas()->get(string $schoolId, int $id, string $expand = null)` | `StudentVisa` |
-| `Isams::students()->visas()->update(string $schoolId, int $id, StudentVisaForUpdate\|array $studentVisa)` | nothing |
-| `Isams::students()->visas()->updateMany(string $schoolId, array $studentVisas)` | nothing |
+| `Isams::students()->visas()->update(string $schoolId, int $id, StudentVisaForUpdate\|array $studentVisa)` | `bool` |
+| `Isams::students()->visas()->updateMany(string $schoolId, array $studentVisas)` | `bool` |
 
 ## System Configuration
 
@@ -947,69 +949,69 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 |---|---|
 | `Isams::systemConfiguration()->list()->admissionsStatus()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->admissionsStatus()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->admissionsStatus()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->admissionsStatus()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->admissionsStatus()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->admissionsStatus()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->contactTypes()->all()` | `Collection<ContactType>` |
 | `Isams::systemConfiguration()->list()->counties()->all()` | `Collection<GlobalListItemWithCensusData>` |
 | `Isams::systemConfiguration()->list()->counties()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->counties()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->counties()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->counties()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->counties()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->countries()->all()` | `Collection<GlobalListItemWithCensusData>` |
 | `Isams::systemConfiguration()->list()->countries()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->countries()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->countries()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->countries()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->countries()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->ethnicity()->all()` | `Collection<GlobalListItemWithCensusData>` |
 | `Isams::systemConfiguration()->list()->ethnicity()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->ethnicity()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->ethnicity()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->ethnicity()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->ethnicity()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->getByType(string $listType)` | `Collection<GlobalListItemWithCensusData>` |
 | `Isams::systemConfiguration()->list()->languages()->all()` | `Collection<GlobalListItemWithCensusData>` |
 | `Isams::systemConfiguration()->list()->languages()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->languages()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->languages()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->languages()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->languages()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->nationalities()->all()` | `Collection<GlobalListItemWithCensusData>` |
 | `Isams::systemConfiguration()->list()->nationalities()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->nationalities()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->nationalities()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->nationalities()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->nationalities()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->offerTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->offerTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->offerTypes()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->offerTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->offerTypes()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->offerTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->passportPlaceIssued()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->passportPlaceIssued()->delete(int $id)` | nothing |
+| `Isams::systemConfiguration()->list()->passportPlaceIssued()->delete(int $id)` | `bool` |
 | `Isams::systemConfiguration()->list()->passportPlaceIssued()->get()` | `Collection<GlobalListItem>` |
-| `Isams::systemConfiguration()->list()->passportPlaceIssued()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->passportPlaceIssued()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->passportType()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->passportType()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->passportType()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->passportType()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->passportType()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->passportType()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->religions()->all()` | `Collection<GlobalListItemWithCensusData>` |
 | `Isams::systemConfiguration()->list()->religions()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->religions()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->religions()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->religions()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->religions()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->selectionCategory()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->selectionCategory()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->selectionCategory()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->selectionCategory()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->selectionCategory()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->selectionCategory()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->studentEntryType()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->studentEntryType()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->studentEntryType()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->studentEntryType()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->studentEntryType()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->studentEntryType()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->studentLeavingReasons()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->studentLeavingReasons()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->studentLeavingReasons()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->studentLeavingReasons()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->studentLeavingReasons()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->studentLeavingReasons()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->titles()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->titles()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->titles()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->titles()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->titles()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->titles()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->list()->universities()->all()` | `Collection<University>` |
 | `Isams::systemConfiguration()->list()->universities()->create(UniversityForCreate\|array $university)` | `Created` |
 | `Isams::systemConfiguration()->list()->universities()->get(int $id)` | `University` |
 | `Isams::systemConfiguration()->list()->visaTypes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::systemConfiguration()->list()->visaTypes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::systemConfiguration()->list()->visaTypes()->delete(int $id)` | nothing |
-| `Isams::systemConfiguration()->list()->visaTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::systemConfiguration()->list()->visaTypes()->delete(int $id)` | `bool` |
+| `Isams::systemConfiguration()->list()->visaTypes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::systemConfiguration()->listGroup()->createCustom(GlobalListRuleForCreate\|array $listRule)` | `Created` |
 | `Isams::systemConfiguration()->listGroup()->createItem(string $listType, GlobalListItemForCreate\|array $listItem)` | `Created` |
 | `Isams::systemConfiguration()->listGroup()->getCustom()` | `Collection<GlobalListGroup>` |
@@ -1026,19 +1028,19 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 |---|---|
 | `Isams::teaching()->curriculumSubjectCodes()->all()` | `Collection<GlobalListItem>` |
 | `Isams::teaching()->curriculumSubjectCodes()->create(GlobalListItemForCreate\|array $listItem)` | `Created` |
-| `Isams::teaching()->curriculumSubjectCodes()->delete(int $id)` | nothing |
-| `Isams::teaching()->curriculumSubjectCodes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | nothing |
+| `Isams::teaching()->curriculumSubjectCodes()->delete(int $id)` | `bool` |
+| `Isams::teaching()->curriculumSubjectCodes()->update(int $id, GlobalListItemForUpdate\|array $listItem)` | `bool` |
 | `Isams::teaching()->sets()->addStudent(int $setId, string $schoolId)` | `Created` |
 | `Isams::teaching()->sets()->all()` | `Collection<TeachingSet>` |
 | `Isams::teaching()->sets()->getStudents(int $setId)` | `Collection<Student>` |
-| `Isams::teaching()->sets()->removeStudent(int $setId, string $schoolId)` | nothing |
+| `Isams::teaching()->sets()->removeStudent(int $setId, string $schoolId)` | `bool` |
 | `Isams::teaching()->subjectTeachingDepartments()->add(int $subjectId, int $departmentId)` | `Created` |
 | `Isams::teaching()->subjectTeachingDepartments()->all(int $subjectId)` | `Collection<TeachingDepartment>` |
-| `Isams::teaching()->subjectTeachingDepartments()->remove(int $subjectId, int $departmentId)` | nothing |
+| `Isams::teaching()->subjectTeachingDepartments()->remove(int $subjectId, int $departmentId)` | `bool` |
 | `Isams::teaching()->subjects()->all()` | `Collection<Subject>` |
 | `Isams::teaching()->subjects()->create(SubjectForCreate\|array $subject)` | `Created` |
 | `Isams::teaching()->subjects()->get(int $id)` | `Subject` |
-| `Isams::teaching()->subjects()->update(int $id, SubjectForUpdate\|array $subject)` | nothing |
+| `Isams::teaching()->subjects()->update(int $id, SubjectForUpdate\|array $subject)` | `bool` |
 
 ## Timetable
 
@@ -1049,7 +1051,7 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::timetable()->formTimetables()->get(string $formCode)` | `FormTimetable` |
 | `Isams::timetable()->import()->complete()` | `Created` |
 | `Isams::timetable()->import()->create(TimetableImportRequestForCreate\|array $timetableImportRequest)` | `Created` |
-| `Isams::timetable()->import()->deleteActive()` | nothing |
+| `Isams::timetable()->import()->deleteActive()` | `bool` |
 | `Isams::timetable()->import()->getActive()` | `TimetableImport` |
 | `Isams::timetable()->import()->getResult(int $id)` | `TimetableImportResult` |
 | `Isams::timetable()->roomTimetables()->get(int $roomId)` | `RoomTimetable` |
@@ -1064,108 +1066,108 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 |---|---|
 | `Isams::wellbeingManager()->agency()->all()` | `Collection<Agency>` |
 | `Isams::wellbeingManager()->agency()->create(AgencyForCreate\|array $agency)` | `Created` |
-| `Isams::wellbeingManager()->agency()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->agency()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->agency()->get(int $id)` | `Agency` |
-| `Isams::wellbeingManager()->agency()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->agency()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernActionOutcomes()->all()` | `Collection<ActionOutcome>` |
 | `Isams::wellbeingManager()->concernActionOutcomes()->create(ActionOutcomeForCreate\|array $actionOutcome)` | `Created` |
-| `Isams::wellbeingManager()->concernActionOutcomes()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernActionOutcomes()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernActionOutcomes()->get(int $id)` | `ActionOutcome` |
-| `Isams::wellbeingManager()->concernActionOutcomes()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernActionOutcomes()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernActionStatuses()->all()` | `Collection<ActionStatus>` |
 | `Isams::wellbeingManager()->concernActionStatuses()->get(int $id)` | `ActionStatus` |
 | `Isams::wellbeingManager()->concernActionTypes()->all()` | `Collection<ActionType>` |
 | `Isams::wellbeingManager()->concernActionTypes()->create(ConcernActionTypeForCreate\|array $concernActionType)` | `Created` |
-| `Isams::wellbeingManager()->concernActionTypes()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernActionTypes()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernActionTypes()->get(int $id)` | `ActionType` |
-| `Isams::wellbeingManager()->concernActionTypes()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernActionTypes()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernActions()->create(string $schoolId, int $concernId, ConcernActionForCreate\|array $concernAction)` | `Created` |
-| `Isams::wellbeingManager()->concernActions()->delete(string $schoolId, int $concernId, int $id)` | nothing |
+| `Isams::wellbeingManager()->concernActions()->delete(string $schoolId, int $concernId, int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernActions()->get(string $schoolId, int $concernId, int $id)` | `ConcernAction` |
-| `Isams::wellbeingManager()->concernActions()->patch(string $schoolId, int $concernId, int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernActions()->patch(string $schoolId, int $concernId, int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernAreas()->all()` | `Collection<PastoralConcernArea>` |
 | `Isams::wellbeingManager()->concernAreas()->create(PastoralConcernAreaForCreate\|array $pastoralConcernArea)` | `Created` |
-| `Isams::wellbeingManager()->concernAreas()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernAreas()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernAreas()->get(int $id)` | `PastoralConcernArea` |
-| `Isams::wellbeingManager()->concernAreas()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernAreas()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernDocuments()->all(string $schoolId, int $concernId)` | `Collection<ConcernDocument>` |
 | `Isams::wellbeingManager()->concernDocuments()->create(string $schoolId, int $concernId, MultipartValue $document, ConcernDocumentForCreate\|array $data)` | `Created` |
-| `Isams::wellbeingManager()->concernDocuments()->delete(string $schoolId, int $concernId, int $id)` | nothing |
+| `Isams::wellbeingManager()->concernDocuments()->delete(string $schoolId, int $concernId, int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernDocuments()->download(string $schoolId, int $concernId, int $documentId)` | `File` |
 | `Isams::wellbeingManager()->concernGirfec()->createForm(string $schoolId, int $concernId, ConcernGirfecFormForCreate\|array $concernGirfecForm)` | `Created` |
 | `Isams::wellbeingManager()->concernGirfec()->getForm(string $schoolId, int $concernId)` | `ConcernGirfecForm` |
-| `Isams::wellbeingManager()->concernGirfec()->patchForm(string $schoolId, int $concernId, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernGirfec()->patchForm(string $schoolId, int $concernId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernInjuryTypes()->all()` | `Collection<ConcernInjuryType>` |
 | `Isams::wellbeingManager()->concernInjuryTypes()->create(ConcernInjuryTypeForCreate\|array $concernInjuryType)` | `Created` |
-| `Isams::wellbeingManager()->concernInjuryTypes()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernInjuryTypes()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernInjuryTypes()->get(int $id)` | `ConcernInjuryType` |
-| `Isams::wellbeingManager()->concernInjuryTypes()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernInjuryTypes()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernRoles()->all()` | `Collection<ConcernRole>` |
 | `Isams::wellbeingManager()->concernRoles()->create(ConcernRoleForCreate\|array $concernRole)` | `Created` |
-| `Isams::wellbeingManager()->concernRoles()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernRoles()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernRoles()->get(int $id)` | `ConcernRole` |
-| `Isams::wellbeingManager()->concernRoles()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernRoles()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernSeverities()->all()` | `Collection<ConcernSeverity>` |
 | `Isams::wellbeingManager()->concernSeverities()->create(ConcernSeverityForCreate\|array $concernSeverity)` | `Created` |
-| `Isams::wellbeingManager()->concernSeverities()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernSeverities()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernSeverities()->get(int $id)` | `ConcernSeverity` |
-| `Isams::wellbeingManager()->concernSeverities()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernSeverities()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernStatuses()->all()` | `Collection<ConcernStatus>` |
 | `Isams::wellbeingManager()->concernStatuses()->create(ConcernStatusForCreate\|array $concernStatus)` | `Created` |
-| `Isams::wellbeingManager()->concernStatuses()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernStatuses()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernStatuses()->get(int $id)` | `ConcernStatus` |
-| `Isams::wellbeingManager()->concernStatuses()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernStatuses()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernStudents()->all(string $schoolId, int $concernId)` | `Collection<ConcernStudentSummary>` |
 | `Isams::wellbeingManager()->concernStudents()->associate(string $schoolId, int $concernId, ConcernStudentForCreate\|array $concernStudent)` | `Created` |
-| `Isams::wellbeingManager()->concernStudents()->disassociate(string $schoolId, int $concernId, int $id)` | nothing |
-| `Isams::wellbeingManager()->concernStudents()->patchRole(string $schoolId, int $concernId, int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernStudents()->disassociate(string $schoolId, int $concernId, int $id)` | `bool` |
+| `Isams::wellbeingManager()->concernStudents()->patchRole(string $schoolId, int $concernId, int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernTypes()->all()` | `Collection<ConcernType>` |
 | `Isams::wellbeingManager()->concernTypes()->create(ConcernTypeForCreate\|array $concernType)` | `Created` |
-| `Isams::wellbeingManager()->concernTypes()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->concernTypes()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->concernTypes()->get(int $id)` | `ConcernType` |
-| `Isams::wellbeingManager()->concernTypes()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->concernTypes()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->concernVisibilities()->all(string $schoolId, int $concernId)` | `Collection<ConcernVisibility>` |
 | `Isams::wellbeingManager()->concernVisibilities()->reset(string $schoolId, int $concernId)` | `Created` |
 | `Isams::wellbeingManager()->concernVisibilities()->set(string $schoolId, int $concernId, ConcernVisibilityForCreate\|array $concernVisibility)` | `Created` |
-| `Isams::wellbeingManager()->concernVisibilities()->setGroups(string $schoolId, int $concernId, ConcernVisibilityGroupsForPatch\|array $concernVisibilityGroups)` | nothing |
+| `Isams::wellbeingManager()->concernVisibilities()->setGroups(string $schoolId, int $concernId, ConcernVisibilityGroupsForPatch\|array $concernVisibilityGroups)` | `bool` |
 | `Isams::wellbeingManager()->concerns()->all(string\|Stringable\|null $filter = null)` | `LazyCollection<Concern>` |
 | `Isams::wellbeingManager()->configuration()->get()` | `Configuration` |
 | `Isams::wellbeingManager()->flag()->create(string $schoolId, PastoralFlagForCreate\|array $pastoralFlag)` | `Created` |
-| `Isams::wellbeingManager()->flag()->delete(string $schoolId)` | nothing |
+| `Isams::wellbeingManager()->flag()->delete(string $schoolId)` | `bool` |
 | `Isams::wellbeingManager()->flag()->get(string $schoolId)` | `PastoralFlag` |
-| `Isams::wellbeingManager()->flag()->patch(string $schoolId, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->flag()->patch(string $schoolId, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->flagTypes()->all()` | `Collection<PastoralFlagType>` |
 | `Isams::wellbeingManager()->flagTypes()->create(FlagTypeForCreate\|array $flagType)` | `Created` |
-| `Isams::wellbeingManager()->flagTypes()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->flagTypes()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->flagTypes()->get(int $id)` | `PastoralFlagType` |
-| `Isams::wellbeingManager()->flagTypes()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->flagTypes()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->framework()->getModules()` | `Collection<Module>` |
 | `Isams::wellbeingManager()->girfecAreas()->all()` | `Collection<PastoralConcernArea>` |
 | `Isams::wellbeingManager()->indicatorStatuses()->all()` | `Collection<IndicatorStatus>` |
 | `Isams::wellbeingManager()->indicators()->create(string $schoolId, IndicatorForCreate\|array $indicator)` | `Created` |
-| `Isams::wellbeingManager()->indicators()->delete(string $schoolId, int $id)` | nothing |
+| `Isams::wellbeingManager()->indicators()->delete(string $schoolId, int $id)` | `bool` |
 | `Isams::wellbeingManager()->indicators()->deleteMany(array $ids)` | `Created` |
-| `Isams::wellbeingManager()->indicators()->dismiss(DismissIndicatorsCollectionForUpdate\|array $dismissIndicatorsCollection)` | nothing |
+| `Isams::wellbeingManager()->indicators()->dismiss(DismissIndicatorsCollectionForUpdate\|array $dismissIndicatorsCollection)` | `bool` |
 | `Isams::wellbeingManager()->indicators()->get(string $schoolId, int $id)` | `Indicator` |
-| `Isams::wellbeingManager()->indicators()->patch(string $schoolId, int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->indicators()->patch(string $schoolId, int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->lifeEventTypes()->all()` | `Collection<LifeEventType>` |
 | `Isams::wellbeingManager()->lifeEventTypes()->create(LifeEventTypeForCreate\|array $lifeEventType)` | `Created` |
-| `Isams::wellbeingManager()->lifeEventTypes()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->lifeEventTypes()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->lifeEventTypes()->get(int $id)` | `LifeEventType` |
-| `Isams::wellbeingManager()->lifeEventTypes()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->lifeEventTypes()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->lifeEvents()->create(string $schoolId, LifeEventForCreate\|array $lifeEvent)` | `Created` |
-| `Isams::wellbeingManager()->lifeEvents()->delete(string $schoolId, int $id)` | nothing |
+| `Isams::wellbeingManager()->lifeEvents()->delete(string $schoolId, int $id)` | `bool` |
 | `Isams::wellbeingManager()->lifeEvents()->get(string $schoolId, int $id)` | `LifeEvent` |
-| `Isams::wellbeingManager()->lifeEvents()->patch(string $schoolId, int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->lifeEvents()->patch(string $schoolId, int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->reasonsForDismissal()->all()` | `Collection<ReasonForDismissal>` |
 | `Isams::wellbeingManager()->reasonsForDismissal()->create(ReasonForDismissalForCreate\|array $reasonForDismissal)` | `Created` |
-| `Isams::wellbeingManager()->reasonsForDismissal()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->reasonsForDismissal()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->reasonsForDismissal()->get(int $id)` | `ReasonForDismissal` |
-| `Isams::wellbeingManager()->reasonsForDismissal()->patch(int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->reasonsForDismissal()->patch(int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->studentConcerns()->create(string $schoolId, ConcernForCreate\|array $concern)` | `Created` |
-| `Isams::wellbeingManager()->studentConcerns()->delete(string $schoolId, int $id)` | nothing |
+| `Isams::wellbeingManager()->studentConcerns()->delete(string $schoolId, int $id)` | `bool` |
 | `Isams::wellbeingManager()->studentConcerns()->get(string $schoolId, int $id)` | `Concern` |
-| `Isams::wellbeingManager()->studentConcerns()->patch(string $schoolId, int $id, JsonPatch\|array $patch)` | nothing |
+| `Isams::wellbeingManager()->studentConcerns()->patch(string $schoolId, int $id, JsonPatch\|array $patch)` | `bool` |
 | `Isams::wellbeingManager()->visibilityGroups()->all()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::wellbeingManager()->visibilityGroups()->get(int $id)` | `VisibilityGroup` |
 | `Isams::wellbeingManager()->visibilityGroups()->getDefault()` | iSAMS's JSON, decoded (the spec gives no model) |
@@ -1173,13 +1175,13 @@ a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#
 | `Isams::wellbeingManager()->workflowActions()->getTypes()` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::wellbeingManager()->workflowRules()->all(string $id)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::wellbeingManager()->workflowRules()->create(RuleForCreate\|array $rule)` | `Created` |
-| `Isams::wellbeingManager()->workflowRules()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->workflowRules()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->workflowRules()->get(int $id)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::wellbeingManager()->workflowRules()->getTypes()` | iSAMS's JSON, decoded (the spec gives no model) |
-| `Isams::wellbeingManager()->workflowRules()->update(RuleForUpdate\|array $rule)` | nothing |
+| `Isams::wellbeingManager()->workflowRules()->update(RuleForUpdate\|array $rule)` | `bool` |
 | `Isams::wellbeingManager()->workflows()->create(WorkflowForCreate\|array $workflow)` | `Created` |
-| `Isams::wellbeingManager()->workflows()->delete(int $id)` | nothing |
+| `Isams::wellbeingManager()->workflows()->delete(int $id)` | `bool` |
 | `Isams::wellbeingManager()->workflows()->get(int $id)` | `Workflow` |
 | `Isams::wellbeingManager()->workflows()->process(int $workflowId)` | iSAMS's JSON, decoded (the spec gives no model) |
 | `Isams::wellbeingManager()->workflows()->processAll()` | iSAMS's JSON, decoded (the spec gives no model) |
-| `Isams::wellbeingManager()->workflows()->update(WorkflowForUpdate\|array $workflow)` | nothing |
+| `Isams::wellbeingManager()->workflows()->update(WorkflowForUpdate\|array $workflow)` | `bool` |

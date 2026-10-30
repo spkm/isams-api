@@ -174,17 +174,21 @@ class AdmissionsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Admissions\PatchApplicantRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchApplicantRequest(schoolId: $schoolId, patch: $patch));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantForUpdate|array<string, mixed>  $applicant
      * @see \spkm\IsamsApi\Requests\Admissions\UpdateApplicantRequest
      */
-    public function update(string $schoolId, ApplicantForUpdate|array $applicant): void
+    public function update(string $schoolId, ApplicantForUpdate|array $applicant): bool
     {
         $this->fetch(new UpdateApplicantRequest(schoolId: $schoolId, applicant: $applicant));
+
+        return true;
     }
 }

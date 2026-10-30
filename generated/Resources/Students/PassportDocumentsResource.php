@@ -40,16 +40,20 @@ class PassportDocumentsResource extends IsamsResource
         int $passportId,
         MultipartValue $binary,
         StudentPassportDocumentForCreate|array $data,
-    ): void {
+    ): bool {
         $this->fetch(new CreateStudentPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, binary: $binary, data: $data));
+
+        return true;
     }
 
     /**
      * @see \spkm\IsamsApi\Requests\Students\PassportDocuments\DeleteStudentPassportDocumentRequest
      */
-    public function delete(string $schoolId, int $passportId, int $documentId): void
+    public function delete(string $schoolId, int $passportId, int $documentId): bool
     {
         $this->fetch(new DeleteStudentPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, documentId: $documentId));
+
+        return true;
     }
 
     /**
@@ -72,8 +76,10 @@ class PassportDocumentsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Students\PassportDocuments\PatchStudentPassportDocumentRequest
      */
-    public function patch(string $schoolId, int $passportId, int $documentId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, int $passportId, int $documentId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentPassportDocumentRequest(schoolId: $schoolId, passportId: $passportId, documentId: $documentId, patch: $patch));
+
+        return true;
     }
 }

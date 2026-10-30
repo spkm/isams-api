@@ -86,12 +86,12 @@ it('returns a download as a file', function () {
         ->and($photo->contents)->toBe('made-up image bytes');
 });
 
-it('returns nothing from a write iSAMS answers without a body', function () {
+it('returns true from a write iSAMS answers without a body, as Eloquent\'s update() and delete() do', function () {
     $isams = FakeIsams::respondWith([RemoveStudentFromTeachingSetRequest::class => MockResponse::make(status: 200)]);
 
     $result = FakeIsams::connector()->teaching()->sets()->removeStudent(34, '100001');
 
-    expect($result)->toBeNull();
+    expect($result)->toBeTrue();
     $isams->assertSent(RemoveStudentFromTeachingSetRequest::class);
 });
 

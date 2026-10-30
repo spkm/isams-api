@@ -39,17 +39,21 @@ class ContractEmployeeLevelsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\ContractEmployeeLevels\DeleteContractEmployeeLevelRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteContractEmployeeLevelRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\HumanResources\ContractEmployeeLevels\UpdateContractEmployeeLevelRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateContractEmployeeLevelRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

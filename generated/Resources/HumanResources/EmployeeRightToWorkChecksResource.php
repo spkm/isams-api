@@ -43,9 +43,11 @@ class EmployeeRightToWorkChecksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\DeleteEmployeeRightToWorkCheckRequest
      */
-    public function delete(int $employeeId, int $rightToWorkCheckId): void
+    public function delete(int $employeeId, int $rightToWorkCheckId): bool
     {
         $this->fetch(new DeleteEmployeeRightToWorkCheckRequest(employeeId: $employeeId, rightToWorkCheckId: $rightToWorkCheckId));
+
+        return true;
     }
 
     /**
@@ -64,7 +66,9 @@ class EmployeeRightToWorkChecksResource extends IsamsResource
         int $employeeId,
         int $rightToWorkCheckId,
         EmployeeRightToWorkCheckForUpdate|array $employeeRightToWorkCheck,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateEmployeeRightToWorkCheckRequest(employeeId: $employeeId, rightToWorkCheckId: $rightToWorkCheckId, employeeRightToWorkCheck: $employeeRightToWorkCheck));
+
+        return true;
     }
 }

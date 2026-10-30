@@ -30,9 +30,11 @@ class LifeEventsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\DeleteLifeEventRequest
      */
-    public function delete(string $schoolId, int $id): void
+    public function delete(string $schoolId, int $id): bool
     {
         $this->fetch(new DeleteLifeEventRequest(schoolId: $schoolId, id: $id));
+
+        return true;
     }
 
     /**
@@ -47,8 +49,10 @@ class LifeEventsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\LifeEvents\PatchLifeEventRequest
      */
-    public function patch(string $schoolId, int $id, JsonPatch|array $patch): void
+    public function patch(string $schoolId, int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchLifeEventRequest(schoolId: $schoolId, id: $id, patch: $patch));
+
+        return true;
     }
 }

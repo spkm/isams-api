@@ -206,17 +206,21 @@ class StudentsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Students\PatchStudentRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentRequest(schoolId: $schoolId, patch: $patch));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentForUpdate|array<string, mixed>  $student
      * @see \spkm\IsamsApi\Requests\Students\UpdateStudentRequest
      */
-    public function update(string $schoolId, StudentForUpdate|array $student): void
+    public function update(string $schoolId, StudentForUpdate|array $student): bool
     {
         $this->fetch(new UpdateStudentRequest(schoolId: $schoolId, student: $student));
+
+        return true;
     }
 }

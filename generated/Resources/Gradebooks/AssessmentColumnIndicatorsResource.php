@@ -25,8 +25,10 @@ class AssessmentColumnIndicatorsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnIndicators\DeleteAssessmentColumnIndicatorRequest
      */
-    public function delete(int $gradebookId, int $columnId, int $indicatorId): void
+    public function delete(int $gradebookId, int $columnId, int $indicatorId): bool
     {
         $this->fetch(new DeleteAssessmentColumnIndicatorRequest(gradebookId: $gradebookId, columnId: $columnId, indicatorId: $indicatorId));
+
+        return true;
     }
 }

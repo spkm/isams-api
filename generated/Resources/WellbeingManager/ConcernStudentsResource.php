@@ -42,17 +42,21 @@ class ConcernStudentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\DisassociateConcernStudentRequest
      */
-    public function disassociate(string $schoolId, int $concernId, int $id): void
+    public function disassociate(string $schoolId, int $concernId, int $id): bool
     {
         $this->fetch(new DisassociateConcernStudentRequest(schoolId: $schoolId, concernId: $concernId, id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernStudents\PatchConcernStudentRoleRequest
      */
-    public function patchRole(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): void
+    public function patchRole(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchConcernStudentRoleRequest(schoolId: $schoolId, concernId: $concernId, id: $id, patch: $patch));
+
+        return true;
     }
 }

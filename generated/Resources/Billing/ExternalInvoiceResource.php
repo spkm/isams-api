@@ -21,15 +21,19 @@ class ExternalInvoiceResource extends IsamsResource
     public function update(
         string $invoiceNumber,
         ExternalAccountsInvoiceForUpdate|array $externalAccountsInvoice,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateExternalInvoiceRequest(invoiceNumber: $invoiceNumber, externalAccountsInvoice: $externalAccountsInvoice));
+
+        return true;
     }
 
     /**
      * @see \spkm\IsamsApi\Requests\Billing\ExternalInvoice\UpdateExternalInvoiceDocumentRequest
      */
-    public function updateDocument(string $invoiceNumber, MultipartValue $document): void
+    public function updateDocument(string $invoiceNumber, MultipartValue $document): bool
     {
         $this->fetch(new UpdateExternalInvoiceDocumentRequest(invoiceNumber: $invoiceNumber, document: $document));
+
+        return true;
     }
 }

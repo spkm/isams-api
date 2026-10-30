@@ -29,7 +29,9 @@ class EmployeeFinancialInformationResource extends IsamsResource
     public function update(
         int $employeeId,
         EmployeeFinancialInformationForUpdate|array $employeeFinancialInformation,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateEmployeeFinancialInformationRequest(employeeId: $employeeId, employeeFinancialInformation: $employeeFinancialInformation));
+
+        return true;
     }
 }

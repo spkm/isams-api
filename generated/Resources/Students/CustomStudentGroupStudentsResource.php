@@ -43,9 +43,11 @@ class CustomStudentGroupStudentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Students\CustomStudentGroupStudents\DeleteCustomStudentGroupStudentRequest
      */
-    public function delete(int $customGroupId, string $schoolId): void
+    public function delete(int $customGroupId, string $schoolId): bool
     {
         $this->fetch(new DeleteCustomStudentGroupStudentRequest(customGroupId: $customGroupId, schoolId: $schoolId));
+
+        return true;
     }
 
     /**
@@ -56,7 +58,9 @@ class CustomStudentGroupStudentsResource extends IsamsResource
         int $customGroupId,
         string $schoolId,
         CustomStudentGroupStudentForUpdate|array $customStudentGroupStudent,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateCustomStudentGroupStudentRequest(customGroupId: $customGroupId, schoolId: $schoolId, customStudentGroupStudent: $customStudentGroupStudent));
+
+        return true;
     }
 }

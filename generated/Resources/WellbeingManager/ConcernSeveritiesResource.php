@@ -41,9 +41,11 @@ class ConcernSeveritiesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\DeleteConcernSeverityRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteConcernSeverityRequest(id: $id));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class ConcernSeveritiesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\PatchConcernSeverityRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): void
+    public function patch(int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchConcernSeverityRequest(id: $id, patch: $patch));
+
+        return true;
     }
 }

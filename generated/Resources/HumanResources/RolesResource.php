@@ -49,8 +49,10 @@ class RolesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\RoleForUpdate|array<string, mixed>  $role
      * @see \spkm\IsamsApi\Requests\HumanResources\Roles\UpdateRoleRequest
      */
-    public function update(int $id, RoleForUpdate|array $role): void
+    public function update(int $id, RoleForUpdate|array $role): bool
     {
         $this->fetch(new UpdateRoleRequest(id: $id, role: $role));
+
+        return true;
     }
 }

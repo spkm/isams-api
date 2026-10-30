@@ -48,17 +48,21 @@ class ReasonForChangeResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Registration\ReasonForChange\DeleteRegistrationReasonForChangeRequest
      */
-    public function delete(int $periodId, string $schoolId, int $codeChangeId): void
+    public function delete(int $periodId, string $schoolId, int $codeChangeId): bool
     {
         $this->fetch(new DeleteRegistrationReasonForChangeRequest(periodId: $periodId, schoolId: $schoolId, codeChangeId: $codeChangeId));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Registration\ReasonForChange\PatchRegistrationReasonForChangeRequest
      */
-    public function patch(int $periodId, string $schoolId, int $codeChangeId, JsonPatch|array $patch): void
+    public function patch(int $periodId, string $schoolId, int $codeChangeId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchRegistrationReasonForChangeRequest(periodId: $periodId, schoolId: $schoolId, codeChangeId: $codeChangeId, patch: $patch));
+
+        return true;
     }
 }

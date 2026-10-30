@@ -39,17 +39,21 @@ class EnquiryTypesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Admissions\EnquiryTypes\DeleteEnquiryTypeRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteEnquiryTypeRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\Admissions\EnquiryTypes\UpdateEnquiryTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateEnquiryTypeRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

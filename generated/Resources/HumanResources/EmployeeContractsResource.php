@@ -47,9 +47,11 @@ class EmployeeContractsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\DeleteEmployeeContractRequest
      */
-    public function delete(int $employeeId, int $contractId): void
+    public function delete(int $employeeId, int $contractId): bool
     {
         $this->fetch(new DeleteEmployeeContractRequest(employeeId: $employeeId, contractId: $contractId));
+
+        return true;
     }
 
     /**
@@ -64,8 +66,10 @@ class EmployeeContractsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\PatchEmployeeContractRequest
      */
-    public function patch(int $employeeId, int $contractId, JsonPatch|array $patch): void
+    public function patch(int $employeeId, int $contractId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchEmployeeContractRequest(employeeId: $employeeId, contractId: $contractId, patch: $patch));
+
+        return true;
     }
 }

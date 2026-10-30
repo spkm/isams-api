@@ -28,8 +28,10 @@ class DocumentResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantDocumentForCreate|array<string, mixed>  $data
      * @see \spkm\IsamsApi\Requests\Admissions\Document\CreateApplicantDocumentRequest
      */
-    public function create(string $schoolId, MultipartValue $binary, ApplicantDocumentForCreate|array $data): void
+    public function create(string $schoolId, MultipartValue $binary, ApplicantDocumentForCreate|array $data): bool
     {
         $this->fetch(new CreateApplicantDocumentRequest(schoolId: $schoolId, binary: $binary, data: $data));
+
+        return true;
     }
 }

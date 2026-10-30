@@ -36,8 +36,10 @@ class ColumnReportMappingsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\DeleteColumnReportMappingRequest
      */
-    public function delete(int $gradebookId, int $columnId, int $reportMappingId): void
+    public function delete(int $gradebookId, int $columnId, int $reportMappingId): bool
     {
         $this->fetch(new DeleteColumnReportMappingRequest(gradebookId: $gradebookId, columnId: $columnId, reportMappingId: $reportMappingId));
+
+        return true;
     }
 }

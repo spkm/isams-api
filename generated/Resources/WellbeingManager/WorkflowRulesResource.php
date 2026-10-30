@@ -39,9 +39,11 @@ class WorkflowRulesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\DeleteWorkflowRuleRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteWorkflowRuleRequest(id: $id));
+
+        return true;
     }
 
     /**
@@ -64,8 +66,10 @@ class WorkflowRulesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\WellbeingManager\RuleForUpdate|array<string, mixed>  $rule
      * @see \spkm\IsamsApi\Requests\WellbeingManager\WorkflowRules\UpdateWorkflowRuleRequest
      */
-    public function update(RuleForUpdate|array $rule): void
+    public function update(RuleForUpdate|array $rule): bool
     {
         $this->fetch(new UpdateWorkflowRuleRequest(rule: $rule));
+
+        return true;
     }
 }

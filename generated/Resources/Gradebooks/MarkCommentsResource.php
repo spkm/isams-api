@@ -43,9 +43,11 @@ class MarkCommentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\MarkComments\DeleteMarkCommentRequest
      */
-    public function delete(int $gradebookId, int $columnId, string $schoolId, int $commentId): void
+    public function delete(int $gradebookId, int $columnId, string $schoolId, int $commentId): bool
     {
         $this->fetch(new DeleteMarkCommentRequest(gradebookId: $gradebookId, columnId: $columnId, schoolId: $schoolId, commentId: $commentId));
+
+        return true;
     }
 
     /**
@@ -58,7 +60,9 @@ class MarkCommentsResource extends IsamsResource
         string $schoolId,
         int $commentId,
         JsonPatch|array $patch,
-    ): void {
+    ): bool {
         $this->fetch(new PatchMarkCommentRequest(gradebookId: $gradebookId, columnId: $columnId, schoolId: $schoolId, commentId: $commentId, patch: $patch));
+
+        return true;
     }
 }

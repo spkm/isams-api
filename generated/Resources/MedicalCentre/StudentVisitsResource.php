@@ -41,9 +41,11 @@ class StudentVisitsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVisits\DeleteStudentVisitRequest
      */
-    public function delete(string $schoolId, string $visitId): void
+    public function delete(string $schoolId, string $visitId): bool
     {
         $this->fetch(new DeleteStudentVisitRequest(schoolId: $schoolId, visitId: $visitId));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class StudentVisitsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVisits\PatchStudentVisitRequest
      */
-    public function patch(string $schoolId, string $visitId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $visitId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentVisitRequest(schoolId: $schoolId, visitId: $visitId, patch: $patch));
+
+        return true;
     }
 }

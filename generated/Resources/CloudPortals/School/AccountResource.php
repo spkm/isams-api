@@ -28,9 +28,11 @@ class AccountResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\ProfileInformationForUpdate|array<string, mixed>  $profileInformation
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\Account\UpdateAccountProfileInformationRequest
      */
-    public function updateProfileInformation(ProfileInformationForUpdate|array $profileInformation): void
+    public function updateProfileInformation(ProfileInformationForUpdate|array $profileInformation): bool
     {
         $this->fetch(new UpdateAccountProfileInformationRequest(profileInformation: $profileInformation));
+
+        return true;
     }
 
     /**
@@ -39,7 +41,9 @@ class AccountResource extends IsamsResource
      */
     public function updateSecurityQuestionAnswer(
         SecurityQuestionInformationForUpdate|array $securityQuestionInformation,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateAccountSecurityQuestionAnswerRequest(securityQuestionInformation: $securityQuestionInformation));
+
+        return true;
     }
 }

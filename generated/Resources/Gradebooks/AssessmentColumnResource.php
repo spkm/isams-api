@@ -32,9 +32,11 @@ class AssessmentColumnResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\DeleteAssessmentColumnRequest
      */
-    public function delete(int $gradebookId, int $columnId): void
+    public function delete(int $gradebookId, int $columnId): bool
     {
         $this->fetch(new DeleteAssessmentColumnRequest(gradebookId: $gradebookId, columnId: $columnId));
+
+        return true;
     }
 
     /**
@@ -49,8 +51,10 @@ class AssessmentColumnResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\PatchAssessmentColumnRequest
      */
-    public function patch(int $gradebookId, int $columnId, JsonPatch|array $patch): void
+    public function patch(int $gradebookId, int $columnId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchAssessmentColumnRequest(gradebookId: $gradebookId, columnId: $columnId, patch: $patch));
+
+        return true;
     }
 }

@@ -44,17 +44,21 @@ class NatureOfAbsenceResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Registration\NatureOfAbsence\DeleteRegistrationNatureOfAbsenceRequest
      */
-    public function delete(int $registrationPupilId): void
+    public function delete(int $registrationPupilId): bool
     {
         $this->fetch(new DeleteRegistrationNatureOfAbsenceRequest(registrationPupilId: $registrationPupilId));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Registration\NatureOfAbsence\PatchRegistrationNatureOfAbsenceRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): void
+    public function patch(int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchRegistrationNatureOfAbsenceRequest(id: $id, patch: $patch));
+
+        return true;
     }
 }

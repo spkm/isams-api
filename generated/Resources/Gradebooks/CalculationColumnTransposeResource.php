@@ -25,8 +25,10 @@ class CalculationColumnTransposeResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\CalculationColumnTranspose\DeleteCalculationColumnTransposeRequest
      */
-    public function delete(int $gradebookId, int $columnId, int $transposeId): void
+    public function delete(int $gradebookId, int $columnId, int $transposeId): bool
     {
         $this->fetch(new DeleteCalculationColumnTransposeRequest(gradebookId: $gradebookId, columnId: $columnId, transposeId: $transposeId));
+
+        return true;
     }
 }

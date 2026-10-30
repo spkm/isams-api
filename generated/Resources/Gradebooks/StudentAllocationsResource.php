@@ -36,8 +36,10 @@ class StudentAllocationsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAllocations\DeleteGradebookStudentAllocationRequest
      */
-    public function delete(int $gradebookId, string $criteria, int $allocationId): void
+    public function delete(int $gradebookId, string $criteria, int $allocationId): bool
     {
         $this->fetch(new DeleteGradebookStudentAllocationRequest(gradebookId: $gradebookId, criteria: $criteria, allocationId: $allocationId));
+
+        return true;
     }
 }

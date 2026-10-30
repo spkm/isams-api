@@ -39,17 +39,21 @@ class BoardingStatusesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Students\BoardingStatuses\DeleteBoardingStatusRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteBoardingStatusRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\Students\BoardingStatuses\UpdateBoardingStatusRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateBoardingStatusRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

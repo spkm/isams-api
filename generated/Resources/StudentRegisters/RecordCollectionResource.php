@@ -40,9 +40,11 @@ class RecordCollectionResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\DeleteRecordCollectionRecordRequest
      */
-    public function delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId): void
+    public function delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId): bool
     {
         $this->fetch(new DeleteRecordCollectionRecordRequest(registerId: $registerId, schoolId: $schoolId, recordCollectionId: $recordCollectionId, recordId: $recordId));
+
+        return true;
     }
 
     /**
@@ -64,7 +66,9 @@ class RecordCollectionResource extends IsamsResource
         int $recordCollectionId,
         int $recordId,
         array $values,
-    ): void {
+    ): bool {
         $this->fetch(new PatchRecordCollectionRecordRequest(registerId: $registerId, schoolId: $schoolId, recordCollectionId: $recordCollectionId, recordId: $recordId, values: $values));
+
+        return true;
     }
 }

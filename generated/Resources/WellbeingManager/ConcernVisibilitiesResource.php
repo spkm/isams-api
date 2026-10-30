@@ -55,7 +55,9 @@ class ConcernVisibilitiesResource extends IsamsResource
         string $schoolId,
         int $concernId,
         ConcernVisibilityGroupsForPatch|array $concernVisibilityGroups,
-    ): void {
+    ): bool {
         $this->fetch(new SetConcernVisibilityGroupsRequest(schoolId: $schoolId, concernId: $concernId, concernVisibilityGroups: $concernVisibilityGroups));
+
+        return true;
     }
 }

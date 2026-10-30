@@ -42,7 +42,9 @@ class AssociationResource extends IsamsResource
         int $registerId,
         string $schoolId,
         RegisterAssociationForCreate|array $registerAssociation,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateRegisterAssociationRequest(registerId: $registerId, schoolId: $schoolId, registerAssociation: $registerAssociation));
+
+        return true;
     }
 }

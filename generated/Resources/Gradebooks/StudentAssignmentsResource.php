@@ -36,8 +36,10 @@ class StudentAssignmentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\StudentAssignments\DeleteGradebookStudentAssignmentRequest
      */
-    public function delete(int $gradebookId, string $schoolId): void
+    public function delete(int $gradebookId, string $schoolId): bool
     {
         $this->fetch(new DeleteGradebookStudentAssignmentRequest(gradebookId: $gradebookId, schoolId: $schoolId));
+
+        return true;
     }
 }

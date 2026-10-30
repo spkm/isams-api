@@ -30,9 +30,11 @@ class ContactsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\Contacts\PatchStudentContactRequest
      */
-    public function patch(string $schoolId, int $contactId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, int $contactId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentContactRequest(schoolId: $schoolId, contactId: $contactId, patch: $patch));
+
+        return true;
     }
 
     /**

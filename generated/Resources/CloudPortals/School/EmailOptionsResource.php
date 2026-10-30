@@ -37,9 +37,11 @@ class EmailOptionsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\PatchEmailOptionEmailDetailsRequest
      */
-    public function patchDetails(JsonPatch|array $patch): void
+    public function patchDetails(JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchEmailOptionEmailDetailsRequest(patch: $patch));
+
+        return true;
     }
 
     /**

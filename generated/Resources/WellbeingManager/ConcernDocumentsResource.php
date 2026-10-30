@@ -44,9 +44,11 @@ class ConcernDocumentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernDocuments\DeleteConcernDocumentRequest
      */
-    public function delete(string $schoolId, int $concernId, int $id): void
+    public function delete(string $schoolId, int $concernId, int $id): bool
     {
         $this->fetch(new DeleteConcernDocumentRequest(schoolId: $schoolId, concernId: $concernId, id: $id));
+
+        return true;
     }
 
     /**

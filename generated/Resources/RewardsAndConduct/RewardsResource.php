@@ -50,8 +50,10 @@ class RewardsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\RewardsAndConduct\RewardForUpdate|array<string, mixed>  $reward
      * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\UpdateRewardRequest
      */
-    public function update(string $schoolId, int $rewardId, RewardForUpdate|array $reward): void
+    public function update(string $schoolId, int $rewardId, RewardForUpdate|array $reward): bool
     {
         $this->fetch(new UpdateRewardRequest(schoolId: $schoolId, rewardId: $rewardId, reward: $reward));
+
+        return true;
     }
 }

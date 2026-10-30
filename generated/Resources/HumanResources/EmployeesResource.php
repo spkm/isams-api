@@ -59,8 +59,10 @@ class EmployeesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeForUpdate|array<string, mixed>  $employee
      * @see \spkm\IsamsApi\Requests\HumanResources\Employees\UpdateEmployeeRequest
      */
-    public function update(int $id, EmployeeForUpdate|array $employee): void
+    public function update(int $id, EmployeeForUpdate|array $employee): bool
     {
         $this->fetch(new UpdateEmployeeRequest(id: $id, employee: $employee));
+
+        return true;
     }
 }

@@ -26,8 +26,10 @@ class NotificationsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Notifications\NotificationSettingPublic|array<string, mixed>  $notificationSettingPublic
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\Notifications\SetUserNotificationSettingByUserCodeRequest
      */
-    public function setUserSettingByUserCode(NotificationSettingPublic|array $notificationSettingPublic): void
+    public function setUserSettingByUserCode(NotificationSettingPublic|array $notificationSettingPublic): bool
     {
         $this->fetch(new SetUserNotificationSettingByUserCodeRequest(notificationSettingPublic: $notificationSettingPublic));
+
+        return true;
     }
 }

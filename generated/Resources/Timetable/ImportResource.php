@@ -39,9 +39,11 @@ class ImportResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Timetable\Import\DeleteActiveTimetableImportRequest
      */
-    public function deleteActive(): void
+    public function deleteActive(): bool
     {
         $this->fetch(new DeleteActiveTimetableImportRequest());
+
+        return true;
     }
 
     /**

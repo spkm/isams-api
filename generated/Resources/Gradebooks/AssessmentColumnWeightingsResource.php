@@ -25,8 +25,10 @@ class AssessmentColumnWeightingsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnWeightings\DeleteAssessmentColumnWeightingRequest
      */
-    public function delete(int $gradebookId, int $columnId, int $weightingId): void
+    public function delete(int $gradebookId, int $columnId, int $weightingId): bool
     {
         $this->fetch(new DeleteAssessmentColumnWeightingRequest(gradebookId: $gradebookId, columnId: $columnId, weightingId: $weightingId));
+
+        return true;
     }
 }

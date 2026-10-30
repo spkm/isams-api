@@ -26,8 +26,10 @@ class EmployeeProbationsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeProbationForUpdate|array<string, mixed>  $employeeProbation
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeProbations\UpdateEmployeeProbationRequest
      */
-    public function update(int $employeeId, EmployeeProbationForUpdate|array $employeeProbation): void
+    public function update(int $employeeId, EmployeeProbationForUpdate|array $employeeProbation): bool
     {
         $this->fetch(new UpdateEmployeeProbationRequest(employeeId: $employeeId, employeeProbation: $employeeProbation));
+
+        return true;
     }
 }

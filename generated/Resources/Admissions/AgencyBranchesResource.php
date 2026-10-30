@@ -35,8 +35,10 @@ class AgencyBranchesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Admissions\AgencyBranches\RemoveApplicantAgencyBranchRequest
      */
-    public function remove(string $schoolId, int $agencyBranchId): void
+    public function remove(string $schoolId, int $agencyBranchId): bool
     {
         $this->fetch(new RemoveApplicantAgencyBranchRequest(schoolId: $schoolId, agencyBranchId: $agencyBranchId));
+
+        return true;
     }
 }

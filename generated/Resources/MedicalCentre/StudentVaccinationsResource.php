@@ -41,9 +41,11 @@ class StudentVaccinationsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\DeleteStudentVaccinationRequest
      */
-    public function delete(string $schoolId, string $vaccinationId): void
+    public function delete(string $schoolId, string $vaccinationId): bool
     {
         $this->fetch(new DeleteStudentVaccinationRequest(schoolId: $schoolId, vaccinationId: $vaccinationId));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class StudentVaccinationsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\PatchStudentVaccinationRequest
      */
-    public function patch(string $schoolId, string $vaccinationId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $vaccinationId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentVaccinationRequest(schoolId: $schoolId, vaccinationId: $vaccinationId, patch: $patch));
+
+        return true;
     }
 }

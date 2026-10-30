@@ -87,6 +87,7 @@ The package has two layers, as Laravel has Eloquent and, beneath it, the query b
 | You write | `Isams::teaching()->subjects()->all()` | `Isams::send(new GetSubjectsRequest)` |
 | You get | the data: here a `Collection` of `Subject` models | Saloon's `Response`, with status, headers and body |
 | A list iSAMS pages | a `LazyCollection` that fetches pages as you loop | one page; loop through them with `Isams::paginate()` |
+| A write iSAMS answers without a body | `true` | the response, with iSAMS's status |
 | iSAMS returns an error | throws an `IsamsApiException` (see [Errors](#errors)) | returns the failed response for you to check |
 
 Use resources in application code. Use `send()` when you need the status or headers, or would rather check for errors
@@ -131,13 +132,17 @@ $subject = Isams::teaching()->subjects()->get(7);          // a Subject
 $created = Isams::teaching()->subjects()->create(new SubjectForCreate(code: 'MA', name: 'Mathematics'));
 $created->id;                                              // Created: the new record's id and location
 $photo = Isams::students()->photos()->getCurrent('100001'); // File: contents, MIME type and filename
-Isams::teaching()->sets()->removeStudent(setId: 34, schoolId: '100001'); // returns nothing
+Isams::teaching()->sets()->removeStudent(setId: 34, schoolId: '100001'); // true, as Eloquent's delete() returns
 Isams::systemConfiguration()->list()->contactTypes()->all();
 
 foreach (Isams::students()->all() as $student) {           // LazyCollection of Student models
     //
 }
 ```
+
+Updates, deletes and the other writes iSAMS answers without a body return `true`, as Eloquent's `update()` and
+`delete()` do. They never return `false`: when iSAMS refuses, they throw (see [Errors](#errors)), so reaching the next
+line means iSAMS accepted the change.
 
 Lists iSAMS sends in pages, such as every student, come back as a `LazyCollection`, like Eloquent's `lazy()`: each
 page of 100 is fetched only when the loop reaches it, so the loop holds about one page at a time however large the

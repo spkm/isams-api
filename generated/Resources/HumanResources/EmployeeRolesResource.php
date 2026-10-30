@@ -35,8 +35,10 @@ class EmployeeRolesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\RemoveEmployeeRoleRequest
      */
-    public function remove(int $employeeId, int $roleId): void
+    public function remove(int $employeeId, int $roleId): bool
     {
         $this->fetch(new RemoveEmployeeRoleRequest(employeeId: $employeeId, roleId: $roleId));
+
+        return true;
     }
 }

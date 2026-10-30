@@ -39,17 +39,21 @@ class EmployeeQualificationsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeQualifications\DeleteEmployeeQualificationRequest
      */
-    public function delete(int $employeeId, int $qualificationId): void
+    public function delete(int $employeeId, int $qualificationId): bool
     {
         $this->fetch(new DeleteEmployeeQualificationRequest(employeeId: $employeeId, qualificationId: $qualificationId));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\QualificationForUpdate|array<string, mixed>  $qualification
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeQualifications\UpdateEmployeeQualificationRequest
      */
-    public function update(int $employeeId, int $qualificationId, QualificationForUpdate|array $qualification): void
+    public function update(int $employeeId, int $qualificationId, QualificationForUpdate|array $qualification): bool
     {
         $this->fetch(new UpdateEmployeeQualificationRequest(employeeId: $employeeId, qualificationId: $qualificationId, qualification: $qualification));
+
+        return true;
     }
 }

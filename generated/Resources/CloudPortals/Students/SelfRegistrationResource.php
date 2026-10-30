@@ -38,8 +38,10 @@ class SelfRegistrationResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Registration\SelfRegistrationRegistersForUpdate|array<string, mixed>  $selfRegistrationRegisters
      * @see \spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\UpdateSelfRegistrationRegisterPeriodsRequest
      */
-    public function updateRegisterPeriods(SelfRegistrationRegistersForUpdate|array $selfRegistrationRegisters): void
+    public function updateRegisterPeriods(SelfRegistrationRegistersForUpdate|array $selfRegistrationRegisters): bool
     {
         $this->fetch(new UpdateSelfRegistrationRegisterPeriodsRequest(selfRegistrationRegisters: $selfRegistrationRegisters));
+
+        return true;
     }
 }
