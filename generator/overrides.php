@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -247,6 +247,20 @@ return [
         'EnquiryTypes_Get' => ['cacheable' => true],
         'Statuses_Get' => ['cacheable' => true],
 
+        // Billing, Bulletin, Other Schools, Storage, Agent, Curriculum and News
+        'Invoicing_GetBillingCycles' => ['class' => 'GetBillingCyclesRequest', 'cacheable' => true],
+        'Invoicing_GetInvoiceRunsForCycleById' => ['class' => 'GetBillingCycleInvoiceRunsRequest'],
+        'Invoicing_GetInvoiceDetailsForInvoiceRunById' => ['class' => 'GetInvoiceRunInvoicesRequest'],
+        'Invoicing_GetInvoiceDetailsReportForInvoiceRunById' => ['class' => 'DownloadInvoiceRunReportRequest'],
+        'ExternalInvoiceCommunications_PostCommunicationAsyncByInvoiceid' => ['class' => 'CreateExternalInvoiceCommunicationRequest'],
+        'BulletinYearGroup_CreateBulletinCategoryAsyncByBulletinidBulletinyeargroups' => ['class' => 'CreateBulletinYearGroupsRequest'],
+        'NewsPublic_PostAsyncByNews' => ['class' => 'CreateNewsRequest'],
+        'PublicCycles_GetAllAsync' => ['class' => 'GetCurriculumCyclesRequest', 'cacheable' => true],
+        'Agents_GetAll' => ['cacheable' => true],
+        'OtherSchools_GetAllByPagePagesize' => ['cacheable' => true],
+        'OtherSchools_GetById' => ['cacheable' => true],
+        'Professions_GetAll' => ['cacheable' => true],
+
         // System Configuration
         'List_GetAsyncByListtype' => ['class' => 'GetListByTypeRequest', 'cacheable' => true],
         'PassportPlaceIssued_Get' => ['class' => 'GetPassportPlacesIssuedRequest', 'cacheable' => true],
@@ -316,7 +330,8 @@ return [
         'Student Registers' => ['Student', 'Registers'],
         'Exclusions' => ['Exclusion'],
         'Timetable' => ['Timetable'],
-        'News' => ['News'],
+        'News' => ['News', 'Public'],
+        'Curriculum' => ['Public'],
         'Other Schools' => ['Other'],
     ],
 

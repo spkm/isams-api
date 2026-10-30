@@ -662,20 +662,24 @@ final class Generator
     private function addQuery(ClassType $class, array $query): void
     {
         $lines = [];
+        $anyOptional = false;
 
         foreach ($query as $name => $parameter) {
             $value = '$this->'.$parameter['php'];
+            $orNull = $parameter['required'] ? '' : "$value === null ? null : ";
+            $anyOptional = $anyOptional || ! $parameter['required'];
             $lines[] = '    '.var_export($name, true).' => '.match (true) {
-                str_contains($parameter['type'], 'bool') => "$value === null ? null : ($value ? 'true' : 'false')",
-                str_contains($parameter['type'], 'Stringable') => "$value === null ? null : (string) $value",
+                str_contains($parameter['type'], 'bool') => $orNull."($value ? 'true' : 'false')",
+                str_contains($parameter['type'], 'Stringable') => $orNull."(string) $value",
                 str_contains($parameter['type'], 'DateTimeInterface') => "$value instanceof \\DateTimeInterface ? {$value}->format('Y-m-d\\TH:i:s') : $value",
                 default => $value,
             }.',';
         }
 
+        $array = "[\n".implode("\n", $lines)."\n]";
         $class->addMethod('defaultQuery')->setProtected()->setReturnType('array')
             ->addComment('@return array<string, mixed>')
-            ->setBody("return array_filter([\n".implode("\n", $lines)."\n], fn (mixed \$value) => \$value !== null);");
+            ->setBody($anyOptional ? "return array_filter($array, fn (mixed \$value) => \$value !== null);" : "return $array;");
     }
 
     /**
