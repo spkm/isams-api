@@ -3,7 +3,8 @@
 namespace spkm\IsamsApi\Requests\Students;
 
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
+use spkm\IsamsApi\Data\Students\Student;
+use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
  * The 'homeAddresses' property is an array of HomeAddress objects.
@@ -19,9 +20,13 @@ use Saloon\Http\Request;
  * The 'languageIsoMappings' and
  * 'nationalityIsoMappings' properties are arrays of IsoMapping objects.
  */
-class GetStudentRequest extends Request
+class GetStudentRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
+
+    protected string $responseShape = self::ONE;
+
+    protected ?string $dto = Student::class;
 
     public function resolveEndpoint(): string
     {

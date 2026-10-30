@@ -74,6 +74,14 @@ it('turns each generated request\'s documented response into the right kind of r
     expect($request instanceof Paginatable)->toBe(collect($spec['parameters'] ?? [])->contains('name', 'page') && isset(Spec::spec()['definitions'][Str::after($schema['$ref'] ?? '', '#/definitions/')]['properties']['totalPages']));
 })->with(Spec::generatedOperations())->group('spec');
 
+it('gives each hand-written request the model the spec documents for its response', function (string $id) {
+    $operation = Spec::manifest()['operations'][$id];
+    $request = new $operation['class'](...Spec::arguments($operation['class']));
+
+    expect($request)->toBeInstanceOf(IsamsRequest::class)
+        ->and($request->dtoClass())->toBe($operation['model'] ?? null);
+})->with(fn () => array_keys(array_filter(Spec::manifest()['operations'], fn (array $operation) => $operation['source'] === 'handwritten')))->group('spec');
+
 it('builds each generated model from made-up data matching its definition and turns it back into the same data', function (string $definition, string $class) {
     $sample = Spec::sample($definition);
     $model = $class::from($sample);

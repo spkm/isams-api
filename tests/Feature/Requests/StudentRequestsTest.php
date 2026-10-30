@@ -1,7 +1,11 @@
 <?php
 
+use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
+use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\Request;
+use spkm\IsamsApi\Data\Students\Student;
+use spkm\IsamsApi\IsamsApiException;
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
 use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 use spkm\IsamsApi\Requests\Students\GetStudentSystemStatusesRequest;
@@ -33,4 +37,33 @@ it('asks for one student with the expansions it was given', function () {
     $sent = FakeIsams::send(new GetStudentRequest('100001', expand: 'customFields'))->getPendingRequest();
 
     expect($sent->query()->all())->toBe(['expand' => 'customFields']);
+});
+
+it('turns a page of students into Student models', function () {
+    $students = FakeIsams::send(new GetStudentsRequest, ['students' => [['schoolId' => '100001', 'forename' => 'Alex'], ['schoolId' => '100002', 'forename' => 'Sam']], 'totalPages' => 1])->dto();
+
+    expect($students)->toBeInstanceOf(Collection::class)
+        ->and($students->map(fn (Student $student) => $student->forename)->all())->toBe(['Alex', 'Sam']);
+});
+
+it('turns one student into a Student model', function () {
+    $student = FakeIsams::send(new GetStudentRequest('100001'), ['schoolId' => '100001', 'forename' => 'Alex', 'yearGroup' => 9])->dto();
+
+    expect($student)->toBeInstanceOf(Student::class)
+        ->and($student->schoolId)->toBe('100001')
+        ->and($student->yearGroup)->toBe(9);
+});
+
+it('pages through every student as Student models', function () {
+    FakeIsams::respondWith([GetStudentsRequest::class => fn () => MockResponse::make(['students' => [['forename' => 'Alex']], 'totalPages' => 2])]);
+
+    $students = FakeIsams::connector()->paginate(new GetStudentsRequest)->dtos()->all();
+
+    expect($students)->toHaveCount(2)->each->toBeInstanceOf(Student::class);
+});
+
+it('throws iSAMS\'s error instead of returning a model when a student is not found', function () {
+    FakeIsams::respondWith([GetStudentRequest::class => MockResponse::make(['message' => 'Student not found'], 404)]);
+
+    expect(fn () => FakeIsams::connector()->send(new GetStudentRequest('999999'))->dto())->toThrow(IsamsApiException::class);
 });

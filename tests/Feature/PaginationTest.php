@@ -27,6 +27,18 @@ it('asks iSAMS for pages 1, 2 and 3 when it reports three pages', function () {
     expect(array_column(FakeIsams::queriesReceived($isams, GetStudentsRequest::class), 'page'))->toBe([1, 2, 3]);
 });
 
+it('asks iSAMS for the next page only when the loop reaches it, so a large school is never held in memory at once', function () {
+    $isams = FakeIsams::respondWith(threePagesOfStudents());
+
+    $pagesFetchedAtEachStudent = [];
+
+    foreach (FakeIsams::connector()->paginate(new GetStudentsRequest)->collect() as $student) {
+        $pagesFetchedAtEachStudent[] = count(FakeIsams::queriesReceived($isams, GetStudentsRequest::class));
+    }
+
+    expect($pagesFetchedAtEachStudent)->toBe([1, 2, 3]);
+});
+
 it('asks for 100 records a page', function () {
     $isams = FakeIsams::respondWith(threePagesOfStudents());
 

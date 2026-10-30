@@ -3,15 +3,20 @@
 namespace spkm\IsamsApi\Requests\Students;
 
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
+use spkm\IsamsApi\Data\Students\Student;
+use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
  * The 'students' property is an array of Student objects.
  */
-class GetStudentsRequest extends Request implements Paginatable
+class GetStudentsRequest extends IsamsRequest implements Paginatable
 {
     protected Method $method = Method::GET;
+
+    protected string $responseShape = self::LIST;
+
+    protected ?string $dto = Student::class;
 
     public string $resultKey = 'students';
 

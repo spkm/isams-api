@@ -89,6 +89,7 @@ final class Generator
                 'path' => $operation['path'],
                 'source' => $operation['source'],
                 'class' => $operation['class'] ?? null,
+                'model' => $operation['source'] === 'handwritten' ? $operation['response']['model'] : null,
                 'reason' => $operation['reason'] ?? null,
                 'apiVersion' => $operation['apiVersion'],
             ]);
@@ -198,7 +199,7 @@ final class Generator
             if (isset($override['skip'])) {
                 $operations[] = [...$operation, 'source' => 'skipped', 'reason' => $override['skip']];
             } elseif (isset($override['handwritten'])) {
-                $operations[] = [...$operation, 'source' => 'handwritten', 'class' => $override['handwritten'], 'namespace' => $this->namespaceFor($tag)];
+                $operations[] = [...$operation, 'source' => 'handwritten', 'class' => $override['handwritten'], 'namespace' => $this->namespaceFor($tag), 'response' => $this->response($operation['spec'], $override)];
             } elseif (! in_array($this->tagParts($tag)['area'], $this->overrides['areas'], true)) {
                 $operations[] = [...$operation, 'source' => 'pending'];
             } else {

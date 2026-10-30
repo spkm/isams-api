@@ -5746,13 +5746,15 @@
             "method": "GET",
             "path": "/api/students",
             "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\GetStudentsRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Students\\GetStudentsRequest",
+            "model": "spkm\\IsamsApi\\Data\\Students\\Student"
         },
         "Students_GetBySchoolidExpand": {
             "method": "GET",
             "path": "/api/students/{schoolId}",
             "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\GetStudentRequest"
+            "class": "spkm\\IsamsApi\\Requests\\Students\\GetStudentRequest",
+            "model": "spkm\\IsamsApi\\Data\\Students\\Student"
         },
         "Students_PatchBySchoolidPatch": {
             "method": "PATCH",
@@ -6674,6 +6676,7 @@
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.ExamEntry": "spkm\\IsamsApi\\Data\\Students\\ExamEntry",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.ExamResult": "spkm\\IsamsApi\\Data\\Students\\ExamResult",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.ExamTimetable": "spkm\\IsamsApi\\Data\\Students\\ExamTimetable",
+        "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.HomeAddress": "spkm\\IsamsApi\\Data\\Students\\HomeAddress",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.InternalExamEntry": "spkm\\IsamsApi\\Data\\Students\\InternalExamEntry",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.InternalExamResult": "spkm\\IsamsApi\\Data\\Students\\InternalExamResult",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.InternalExamSession": "spkm\\IsamsApi\\Data\\Students\\InternalExamSession",
@@ -6687,10 +6690,12 @@
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.PublicStudentPassport": "spkm\\IsamsApi\\Data\\Students\\StudentPassport",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.PublicTimetableActivity": "spkm\\IsamsApi\\Data\\Students\\TimetableActivity",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.PublicTimetablePeriod": "spkm\\IsamsApi\\Data\\Students\\TimetablePeriod",
+        "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.RemovalGrounds": "spkm\\IsamsApi\\Data\\Students\\RemovalGrounds",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Reward": "spkm\\IsamsApi\\Data\\Students\\Reward",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.RewardTeacher": "spkm\\IsamsApi\\Data\\Students\\RewardTeacher",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.RewardType": "spkm\\IsamsApi\\Data\\Students\\RewardType",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.SmsMessage": "spkm\\IsamsApi\\Data\\Students\\SmsMessage",
+        "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Student": "spkm\\IsamsApi\\Data\\Students\\Student",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentContact": "spkm\\IsamsApi\\Data\\Students\\StudentContact",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentDocument": "spkm\\IsamsApi\\Data\\Students\\StudentDocument",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentPassportDocument": "spkm\\IsamsApi\\Data\\Students\\StudentPassportDocument",
