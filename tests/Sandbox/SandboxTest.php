@@ -528,7 +528,7 @@ it('shows the format of batch values the models can\'t read, and whether the exa
 
     foreach (['ExamResultsFiltered', 'ExamResults'] as $element) {
         foreach (['ExamCycleIdsToInclude', 'examCycleIdsToInclude'] as $attribute) {
-            Sandbox::line("Exam results under ExamsManager/$element $attribute for one real exam cycle: ".$get('ExternalExams_GetExamResults', ['ExamsManager', $element, [$attribute => [$cycleId]]])->count());
+            Sandbox::line("Exam results under ExamsManager/$element $attribute for an exam cycle that exists: ".$get('ExternalExams_GetExamResults', ['ExamsManager', $element, [$attribute => [$cycleId]]])->count());
         }
     }
 
