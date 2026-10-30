@@ -7,6 +7,8 @@ use Saloon\Http\Request;
 
 /**
  * The 'systemStatuses' property is an array of StudentSystemStatus objects.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Students\SystemStatuses\GetStudentSystemStatusesRequest instead.
  */
 class GetStudentSystemStatusesRequest extends Request
 {

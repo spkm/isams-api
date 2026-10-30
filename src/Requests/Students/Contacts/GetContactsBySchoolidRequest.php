@@ -11,6 +11,8 @@ use spkm\IsamsApi\Traits\ApiErrorHandling;
 
 /**
  * The 'contacts' property is an array of StudentContact objects.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Students\Contacts\GetStudentContactsRequest instead.
  */
 class GetContactsBySchoolidRequest extends Request
 {

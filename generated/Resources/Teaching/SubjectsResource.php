@@ -10,9 +10,9 @@ use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
 use spkm\IsamsApi\Data\Teaching\SubjectForUpdate;
-use spkm\IsamsApi\Requests\Teaching\GetSubjectByIdRequest;
-use spkm\IsamsApi\Requests\Teaching\GetSubjectsRequest;
 use spkm\IsamsApi\Requests\Teaching\Subjects\CreateSubjectRequest;
+use spkm\IsamsApi\Requests\Teaching\Subjects\GetSubjectRequest;
+use spkm\IsamsApi\Requests\Teaching\Subjects\GetSubjectsRequest;
 use spkm\IsamsApi\Requests\Teaching\Subjects\UpdateSubjectRequest;
 
 class SubjectsResource extends BaseResource
@@ -25,9 +25,9 @@ class SubjectsResource extends BaseResource
         return $this->connector->send(new CreateSubjectRequest($subject));
     }
 
-    public function getSubjectById(int $id): Response
+    public function getSubject(int $id): Response
     {
-        return $this->connector->send(new GetSubjectByIdRequest($id));
+        return $this->connector->send(new GetSubjectRequest($id));
     }
 
     public function getSubjects(): Response

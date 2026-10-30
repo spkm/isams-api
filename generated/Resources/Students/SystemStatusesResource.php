@@ -8,7 +8,7 @@ namespace spkm\IsamsApi\Resources\Students;
 
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
-use spkm\IsamsApi\Requests\Students\GetStudentSystemStatusesRequest;
+use spkm\IsamsApi\Requests\Students\SystemStatuses\GetStudentSystemStatusesRequest;
 
 class SystemStatusesResource extends BaseResource
 {

@@ -8,26 +8,27 @@ namespace spkm\IsamsApi\Resources\Students;
 
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
-use spkm\IsamsApi\Requests\Students\Contacts\GetContactsBySchoolidRequest;
-use spkm\IsamsApi\Requests\Students\Contacts\GetContactsRequest;
+use Stringable;
+use spkm\IsamsApi\Requests\Students\Contacts\GetAllStudentContactsRequest;
+use spkm\IsamsApi\Requests\Students\Contacts\GetStudentContactsRequest;
 
 class ContactsResource extends BaseResource
 {
-    public function getContacts(
-        mixed $page = null,
-        mixed $pageSize = null,
-        mixed $expand = null,
-        mixed $filter = null,
+    public function getAllStudentContacts(
+        ?int $page = null,
+        ?int $pageSize = null,
+        ?string $expand = null,
+        string|Stringable|null $filter = null,
     ): Response {
-        return $this->connector->send(new GetContactsRequest($page, $pageSize, $expand, $filter));
+        return $this->connector->send(new GetAllStudentContactsRequest($page, $pageSize, $expand, $filter));
     }
 
-    public function getContactsBySchoolid(
+    public function getStudentContacts(
         string $schoolId,
-        bool $includeDeceased = false,
-        mixed $expand = null,
-        mixed $filter = null,
+        ?bool $includeDeceased = null,
+        ?string $expand = null,
+        string|Stringable|null $filter = null,
     ): Response {
-        return $this->connector->send(new GetContactsBySchoolidRequest($schoolId, $includeDeceased, $expand, $filter));
+        return $this->connector->send(new GetStudentContactsRequest($schoolId, $includeDeceased, $expand, $filter));
     }
 }

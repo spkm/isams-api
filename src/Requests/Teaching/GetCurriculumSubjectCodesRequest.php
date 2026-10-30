@@ -7,6 +7,8 @@ use Saloon\Http\Request;
 
 /**
  * The 'items' property is an array of GlobalListItem objects.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\GetCurriculumSubjectCodesRequest instead.
  */
 class GetCurriculumSubjectCodesRequest extends Request
 {

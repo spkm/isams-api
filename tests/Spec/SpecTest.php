@@ -7,6 +7,10 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Data;
 use spkm\IsamsApi\Data\File;
+use spkm\IsamsApi\Requests\AdhocRequest;
+use spkm\IsamsApi\Requests\ConfigurablePaginatedRequest;
+use spkm\IsamsApi\Requests\ConfigurableRequest;
+use spkm\IsamsApi\Requests\IsamsRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 use spkm\IsamsApi\Tests\Helpers\Spec;
 
@@ -85,3 +89,18 @@ it('builds each generated model from made-up data matching its definition and tu
         ? expect($class::from([]))->toBeInstanceOf($class)
         : expect(fn () => $class::from([]))->toThrow(InvalidArgumentException::class, 'needs a value for "'.$required->first().'"');
 })->with(fn () => collect(Spec::manifest()['models'])->mapWithKeys(fn (string $class, string $definition) => [class_basename($class) => [$definition, $class]])->all())->group('spec');
+
+it('deprecates every hand-written request the generator has replaced', function () {
+    $current = collect(Spec::manifest()['operations'])->where('source', 'handwritten')->pluck('class')
+        ->merge([IsamsRequest::class, AdhocRequest::class, ConfigurableRequest::class, ConfigurablePaginatedRequest::class]);
+    $root = dirname(__DIR__, 2).'/src/Requests/';
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS));
+
+    foreach ($files as $file) {
+        $class = 'spkm\\IsamsApi\\Requests\\'.str_replace(['/', '.php'], ['\\', ''], substr($file->getPathname(), strlen($root)));
+
+        if (! $current->contains($class)) {
+            expect(str_contains((string) (new ReflectionClass($class))->getDocComment(), '@deprecated'))->toBeTrue("$class is neither current nor deprecated");
+        }
+    }
+})->group('spec');

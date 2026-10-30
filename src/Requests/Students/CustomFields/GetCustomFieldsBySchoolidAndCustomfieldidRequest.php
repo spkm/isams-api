@@ -15,6 +15,8 @@ use Saloon\Http\Request;
  *
  * The
  * 'studentSource' property is StudentSource enumeration.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Students\CustomFields\GetStudentCustomFieldRequest instead.
  */
 class GetCustomFieldsBySchoolidAndCustomfieldidRequest extends Request
 {

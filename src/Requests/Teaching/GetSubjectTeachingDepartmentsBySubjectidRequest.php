@@ -7,6 +7,8 @@ use Saloon\Http\Request;
 
 /**
  * The 'teachingDepartments' property is an array of TeachingDepartment objects.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\GetSubjectTeachingDepartmentsRequest instead.
  */
 class GetSubjectTeachingDepartmentsBySubjectidRequest extends Request
 {

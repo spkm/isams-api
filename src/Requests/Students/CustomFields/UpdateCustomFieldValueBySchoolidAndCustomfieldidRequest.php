@@ -9,6 +9,8 @@ use Saloon\Traits\Body\HasFormBody;
 
 /**
  * StudentCustomFields_PatchBySchoolidCustomfieldidPubliccustomfield
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Students\CustomFields\PatchStudentCustomFieldRequest instead, which sends the JSON body iSAMS documents (this request sends a form).
  */
 class UpdateCustomFieldValueBySchoolidAndCustomfieldidRequest extends Request implements HasBody
 {

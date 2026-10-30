@@ -10,8 +10,8 @@ use spkm\IsamsApi\Facades\Isams;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\CreateCurriculumSubjectCodeRequest;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\DeleteCurriculumSubjectCodeRequest;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\UpdateCurriculumSubjectCodeRequest;
-use spkm\IsamsApi\Requests\Teaching\GetSubjectsRequest;
 use spkm\IsamsApi\Requests\Teaching\Subjects\CreateSubjectRequest;
+use spkm\IsamsApi\Requests\Teaching\Subjects\GetSubjectsRequest;
 use spkm\IsamsApi\Requests\Teaching\Subjects\UpdateSubjectRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\AddSubjectTeachingDepartmentRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\RemoveSubjectTeachingDepartmentRequest;
@@ -45,7 +45,7 @@ it('reports the location and id of a subject it creates', function () {
     expect($created)->toEqual(new Created('https://isams.example.test/api/teaching/subjects/77', '77'));
 });
 
-it('reaches generated and hand-written teaching requests through resources', function () {
+it('reaches teaching requests through resources', function () {
     $isams = FakeIsams::respondWith([
         CreateSubjectRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/teaching/subjects/77']),
         GetSubjectsRequest::class => MockResponse::make(['subjects' => []]),

@@ -8,6 +8,8 @@ use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * The 'contacts' property is an array of StudentsContact objects.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Students\Contacts\GetAllStudentContactsRequest instead.
  */
 class GetContactsRequest extends Request implements Paginatable
 {
