@@ -29,13 +29,13 @@ class CreateStudentPassportDocumentRequest extends IsamsRequest implements HasBo
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentPassportDocumentForCreate|array<string, mixed>|null  $data
+     * @param  \spkm\IsamsApi\Data\Students\StudentPassportDocumentForCreate|array<string, mixed>  $data
      */
     public function __construct(
         protected string $schoolId,
         protected int $passportId,
         protected MultipartValue $binary,
-        protected StudentPassportDocumentForCreate|array|null $data = null,
+        protected StudentPassportDocumentForCreate|array $data,
     ) {
     }
 
@@ -49,12 +49,6 @@ class CreateStudentPassportDocumentRequest extends IsamsRequest implements HasBo
      */
     protected function defaultBody(): array
     {
-        $parts = [$this->binary];
-
-        if ($this->data !== null) {
-            $parts[] = new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data));
-        }
-
-        return $parts;
+        return [$this->binary, new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
     }
 }

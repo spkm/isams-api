@@ -45,6 +45,9 @@ final class Generator
     /** @var list<string> */
     private array $modelQueue = [];
 
+    /** @var list<string>|null every tag in the spec, cleaned */
+    private ?array $tags = null;
+
     /** @var array<string, array<string, Method>> resource class => method name => method */
     private array $resources = [];
 
@@ -160,15 +163,34 @@ final class Generator
      */
     private function tagParts(string $tag): array
     {
-        $tag = trim((string) preg_replace(['/\*\* Beta \*\*/', '/\(v[\d.]+\)/', '/\s+/'], ['', '', ' '], $tag));
-        $parts = explode(' - ', $tag);
+        $parts = explode(' - ', $this->cleanTag($tag));
         $resource = count($parts) > 1 ? (string) end($parts) : '';
 
         return [
             'area' => $parts[0],
             'middle' => array_slice($parts, 1, -1),
-            'resource' => trim((string) preg_replace('/ Commands$/', '', $resource)),
+            'resource' => $this->commandsResource($parts[0], $resource),
         ];
+    }
+
+    /**
+     * "X Commands" tags share X's namespace, or its plural's when the area has a tag for that.
+     */
+    private function commandsResource(string $area, string $resource): string
+    {
+        if (! str_ends_with($resource, ' Commands')) {
+            return $resource;
+        }
+
+        $resource = substr($resource, 0, -strlen(' Commands'));
+        $this->tags ??= collect($this->spec['paths'])->flatten(1)->pluck('tags')->flatten()->map($this->cleanTag(...))->unique()->values()->all();
+
+        return in_array($area.' - '.Str::plural($resource), $this->tags, true) ? Str::plural($resource) : $resource;
+    }
+
+    private function cleanTag(string $tag): string
+    {
+        return trim((string) preg_replace(['/\*\* Beta \*\*/', '/\(v[\d.]+\)/', '/\s+/'], ['', '', ' '], $tag));
     }
 
     private function namespaceFor(string $tag): string
@@ -261,7 +283,7 @@ final class Generator
             }
         }
 
-        return (string) preg_replace('/Async$/', '', $action);
+        return (string) preg_replace(['/Async$/', '/^GetAll(?=[A-Z])/'], ['', 'Get'], $action);
     }
 
     private function hasBodylessPost(string $path): bool
@@ -397,7 +419,7 @@ final class Generator
                 'path' => $parameters['path'][$parameter['name']] = ['php' => $name, 'type' => ($parameter['type'] ?? 'string') === 'integer' ? 'int' : 'string'],
                 'query' => $parameters['query'][$parameter['name']] = ['php' => $name, 'type' => $this->queryType($parameter), 'required' => $parameter['required'] ?? false],
                 'body' => $parameters['body'] = $this->body($parameter),
-                'formData' => $parameters['multipart'][$parameter['name']] = ['php' => $name, 'file' => ($parameter['type'] ?? null) === 'file', 'model' => isset($override['multipart'][$parameter['name']]) ? $this->queueModel($override['multipart'][$parameter['name']]) : null, 'required' => $parameter['required'] ?? false],
+                'formData' => $parameters['multipart'][$parameter['name']] = ['php' => $name, 'file' => ($parameter['type'] ?? null) === 'file', 'model' => $this->multipartModel($override['multipart'][$parameter['name']] ?? (isset($parameter['schema']['$ref']) ? $this->refName($parameter['schema']['$ref']) : null)), 'required' => $parameter['required'] ?? false],
                 default => null,
             };
         }
@@ -536,11 +558,11 @@ final class Generator
         }
 
         foreach ($parameters['multipart'] as $part) {
-            $type = $part['file'] ? 'Saloon\Data\MultipartValue' : ($part['model'] ? $part['model'].'|array|null' : 'array|null');
+            $type = $part['file'] ? 'Saloon\Data\MultipartValue' : ($part['model'] ? $part['model'].'|array' : 'array');
             $namespace->addUse($part['file'] ? 'Saloon\Data\MultipartValue' : ($part['model'] ?? 'Saloon\Data\MultipartValue'));
-            $parameter = $add($part['php'])->setType($part['file'] && ! $part['required'] ? '?Saloon\Data\MultipartValue' : $type);
+            $parameter = $add($part['php'])->setType($part['required'] ? $type : ($part['file'] ? '?'.$type : $type.'|null'));
 
-            if (! $part['file'] || ! $part['required']) {
+            if (! $part['required']) {
                 $parameter->setDefaultValue(null);
             }
         }
@@ -557,7 +579,7 @@ final class Generator
 
         foreach ($parameters['multipart'] as $part) {
             if (! $part['file']) {
-                $method->addComment('@param  '.($part['model'] ? '\\'.$part['model'].'|' : '').'array<string, mixed>|null  $'.$part['php']);
+                $method->addComment('@param  '.($part['model'] ? '\\'.$part['model'].'|' : '').'array<string, mixed>'.($part['required'] ? '' : '|null').'  $'.$part['php']);
             }
         }
 
@@ -652,7 +674,7 @@ final class Generator
             $value = '$this->'.$part['php'];
             $code = $part['file'] ? $value : "new MultipartValue('$name', (string) json_encode($value instanceof Data ? {$value}->toArray() : $value))";
 
-            if ($part['file'] && $part['required']) {
+            if ($part['required']) {
                 $required[] = $code;
             } else {
                 $optional[] = "if ($value !== null) {\n    \$parts[] = $code;\n}\n";
@@ -663,6 +685,11 @@ final class Generator
             ->setBody($optional === []
                 ? 'return ['.implode(', ', $required).'];'
                 : '$parts = ['.implode(', ', $required)."];\n\n".implode("\n", $optional)."\nreturn \$parts;");
+    }
+
+    private function multipartModel(?string $definition): ?string
+    {
+        return $definition === null || $this->isEmptyModel($definition) ? null : $this->queueModel($definition);
     }
 
     private function isEmptyModel(string $definition): bool

@@ -21,13 +21,13 @@ use spkm\IsamsApi\Support\JsonPatch;
 class PassportDocumentsResource extends BaseResource
 {
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentPassportDocumentForCreate|array<string, mixed>|null  $data
+     * @param  \spkm\IsamsApi\Data\Students\StudentPassportDocumentForCreate|array<string, mixed>  $data
      */
     public function createStudentPassportDocument(
         string $schoolId,
         int $passportId,
         MultipartValue $binary,
-        StudentPassportDocumentForCreate|array|null $data = null,
+        StudentPassportDocumentForCreate|array $data,
     ): Response {
         return $this->connector->send(new CreateStudentPassportDocumentRequest($schoolId, $passportId, $binary, $data));
     }

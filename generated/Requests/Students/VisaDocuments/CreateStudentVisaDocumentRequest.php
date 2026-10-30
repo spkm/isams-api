@@ -29,13 +29,13 @@ class CreateStudentVisaDocumentRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentVisaDocumentForCreate|array<string, mixed>|null  $data
+     * @param  \spkm\IsamsApi\Data\Students\StudentVisaDocumentForCreate|array<string, mixed>  $data
      */
     public function __construct(
         protected string $schoolId,
         protected int $visaId,
         protected MultipartValue $binary,
-        protected StudentVisaDocumentForCreate|array|null $data = null,
+        protected StudentVisaDocumentForCreate|array $data,
     ) {
     }
 
@@ -49,12 +49,6 @@ class CreateStudentVisaDocumentRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        $parts = [$this->binary];
-
-        if ($this->data !== null) {
-            $parts[] = new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data));
-        }
-
-        return $parts;
+        return [$this->binary, new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
     }
 }

@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -47,9 +47,6 @@ return [
         'StudentVisas_EditMultipleVisasAsyncBySchoolidVisas' => ['class' => 'UpdateStudentVisasRequest'],
         'StudentVisas_GetAllAsyncBySchoolidExpand' => ['response' => ['definition' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentVisas']],
         'StudentVisas_GetAsyncBySchoolidIdExpand' => ['response' => ['definition' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentVisa']],
-        'StudentDocument_PostAsyncBySchoolid' => ['multipart' => ['data' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Post.StudentDocument']],
-        'StudentPassportDocuments_PostAsyncBySchoolidPassportid' => ['multipart' => ['data' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Post.StudentPassportDocument']],
-        'StudentVisaDocuments_PostAsyncBySchoolidVisaid' => ['multipart' => ['data' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Post.StudentVisaDocument']],
         'StudentPassportDocuments_DownloadAsyncBySchoolidPassportidDocumentid' => ['response' => 'file'],
         'StudentVisaDocuments_DownloadAsyncBySchoolidVisaidDocumentid' => ['response' => 'file'],
 
@@ -130,6 +127,34 @@ return [
 
         // Exclusions
         'Exclusion_GetAllReasonsForCancellationAsync' => ['class' => 'GetExclusionCancellationReasonsRequest', 'cacheable' => true],
+
+        // Medical Centre
+        'MedicalCondition_GetAllSeverities' => ['cacheable' => true],
+        'MedicalCondition_GetAllTypes' => ['cacheable' => true],
+        'MedicalConsent_GetAllTypes' => ['cacheable' => true],
+        'MedicalDoctors_GetAllBySurgeryid' => ['cacheable' => true],
+        'MedicalDoctors_GetByDoctoridSurgeryid' => ['cacheable' => true],
+        'MedicalDocument_GetAllCategories' => ['cacheable' => true],
+        'MedicalInventory_GetAllTypes' => ['cacheable' => true],
+        'MedicalMedication_GetAllLocations' => ['cacheable' => true],
+        'MedicalMedication_GetAllSuppliers' => ['cacheable' => true],
+        'MedicalMedication_GetAllTypes' => ['cacheable' => true],
+        'MedicalNote_GetAllTypes' => ['cacheable' => true],
+        'MedicalStock_GetAllReasons' => ['cacheable' => true],
+        'MedicalSurgeries_GetAll' => ['cacheable' => true],
+        'MedicalSurgeries_GetBySurgeryid' => ['cacheable' => true],
+        'MedicalVaccination_GetAllCompleteTo' => ['cacheable' => true],
+        'MedicalVaccination_GetAllSchedules' => ['cacheable' => true],
+        'MedicalVaccination_GetAllStatuses' => ['cacheable' => true],
+        'MedicalVaccination_GetAllTypes' => ['cacheable' => true],
+        'MedicalVisit_GetAllArriveFrom' => ['cacheable' => true],
+        'MedicalVisit_GetAllDepartTo' => ['cacheable' => true],
+        'MedicalVisit_GetAllLocations' => ['cacheable' => true],
+        'MedicalVisit_GetAllReasons' => ['cacheable' => true],
+        'MedicalVisit_GetAllTransportOptions' => ['cacheable' => true],
+        'StudentDoctor_DeleteDoctorBySchoolid' => ['class' => 'DeleteStudentDoctorRequest'],
+        'StudentDoctor_UpdateDoctorBySchoolidPatch' => ['class' => 'PatchStudentDoctorRequest'],
+        'StudentDocuments_DownloadBySchoolidDocumentid' => ['response' => 'file'],
 
         // System Configuration
         'PaymentStatus_GetGetnetPaymentProcessingPage' => $paymentWebhook,

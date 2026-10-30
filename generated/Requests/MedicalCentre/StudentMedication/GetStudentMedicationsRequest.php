@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead.
+ */
+
+namespace spkm\IsamsApi\Requests\MedicalCentre\StudentMedication;
+
+use Saloon\Enums\Method;
+use spkm\IsamsApi\Data\MedicalCentre\Medication;
+use spkm\IsamsApi\Requests\IsamsRequest;
+
+/**
+ * Retrieves a student's medical medication.
+ *
+ * GET /api/medical/students/{schoolId}/medication
+ */
+class GetStudentMedicationsRequest extends IsamsRequest
+{
+    protected Method $method = Method::GET;
+    protected string $responseShape = self::LIST;
+    protected ?string $dto = Medication::class;
+    public string $resultKey = 'medication';
+
+    public function __construct(
+        protected string $schoolId,
+        protected ?bool $includeArchive = null,
+    ) {
+    }
+
+    public function resolveEndpoint(): string
+    {
+        return '/api/medical/students/'.rawurlencode((string) $this->schoolId).'/medication';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function defaultQuery(): array
+    {
+        return array_filter([
+            'includeArchive' => $this->includeArchive === null ? null : ($this->includeArchive ? 'true' : 'false'),
+        ], fn (mixed $value) => $value !== null);
+    }
+}

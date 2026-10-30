@@ -16,12 +16,12 @@ use spkm\IsamsApi\Requests\Students\Document\GetStudentDocumentsRequest;
 class DocumentResource extends BaseResource
 {
     /**
-     * @param  \spkm\IsamsApi\Data\Students\StudentDocumentForCreate|array<string, mixed>|null  $data
+     * @param  \spkm\IsamsApi\Data\Students\StudentDocumentForCreate|array<string, mixed>  $data
      */
     public function createStudentDocument(
         string $schoolId,
         MultipartValue $binary,
-        StudentDocumentForCreate|array|null $data = null,
+        StudentDocumentForCreate|array $data,
     ): Response {
         return $this->connector->send(new CreateStudentDocumentRequest($schoolId, $binary, $data));
     }
