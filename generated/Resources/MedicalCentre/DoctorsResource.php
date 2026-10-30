@@ -41,9 +41,11 @@ class DoctorsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\Doctors\DeleteMedicalDoctorRequest
      */
-    public function delete(string $surgeryId, int $doctorId): void
+    public function delete(string $surgeryId, int $doctorId): bool
     {
         $this->fetch(new DeleteMedicalDoctorRequest(surgeryId: $surgeryId, doctorId: $doctorId));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class DoctorsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\Doctors\PatchMedicalDoctorRequest
      */
-    public function patch(string $surgeryId, int $doctorId, JsonPatch|array $patch): void
+    public function patch(string $surgeryId, int $doctorId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchMedicalDoctorRequest(surgeryId: $surgeryId, doctorId: $doctorId, patch: $patch));
+
+        return true;
     }
 }

@@ -51,9 +51,11 @@ class StudentInventoryResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\DeleteStudentInventoryRequest
      */
-    public function delete(string $schoolId, string $inventoryId): void
+    public function delete(string $schoolId, string $inventoryId): bool
     {
         $this->fetch(new DeleteStudentInventoryRequest(schoolId: $schoolId, inventoryId: $inventoryId));
+
+        return true;
     }
 
     /**
@@ -68,9 +70,11 @@ class StudentInventoryResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentInventory\PatchStudentInventoryRequest
      */
-    public function patch(string $schoolId, string $inventoryId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $inventoryId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentInventoryRequest(schoolId: $schoolId, inventoryId: $inventoryId, patch: $patch));
+
+        return true;
     }
 
     /**

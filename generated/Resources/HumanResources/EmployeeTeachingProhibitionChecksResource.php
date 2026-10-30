@@ -29,7 +29,9 @@ class EmployeeTeachingProhibitionChecksResource extends IsamsResource
     public function update(
         int $employeeId,
         EmployeeTeachingProhibitionCheckForUpdate|array $employeeTeachingProhibitionCheck,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateEmployeeTeachingProhibitionCheckRequest(employeeId: $employeeId, employeeTeachingProhibitionCheck: $employeeTeachingProhibitionCheck));
+
+        return true;
     }
 }

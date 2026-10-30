@@ -35,8 +35,10 @@ class StudentExclusionsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\DeleteStudentExclusionRequest
      */
-    public function delete(int $gradebookId, int $columnId, string $schoolId): void
+    public function delete(int $gradebookId, int $columnId, string $schoolId): bool
     {
         $this->fetch(new DeleteStudentExclusionRequest(gradebookId: $gradebookId, columnId: $columnId, schoolId: $schoolId));
+
+        return true;
     }
 }

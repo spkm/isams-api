@@ -105,7 +105,7 @@ it('gives each resource method the return type its request\'s response calls for
                 $shape === IsamsRequest::CREATED => Created::class,
                 $shape === IsamsRequest::FILE => File::class,
                 $shape === IsamsRequest::RAW => 'mixed',
-                default => 'void',
+                default => 'bool',
             };
             $checked++;
 
@@ -169,6 +169,7 @@ it('lists every resource call in ENDPOINTS.md as you would write it, with what i
         ->toContain('| `Isams::teaching()->subjects()->get(int $id)` | `Subject` |')
         ->toContain('| `Isams::students()->all(mixed $expand = null, mixed $filter = null)` | `LazyCollection<Student>` |')
         ->toContain('| `Isams::teaching()->subjects()->create(SubjectForCreate\\|array $subject)` | `Created` |')
+        ->toContain('| `Isams::teaching()->sets()->removeStudent(int $setId, string $schoolId)` | `bool` |')
         ->toContain('| `Isams::humanResources()->employeeContracts()->v1()->all(int $employeeId)` |')
         ->and((string) file_get_contents($root.'/README.md'))->toContain('(ENDPOINTS.md)');
 })->group('spec');

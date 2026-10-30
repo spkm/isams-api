@@ -41,9 +41,11 @@ class TeachingSkillsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\TeachingSkills\DeleteTeachingSkillRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteTeachingSkillRequest(id: $id));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class TeachingSkillsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\HumanResources\TeachingSkills\PatchTeachingSkillRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): void
+    public function patch(int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchTeachingSkillRequest(id: $id, patch: $patch));
+
+        return true;
     }
 }

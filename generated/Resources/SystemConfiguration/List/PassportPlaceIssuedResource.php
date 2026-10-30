@@ -30,9 +30,11 @@ class PassportPlaceIssuedResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\DeletePassportPlaceIssuedRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeletePassportPlaceIssuedRequest(id: $id));
+
+        return true;
     }
 
     /**
@@ -48,8 +50,10 @@ class PassportPlaceIssuedResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\PassportPlaceIssued\UpdatePassportPlaceIssuedRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdatePassportPlaceIssuedRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

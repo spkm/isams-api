@@ -1242,12 +1242,12 @@ final class Generator
             $operation['response']['shape'] === 'created' => ['spkm\IsamsApi\Data\Created', null],
             $operation['response']['shape'] === 'file' => ['spkm\IsamsApi\Data\File', null],
             $operation['response']['shape'] === 'raw' => ['mixed', null],
-            default => ['void', null],
+            default => ['bool', null],
         };
 
         $method->setReturnType($returnType)->setBody(match (true) {
             $paged => "return \$this->each($send, \\{$model}::class);",
-            $returnType === 'void' => "\$this->fetch($send);",
+            $returnType === 'bool' => "\$this->fetch($send);\n\nreturn true;",
             default => "return \$this->fetch($send);",
         });
 
@@ -1462,9 +1462,11 @@ final class Generator
             '<!-- '.self::MARKER.' -->',
             '',
             'Every call the package\'s resources provide, as you write it, and what it returns. Lists come back as a',
-            '`Collection` of models, lists iSAMS sends in pages as a `LazyCollection` that fetches each page as you loop, and',
-            'a failure throws an `IsamsApiException`; see [Two ways to call iSAMS](README.md#two-ways-to-call-isams) and',
-            '[Errors](README.md#errors). Each call\'s docblock names the request it sends, for `Isams::send()`.',
+            '`Collection` of models, and lists iSAMS sends in pages as a `LazyCollection` that fetches each page as you loop.',
+            'Writes iSAMS answers without a body return `true` (`bool`), as Eloquent\'s `update()` and `delete()` do. A',
+            'failure never returns `false`: it throws an `IsamsApiException`. See [Two ways to call',
+            'iSAMS](README.md#two-ways-to-call-isams) and [Errors](README.md#errors). Each call\'s docblock names the request',
+            'it sends, for `Isams::send()`.',
             '',
             ...$contents,
             '',
@@ -1486,7 +1488,6 @@ final class Generator
         preg_match('/@return\\s+\\S*Collection<int, \\\\?([\\w\\\\]+)>/', $method->getComment() ?? '', $item);
 
         return match (true) {
-            $type === 'void' => 'nothing',
             $type === 'mixed' => 'iSAMS\'s JSON, decoded (the spec gives no model)',
             isset($item[1]) => '`'.class_basename($type).'<'.class_basename($item[1]).'>`',
             default => '`'.class_basename($type).'`',

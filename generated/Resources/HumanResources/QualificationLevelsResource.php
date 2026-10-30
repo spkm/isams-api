@@ -39,17 +39,21 @@ class QualificationLevelsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\QualificationLevels\DeleteQualificationLevelRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteQualificationLevelRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\HumanResources\QualificationLevels\UpdateQualificationLevelRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateQualificationLevelRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

@@ -41,8 +41,10 @@ class ConcernGirfecResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernGirfec\PatchConcernGirfecFormRequest
      */
-    public function patchForm(string $schoolId, int $concernId, JsonPatch|array $patch): void
+    public function patchForm(string $schoolId, int $concernId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchConcernGirfecFormRequest(schoolId: $schoolId, concernId: $concernId, patch: $patch));
+
+        return true;
     }
 }

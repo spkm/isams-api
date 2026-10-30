@@ -57,8 +57,10 @@ class AlumniResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Students\Alumni\PatchAlumniRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchAlumniRequest(schoolId: $schoolId, patch: $patch));
+
+        return true;
     }
 }

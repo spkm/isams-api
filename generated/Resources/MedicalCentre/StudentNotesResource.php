@@ -51,9 +51,11 @@ class StudentNotesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\DeleteStudentNoteRequest
      */
-    public function delete(string $schoolId, string $noteId): void
+    public function delete(string $schoolId, string $noteId): bool
     {
         $this->fetch(new DeleteStudentNoteRequest(schoolId: $schoolId, noteId: $noteId));
+
+        return true;
     }
 
     /**
@@ -68,9 +70,11 @@ class StudentNotesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\PatchStudentNoteRequest
      */
-    public function patch(string $schoolId, string $noteId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $noteId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentNoteRequest(schoolId: $schoolId, noteId: $noteId, patch: $patch));
+
+        return true;
     }
 
     /**

@@ -25,8 +25,10 @@ class AssessmentColumnTransposeResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnTranspose\DeleteAssessmentColumnTransposeRequest
      */
-    public function delete(int $gradebookId, int $columnId, int $transposeId): void
+    public function delete(int $gradebookId, int $columnId, int $transposeId): bool
     {
         $this->fetch(new DeleteAssessmentColumnTransposeRequest(gradebookId: $gradebookId, columnId: $columnId, transposeId: $transposeId));
+
+        return true;
     }
 }

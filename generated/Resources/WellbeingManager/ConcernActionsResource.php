@@ -30,9 +30,11 @@ class ConcernActionsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\DeleteConcernActionRequest
      */
-    public function delete(string $schoolId, int $concernId, int $id): void
+    public function delete(string $schoolId, int $concernId, int $id): bool
     {
         $this->fetch(new DeleteConcernActionRequest(schoolId: $schoolId, concernId: $concernId, id: $id));
+
+        return true;
     }
 
     /**
@@ -47,8 +49,10 @@ class ConcernActionsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\PatchConcernActionRequest
      */
-    public function patch(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): void
+    public function patch(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchConcernActionRequest(schoolId: $schoolId, concernId: $concernId, id: $id, patch: $patch));
+
+        return true;
     }
 }

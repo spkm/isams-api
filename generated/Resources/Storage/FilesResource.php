@@ -19,9 +19,11 @@ class FilesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Storage\Files\DeleteFileRequest
      */
-    public function delete(string $path, string $filename): void
+    public function delete(string $path, string $filename): bool
     {
         $this->fetch(new DeleteFileRequest(path: $path, filename: $filename));
+
+        return true;
     }
 
     /**

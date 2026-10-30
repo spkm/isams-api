@@ -42,9 +42,11 @@ class PassportsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Students\Passports\DeleteStudentPassportRequest
      */
-    public function delete(string $schoolId, int $id): void
+    public function delete(string $schoolId, int $id): bool
     {
         $this->fetch(new DeleteStudentPassportRequest(schoolId: $schoolId, id: $id));
+
+        return true;
     }
 
     /**
@@ -59,17 +61,21 @@ class PassportsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Students\StudentPassportForUpdate|array<string, mixed>  $studentPassport
      * @see \spkm\IsamsApi\Requests\Students\Passports\UpdateStudentPassportRequest
      */
-    public function update(string $schoolId, int $id, StudentPassportForUpdate|array $studentPassport): void
+    public function update(string $schoolId, int $id, StudentPassportForUpdate|array $studentPassport): bool
     {
         $this->fetch(new UpdateStudentPassportRequest(schoolId: $schoolId, id: $id, studentPassport: $studentPassport));
+
+        return true;
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Students\StudentPassportForUpdate|array<string, mixed>>  $studentPassports
      * @see \spkm\IsamsApi\Requests\Students\Passports\UpdateStudentPassportsRequest
      */
-    public function updateMany(string $schoolId, array $studentPassports): void
+    public function updateMany(string $schoolId, array $studentPassports): bool
     {
         $this->fetch(new UpdateStudentPassportsRequest(schoolId: $schoolId, studentPassports: $studentPassports));
+
+        return true;
     }
 }

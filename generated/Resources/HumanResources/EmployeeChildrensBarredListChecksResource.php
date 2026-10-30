@@ -40,8 +40,10 @@ class EmployeeChildrensBarredListChecksResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\ChildrensBarredListCheckForUpdate|array<string, mixed>  $childrensBarredListCheck
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeChildrensBarredListChecks\UpdateEmployeeChildrensBarredListCheckRequest
      */
-    public function update(int $employeeId, ChildrensBarredListCheckForUpdate|array $childrensBarredListCheck): void
+    public function update(int $employeeId, ChildrensBarredListCheckForUpdate|array $childrensBarredListCheck): bool
     {
         $this->fetch(new UpdateEmployeeChildrensBarredListCheckRequest(employeeId: $employeeId, childrensBarredListCheck: $childrensBarredListCheck));
+
+        return true;
     }
 }

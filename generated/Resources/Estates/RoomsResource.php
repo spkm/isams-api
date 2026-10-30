@@ -49,8 +49,10 @@ class RoomsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Estates\RoomForUpdate|array<string, mixed>  $room
      * @see \spkm\IsamsApi\Requests\Estates\Rooms\UpdateRoomRequest
      */
-    public function update(int $id, RoomForUpdate|array $room): void
+    public function update(int $id, RoomForUpdate|array $room): bool
     {
         $this->fetch(new UpdateRoomRequest(id: $id, room: $room));
+
+        return true;
     }
 }

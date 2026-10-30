@@ -30,9 +30,11 @@ class GroupResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\Group\DeleteGradebookGroupRequest
      */
-    public function delete(int $gradebookId, int $groupId): void
+    public function delete(int $gradebookId, int $groupId): bool
     {
         $this->fetch(new DeleteGradebookGroupRequest(gradebookId: $gradebookId, groupId: $groupId));
+
+        return true;
     }
 
     /**
@@ -47,8 +49,10 @@ class GroupResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\Gradebooks\Group\PatchGradebookGroupRequest
      */
-    public function patch(int $gradebookId, int $groupId, JsonPatch|array $patch): void
+    public function patch(int $gradebookId, int $groupId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchGradebookGroupRequest(gradebookId: $gradebookId, groupId: $groupId, patch: $patch));
+
+        return true;
     }
 }

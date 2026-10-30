@@ -25,8 +25,10 @@ class CharacteristicsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\Characteristics\DeleteGradebookCharacteristicRequest
      */
-    public function delete(int $gradebookId, string $characteristic): void
+    public function delete(int $gradebookId, string $characteristic): bool
     {
         $this->fetch(new DeleteGradebookCharacteristicRequest(gradebookId: $gradebookId, characteristic: $characteristic));
+
+        return true;
     }
 }

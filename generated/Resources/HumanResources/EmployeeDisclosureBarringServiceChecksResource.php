@@ -43,7 +43,9 @@ class EmployeeDisclosureBarringServiceChecksResource extends IsamsResource
     public function update(
         int $employeeId,
         DisclosureBarringServiceCheckForUpdate|array $disclosureBarringServiceCheck,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateEmployeeDisclosureBarringServiceCheckRequest(employeeId: $employeeId, disclosureBarringServiceCheck: $disclosureBarringServiceCheck));
+
+        return true;
     }
 }

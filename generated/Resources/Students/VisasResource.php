@@ -42,9 +42,11 @@ class VisasResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Students\Visas\DeleteStudentVisaRequest
      */
-    public function delete(string $schoolId, int $id): void
+    public function delete(string $schoolId, int $id): bool
     {
         $this->fetch(new DeleteStudentVisaRequest(schoolId: $schoolId, id: $id));
+
+        return true;
     }
 
     /**
@@ -59,17 +61,21 @@ class VisasResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Students\StudentVisaForUpdate|array<string, mixed>  $studentVisa
      * @see \spkm\IsamsApi\Requests\Students\Visas\UpdateStudentVisaRequest
      */
-    public function update(string $schoolId, int $id, StudentVisaForUpdate|array $studentVisa): void
+    public function update(string $schoolId, int $id, StudentVisaForUpdate|array $studentVisa): bool
     {
         $this->fetch(new UpdateStudentVisaRequest(schoolId: $schoolId, id: $id, studentVisa: $studentVisa));
+
+        return true;
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Students\StudentVisaForUpdate|array<string, mixed>>  $studentVisas
      * @see \spkm\IsamsApi\Requests\Students\Visas\UpdateStudentVisasRequest
      */
-    public function updateMany(string $schoolId, array $studentVisas): void
+    public function updateMany(string $schoolId, array $studentVisas): bool
     {
         $this->fetch(new UpdateStudentVisasRequest(schoolId: $schoolId, studentVisas: $studentVisas));
+
+        return true;
     }
 }

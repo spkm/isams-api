@@ -39,17 +39,21 @@ class StudentEntryTypeResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\DeleteStudentEntryTypeRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteStudentEntryTypeRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\StudentEntryType\UpdateStudentEntryTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateStudentEntryTypeRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

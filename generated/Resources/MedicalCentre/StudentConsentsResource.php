@@ -51,9 +51,11 @@ class StudentConsentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\DeleteStudentConsentRequest
      */
-    public function delete(string $schoolId, string $consentId): void
+    public function delete(string $schoolId, string $consentId): bool
     {
         $this->fetch(new DeleteStudentConsentRequest(schoolId: $schoolId, consentId: $consentId));
+
+        return true;
     }
 
     /**
@@ -68,9 +70,11 @@ class StudentConsentsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentConsents\PatchStudentConsentRequest
      */
-    public function patch(string $schoolId, string $consentId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $consentId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentConsentRequest(schoolId: $schoolId, consentId: $consentId, patch: $patch));
+
+        return true;
     }
 
     /**

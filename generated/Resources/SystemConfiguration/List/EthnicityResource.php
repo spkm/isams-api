@@ -39,17 +39,21 @@ class EthnicityResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Ethnicity\DeleteEthnicityRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteEthnicityRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Ethnicity\UpdateEthnicityRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateEthnicityRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

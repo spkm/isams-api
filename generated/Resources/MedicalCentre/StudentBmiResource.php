@@ -41,9 +41,11 @@ class StudentBmiResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\DeleteStudentBmiRequest
      */
-    public function delete(string $schoolId, string $bmiId): void
+    public function delete(string $schoolId, string $bmiId): bool
     {
         $this->fetch(new DeleteStudentBmiRequest(schoolId: $schoolId, bmiId: $bmiId));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class StudentBmiResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentBmi\PatchStudentBmiRequest
      */
-    public function patch(string $schoolId, string $bmiId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $bmiId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentBmiRequest(schoolId: $schoolId, bmiId: $bmiId, patch: $patch));
+
+        return true;
     }
 }

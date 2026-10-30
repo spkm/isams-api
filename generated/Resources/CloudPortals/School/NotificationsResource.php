@@ -26,8 +26,10 @@ class NotificationsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\Notifications\PatchPortalNotificationSettingsRequest
      */
-    public function patchSettings(JsonPatch|array $patch): void
+    public function patchSettings(JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchPortalNotificationSettingsRequest(patch: $patch));
+
+        return true;
     }
 }

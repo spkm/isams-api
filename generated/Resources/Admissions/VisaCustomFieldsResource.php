@@ -36,8 +36,10 @@ class VisaCustomFieldsResource extends IsamsResource
      * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\Admissions\VisaCustomFields\PatchApplicantVisaCustomFieldsRequest
      */
-    public function patchMany(string $schoolId, int $visaId, array $customFields): void
+    public function patchMany(string $schoolId, int $visaId, array $customFields): bool
     {
         $this->fetch(new PatchApplicantVisaCustomFieldsRequest(schoolId: $schoolId, visaId: $visaId, customFields: $customFields));
+
+        return true;
     }
 }

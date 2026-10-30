@@ -39,17 +39,21 @@ class StatusesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Admissions\Statuses\DeleteStatusRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteStatusRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\Admissions\Statuses\UpdateStatusRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateStatusRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

@@ -49,8 +49,10 @@ class V1Resource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeContractForUpdate|array<string, mixed>  $employeeContract
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\V1\UpdateEmployeeContractRequest
      */
-    public function update(int $employeeId, int $contractId, EmployeeContractForUpdate|array $employeeContract): void
+    public function update(int $employeeId, int $contractId, EmployeeContractForUpdate|array $employeeContract): bool
     {
         $this->fetch(new UpdateEmployeeContractRequest(employeeId: $employeeId, contractId: $contractId, employeeContract: $employeeContract));
+
+        return true;
     }
 }

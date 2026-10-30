@@ -39,17 +39,21 @@ class OfferTypesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\DeleteOfferTypeRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteOfferTypeRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\OfferTypes\UpdateOfferTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateOfferTypeRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

@@ -36,8 +36,10 @@ class PassportCustomFieldsResource extends IsamsResource
      * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\Students\PassportCustomFields\PatchStudentPassportCustomFieldsRequest
      */
-    public function patchMany(string $schoolId, int $passportId, array $customFields): void
+    public function patchMany(string $schoolId, int $passportId, array $customFields): bool
     {
         $this->fetch(new PatchStudentPassportCustomFieldsRequest(schoolId: $schoolId, passportId: $passportId, customFields: $customFields));
+
+        return true;
     }
 }

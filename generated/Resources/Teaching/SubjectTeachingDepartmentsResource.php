@@ -35,8 +35,10 @@ class SubjectTeachingDepartmentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\RemoveSubjectTeachingDepartmentRequest
      */
-    public function remove(int $subjectId, int $departmentId): void
+    public function remove(int $subjectId, int $departmentId): bool
     {
         $this->fetch(new RemoveSubjectTeachingDepartmentRequest(subjectId: $subjectId, departmentId: $departmentId));
+
+        return true;
     }
 }

@@ -54,8 +54,10 @@ class OtherSchoolsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\OtherSchools\OtherSchoolForUpdate|array<string, mixed>  $otherSchool
      * @see \spkm\IsamsApi\Requests\OtherSchools\UpdateOtherSchoolRequest
      */
-    public function update(int $id, OtherSchoolForUpdate|array $otherSchool): void
+    public function update(int $id, OtherSchoolForUpdate|array $otherSchool): bool
     {
         $this->fetch(new UpdateOtherSchoolRequest(id: $id, otherSchool: $otherSchool));
+
+        return true;
     }
 }

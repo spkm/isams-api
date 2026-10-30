@@ -30,7 +30,9 @@ class StatusStudentsResource extends IsamsResource
         int $registrationPeriodId,
         string $schoolId,
         UpdateRegistrationStatusCommand|array $updateRegistrationStatus,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateStudentRegistrationStatusRequest(registrationPeriodId: $registrationPeriodId, schoolId: $schoolId, updateRegistrationStatus: $updateRegistrationStatus));
+
+        return true;
     }
 }

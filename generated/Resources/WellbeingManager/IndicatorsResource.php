@@ -33,9 +33,11 @@ class IndicatorsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\Indicators\DeleteIndicatorRequest
      */
-    public function delete(string $schoolId, int $id): void
+    public function delete(string $schoolId, int $id): bool
     {
         $this->fetch(new DeleteIndicatorRequest(schoolId: $schoolId, id: $id));
+
+        return true;
     }
 
     /**
@@ -51,9 +53,11 @@ class IndicatorsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\WellbeingManager\DismissIndicatorsCollectionForUpdate|array<string, mixed>  $dismissIndicatorsCollection
      * @see \spkm\IsamsApi\Requests\WellbeingManager\Indicators\DismissIndicatorsRequest
      */
-    public function dismiss(DismissIndicatorsCollectionForUpdate|array $dismissIndicatorsCollection): void
+    public function dismiss(DismissIndicatorsCollectionForUpdate|array $dismissIndicatorsCollection): bool
     {
         $this->fetch(new DismissIndicatorsRequest(dismissIndicatorsCollection: $dismissIndicatorsCollection));
+
+        return true;
     }
 
     /**
@@ -68,8 +72,10 @@ class IndicatorsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\Indicators\PatchIndicatorRequest
      */
-    public function patch(string $schoolId, int $id, JsonPatch|array $patch): void
+    public function patch(string $schoolId, int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchIndicatorRequest(schoolId: $schoolId, id: $id, patch: $patch));
+
+        return true;
     }
 }

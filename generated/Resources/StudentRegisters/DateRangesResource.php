@@ -42,9 +42,11 @@ class DateRangesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\StudentRegisters\DateRanges\DeleteDateRangeRequest
      */
-    public function delete(int $registerId, string $schoolId, int $dateRangeId): void
+    public function delete(int $registerId, string $schoolId, int $dateRangeId): bool
     {
         $this->fetch(new DeleteDateRangeRequest(registerId: $registerId, schoolId: $schoolId, dateRangeId: $dateRangeId));
+
+        return true;
     }
 
     /**
@@ -65,7 +67,9 @@ class DateRangesResource extends IsamsResource
         string $schoolId,
         int $dateRangeId,
         DateRangeForUpdate|array $dateRange,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateDateRangeRequest(registerId: $registerId, schoolId: $schoolId, dateRangeId: $dateRangeId, dateRange: $dateRange));
+
+        return true;
     }
 }

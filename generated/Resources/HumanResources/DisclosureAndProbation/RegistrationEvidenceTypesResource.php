@@ -39,17 +39,21 @@ class RegistrationEvidenceTypesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\DeleteRegistrationEvidenceTypeRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteRegistrationEvidenceTypeRequest(id: $id));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
      * @see \spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\RegistrationEvidenceTypes\UpdateRegistrationEvidenceTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): bool
     {
         $this->fetch(new UpdateRegistrationEvidenceTypeRequest(id: $id, listItem: $listItem));
+
+        return true;
     }
 }

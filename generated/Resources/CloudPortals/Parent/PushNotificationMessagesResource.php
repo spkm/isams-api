@@ -29,41 +29,51 @@ class PushNotificationMessagesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAllMessagesAsDeletedRequest
      */
-    public function markAllMessagesAsDeleted(): void
+    public function markAllMessagesAsDeleted(): bool
     {
         $this->fetch(new MarkPushNotificationMessageAllMessagesAsDeletedRequest());
+
+        return true;
     }
 
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAllMessagesAsReadRequest
      */
-    public function markAllMessagesAsRead(): void
+    public function markAllMessagesAsRead(): bool
     {
         $this->fetch(new MarkPushNotificationMessageAllMessagesAsReadRequest());
+
+        return true;
     }
 
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAsDeletedRequest
      */
-    public function markAsDeleted(string $messageId): void
+    public function markAsDeleted(string $messageId): bool
     {
         $this->fetch(new MarkPushNotificationMessageAsDeletedRequest(messageId: $messageId));
+
+        return true;
     }
 
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\MarkPushNotificationMessageAsReadRequest
      */
-    public function markAsRead(string $messageId): void
+    public function markAsRead(string $messageId): bool
     {
         $this->fetch(new MarkPushNotificationMessageAsReadRequest(messageId: $messageId));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\PushNotifications\UserMessageStatusUpdate|array<string, mixed>  $userMessageStatusUpdate
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\UpdatePushNotificationMessageStatusRequest
      */
-    public function updateStatus(int $messageId, UserMessageStatusUpdate|array $userMessageStatusUpdate): void
+    public function updateStatus(int $messageId, UserMessageStatusUpdate|array $userMessageStatusUpdate): bool
     {
         $this->fetch(new UpdatePushNotificationMessageStatusRequest(messageId: $messageId, userMessageStatusUpdate: $userMessageStatusUpdate));
+
+        return true;
     }
 }

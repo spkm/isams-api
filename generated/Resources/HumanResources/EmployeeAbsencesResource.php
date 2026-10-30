@@ -49,8 +49,10 @@ class EmployeeAbsencesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\HumanResources\AbsenceForUpdate|array<string, mixed>  $absence
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeAbsences\UpdateEmployeeAbsenceRequest
      */
-    public function update(int $employeeId, int $id, AbsenceForUpdate|array $absence): void
+    public function update(int $employeeId, int $id, AbsenceForUpdate|array $absence): bool
     {
         $this->fetch(new UpdateEmployeeAbsenceRequest(employeeId: $employeeId, id: $id, absence: $absence));
+
+        return true;
     }
 }

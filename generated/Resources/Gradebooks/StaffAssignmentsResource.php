@@ -36,8 +36,10 @@ class StaffAssignmentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\StaffAssignments\DeleteGradebookStaffAssignmentRequest
      */
-    public function delete(int $gradebookId, string $staffId): void
+    public function delete(int $gradebookId, string $staffId): bool
     {
         $this->fetch(new DeleteGradebookStaffAssignmentRequest(gradebookId: $gradebookId, staffId: $staffId));
+
+        return true;
     }
 }

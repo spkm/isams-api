@@ -30,9 +30,11 @@ class FlagResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\Flag\DeleteStudentFlagRequest
      */
-    public function delete(string $schoolId): void
+    public function delete(string $schoolId): bool
     {
         $this->fetch(new DeleteStudentFlagRequest(schoolId: $schoolId));
+
+        return true;
     }
 
     /**
@@ -47,8 +49,10 @@ class FlagResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\Flag\PatchStudentFlagRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentFlagRequest(schoolId: $schoolId, patch: $patch));
+
+        return true;
     }
 }

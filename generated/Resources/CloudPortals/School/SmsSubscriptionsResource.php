@@ -27,8 +27,10 @@ class SmsSubscriptionsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\SmsSubscriptions\PatchSmsSubscriptionToSmsCategoriesRequest
      */
-    public function patchToSmsCategories(JsonPatch|array $patch): void
+    public function patchToSmsCategories(JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchSmsSubscriptionToSmsCategoriesRequest(patch: $patch));
+
+        return true;
     }
 }

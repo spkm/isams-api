@@ -39,17 +39,21 @@ class AlumniCustomFieldsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>  $customField
      * @see \spkm\IsamsApi\Requests\Admissions\AlumniCustomFields\PatchApplicantAlumniCustomFieldRequest
      */
-    public function patch(string $schoolId, int $customFieldId, CustomFieldForPatch|array $customField): void
+    public function patch(string $schoolId, int $customFieldId, CustomFieldForPatch|array $customField): bool
     {
         $this->fetch(new PatchApplicantAlumniCustomFieldRequest(schoolId: $schoolId, customFieldId: $customFieldId, customField: $customField));
+
+        return true;
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\Admissions\AlumniCustomFields\PatchApplicantAlumniCustomFieldsRequest
      */
-    public function patchMany(string $schoolId, array $customFields): void
+    public function patchMany(string $schoolId, array $customFields): bool
     {
         $this->fetch(new PatchApplicantAlumniCustomFieldsRequest(schoolId: $schoolId, customFields: $customFields));
+
+        return true;
     }
 }

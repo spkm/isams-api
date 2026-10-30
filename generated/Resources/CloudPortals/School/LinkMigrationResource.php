@@ -26,9 +26,11 @@ class LinkMigrationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\LinkMigration\DeleteLinkMigrationPortalLinkRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteLinkMigrationPortalLinkRequest(id: $id));
+
+        return true;
     }
 
     /**

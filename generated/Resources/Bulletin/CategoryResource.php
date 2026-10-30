@@ -14,8 +14,10 @@ class CategoryResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Bulletin\Category\UpdateBulletinCategoryRequest
      */
-    public function update(int $bulletinId, int $categoryId): void
+    public function update(int $bulletinId, int $categoryId): bool
     {
         $this->fetch(new UpdateBulletinCategoryRequest(bulletinId: $bulletinId, categoryId: $categoryId));
+
+        return true;
     }
 }

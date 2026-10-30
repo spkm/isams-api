@@ -37,8 +37,10 @@ class FieldsResource extends IsamsResource
      * @param  array<mixed>  $values
      * @see \spkm\IsamsApi\Requests\StudentRegisters\Fields\PatchStudentFieldsRequest
      */
-    public function patchMany(int $registerId, string $schoolId, array $values): void
+    public function patchMany(int $registerId, string $schoolId, array $values): bool
     {
         $this->fetch(new PatchStudentFieldsRequest(registerId: $registerId, schoolId: $schoolId, values: $values));
+
+        return true;
     }
 }

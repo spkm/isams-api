@@ -41,9 +41,11 @@ class ConcernActionOutcomesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\DeleteConcernActionOutcomeRequest
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
         $this->fetch(new DeleteConcernActionOutcomeRequest(id: $id));
+
+        return true;
     }
 
     /**
@@ -58,8 +60,10 @@ class ConcernActionOutcomesResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\PatchConcernActionOutcomeRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): void
+    public function patch(int $id, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchConcernActionOutcomeRequest(id: $id, patch: $patch));
+
+        return true;
     }
 }

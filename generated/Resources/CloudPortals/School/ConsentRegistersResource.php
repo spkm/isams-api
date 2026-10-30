@@ -27,17 +27,21 @@ class ConsentRegistersResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\PatchContactConsentRegisterResponsesRequest
      */
-    public function patchContactResponses(JsonPatch|array $patch): void
+    public function patchContactResponses(JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchContactConsentRegisterResponsesRequest(patch: $patch));
+
+        return true;
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\PatchStudentConsentRegisterResponsesRequest
      */
-    public function patchResponses(string $schoolId, JsonPatch|array $patch): void
+    public function patchResponses(string $schoolId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentConsentRegisterResponsesRequest(schoolId: $schoolId, patch: $patch));
+
+        return true;
     }
 }

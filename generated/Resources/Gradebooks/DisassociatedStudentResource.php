@@ -14,8 +14,10 @@ class DisassociatedStudentResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\DisassociatedStudent\RemoveGradebookDisassociatedStudentRequest
      */
-    public function remove(int $gradebookId, string $schoolId): void
+    public function remove(int $gradebookId, string $schoolId): bool
     {
         $this->fetch(new RemoveGradebookDisassociatedStudentRequest(gradebookId: $gradebookId, schoolId: $schoolId));
+
+        return true;
     }
 }

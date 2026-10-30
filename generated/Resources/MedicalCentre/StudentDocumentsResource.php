@@ -54,9 +54,11 @@ class StudentDocumentsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\DeleteStudentDocumentRequest
      */
-    public function delete(string $schoolId, string $documentId): void
+    public function delete(string $schoolId, string $documentId): bool
     {
         $this->fetch(new DeleteStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId));
+
+        return true;
     }
 
     /**
@@ -79,9 +81,11 @@ class StudentDocumentsResource extends IsamsResource
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
      * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\PatchStudentDocumentRequest
      */
-    public function patch(string $schoolId, string $documentId, JsonPatch|array $patch): void
+    public function patch(string $schoolId, string $documentId, JsonPatch|array $patch): bool
     {
         $this->fetch(new PatchStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId, patch: $patch));
+
+        return true;
     }
 
     /**

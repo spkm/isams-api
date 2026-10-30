@@ -41,9 +41,11 @@ class EmployeeIdentityChecksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\DeleteEmployeeIdentityCheckRequest
      */
-    public function delete(int $employeeId, int $identityCheckId): void
+    public function delete(int $employeeId, int $identityCheckId): bool
     {
         $this->fetch(new DeleteEmployeeIdentityCheckRequest(employeeId: $employeeId, identityCheckId: $identityCheckId));
+
+        return true;
     }
 
     /**
@@ -62,7 +64,9 @@ class EmployeeIdentityChecksResource extends IsamsResource
         int $employeeId,
         int $identityCheckId,
         EmployeeIdentityCheckForUpdate|array $employeeIdentityCheck,
-    ): void {
+    ): bool {
         $this->fetch(new UpdateEmployeeIdentityCheckRequest(employeeId: $employeeId, identityCheckId: $identityCheckId, employeeIdentityCheck: $employeeIdentityCheck));
+
+        return true;
     }
 }
