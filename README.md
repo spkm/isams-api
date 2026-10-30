@@ -207,6 +207,30 @@ foreach (Isams::batch('photos')->send(BatchPhotosRequest::students())->dto()->ph
 The older `GetEndpointRequest` and `FilterEndpointRequest` still work but are deprecated: from 2 November 2026 iSAMS
 only accepts Batch API requests that authenticate with the key's own client secret.
 
+### Cloud Portals
+
+The Cloud Portals endpoints (`Isams::cloudPortals()`, `Requests\CloudPortals\…`) are the ones iSAMS's parent and
+student portals use. iSAMS's spec lists them under the usual `restapi` scope, while its portal documentation names a
+separate `iSAMS.CloudPortals.Api` scope; if your credentials need that scope, give them a connection of their own:
+
+```php
+'connections' => [
+    'portals' => [
+        'client_id' => env('ISAMS_PORTALS_CLIENT_ID'),
+        'client_secret' => env('ISAMS_PORTALS_CLIENT_SECRET'),
+        'base_url' => env('ISAMS_BASE_URL'),
+        'scopes' => ['iSAMS.CloudPortals.Api'],
+    ],
+],
+```
+
+```php
+Isams::connection('portals')->cloudPortals()->schoolBookmark()->getBookmarks();
+```
+
+Many of them act for a signed-in portal user and are untyped in iSAMS's spec, so they return arrays; treat them as
+unverified until you have tried them against your own iSAMS.
+
 ### When iSAMS is slow or offline
 
 All of these are off unless you configure them (see `config/isams-api.php`):

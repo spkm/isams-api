@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News', 'Gradebooks'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News', 'Gradebooks', 'Cloud Portals'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -301,6 +301,28 @@ return [
         'Tags_DeleteTagByGradebookidCategoryidCategoryentityid' => ['class' => 'DeleteGradebookTagRequest'],
         'Tags_PostTagsByGradebookidTags' => ['class' => 'CreateGradebookTagsRequest'],
 
+        // Cloud Portals
+        'Bookmark_GetBoomarksAsyncByPagePagesize' => ['class' => 'GetBookmarksRequest'],
+        'CommunicationHistory_GetPortalEmailHistoryMessageByIdByEmailid' => ['class' => 'GetPortalEmailHistoryMessageRequest'],
+        'ConsentRegisters_UpdateConsentRegisterResponsesByConsentregistersupdates' => ['class' => 'PatchContactConsentRegisterResponsesRequest'],
+        'ConsentRegisters_UpdateConsentRegisterResponsesBySchoolidConsentregistersupdates' => ['class' => 'PatchStudentConsentRegisterResponsesRequest'],
+        'PortalDocumentSigning_CreateParentPortalSigningRequestAsyncByDocumentsigningcreaterequest' => ['class' => 'CreateDocumentSigningRequest'],
+        'PortalDocumentSigning_GetDocumentsForSigningAsync' => ['class' => 'GetDocumentsForSigningRequest'],
+        'PortalDocumentSigning_GetEmbeddedSigningUrlAsyncBySigningrequestid' => ['class' => 'GetEmbeddedSigningUrlRequest'],
+        'PortalDocumentSigning_GetEmbeddedSigningUrlForDocumentAsyncByDocumentguid' => ['class' => 'GetEmbeddedSigningUrlForDocumentRequest'],
+        'PortalDocument_DocumentDownloadByDocumentid' => ['class' => 'DownloadPortalDocumentRequest', 'response' => 'file'],
+        'PushNotificationPortal_UnSubscribeUserFromChannelAsyncBySubscribe' => ['class' => 'UnsubscribePushNotificationUserFromChannelRequest'],
+        'SchoolTermsPortal_GetSchoolTermsAsync' => ['class' => 'GetPortalSchoolTermsRequest'],
+        'SchoolsPortal_GetSchoolsByQueryPagePagesize' => ['class' => 'GetPortalSchoolsRequest'],
+        'StudentsPortal_GetStudentBySchoolIdAsyncBySchoolid' => ['class' => 'GetPortalStudentRequest'],
+        'StudentsPortal_GetStudentsByPortalTypeAsyncByPortaltypeDivisionidscommaseparated' => ['class' => 'GetPortalStudentsByPortalTypeRequest'],
+        'File_DownloadByFilepath' => ['response' => 'file'],
+        'File_GetLogo' => ['response' => 'file'],
+        'Homework_DownloadAsyncByHomeworkidResourceid' => ['response' => 'file'],
+        'Invoices_GetInvoiceDocumentByCentralfileserviceid' => ['response' => 'file'],
+        'LeaveRequests_GetLeaveRequestDocumentBySchoolidRequestidDocumentid' => ['response' => 'file'],
+        'PhotoGalleries_GetPhotoGalleryImageByGalleryidImageid' => ['response' => 'file'],
+
         // System Configuration
         'List_GetAsyncByListtype' => ['class' => 'GetListByTypeRequest', 'cacheable' => true],
         'PassportPlaceIssued_Get' => ['class' => 'GetPassportPlacesIssuedRequest', 'cacheable' => true],
@@ -353,6 +375,9 @@ return [
         'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessionStudents' => 'DetentionSessionStudent',
         'iSAMS.HR.AppServices.Objects.Public.Resources.Post.CreateContractCommand' => 'Contract',
     ],
+
+    // Tag segments iSAMS uses as placeholders, left out of namespaces.
+    'ignoredTagSegments' => ['Undefined'],
 
     // Words that are the same singular and plural.
     'uncountable' => ['Alumni', 'Staff', 'News', 'Homework', 'Information', 'Data', 'Metadata'],
