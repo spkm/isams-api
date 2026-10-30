@@ -157,3 +157,18 @@ it('deprecates every hand-written request the generator has replaced', function 
         }
     }
 })->group('spec');
+
+it('lists every resource call in ENDPOINTS.md as you would write it, with what it returns, linked from the README', function () {
+    $root = dirname(__DIR__, 2);
+    $endpoints = (string) file_get_contents($root.'/ENDPOINTS.md');
+    preg_match_all('/^\| `Isams::.+` \| .+ \|$/m', $endpoints, $calls);
+    $onResources = array_filter(Spec::manifest()['operations'], fn (array $operation) => in_array($operation['source'], ['generated', 'handwritten'], true));
+
+    expect($calls[0])->toHaveCount(count($onResources))
+        ->and($endpoints)->toContain('| `Isams::teaching()->subjects()->all()` | `Collection<Subject>` |')
+        ->toContain('| `Isams::teaching()->subjects()->get(int $id)` | `Subject` |')
+        ->toContain('| `Isams::students()->all(mixed $expand = null, mixed $filter = null)` | `LazyCollection<Student>` |')
+        ->toContain('| `Isams::teaching()->subjects()->create(SubjectForCreate\\|array $subject)` | `Created` |')
+        ->toContain('| `Isams::humanResources()->employeeContracts()->v1()->all(int $employeeId)` |')
+        ->and((string) file_get_contents($root.'/README.md'))->toContain('(ENDPOINTS.md)');
+})->group('spec');
