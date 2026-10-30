@@ -7,6 +7,9 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasXmlBody;
 
+/**
+ * @deprecated Use \spkm\IsamsApi\Batch\BatchRequest with \spkm\IsamsApi\Batch\BatchFilters through Isams::batch(), which authenticates with the batch key itself as iSAMS requires from 2 November 2026.
+ */
 class FilterEndpointRequest extends Request implements HasBody
 {
     use HasXmlBody;

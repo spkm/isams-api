@@ -1,13 +1,15 @@
 #!/usr/bin/env php
 <?php
 
+use spkm\IsamsApi\Generator\BatchGenerator;
 use spkm\IsamsApi\Generator\Generator;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $root = dirname(__DIR__);
 $check = in_array('--check', $argv, true);
-$files = (new Generator($root))->build();
+$files = (new Generator($root))->build() + (new BatchGenerator($root))->build();
+ksort($files);
 
 $existing = ['generator/manifest.json'];
 $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root.'/generated', FilesystemIterator::SKIP_DOTS));

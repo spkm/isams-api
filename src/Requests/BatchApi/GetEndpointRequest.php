@@ -5,6 +5,9 @@ namespace spkm\IsamsApi\Requests\BatchApi;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+/**
+ * @deprecated Use \spkm\IsamsApi\Batch\BatchRequest through Isams::batch(), which authenticates with the batch key itself as iSAMS requires from 2 November 2026.
+ */
 class GetEndpointRequest extends Request
 {
     protected Method $method = Method::GET;

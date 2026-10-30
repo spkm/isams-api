@@ -4,6 +4,7 @@ namespace spkm\IsamsApi;
 
 use BadMethodCallException;
 use InvalidArgumentException;
+use spkm\IsamsApi\Batch\IsamsBatchConnector;
 use spkm\IsamsApi\Support\CircuitBreaker;
 
 class IsamsService
@@ -12,6 +13,9 @@ class IsamsService
 
     /** @var array<string, IsamsConnector> */
     protected array $connections = [];
+
+    /** @var array<string, IsamsBatchConnector> */
+    protected array $batchConnectors = [];
 
     public function connection(string $name): IsamsConnector
     {
@@ -28,6 +32,32 @@ class IsamsService
         }
 
         return $this->connections[$name] ??= new IsamsConnector($config['client_id'], $config['client_secret'], $config['base_url'], $config['scopes'] ?? ['restapi']);
+    }
+
+    /**
+     * A connector for one of a school's Batch API keys: the default school's, or a named connection's.
+     */
+    public function batch(string $key, ?string $connection = null): IsamsBatchConnector
+    {
+        $prefix = $connection === null ? 'isams-api' : "isams-api.connections.$connection";
+        $config = config("$prefix.batch_keys.$key");
+        $baseUrl = config("$prefix.base_url");
+
+        if (! is_array($config)) {
+            throw new InvalidArgumentException('No iSAMS batch key named "'.$key.'" is configured in '.$prefix.'.batch_keys.');
+        }
+
+        foreach (['api_key', 'client_secret'] as $setting) {
+            if (! is_string($config[$setting] ?? null) || $config[$setting] === '') {
+                throw new InvalidArgumentException('The iSAMS batch key "'.$key.'" needs a '.$setting.'.');
+            }
+        }
+
+        if (! is_string($baseUrl) || $baseUrl === '') {
+            throw new InvalidArgumentException('The iSAMS batch key "'.$key.'" needs its school\'s base_url in '.$prefix.'.base_url.');
+        }
+
+        return $this->batchConnectors["$prefix.$key"] ??= new IsamsBatchConnector($config['api_key'], $config['client_secret'], $baseUrl);
     }
 
     public function isAvailable(?string $connection = null): bool
