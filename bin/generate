@@ -8,7 +8,8 @@ require __DIR__.'/../vendor/autoload.php';
 
 $root = dirname(__DIR__);
 $check = in_array('--check', $argv, true);
-$files = (new Generator($root))->build() + (new BatchGenerator($root))->build();
+$batch = new BatchGenerator($root);
+$files = (new Generator($root))->build($batch->endpoints()) + $batch->build();
 ksort($files);
 
 $existing = ['generator/manifest.json'];

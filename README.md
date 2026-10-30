@@ -122,7 +122,7 @@ The connector fetches an access token from iSAMS and caches it, encrypted, until
 Resources follow iSAMS's areas, and your IDE autocompletes them from `Isams::`. A resource's methods are named for
 what they do: `all()` for a list, `get()` for one item, `create()`, `update()`, `patch()` and `delete()`, `patchMany()`
 and the like for several at once, and actions of their own such as `archive()` or `moveToAlumni()`. Each returns what
-iSAMS sent back. [ENDPOINTS.md](ENDPOINTS.md) lists every call, with its parameters and what it returns:
+iSAMS sent back. [ENDPOINTS.md](ENDPOINTS.md#rest-api) lists every call, with its parameters and what it returns:
 
 ```php
 use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
@@ -296,6 +296,7 @@ $events = Isams::batch()->send(new BatchRequest(
 $timetable = Isams::batch('timetable')->send(new BatchRequest)->dto(); // a separately named key
 ```
 
+[ENDPOINTS.md](ENDPOINTS.md#batch-api) lists every method, with the model it returns and the filters it takes.
 `method()` returns a collection of models (`Data\Batch\{Module}\{RootNode}\{Node}`); `models($module, $rootNode)`
 does the same by node name, and `get($module, $rootNode)` returns plain arrays for anything the package has no model
 for. The filter's module and method names are the ones iSAMS documents for filters, which can differ from the

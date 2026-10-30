@@ -5,6 +5,7 @@ use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Str;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
+use spkm\IsamsApi\Batch\BatchMap;
 use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Data;
 use spkm\IsamsApi\Data\File;
@@ -161,7 +162,7 @@ it('deprecates every hand-written request the generator has replaced', function 
 it('lists every resource call in ENDPOINTS.md as you would write it, with what it returns, linked from the README', function () {
     $root = dirname(__DIR__, 2);
     $endpoints = (string) file_get_contents($root.'/ENDPOINTS.md');
-    preg_match_all('/^\| `Isams::.+` \| .+ \|$/m', $endpoints, $calls);
+    preg_match_all('/^\| `Isams::.+` \| .+ \|$/m', Str::before($endpoints, "\n## Batch API\n"), $calls);
     $onResources = array_filter(Spec::manifest()['operations'], fn (array $operation) => in_array($operation['source'], ['generated', 'handwritten'], true));
 
     expect($calls[0])->toHaveCount(count($onResources))
@@ -171,5 +172,24 @@ it('lists every resource call in ENDPOINTS.md as you would write it, with what i
         ->toContain('| `Isams::teaching()->subjects()->create(SubjectForCreate\\|array $subject)` | `Created` |')
         ->toContain('| `Isams::teaching()->sets()->removeStudent(int $setId, string $schoolId)` | `bool` |')
         ->toContain('| `Isams::humanResources()->employeeContracts()->v1()->all(int $employeeId)` |')
-        ->and((string) file_get_contents($root.'/README.md'))->toContain('(ENDPOINTS.md)');
+        ->and((string) file_get_contents($root.'/README.md'))->toContain('(ENDPOINTS.md#rest-api)');
+})->group('spec');
+
+it('separates the REST calls from the Batch API methods in ENDPOINTS.md, listing every batch method and root node with its model and filters', function () {
+    $endpoints = (string) file_get_contents(dirname(__DIR__, 2).'/ENDPOINTS.md');
+    $rest = Str::between($endpoints, "\n## REST API\n", "\n## Batch API\n");
+    $batch = Str::after($endpoints, "\n## Batch API\n");
+    $filled = array_map(fn (array $place) => implode('/', $place), BatchMap::METHODS);
+    $unfilled = collect(BatchMap::ROOTS)->flatMap(fn (array $roots, string $module) => array_map(fn (string $root) => "$module/$root", array_keys($roots)))->diff($filled);
+    preg_match_all('/^\| `->(method|models)\(.+\)` \| .+ \| .+ \|$/m', $batch, $batchRows);
+
+    expect($rest)->toContain('| `Isams::teaching()->subjects()->all()` |')
+        ->not->toContain('->method(')
+        ->and($batch)->not->toContain('| `Isams::teaching()')
+        ->toContain("| `->method('Calendar_GetEvents')` | `Collection<Event>` | `StartDate`, `EndDate` (required) |")
+        ->toContain("| `->method('Agent_GetActive')` | `Collection<Agency>` | none |")
+        ->toContain("| `->models('CurriculumManager', 'Levels')` |")
+        ->toContain('| `Isams::batch()->send(BatchPhotosRequest::students())->dto()` | `BatchPhotos`')
+        ->and($batchRows[0])->toHaveCount(count(BatchMap::METHODS) + $unfilled->count())
+        ->and((string) file_get_contents(dirname(__DIR__, 2).'/README.md'))->toContain('(ENDPOINTS.md#batch-api)');
 })->group('spec');
