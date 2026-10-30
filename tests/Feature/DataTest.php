@@ -66,6 +66,12 @@ it('turns a model back into iSAMS JSON, leaving out empty values', function () {
     ])->and(json_encode($student))->toBe(json_encode($student->toArray()));
 });
 
+it('keeps an empty value that was set on purpose, so iSAMS can clear a list', function () {
+    $student = new ExampleStudent(id: 12, extra: []);
+
+    expect($student->toArray())->toBe(['id' => 12, 'extra' => []]);
+});
+
 it('builds a collection of models from a list', function () {
     $addresses = ExampleAddress::collect([['town' => 'Sampleford'], ['town' => 'Testbury']]);
 

@@ -62,4 +62,9 @@ trait HasResources
     {
         return new TimetableResource($this);
     }
+
+    public function wellbeingManager(): WellbeingManagerResource
+    {
+        return new WellbeingManagerResource($this);
+    }
 }

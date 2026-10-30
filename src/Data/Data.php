@@ -59,9 +59,13 @@ abstract readonly class Data implements JsonSerializable
      */
     public function toArray(): array
     {
+        $emptyByDefault = collect((new ReflectionClass($this))->getConstructor()?->getParameters() ?? [])
+            ->filter(fn (ReflectionParameter $parameter) => $parameter->isDefaultValueAvailable() && static::serialise($parameter->getDefaultValue()) === [])
+            ->map(fn (ReflectionParameter $parameter) => $parameter->getName());
+
         return collect(get_object_vars($this))
             ->map(fn (mixed $value) => static::serialise($value))
-            ->reject(fn (mixed $value) => $value === null)
+            ->reject(fn (mixed $value, string $name) => $value === null || ($value === [] && $emptyByDefault->contains($name)))
             ->all();
     }
 
@@ -117,10 +121,9 @@ abstract readonly class Data implements JsonSerializable
     {
         return match (true) {
             $value instanceof self => $value->toArray(),
-            $value instanceof Collection => $value->isEmpty() ? null : $value->map(fn (mixed $item) => static::serialise($item))->values()->all(),
+            $value instanceof Collection => $value->map(fn (mixed $item) => static::serialise($item))->values()->all(),
             $value instanceof DateTimeInterface => $value->format('Y-m-d\TH:i:s'),
             $value instanceof BackedEnum => $value->value,
-            is_array($value) => $value === [] ? null : $value,
             default => $value,
         };
     }

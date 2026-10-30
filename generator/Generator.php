@@ -155,6 +155,7 @@ final class Generator
             'beta' => str_contains($operation['tag'], 'Beta'),
             'paginatable' => $override['paginatable'] ?? ($response['paged'] && isset($parameters['query']['page'])),
             'cacheable' => $override['cacheable'] ?? false,
+            'safe' => $override['safe'] ?? true,
         ];
     }
 
@@ -257,7 +258,14 @@ final class Generator
         $name = $this->studly($action);
 
         if (! str_contains($name, $singular) && ! str_contains($name, $plural)) {
-            $name = (string) preg_replace('/^([A-Z][a-z]*)/', '$1'.$singular, $name);
+            preg_match('/^[A-Z][a-z]*([A-Z][a-z]*)?/', $name, $firstWords);
+            $repeatsHead = Str::singular($firstWords[1] ?? '') === $this->studly(Str::singular($head));
+            $noun = $repeatsHead ? $this->studly(implode(' ', array_slice($words, 0, -1))) : $singular;
+            $name = (string) preg_replace('/^([A-Z][a-z]*)/', '$1'.$noun, $name);
+        }
+
+        if (($parameters['body']['kind'] ?? null) === 'patch') {
+            $name = (string) preg_replace('/^Update(?=[A-Z])/', 'Patch', $name);
         }
 
         return $name.'Request';
@@ -457,7 +465,7 @@ final class Generator
 
         return match (true) {
             $reference !== null && str_starts_with($reference, 'Marvin.JsonPatch') => ['php' => 'patch', 'kind' => 'patch', 'list' => false, 'required' => true],
-            $reference !== null && $this->wrapper($reference) === null => ['php' => $name, 'kind' => 'model', 'model' => $this->queueModel($reference), 'list' => false, 'required' => true],
+            $reference !== null && ! $this->isEmptyModel($reference) => ['php' => $name, 'kind' => 'model', 'model' => $this->queueModel($reference), 'list' => false, 'required' => true],
             ($schema['type'] ?? null) === 'array' && isset($schema['items']['$ref']) => ['php' => $name, 'kind' => 'models', 'model' => $this->queueModel($this->refName($schema['items']['$ref'])), 'list' => true, 'required' => true],
             ($schema['type'] ?? null) === 'string' => ['php' => $name, 'kind' => 'string', 'list' => false, 'required' => true],
             default => ['php' => $name, 'kind' => 'array', 'list' => ($schema['type'] ?? null) === 'array', 'required' => true],
@@ -503,6 +511,10 @@ final class Generator
 
         if ($operation['cacheable']) {
             $class->addProperty('cacheable', true)->setProtected()->setType('bool');
+        }
+
+        if (! $operation['safe']) {
+            $class->addProperty('safe', false)->setProtected()->setType('bool');
         }
 
         $constructor = $class->addMethod('__construct');
@@ -754,7 +766,7 @@ final class Generator
         $constructor = $class->addMethod('__construct');
         $lists = [];
         $docs = [];
-        $properties = $spec['properties'] ?? [];
+        $properties = array_filter($spec['properties'] ?? [], fn (array $property) => ($property['$ref'] ?? null) !== '#/definitions/System.IO.Stream');
 
         if ($isPayload) {
             $properties = array_filter($properties, fn (array $property) => ! ($property['readOnly'] ?? false));

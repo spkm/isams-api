@@ -28,6 +28,7 @@ use Saloon\Traits\OAuth2\ClientCredentialsGrant;
 use Saloon\Traits\Plugins\HasTimeout;
 use spkm\IsamsApi\Requests\AdhocRequest;
 use spkm\IsamsApi\Requests\ConfigurablePaginatedRequest;
+use spkm\IsamsApi\Requests\IsamsRequest;
 use spkm\IsamsApi\Resources\HasResources;
 use spkm\IsamsApi\Support\CircuitBreaker;
 
@@ -84,7 +85,9 @@ class IsamsConnector extends Connector implements HasPagination
 
     public function handleRetry(FatalRequestException|RequestException $exception, Request $request): bool
     {
-        if ($request->getMethod() !== Method::GET || $exception instanceof IsamsUnavailable) {
+        $isSafe = $request instanceof IsamsRequest ? $request->isSafe() : $request->getMethod() === Method::GET;
+
+        if (! $isSafe || $exception instanceof IsamsUnavailable) {
             return false;
         }
 

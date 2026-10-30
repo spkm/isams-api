@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use ReflectionParameter;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\PaginationPlugin\Contracts\Paginatable;
 use spkm\IsamsApi\Data\Created;
@@ -65,7 +66,7 @@ it('turns each generated request\'s documented response into the right kind of r
     $body = $schema === null ? '' : Spec::value($schema);
     $request = new $class(...Spec::arguments($class));
 
-    FakeIsams::respondWith([$class => MockResponse::make($body, $code, ['Location' => 'https://isams.example.test'.$path, 'Content-Type' => 'application/json'])]);
+    FakeIsams::respondWith([$class => MockResponse::make(is_array($body) || $body === '' ? $body : (string) json_encode($body), $code, ['Location' => 'https://isams.example.test'.$path, 'Content-Type' => 'application/json'])]);
     $result = FakeIsams::connector()->send($request)->dto();
 
     match (true) {
@@ -83,8 +84,9 @@ it('turns each generated request\'s documented response into the right kind of r
 it('builds each generated model from made-up data matching its definition and turns it back into the same data', function (string $definition, string $class) {
     $sample = Spec::sample($definition);
     $model = $class::from($sample);
-    $parameters = collect((new ReflectionClass($class))->getConstructor()?->getParameters() ?? [])->map->getName();
-    $expected = collect($sample)->only($parameters)->reject(fn (mixed $value) => $value === null || $value === [])->all();
+    $parameters = collect((new ReflectionClass($class))->getConstructor()?->getParameters() ?? []);
+    $emptyByDefault = $parameters->filter(fn (ReflectionParameter $parameter) => $parameter->isDefaultValueAvailable() && ($parameter->getDefaultValue() === [] || $parameter->getDefaultValue() instanceof Collection))->map->getName();
+    $expected = collect($sample)->only($parameters->map->getName())->reject(fn (mixed $value, string $name) => $value === null || ($value === [] && $emptyByDefault->contains($name)))->all();
 
     $required = collect((new ReflectionClass($class))->getConstructor()?->getParameters() ?? [])->reject->isDefaultValueAvailable()->map->getName();
 

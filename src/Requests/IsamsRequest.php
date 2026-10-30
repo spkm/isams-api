@@ -43,6 +43,8 @@ abstract class IsamsRequest extends Request implements Cacheable
 
     protected bool $cacheable = false;
 
+    protected bool $safe = true;
+
     public function resolveCacheDriver(): Driver
     {
         return new LaravelCacheDriver(Cache::store(config('isams-api.cache.store')));
@@ -76,6 +78,11 @@ abstract class IsamsRequest extends Request implements Cacheable
         return $request->withUri($request->getUri()->withQuery($query));
     }
 
+    public function isSafe(): bool
+    {
+        return $this->safe && $this->getMethod() === Method::GET;
+    }
+
     /**
      * @return class-string<Data>|null
      */
@@ -105,7 +112,7 @@ abstract class IsamsRequest extends Request implements Cacheable
                 ->values(),
             self::CREATED => Created::fromResponse($response),
             self::FILE => File::fromResponse($response),
-            self::RAW => $response->json(),
+            self::RAW => $response->body() === '' ? [] : json_decode($response->body(), true, flags: JSON_THROW_ON_ERROR),
             default => null,
         };
     }
