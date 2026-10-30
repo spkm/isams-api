@@ -445,7 +445,6 @@ If you discover any security related issues, please email hello@spkmitchell.co.u
 
 - [Simon Mitchell](https://github.com/spkm)
 - [Fred Bradley](https://github.com/fredbradley)
-- [All Contributors](../../contributors)
 
 ## Licence
 
