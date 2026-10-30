@@ -37,7 +37,7 @@ class IsamsService
     /**
      * A connector for one of a school's Batch API keys: the default school's, or a named connection's.
      */
-    public function batch(string $key, ?string $connection = null): IsamsBatchConnector
+    public function batch(string $key = 'default', ?string $connection = null): IsamsBatchConnector
     {
         $prefix = $connection === null ? 'isams-api' : "isams-api.connections.$connection";
         $config = config("$prefix.batch_keys.$key");

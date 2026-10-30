@@ -206,17 +206,17 @@ The top-level `client_id`, `client_secret` and `base_url` remain the default con
 ### Batch API
 
 iSAMS's Batch API returns large read-only exports, one set of methods per Batch API key. Each key has its own
-client secret; the package fetches a token for the key and sends the key with every request. Add your keys to
-`config/isams-api.php`, at the top level for the default school or under a named connection:
+client secret; the package fetches a token for the key and sends the key with every request.
 
-```php
-'batch_keys' => [
-    'timetable' => [
-        'api_key' => env('ISAMS_BATCH_TIMETABLE_KEY'),
-        'client_secret' => env('ISAMS_BATCH_TIMETABLE_SECRET'),
-    ],
-],
+iSAMS recommends one key for everything, choosing the methods each request runs. Set it in `.env`:
+
+```dotenv
+ISAMS_BATCH_API_KEY=your-batch-api-key
+ISAMS_BATCH_CLIENT_SECRET=your-batch-api-client-secret
 ```
+
+If your school uses separate keys, add them by name to `batch_keys` in `config/isams-api.php` (the published file
+has a commented-out example), at the top level for the default school or under a named connection.
 
 Run every method allocated to the key, or only some, with filters for the methods that need them:
 
@@ -224,13 +224,15 @@ Run every method allocated to the key, or only some, with filters for the method
 use spkm\IsamsApi\Batch\BatchFilters;
 use spkm\IsamsApi\Batch\BatchRequest;
 
-$batch = Isams::batch('timetable')->send(new BatchRequest)->dto();
+$batch = Isams::batch()->send(new BatchRequest)->dto();
 
-$events = Isams::batch('calendar')->send(new BatchRequest(
+$events = Isams::batch()->send(new BatchRequest(
     BatchFilters::make()
         ->methods('Calendar_GetEvents')
         ->filter('Calendar', 'Events', ['StartDate' => now(), 'EndDate' => now()->addMonth()])
 ))->dto()->method('Calendar_GetEvents');
+
+$timetable = Isams::batch('timetable')->send(new BatchRequest)->dto(); // a separately named key
 ```
 
 `method()` returns a collection of models (`Data\Batch\{Module}\{RootNode}\{Node}`); `models($module, $rootNode)`
@@ -245,7 +247,7 @@ Photos come as a zip, read by the student's or staff member's id:
 ```php
 use spkm\IsamsApi\Batch\BatchPhotosRequest;
 
-foreach (Isams::batch('photos')->send(BatchPhotosRequest::students())->dto()->photos() as $id => $png) {
+foreach (Isams::batch()->send(BatchPhotosRequest::students())->dto()->photos() as $id => $png) {
     //
 }
 ```

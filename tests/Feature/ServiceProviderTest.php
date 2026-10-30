@@ -69,3 +69,17 @@ it('offers an isams-api:install command that publishes the config', function () 
         tap(new IsamsApiServiceProvider($this->app))->register()->boot();
     }
 });
+
+it('reads a default Batch API key from ISAMS_BATCH_API_KEY and ISAMS_BATCH_CLIENT_SECRET', function () {
+    putenv('ISAMS_BATCH_API_KEY=key-from-env');
+    putenv('ISAMS_BATCH_CLIENT_SECRET=batch-secret-from-env');
+
+    try {
+        $config = require dirname(__DIR__, 2).'/config/isams-api.php';
+    } finally {
+        putenv('ISAMS_BATCH_API_KEY');
+        putenv('ISAMS_BATCH_CLIENT_SECRET');
+    }
+
+    expect($config['batch_keys'])->toBe(['default' => ['api_key' => 'key-from-env', 'client_secret' => 'batch-secret-from-env']]);
+});
