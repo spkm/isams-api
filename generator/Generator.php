@@ -77,6 +77,7 @@ final class Generator
      */
     public function build(): array
     {
+        $this->rejectStaleOverrides();
         $operations = $this->resolveCollisions($this->operations());
 
         foreach ($operations as $operation) {
@@ -110,6 +111,64 @@ final class Generator
         ksort($this->files);
 
         return $this->files;
+    }
+
+    /**
+     * Fails when an override names something the spec no longer has, so a correction is never silently lost when the
+     * pinned spec is updated.
+     */
+    private function rejectStaleOverrides(): void
+    {
+        $operations = $this->specOperations();
+        $ids = array_column($operations, 'id');
+        $tags = array_map(fn (array $operation) => explode(' - ', $this->cleanTag($operation['spec']['tags'][0] ?? 'Other')), $operations);
+        $areas = array_unique(array_column($tags, 0));
+        $segments = array_unique(array_merge(...array_map(fn (array $parts) => array_slice($parts, 1, -1), $tags)));
+        $modules = array_unique(array_map(fn (string $definition) => explode('.', $definition)[1] ?? '', array_keys($this->spec['definitions'])));
+        $settings = ['class', 'handwritten', 'skip', 'response', 'multipart', 'cacheable', 'safe', 'paginatable'];
+        $problems = [];
+
+        foreach ($this->overrides['operations'] as $id => $override) {
+            if (! in_array($id, $ids, true)) {
+                $problems[] = "operations.$id: no such operation in the spec";
+            }
+
+            foreach (array_diff(array_keys($override), $settings) as $setting) {
+                $problems[] = "operations.$id.$setting: no such setting";
+            }
+
+            if (isset($override['handwritten']) && ! class_exists($override['handwritten'])) {
+                $problems[] = "operations.$id.handwritten: no class {$override['handwritten']}";
+            }
+        }
+
+        foreach (array_keys($this->overrides['models'] ?? []) as $definition) {
+            if (! isset($this->spec['definitions'][$definition])) {
+                $problems[] = "models.$definition: no such definition in the spec";
+            }
+        }
+
+        foreach ([...array_map(fn ($area) => ['areas', $area], $this->overrides['areas']), ...array_map(fn ($area) => ['areaNouns', $area], array_keys($this->overrides['areaNouns'] ?? [])), ...array_map(fn ($area) => ['areaNames', $area], array_keys($this->overrides['areaNames'] ?? []))] as [$setting, $area]) {
+            if (! in_array($area, $areas, true)) {
+                $problems[] = "$setting.$area: no such area in the spec";
+            }
+        }
+
+        foreach ($this->overrides['ignoredTagSegments'] ?? [] as $segment) {
+            if (! in_array($segment, $segments, true)) {
+                $problems[] = "ignoredTagSegments.$segment: no tag in the spec has this segment";
+            }
+        }
+
+        foreach (array_keys($this->overrides['modules'] ?? []) as $module) {
+            if (! in_array($module, $modules, true)) {
+                $problems[] = "modules.$module: no such module in the spec's definitions";
+            }
+        }
+
+        if ($problems !== []) {
+            throw new RuntimeException("generator/overrides.php names things the spec does not have:\n- ".implode("\n- ", $problems));
+        }
     }
 
     /**
