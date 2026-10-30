@@ -7,24 +7,32 @@
 namespace spkm\IsamsApi\Resources\Registration;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Registration\RegistrationPeriod;
 use spkm\IsamsApi\Requests\Registration\Periods\GetRegistrationPeriodRequest;
 use spkm\IsamsApi\Requests\Registration\Periods\GetRegistrationPeriodsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PeriodsResource extends BaseResource
+class PeriodsResource extends IsamsResource
 {
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Registration\RegistrationPeriod>
+     * @see \spkm\IsamsApi\Requests\Registration\Periods\GetRegistrationPeriodsRequest
+     */
     public function all(
         DateTimeInterface|string|null $endDate = null,
         DateTimeInterface|string|null $startDate = null,
         ?int $divisionId = null,
         ?string $userCode = null,
-    ): Response {
-        return $this->connector->send(new GetRegistrationPeriodsRequest($endDate, $startDate, $divisionId, $userCode));
+    ): Collection {
+        return $this->fetch(new GetRegistrationPeriodsRequest(endDate: $endDate, startDate: $startDate, divisionId: $divisionId, userCode: $userCode));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Registration\Periods\GetRegistrationPeriodRequest
+     */
+    public function get(int $id): RegistrationPeriod
     {
-        return $this->connector->send(new GetRegistrationPeriodRequest($id));
+        return $this->fetch(new GetRegistrationPeriodRequest(id: $id));
     }
 }

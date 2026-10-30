@@ -6,26 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\CloudPortals\EmailMessage;
 use spkm\IsamsApi\Requests\CloudPortals\School\CommunicationHistory\GetPortalEmailCommunicationHistoryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\CommunicationHistory\GetPortalEmailHistoryMessageRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\CommunicationHistory\GetPortalSmsCommunicationHistoryRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CommunicationHistoryResource extends BaseResource
+class CommunicationHistoryResource extends IsamsResource
 {
-    public function getMessage(int $emailId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\CommunicationHistory\GetPortalEmailHistoryMessageRequest
+     */
+    public function getMessage(int $emailId): EmailMessage
     {
-        return $this->connector->send(new GetPortalEmailHistoryMessageRequest($emailId));
+        return $this->fetch(new GetPortalEmailHistoryMessageRequest(emailId: $emailId));
     }
 
-    public function getPortalEmail(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\EmailMessage>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\CommunicationHistory\GetPortalEmailCommunicationHistoryRequest
+     */
+    public function getPortalEmail(): Collection
     {
-        return $this->connector->send(new GetPortalEmailCommunicationHistoryRequest());
+        return $this->fetch(new GetPortalEmailCommunicationHistoryRequest());
     }
 
-    public function getPortalSms(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\SmsMessage>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\CommunicationHistory\GetPortalSmsCommunicationHistoryRequest
+     */
+    public function getPortalSms(): Collection
     {
-        return $this->connector->send(new GetPortalSmsCommunicationHistoryRequest());
+        return $this->fetch(new GetPortalSmsCommunicationHistoryRequest());
     }
 }

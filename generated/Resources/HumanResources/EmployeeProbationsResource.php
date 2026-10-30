@@ -6,24 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\HumanResources\EmployeeProbation;
 use spkm\IsamsApi\Data\HumanResources\EmployeeProbationForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeProbations\GetEmployeeProbationRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeProbations\UpdateEmployeeProbationRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeProbationsResource extends BaseResource
+class EmployeeProbationsResource extends IsamsResource
 {
-    public function get(int $employeeId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeProbations\GetEmployeeProbationRequest
+     */
+    public function get(int $employeeId): EmployeeProbation
     {
-        return $this->connector->send(new GetEmployeeProbationRequest($employeeId));
+        return $this->fetch(new GetEmployeeProbationRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeProbationForUpdate|array<string, mixed>  $employeeProbation
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeProbations\UpdateEmployeeProbationRequest
      */
-    public function update(int $employeeId, EmployeeProbationForUpdate|array $employeeProbation): Response
+    public function update(int $employeeId, EmployeeProbationForUpdate|array $employeeProbation): void
     {
-        return $this->connector->send(new UpdateEmployeeProbationRequest($employeeId, $employeeProbation));
+        $this->fetch(new UpdateEmployeeProbationRequest(employeeId: $employeeId, employeeProbation: $employeeProbation));
     }
 }

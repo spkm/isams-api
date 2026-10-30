@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\Contract;
 use spkm\IsamsApi\Data\HumanResources\ContractForCreate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\CreateEmployeeContractRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\DeleteEmployeeContractRequest;
@@ -15,43 +16,56 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\GetEmployeeContractR
 use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\GetEmployeeContractsRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\PatchEmployeeContractRequest;
 use spkm\IsamsApi\Resources\HumanResources\EmployeeContracts\V1Resource;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class EmployeeContractsResource extends BaseResource
+class EmployeeContractsResource extends IsamsResource
 {
     public function v1(): V1Resource
     {
         return new V1Resource($this->connector);
     }
 
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\Contract>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\GetEmployeeContractsRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeContractsRequest($employeeId));
+        return $this->fetch(new GetEmployeeContractsRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\ContractForCreate|array<string, mixed>  $contract
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\CreateEmployeeContractRequest
      */
-    public function create(int $employeeId, ContractForCreate|array $contract): Response
+    public function create(int $employeeId, ContractForCreate|array $contract): Created
     {
-        return $this->connector->send(new CreateEmployeeContractRequest($employeeId, $contract));
+        return $this->fetch(new CreateEmployeeContractRequest(employeeId: $employeeId, contract: $contract));
     }
 
-    public function delete(int $employeeId, int $contractId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\DeleteEmployeeContractRequest
+     */
+    public function delete(int $employeeId, int $contractId): void
     {
-        return $this->connector->send(new DeleteEmployeeContractRequest($employeeId, $contractId));
+        $this->fetch(new DeleteEmployeeContractRequest(employeeId: $employeeId, contractId: $contractId));
     }
 
-    public function get(int $employeeId, int $contractId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\GetEmployeeContractRequest
+     */
+    public function get(int $employeeId, int $contractId): Contract
     {
-        return $this->connector->send(new GetEmployeeContractRequest($employeeId, $contractId));
+        return $this->fetch(new GetEmployeeContractRequest(employeeId: $employeeId, contractId: $contractId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContracts\PatchEmployeeContractRequest
      */
-    public function patch(int $employeeId, int $contractId, JsonPatch|array $patch): Response
+    public function patch(int $employeeId, int $contractId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchEmployeeContractRequest($employeeId, $contractId, $patch));
+        $this->fetch(new PatchEmployeeContractRequest(employeeId: $employeeId, contractId: $contractId, patch: $patch));
     }
 }

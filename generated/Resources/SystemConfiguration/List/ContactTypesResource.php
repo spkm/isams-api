@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\ContactTypes\GetContactTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ContactTypesResource extends BaseResource
+class ContactTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\ContactType>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\ContactTypes\GetContactTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetContactTypesRequest());
+        return $this->fetch(new GetContactTypesRequest());
     }
 }

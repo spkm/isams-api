@@ -6,14 +6,17 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\WellbeingManager\Configuration;
 use spkm\IsamsApi\Requests\WellbeingManager\Configuration\GetWellbeingConfigurationRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ConfigurationResource extends BaseResource
+class ConfigurationResource extends IsamsResource
 {
-    public function get(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Configuration\GetWellbeingConfigurationRequest
+     */
+    public function get(): Configuration
     {
-        return $this->connector->send(new GetWellbeingConfigurationRequest());
+        return $this->fetch(new GetWellbeingConfigurationRequest());
     }
 }

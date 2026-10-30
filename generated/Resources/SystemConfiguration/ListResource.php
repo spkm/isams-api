@@ -6,9 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\GetListByTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\List\AdmissionsStatusResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\List\ContactTypesResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\List\CountiesResource;
@@ -27,7 +27,7 @@ use spkm\IsamsApi\Resources\SystemConfiguration\List\TitlesResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\List\UniversitiesResource;
 use spkm\IsamsApi\Resources\SystemConfiguration\List\VisaTypesResource;
 
-class ListResource extends BaseResource
+class ListResource extends IsamsResource
 {
     public function admissionsStatus(): AdmissionsStatusResource
     {
@@ -114,8 +114,12 @@ class ListResource extends BaseResource
         return new VisaTypesResource($this->connector);
     }
 
-    public function getByType(string $listType): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemWithCensusData>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\GetListByTypeRequest
+     */
+    public function getByType(string $listType): Collection
     {
-        return $this->connector->send(new GetListByTypeRequest($listType));
+        return $this->fetch(new GetListByTypeRequest(listType: $listType));
     }
 }

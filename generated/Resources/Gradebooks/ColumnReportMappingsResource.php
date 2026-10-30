@@ -6,29 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\CreateColumnReportMappingsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\DeleteColumnReportMappingRequest;
 use spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\GetColumnReportMappingsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ColumnReportMappingsResource extends BaseResource
+class ColumnReportMappingsResource extends IsamsResource
 {
-    public function all(int $gradebookId, int $columnId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\ReportMapping>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\GetColumnReportMappingsRequest
+     */
+    public function all(int $gradebookId, int $columnId): Collection
     {
-        return $this->connector->send(new GetColumnReportMappingsRequest($gradebookId, $columnId));
+        return $this->fetch(new GetColumnReportMappingsRequest(gradebookId: $gradebookId, columnId: $columnId));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Gradebooks\ReportMappingForCreate|array<string, mixed>>  $reportMappings
+     * @see \spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\CreateColumnReportMappingsRequest
      */
-    public function createMany(int $gradebookId, int $columnId, array $reportMappings): Response
+    public function createMany(int $gradebookId, int $columnId, array $reportMappings): Created
     {
-        return $this->connector->send(new CreateColumnReportMappingsRequest($gradebookId, $columnId, $reportMappings));
+        return $this->fetch(new CreateColumnReportMappingsRequest(gradebookId: $gradebookId, columnId: $columnId, reportMappings: $reportMappings));
     }
 
-    public function delete(int $gradebookId, int $columnId, int $reportMappingId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\DeleteColumnReportMappingRequest
+     */
+    public function delete(int $gradebookId, int $columnId, int $reportMappingId): void
     {
-        return $this->connector->send(new DeleteColumnReportMappingRequest($gradebookId, $columnId, $reportMappingId));
+        $this->fetch(new DeleteColumnReportMappingRequest(gradebookId: $gradebookId, columnId: $columnId, reportMappingId: $reportMappingId));
     }
 }

@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\WellbeingManager\IndicatorStatuses\GetIndicatorStatusesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class IndicatorStatusesResource extends BaseResource
+class IndicatorStatusesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\IndicatorStatus>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\IndicatorStatuses\GetIndicatorStatusesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetIndicatorStatusesRequest());
+        return $this->fetch(new GetIndicatorStatusesRequest());
     }
 }

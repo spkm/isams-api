@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\WellbeingManager\FlagTypeForCreate;
+use spkm\IsamsApi\Data\WellbeingManager\PastoralFlagType;
 use spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\CreateFlagTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\DeleteFlagTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\GetFlagTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\GetFlagTypesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\PatchFlagTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class FlagTypesResource extends BaseResource
+class FlagTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\PastoralFlagType>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\GetFlagTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetFlagTypesRequest());
+        return $this->fetch(new GetFlagTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\FlagTypeForCreate|array<string, mixed>  $flagType
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\CreateFlagTypeRequest
      */
-    public function create(FlagTypeForCreate|array $flagType): Response
+    public function create(FlagTypeForCreate|array $flagType): Created
     {
-        return $this->connector->send(new CreateFlagTypeRequest($flagType));
+        return $this->fetch(new CreateFlagTypeRequest(flagType: $flagType));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\DeleteFlagTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteFlagTypeRequest($id));
+        $this->fetch(new DeleteFlagTypeRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\GetFlagTypeRequest
+     */
+    public function get(int $id): PastoralFlagType
     {
-        return $this->connector->send(new GetFlagTypeRequest($id));
+        return $this->fetch(new GetFlagTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\FlagTypes\PatchFlagTypeRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchFlagTypeRequest($id, $patch));
+        $this->fetch(new PatchFlagTypeRequest(id: $id, patch: $patch));
     }
 }

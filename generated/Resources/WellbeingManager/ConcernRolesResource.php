@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ConcernRole;
 use spkm\IsamsApi\Data\WellbeingManager\ConcernRoleForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\CreateConcernRoleRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\DeleteConcernRoleRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\GetConcernRoleRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\GetConcernRolesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\PatchConcernRoleRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernRolesResource extends BaseResource
+class ConcernRolesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ConcernRole>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\GetConcernRolesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernRolesRequest());
+        return $this->fetch(new GetConcernRolesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernRoleForCreate|array<string, mixed>  $concernRole
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\CreateConcernRoleRequest
      */
-    public function create(ConcernRoleForCreate|array $concernRole): Response
+    public function create(ConcernRoleForCreate|array $concernRole): Created
     {
-        return $this->connector->send(new CreateConcernRoleRequest($concernRole));
+        return $this->fetch(new CreateConcernRoleRequest(concernRole: $concernRole));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\DeleteConcernRoleRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteConcernRoleRequest($id));
+        $this->fetch(new DeleteConcernRoleRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\GetConcernRoleRequest
+     */
+    public function get(int $id): ConcernRole
     {
-        return $this->connector->send(new GetConcernRoleRequest($id));
+        return $this->fetch(new GetConcernRoleRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernRoles\PatchConcernRoleRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernRoleRequest($id, $patch));
+        $this->fetch(new PatchConcernRoleRequest(id: $id, patch: $patch));
     }
 }

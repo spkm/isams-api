@@ -6,20 +6,25 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Billing;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\CloudPortals\Billing\PaymentGateway\GetPaymentGatewayPaymentProviderRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Billing\PaymentGateway\GetPaymentGatewayRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PaymentGatewayResource extends BaseResource
+class PaymentGatewayResource extends IsamsResource
 {
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\PaymentGateway\GetPaymentGatewayRequest
+     */
+    public function get(int $id): mixed
     {
-        return $this->connector->send(new GetPaymentGatewayRequest($id));
+        return $this->fetch(new GetPaymentGatewayRequest(id: $id));
     }
 
-    public function getProvider(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\PaymentGateway\GetPaymentGatewayPaymentProviderRequest
+     */
+    public function getProvider(): mixed
     {
-        return $this->connector->send(new GetPaymentGatewayPaymentProviderRequest());
+        return $this->fetch(new GetPaymentGatewayPaymentProviderRequest());
     }
 }

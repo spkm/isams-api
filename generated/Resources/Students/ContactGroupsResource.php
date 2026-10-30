@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Students\ContactGroups\GetContactGroupsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ContactGroupsResource extends BaseResource
+class ContactGroupsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\ContactGroup>
+     * @see \spkm\IsamsApi\Requests\Students\ContactGroups\GetContactGroupsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetContactGroupsRequest());
+        return $this->fetch(new GetContactGroupsRequest());
     }
 }

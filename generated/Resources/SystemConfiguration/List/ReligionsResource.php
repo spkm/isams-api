@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\CreateReligionRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\DeleteReligionRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\GetReligionsRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\UpdateReligionRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ReligionsResource extends BaseResource
+class ReligionsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemWithCensusData>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\GetReligionsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetReligionsRequest());
+        return $this->fetch(new GetReligionsRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\CreateReligionRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateReligionRequest($listItem));
+        return $this->fetch(new CreateReligionRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\DeleteReligionRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteReligionRequest($id));
+        $this->fetch(new DeleteReligionRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Religions\UpdateReligionRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateReligionRequest($id, $listItem));
+        $this->fetch(new UpdateReligionRequest(id: $id, listItem: $listItem));
     }
 }

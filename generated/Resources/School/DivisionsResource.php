@@ -6,21 +6,29 @@
 
 namespace spkm\IsamsApi\Resources\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
+use spkm\IsamsApi\Data\School\Division;
 use spkm\IsamsApi\Requests\School\Divisions\GetDivisionRequest;
 use spkm\IsamsApi\Requests\School\Divisions\GetDivisionsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DivisionsResource extends BaseResource
+class DivisionsResource extends IsamsResource
 {
-    public function all(string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\Division>
+     * @see \spkm\IsamsApi\Requests\School\Divisions\GetDivisionsRequest
+     */
+    public function all(string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetDivisionsRequest($filter));
+        return $this->fetch(new GetDivisionsRequest(filter: $filter));
     }
 
-    public function get(string $code): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\School\Divisions\GetDivisionRequest
+     */
+    public function get(string $code): Division
     {
-        return $this->connector->send(new GetDivisionRequest($code));
+        return $this->fetch(new GetDivisionRequest(code: $code));
     }
 }

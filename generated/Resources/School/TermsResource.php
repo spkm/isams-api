@@ -6,15 +6,19 @@
 
 namespace spkm\IsamsApi\Resources\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Requests\School\Terms\GetTermsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class TermsResource extends BaseResource
+class TermsResource extends IsamsResource
 {
-    public function all(string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\Term>
+     * @see \spkm\IsamsApi\Requests\School\Terms\GetTermsRequest
+     */
+    public function all(string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetTermsRequest($filter));
+        return $this->fetch(new GetTermsRequest(filter: $filter));
     }
 }

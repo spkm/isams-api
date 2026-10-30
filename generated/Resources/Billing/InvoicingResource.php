@@ -6,32 +6,48 @@
 
 namespace spkm\IsamsApi\Resources\Billing;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\Billing\Invoicing\DownloadInvoiceRunReportRequest;
 use spkm\IsamsApi\Requests\Billing\Invoicing\GetBillingCycleInvoiceRunsRequest;
 use spkm\IsamsApi\Requests\Billing\Invoicing\GetBillingCyclesRequest;
 use spkm\IsamsApi\Requests\Billing\Invoicing\GetInvoiceRunInvoicesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class InvoicingResource extends BaseResource
+class InvoicingResource extends IsamsResource
 {
-    public function downloadInvoiceRunReport(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Billing\Invoicing\DownloadInvoiceRunReportRequest
+     */
+    public function downloadInvoiceRunReport(int $id): File
     {
-        return $this->connector->send(new DownloadInvoiceRunReportRequest($id));
+        return $this->fetch(new DownloadInvoiceRunReportRequest(id: $id));
     }
 
-    public function getBillingCycleInvoiceRuns(int $id): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Billing\InvoiceRun>
+     * @see \spkm\IsamsApi\Requests\Billing\Invoicing\GetBillingCycleInvoiceRunsRequest
+     */
+    public function getBillingCycleInvoiceRuns(int $id): Collection
     {
-        return $this->connector->send(new GetBillingCycleInvoiceRunsRequest($id));
+        return $this->fetch(new GetBillingCycleInvoiceRunsRequest(id: $id));
     }
 
-    public function getBillingCycles(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Billing\BillingCycle>
+     * @see \spkm\IsamsApi\Requests\Billing\Invoicing\GetBillingCyclesRequest
+     */
+    public function getBillingCycles(): Collection
     {
-        return $this->connector->send(new GetBillingCyclesRequest());
+        return $this->fetch(new GetBillingCyclesRequest());
     }
 
-    public function getInvoiceRunInvoices(int $id): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Billing\InvoiceRunInvoice>
+     * @see \spkm\IsamsApi\Requests\Billing\Invoicing\GetInvoiceRunInvoicesRequest
+     */
+    public function getInvoiceRunInvoices(int $id): Collection
     {
-        return $this->connector->send(new GetInvoiceRunInvoicesRequest($id));
+        return $this->fetch(new GetInvoiceRunInvoicesRequest(id: $id));
     }
 }

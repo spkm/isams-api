@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheck;
 use spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheckForCreate;
 use spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheckForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\CreateEmployeeQualificationCheckRequest;
@@ -15,42 +16,55 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\DeleteEmpl
 use spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\GetEmployeeQualificationCheckRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\GetEmployeeQualificationChecksRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\UpdateEmployeeQualificationCheckRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeQualificationChecksResource extends BaseResource
+class EmployeeQualificationChecksResource extends IsamsResource
 {
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheck>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\GetEmployeeQualificationChecksRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeQualificationChecksRequest($employeeId));
+        return $this->fetch(new GetEmployeeQualificationChecksRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheckForCreate|array<string, mixed>  $employeeQualificationCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\CreateEmployeeQualificationCheckRequest
      */
     public function create(
         int $employeeId,
         EmployeeQualificationCheckForCreate|array $employeeQualificationCheck,
-    ): Response {
-        return $this->connector->send(new CreateEmployeeQualificationCheckRequest($employeeId, $employeeQualificationCheck));
+    ): Created {
+        return $this->fetch(new CreateEmployeeQualificationCheckRequest(employeeId: $employeeId, employeeQualificationCheck: $employeeQualificationCheck));
     }
 
-    public function delete(int $employeeId, int $qualificationCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\DeleteEmployeeQualificationCheckRequest
+     */
+    public function delete(int $employeeId, int $qualificationCheckId): void
     {
-        return $this->connector->send(new DeleteEmployeeQualificationCheckRequest($employeeId, $qualificationCheckId));
+        $this->fetch(new DeleteEmployeeQualificationCheckRequest(employeeId: $employeeId, qualificationCheckId: $qualificationCheckId));
     }
 
-    public function get(int $employeeId, int $qualificationCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\GetEmployeeQualificationCheckRequest
+     */
+    public function get(int $employeeId, int $qualificationCheckId): EmployeeQualificationCheck
     {
-        return $this->connector->send(new GetEmployeeQualificationCheckRequest($employeeId, $qualificationCheckId));
+        return $this->fetch(new GetEmployeeQualificationCheckRequest(employeeId: $employeeId, qualificationCheckId: $qualificationCheckId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeQualificationCheckForUpdate|array<string, mixed>  $employeeQualificationCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeQualificationChecks\UpdateEmployeeQualificationCheckRequest
      */
     public function update(
         int $employeeId,
         int $qualificationCheckId,
         EmployeeQualificationCheckForUpdate|array $employeeQualificationCheck,
-    ): Response {
-        return $this->connector->send(new UpdateEmployeeQualificationCheckRequest($employeeId, $qualificationCheckId, $employeeQualificationCheck));
+    ): void {
+        $this->fetch(new UpdateEmployeeQualificationCheckRequest(employeeId: $employeeId, qualificationCheckId: $qualificationCheckId, employeeQualificationCheck: $employeeQualificationCheck));
     }
 }

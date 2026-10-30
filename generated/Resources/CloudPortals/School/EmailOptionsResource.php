@@ -6,36 +6,47 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\SystemConfiguration\PortalEmailDetails;
 use spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\CancelEmailOptionEmailDetailsVerificationRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\GetEmailOptionEmailDetailsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\PatchEmailOptionEmailDetailsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\VerifyEmailOptionEmailDetailsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class EmailOptionsResource extends BaseResource
+class EmailOptionsResource extends IsamsResource
 {
-    public function cancelDetailsVerification(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\CancelEmailOptionEmailDetailsVerificationRequest
+     */
+    public function cancelDetailsVerification(): Created
     {
-        return $this->connector->send(new CancelEmailOptionEmailDetailsVerificationRequest());
+        return $this->fetch(new CancelEmailOptionEmailDetailsVerificationRequest());
     }
 
-    public function getDetails(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\GetEmailOptionEmailDetailsRequest
+     */
+    public function getDetails(): PortalEmailDetails
     {
-        return $this->connector->send(new GetEmailOptionEmailDetailsRequest());
+        return $this->fetch(new GetEmailOptionEmailDetailsRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\PatchEmailOptionEmailDetailsRequest
      */
-    public function patchDetails(JsonPatch|array $patch): Response
+    public function patchDetails(JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchEmailOptionEmailDetailsRequest($patch));
+        $this->fetch(new PatchEmailOptionEmailDetailsRequest(patch: $patch));
     }
 
-    public function verifyDetails(string $verificationGuid, bool $updateUsername): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\VerifyEmailOptionEmailDetailsRequest
+     */
+    public function verifyDetails(string $verificationGuid, bool $updateUsername): Created
     {
-        return $this->connector->send(new VerifyEmailOptionEmailDetailsRequest($verificationGuid, $updateUsername));
+        return $this->fetch(new VerifyEmailOptionEmailDetailsRequest(verificationGuid: $verificationGuid, updateUsername: $updateUsername));
     }
 }

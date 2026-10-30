@@ -6,37 +6,43 @@
 
 namespace spkm\IsamsApi\Resources\StudentRegisters;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\StudentRegisters\RegisterAssociation;
 use spkm\IsamsApi\Data\StudentRegisters\RegisterAssociationForCreate;
+use spkm\IsamsApi\Data\StudentRegisters\StudentRegisterAssociation;
 use spkm\IsamsApi\Requests\StudentRegisters\Association\GetRegisterAssociationRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\Association\GetRegisterAssociationsRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\Association\UpdateRegisterAssociationRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AssociationResource extends BaseResource
+class AssociationResource extends IsamsResource
 {
-    public function all(
-        int $registerId,
-        ?string $systemStatus = null,
-        ?int $page = null,
-        ?int $pageSize = null,
-    ): Response {
-        return $this->connector->send(new GetRegisterAssociationsRequest($registerId, $systemStatus, $page, $pageSize));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\StudentRegisters\StudentRegisterAssociation>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Association\GetRegisterAssociationsRequest
+     */
+    public function all(int $registerId, ?string $systemStatus = null): LazyCollection
+    {
+        return $this->each(new GetRegisterAssociationsRequest(registerId: $registerId, systemStatus: $systemStatus), StudentRegisterAssociation::class);
     }
 
-    public function get(int $registerId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Association\GetRegisterAssociationRequest
+     */
+    public function get(int $registerId, string $schoolId): RegisterAssociation
     {
-        return $this->connector->send(new GetRegisterAssociationRequest($registerId, $schoolId));
+        return $this->fetch(new GetRegisterAssociationRequest(registerId: $registerId, schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\StudentRegisters\RegisterAssociationForCreate|array<string, mixed>  $registerAssociation
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Association\UpdateRegisterAssociationRequest
      */
     public function update(
         int $registerId,
         string $schoolId,
         RegisterAssociationForCreate|array $registerAssociation,
-    ): Response {
-        return $this->connector->send(new UpdateRegisterAssociationRequest($registerId, $schoolId, $registerAssociation));
+    ): void {
+        $this->fetch(new UpdateRegisterAssociationRequest(registerId: $registerId, schoolId: $schoolId, registerAssociation: $registerAssociation));
     }
 }

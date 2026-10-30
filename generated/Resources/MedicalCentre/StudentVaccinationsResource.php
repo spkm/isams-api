@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\MedicalCentre\Vaccination;
 use spkm\IsamsApi\Data\MedicalCentre\VaccinationForCreate;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\CreateStudentVaccinationRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\DeleteStudentVaccinationRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\GetStudentVaccinationRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\GetStudentVaccinationsRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\PatchStudentVaccinationRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentVaccinationsResource extends BaseResource
+class StudentVaccinationsResource extends IsamsResource
 {
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\Vaccination>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\GetStudentVaccinationsRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetStudentVaccinationsRequest($schoolId));
+        return $this->fetch(new GetStudentVaccinationsRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\VaccinationForCreate|array<string, mixed>  $vaccination
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\CreateStudentVaccinationRequest
      */
-    public function create(string $schoolId, VaccinationForCreate|array $vaccination): Response
+    public function create(string $schoolId, VaccinationForCreate|array $vaccination): Created
     {
-        return $this->connector->send(new CreateStudentVaccinationRequest($schoolId, $vaccination));
+        return $this->fetch(new CreateStudentVaccinationRequest(schoolId: $schoolId, vaccination: $vaccination));
     }
 
-    public function delete(string $schoolId, string $vaccinationId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\DeleteStudentVaccinationRequest
+     */
+    public function delete(string $schoolId, string $vaccinationId): void
     {
-        return $this->connector->send(new DeleteStudentVaccinationRequest($schoolId, $vaccinationId));
+        $this->fetch(new DeleteStudentVaccinationRequest(schoolId: $schoolId, vaccinationId: $vaccinationId));
     }
 
-    public function get(string $schoolId, string $vaccinationId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\GetStudentVaccinationRequest
+     */
+    public function get(string $schoolId, string $vaccinationId): Vaccination
     {
-        return $this->connector->send(new GetStudentVaccinationRequest($schoolId, $vaccinationId));
+        return $this->fetch(new GetStudentVaccinationRequest(schoolId: $schoolId, vaccinationId: $vaccinationId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentVaccinations\PatchStudentVaccinationRequest
      */
-    public function patch(string $schoolId, string $vaccinationId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $vaccinationId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentVaccinationRequest($schoolId, $vaccinationId, $patch));
+        $this->fetch(new PatchStudentVaccinationRequest(schoolId: $schoolId, vaccinationId: $vaccinationId, patch: $patch));
     }
 }

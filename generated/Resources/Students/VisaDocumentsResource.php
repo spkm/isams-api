@@ -6,9 +6,10 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
+use Illuminate\Support\Collection;
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\File;
+use spkm\IsamsApi\Data\Students\StudentVisaDocument;
 use spkm\IsamsApi\Data\Students\StudentVisaDocumentForCreate;
 use spkm\IsamsApi\Requests\Students\VisaDocuments\CreateStudentVisaDocumentRequest;
 use spkm\IsamsApi\Requests\Students\VisaDocuments\DeleteStudentVisaDocumentRequest;
@@ -16,47 +17,63 @@ use spkm\IsamsApi\Requests\Students\VisaDocuments\DownloadStudentVisaDocumentReq
 use spkm\IsamsApi\Requests\Students\VisaDocuments\GetStudentVisaDocumentRequest;
 use spkm\IsamsApi\Requests\Students\VisaDocuments\GetStudentVisaDocumentsRequest;
 use spkm\IsamsApi\Requests\Students\VisaDocuments\PatchStudentVisaDocumentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class VisaDocumentsResource extends BaseResource
+class VisaDocumentsResource extends IsamsResource
 {
-    public function all(string $schoolId, int $visaId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\StudentVisaDocument>
+     * @see \spkm\IsamsApi\Requests\Students\VisaDocuments\GetStudentVisaDocumentsRequest
+     */
+    public function all(string $schoolId, int $visaId): Collection
     {
-        return $this->connector->send(new GetStudentVisaDocumentsRequest($schoolId, $visaId));
+        return $this->fetch(new GetStudentVisaDocumentsRequest(schoolId: $schoolId, visaId: $visaId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentVisaDocumentForCreate|array<string, mixed>  $data
+     * @see \spkm\IsamsApi\Requests\Students\VisaDocuments\CreateStudentVisaDocumentRequest
      */
     public function create(
         string $schoolId,
         int $visaId,
         MultipartValue $binary,
         StudentVisaDocumentForCreate|array $data,
-    ): Response {
-        return $this->connector->send(new CreateStudentVisaDocumentRequest($schoolId, $visaId, $binary, $data));
+    ): void {
+        $this->fetch(new CreateStudentVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, binary: $binary, data: $data));
     }
 
-    public function delete(string $schoolId, int $visaId, int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\VisaDocuments\DeleteStudentVisaDocumentRequest
+     */
+    public function delete(string $schoolId, int $visaId, int $documentId): void
     {
-        return $this->connector->send(new DeleteStudentVisaDocumentRequest($schoolId, $visaId, $documentId));
+        $this->fetch(new DeleteStudentVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, documentId: $documentId));
     }
 
-    public function download(string $schoolId, int $visaId, int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\VisaDocuments\DownloadStudentVisaDocumentRequest
+     */
+    public function download(string $schoolId, int $visaId, int $documentId): File
     {
-        return $this->connector->send(new DownloadStudentVisaDocumentRequest($schoolId, $visaId, $documentId));
+        return $this->fetch(new DownloadStudentVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, documentId: $documentId));
     }
 
-    public function get(string $schoolId, int $visaId, int $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\VisaDocuments\GetStudentVisaDocumentRequest
+     */
+    public function get(string $schoolId, int $visaId, int $documentId): StudentVisaDocument
     {
-        return $this->connector->send(new GetStudentVisaDocumentRequest($schoolId, $visaId, $documentId));
+        return $this->fetch(new GetStudentVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, documentId: $documentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Students\VisaDocuments\PatchStudentVisaDocumentRequest
      */
-    public function patch(string $schoolId, int $visaId, int $documentId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $visaId, int $documentId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentVisaDocumentRequest($schoolId, $visaId, $documentId, $patch));
+        $this->fetch(new PatchStudentVisaDocumentRequest(schoolId: $schoolId, visaId: $visaId, documentId: $documentId, patch: $patch));
     }
 }

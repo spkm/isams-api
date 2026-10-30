@@ -6,10 +6,12 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Parent;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\PushNotifications\NotificationSubscription;
 use spkm\IsamsApi\Data\PushNotifications\NotificationUpdateDevicePrivate;
+use spkm\IsamsApi\Data\PushNotifications\PrivateNotificationDeviceTokenMapped;
+use spkm\IsamsApi\Data\PushNotifications\PushConfigurationMapped;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationChannelsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationConfigRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationUserChannelSubscriptionsRequest;
@@ -18,56 +20,77 @@ use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\SendDebugPushNot
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\SubscribePushNotificationUserToChannelRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\UnsubscribePushNotificationUserFromChannelRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\UpdatePushNotificationUserPushDeviceTokenRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PushNotificationResource extends BaseResource
+class PushNotificationResource extends IsamsResource
 {
-    public function getChannels(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\PushNotifications\NotificationChannel>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationChannelsRequest
+     */
+    public function getChannels(): Collection
     {
-        return $this->connector->send(new GetPushNotificationChannelsRequest());
+        return $this->fetch(new GetPushNotificationChannelsRequest());
     }
 
-    public function getConfig(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationConfigRequest
+     */
+    public function getConfig(): PushConfigurationMapped
     {
-        return $this->connector->send(new GetPushNotificationConfigRequest());
+        return $this->fetch(new GetPushNotificationConfigRequest());
     }
 
-    public function getUserChannelSubscriptions(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\PushNotifications\NotificationUserSubscription>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationUserChannelSubscriptionsRequest
+     */
+    public function getUserChannelSubscriptions(): Collection
     {
-        return $this->connector->send(new GetPushNotificationUserChannelSubscriptionsRequest());
+        return $this->fetch(new GetPushNotificationUserChannelSubscriptionsRequest());
     }
 
-    public function getUserPushDeviceToken(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\GetPushNotificationUserPushDeviceTokenRequest
+     */
+    public function getUserPushDeviceToken(): PrivateNotificationDeviceTokenMapped
     {
-        return $this->connector->send(new GetPushNotificationUserPushDeviceTokenRequest());
+        return $this->fetch(new GetPushNotificationUserPushDeviceTokenRequest());
     }
 
-    public function sendDebug(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\SendDebugPushNotificationRequest
+     */
+    public function sendDebug(): Created
     {
-        return $this->connector->send(new SendDebugPushNotificationRequest());
+        return $this->fetch(new SendDebugPushNotificationRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\PushNotifications\NotificationSubscription|array<string, mixed>  $notificationSubscription
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\SubscribePushNotificationUserToChannelRequest
      */
-    public function subscribeUserToChannel(NotificationSubscription|array $notificationSubscription): Response
+    public function subscribeUserToChannel(NotificationSubscription|array $notificationSubscription): void
     {
-        return $this->connector->send(new SubscribePushNotificationUserToChannelRequest($notificationSubscription));
+        $this->fetch(new SubscribePushNotificationUserToChannelRequest(notificationSubscription: $notificationSubscription));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\PushNotifications\NotificationSubscription|array<string, mixed>  $notificationSubscription
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\UnsubscribePushNotificationUserFromChannelRequest
      */
-    public function unsubscribeUserFromChannel(NotificationSubscription|array $notificationSubscription): Response
+    public function unsubscribeUserFromChannel(NotificationSubscription|array $notificationSubscription): void
     {
-        return $this->connector->send(new UnsubscribePushNotificationUserFromChannelRequest($notificationSubscription));
+        $this->fetch(new UnsubscribePushNotificationUserFromChannelRequest(notificationSubscription: $notificationSubscription));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\PushNotifications\NotificationUpdateDevicePrivate|array<string, mixed>  $notificationUpdateDevicePrivate
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotification\UpdatePushNotificationUserPushDeviceTokenRequest
      */
     public function updateUserPushDeviceToken(
         NotificationUpdateDevicePrivate|array $notificationUpdateDevicePrivate,
-    ): Response {
-        return $this->connector->send(new UpdatePushNotificationUserPushDeviceTokenRequest($notificationUpdateDevicePrivate));
+    ): void {
+        $this->fetch(new UpdatePushNotificationUserPushDeviceTokenRequest(notificationUpdateDevicePrivate: $notificationUpdateDevicePrivate));
     }
 }

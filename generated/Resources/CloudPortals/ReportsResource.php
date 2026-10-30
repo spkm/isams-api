@@ -6,10 +6,10 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\CloudPortals\Reports\AcademicReportsResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ReportsResource extends BaseResource
+class ReportsResource extends IsamsResource
 {
     public function academicReports(): AcademicReportsResource
     {

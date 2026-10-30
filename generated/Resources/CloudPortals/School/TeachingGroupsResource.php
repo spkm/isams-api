@@ -6,32 +6,48 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Students\TeachingGroupForm;
+use spkm\IsamsApi\Data\Students\TeachingGroupSet;
+use spkm\IsamsApi\Data\Students\TeachingGroupsHistoryCollection;
 use spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupFormByIdRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupSetByIdRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupsHistoryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class TeachingGroupsResource extends BaseResource
+class TeachingGroupsResource extends IsamsResource
 {
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\TeachingGroup>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupsRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetTeachingGroupsRequest($schoolId));
+        return $this->fetch(new GetTeachingGroupsRequest(schoolId: $schoolId));
     }
 
-    public function getForm(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupFormByIdRequest
+     */
+    public function getForm(string $schoolId, int $id): TeachingGroupForm
     {
-        return $this->connector->send(new GetTeachingGroupFormByIdRequest($schoolId, $id));
+        return $this->fetch(new GetTeachingGroupFormByIdRequest(schoolId: $schoolId, id: $id));
     }
 
-    public function getHistory(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupsHistoryRequest
+     */
+    public function getHistory(string $schoolId): TeachingGroupsHistoryCollection
     {
-        return $this->connector->send(new GetTeachingGroupsHistoryRequest($schoolId));
+        return $this->fetch(new GetTeachingGroupsHistoryRequest(schoolId: $schoolId));
     }
 
-    public function getSet(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\TeachingGroups\GetTeachingGroupSetByIdRequest
+     */
+    public function getSet(string $schoolId, int $id): TeachingGroupSet
     {
-        return $this->connector->send(new GetTeachingGroupSetByIdRequest($schoolId, $id));
+        return $this->fetch(new GetTeachingGroupSetByIdRequest(schoolId: $schoolId, id: $id));
     }
 }

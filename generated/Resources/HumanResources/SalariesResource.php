@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\Salary;
 use spkm\IsamsApi\Data\HumanResources\SalaryForCreate;
 use spkm\IsamsApi\Requests\HumanResources\Salaries\CreateSalaryRequest;
 use spkm\IsamsApi\Requests\HumanResources\Salaries\DeleteSalaryRequest;
 use spkm\IsamsApi\Requests\HumanResources\Salaries\GetSalariesRequest;
 use spkm\IsamsApi\Requests\HumanResources\Salaries\GetSalaryRequest;
 use spkm\IsamsApi\Requests\HumanResources\Salaries\PatchSalaryRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class SalariesResource extends BaseResource
+class SalariesResource extends IsamsResource
 {
-    public function all(int $contractId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\Salary>
+     * @see \spkm\IsamsApi\Requests\HumanResources\Salaries\GetSalariesRequest
+     */
+    public function all(int $contractId): Collection
     {
-        return $this->connector->send(new GetSalariesRequest($contractId));
+        return $this->fetch(new GetSalariesRequest(contractId: $contractId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\SalaryForCreate|array<string, mixed>  $salary
+     * @see \spkm\IsamsApi\Requests\HumanResources\Salaries\CreateSalaryRequest
      */
-    public function create(int $contractId, SalaryForCreate|array $salary): Response
+    public function create(int $contractId, SalaryForCreate|array $salary): Created
     {
-        return $this->connector->send(new CreateSalaryRequest($contractId, $salary));
+        return $this->fetch(new CreateSalaryRequest(contractId: $contractId, salary: $salary));
     }
 
-    public function delete(int $contractId, int $salaryId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\Salaries\DeleteSalaryRequest
+     */
+    public function delete(int $contractId, int $salaryId): void
     {
-        return $this->connector->send(new DeleteSalaryRequest($contractId, $salaryId));
+        $this->fetch(new DeleteSalaryRequest(contractId: $contractId, salaryId: $salaryId));
     }
 
-    public function get(int $contractId, int $salaryId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\Salaries\GetSalaryRequest
+     */
+    public function get(int $contractId, int $salaryId): Salary
     {
-        return $this->connector->send(new GetSalaryRequest($contractId, $salaryId));
+        return $this->fetch(new GetSalaryRequest(contractId: $contractId, salaryId: $salaryId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\HumanResources\Salaries\PatchSalaryRequest
      */
-    public function patch(int $contractId, int $salaryId, JsonPatch|array $patch): Response
+    public function patch(int $contractId, int $salaryId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchSalaryRequest($contractId, $salaryId, $patch));
+        $this->fetch(new PatchSalaryRequest(contractId: $contractId, salaryId: $salaryId, patch: $patch));
     }
 }

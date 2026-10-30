@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ConcernInjuryType;
 use spkm\IsamsApi\Data\WellbeingManager\ConcernInjuryTypeForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\CreateConcernInjuryTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\DeleteConcernInjuryTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\GetConcernInjuryTypeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\GetConcernInjuryTypesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\PatchConcernInjuryTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernInjuryTypesResource extends BaseResource
+class ConcernInjuryTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ConcernInjuryType>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\GetConcernInjuryTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernInjuryTypesRequest());
+        return $this->fetch(new GetConcernInjuryTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernInjuryTypeForCreate|array<string, mixed>  $concernInjuryType
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\CreateConcernInjuryTypeRequest
      */
-    public function create(ConcernInjuryTypeForCreate|array $concernInjuryType): Response
+    public function create(ConcernInjuryTypeForCreate|array $concernInjuryType): Created
     {
-        return $this->connector->send(new CreateConcernInjuryTypeRequest($concernInjuryType));
+        return $this->fetch(new CreateConcernInjuryTypeRequest(concernInjuryType: $concernInjuryType));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\DeleteConcernInjuryTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteConcernInjuryTypeRequest($id));
+        $this->fetch(new DeleteConcernInjuryTypeRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\GetConcernInjuryTypeRequest
+     */
+    public function get(int $id): ConcernInjuryType
     {
-        return $this->connector->send(new GetConcernInjuryTypeRequest($id));
+        return $this->fetch(new GetConcernInjuryTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernInjuryTypes\PatchConcernInjuryTypeRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernInjuryTypeRequest($id, $patch));
+        $this->fetch(new PatchConcernInjuryTypeRequest(id: $id, patch: $patch));
     }
 }

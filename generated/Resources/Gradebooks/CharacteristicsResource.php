@@ -6,23 +6,27 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\Characteristics\CreateGradebookCharacteristicsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\Characteristics\DeleteGradebookCharacteristicRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CharacteristicsResource extends BaseResource
+class CharacteristicsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>  $characteristics
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Characteristics\CreateGradebookCharacteristicsRequest
      */
-    public function createMany(int $gradebookId, array $characteristics): Response
+    public function createMany(int $gradebookId, array $characteristics): Created
     {
-        return $this->connector->send(new CreateGradebookCharacteristicsRequest($gradebookId, $characteristics));
+        return $this->fetch(new CreateGradebookCharacteristicsRequest(gradebookId: $gradebookId, characteristics: $characteristics));
     }
 
-    public function delete(int $gradebookId, string $characteristic): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Characteristics\DeleteGradebookCharacteristicRequest
+     */
+    public function delete(int $gradebookId, string $characteristic): void
     {
-        return $this->connector->send(new DeleteGradebookCharacteristicRequest($gradebookId, $characteristic));
+        $this->fetch(new DeleteGradebookCharacteristicRequest(gradebookId: $gradebookId, characteristic: $characteristic));
     }
 }

@@ -22,7 +22,7 @@ use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 it('reads the houses of one type as models', function () {
     $isams = FakeIsams::respondWith([GetHousesRequest::class => MockResponse::make(['houses' => [['id' => 4, 'name' => 'Example House', 'type' => 'Boarding']]])]);
 
-    $houses = FakeIsams::connector()->school()->houses()->all('Boarding')->dto();
+    $houses = FakeIsams::connector()->school()->houses()->all('Boarding');
 
     expect($houses->first())->toBeInstanceOf(House::class)
         ->and($houses->first()->typeEnum())->toBe(HouseType::Boarding)
@@ -80,7 +80,7 @@ it('starts a timetable import with its lessons as JSON and reports where iSAMS s
     $isams = FakeIsams::respondWith([CreateTimetableImportRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/timetables/import/active'])]);
     $import = TimetableImportRequestForCreate::from(['importAction' => 'New', 'name' => 'Autumn timetable', 'lessons' => [['periodId' => 3, 'setCode' => '10A/Ma1']]]);
 
-    $created = FakeIsams::connector()->timetable()->import()->create($import)->dto();
+    $created = FakeIsams::connector()->timetable()->import()->create($import);
 
     expect($created)->toEqual(new Created('https://isams.example.test/api/timetables/import/active', 'active'))
         ->and(json_decode((string) FakeIsams::received($isams, CreateTimetableImportRequest::class)->createPsrRequest()->getBody(), true))

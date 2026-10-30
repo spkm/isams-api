@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\CreateLanguageRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\DeleteLanguageRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\GetLanguagesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\UpdateLanguageRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class LanguagesResource extends BaseResource
+class LanguagesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemWithCensusData>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\GetLanguagesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetLanguagesRequest());
+        return $this->fetch(new GetLanguagesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\CreateLanguageRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateLanguageRequest($listItem));
+        return $this->fetch(new CreateLanguageRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\DeleteLanguageRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteLanguageRequest($id));
+        $this->fetch(new DeleteLanguageRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Languages\UpdateLanguageRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateLanguageRequest($id, $listItem));
+        $this->fetch(new UpdateLanguageRequest(id: $id, listItem: $listItem));
     }
 }

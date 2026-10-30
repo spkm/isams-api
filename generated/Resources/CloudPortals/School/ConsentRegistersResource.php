@@ -6,33 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\DataProtection\PortalConsentRegisterResponses;
 use spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\GetConsentRegistersRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\PatchContactConsentRegisterResponsesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\PatchStudentConsentRegisterResponsesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConsentRegistersResource extends BaseResource
+class ConsentRegistersResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\GetConsentRegistersRequest
+     */
+    public function all(): PortalConsentRegisterResponses
     {
-        return $this->connector->send(new GetConsentRegistersRequest());
+        return $this->fetch(new GetConsentRegistersRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\PatchContactConsentRegisterResponsesRequest
      */
-    public function patchContactResponses(JsonPatch|array $patch): Response
+    public function patchContactResponses(JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchContactConsentRegisterResponsesRequest($patch));
+        $this->fetch(new PatchContactConsentRegisterResponsesRequest(patch: $patch));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\ConsentRegisters\PatchStudentConsentRegisterResponsesRequest
      */
-    public function patchResponses(string $schoolId, JsonPatch|array $patch): Response
+    public function patchResponses(string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentConsentRegisterResponsesRequest($schoolId, $patch));
+        $this->fetch(new PatchStudentConsentRegisterResponsesRequest(schoolId: $schoolId, patch: $patch));
     }
 }

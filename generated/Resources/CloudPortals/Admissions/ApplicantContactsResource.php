@@ -6,18 +6,22 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\ApplicantContacts\GetApplicantContactsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ApplicantContactsResource extends BaseResource
+class ApplicantContactsResource extends IsamsResource
 {
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\Contact>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\ApplicantContacts\GetApplicantContactsRequest
+     */
     public function all(
         string $schoolId,
         ?bool $includeDeceased = null,
         string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetApplicantContactsRequest($schoolId, $includeDeceased, $filter));
+    ): Collection {
+        return $this->fetch(new GetApplicantContactsRequest(schoolId: $schoolId, includeDeceased: $includeDeceased, filter: $filter));
     }
 }

@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\School\SchoolAddress;
 use spkm\IsamsApi\Requests\CloudPortals\School\Addresses\GetSchoolAddressListRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Addresses\GetSchoolAddressRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AddressesResource extends BaseResource
+class AddressesResource extends IsamsResource
 {
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Addresses\GetSchoolAddressRequest
+     */
+    public function get(int $id): SchoolAddress
     {
-        return $this->connector->send(new GetSchoolAddressRequest($id));
+        return $this->fetch(new GetSchoolAddressRequest(id: $id));
     }
 
-    public function getList(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\SchoolAddress>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Addresses\GetSchoolAddressListRequest
+     */
+    public function getList(): Collection
     {
-        return $this->connector->send(new GetSchoolAddressListRequest());
+        return $this->fetch(new GetSchoolAddressListRequest());
     }
 }

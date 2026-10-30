@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\School\Department;
 use spkm\IsamsApi\Requests\School\Departments\GetDepartmentRequest;
 use spkm\IsamsApi\Requests\School\Departments\GetDepartmentsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DepartmentsResource extends BaseResource
+class DepartmentsResource extends IsamsResource
 {
-    public function all(string $departmentType, ?string $expand = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, mixed>
+     * @see \spkm\IsamsApi\Requests\School\Departments\GetDepartmentsRequest
+     */
+    public function all(string $departmentType, ?string $expand = null): Collection
     {
-        return $this->connector->send(new GetDepartmentsRequest($departmentType, $expand));
+        return $this->fetch(new GetDepartmentsRequest(departmentType: $departmentType, expand: $expand));
     }
 
-    public function get(string $departmentType, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\School\Departments\GetDepartmentRequest
+     */
+    public function get(string $departmentType, int $id): Department
     {
-        return $this->connector->send(new GetDepartmentRequest($departmentType, $id));
+        return $this->fetch(new GetDepartmentRequest(departmentType: $departmentType, id: $id));
     }
 }

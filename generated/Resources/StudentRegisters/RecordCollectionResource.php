@@ -6,46 +6,57 @@
 
 namespace spkm\IsamsApi\Resources\StudentRegisters;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\StudentRegisters\StudentRecords;
 use spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\CreateRecordCollectionRecordRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\DeleteRecordCollectionRecordRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\GetRecordCollectionRecordsRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\GetStudentRecordCollectionRecordsRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\PatchRecordCollectionRecordRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class RecordCollectionResource extends BaseResource
+class RecordCollectionResource extends IsamsResource
 {
-    public function all(
-        int $registerId,
-        int $recordCollectionId,
-        ?string $systemStatus = null,
-        ?int $page = null,
-        ?int $pageSize = null,
-    ): Response {
-        return $this->connector->send(new GetRecordCollectionRecordsRequest($registerId, $recordCollectionId, $systemStatus, $page, $pageSize));
-    }
-
     /**
-     * @param  array<mixed>  $values
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\StudentRegisters\StudentRecords>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\GetRecordCollectionRecordsRequest
      */
-    public function create(int $registerId, string $schoolId, int $recordCollectionId, array $values): Response
+    public function all(int $registerId, int $recordCollectionId, ?string $systemStatus = null): LazyCollection
     {
-        return $this->connector->send(new CreateRecordCollectionRecordRequest($registerId, $schoolId, $recordCollectionId, $values));
-    }
-
-    public function delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId): Response
-    {
-        return $this->connector->send(new DeleteRecordCollectionRecordRequest($registerId, $schoolId, $recordCollectionId, $recordId));
-    }
-
-    public function forStudent(int $registerId, string $schoolId, int $recordCollectionId): Response
-    {
-        return $this->connector->send(new GetStudentRecordCollectionRecordsRequest($registerId, $schoolId, $recordCollectionId));
+        return $this->each(new GetRecordCollectionRecordsRequest(registerId: $registerId, recordCollectionId: $recordCollectionId, systemStatus: $systemStatus), StudentRecords::class);
     }
 
     /**
      * @param  array<mixed>  $values
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\CreateRecordCollectionRecordRequest
+     */
+    public function create(int $registerId, string $schoolId, int $recordCollectionId, array $values): Created
+    {
+        return $this->fetch(new CreateRecordCollectionRecordRequest(registerId: $registerId, schoolId: $schoolId, recordCollectionId: $recordCollectionId, values: $values));
+    }
+
+    /**
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\DeleteRecordCollectionRecordRequest
+     */
+    public function delete(int $registerId, string $schoolId, int $recordCollectionId, int $recordId): void
+    {
+        $this->fetch(new DeleteRecordCollectionRecordRequest(registerId: $registerId, schoolId: $schoolId, recordCollectionId: $recordCollectionId, recordId: $recordId));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\StudentRegisters\Record>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\GetStudentRecordCollectionRecordsRequest
+     */
+    public function forStudent(int $registerId, string $schoolId, int $recordCollectionId): Collection
+    {
+        return $this->fetch(new GetStudentRecordCollectionRecordsRequest(registerId: $registerId, schoolId: $schoolId, recordCollectionId: $recordCollectionId));
+    }
+
+    /**
+     * @param  array<mixed>  $values
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\RecordCollection\PatchRecordCollectionRecordRequest
      */
     public function patch(
         int $registerId,
@@ -53,7 +64,7 @@ class RecordCollectionResource extends BaseResource
         int $recordCollectionId,
         int $recordId,
         array $values,
-    ): Response {
-        return $this->connector->send(new PatchRecordCollectionRecordRequest($registerId, $schoolId, $recordCollectionId, $recordId, $values));
+    ): void {
+        $this->fetch(new PatchRecordCollectionRecordRequest(registerId: $registerId, schoolId: $schoolId, recordCollectionId: $recordCollectionId, recordId: $recordId, values: $values));
     }
 }

@@ -6,24 +6,29 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\EmailSubscriptions\GetEmailSubscriptionsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\EmailSubscriptions\PatchEmailSubscriptionToEmailCategoriesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class EmailSubscriptionsResource extends BaseResource
+class EmailSubscriptionsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\CloudPortals\EmailSubscriptionCategory>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailSubscriptions\GetEmailSubscriptionsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetEmailSubscriptionsRequest());
+        return $this->fetch(new GetEmailSubscriptionsRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailSubscriptions\PatchEmailSubscriptionToEmailCategoriesRequest
      */
-    public function patchToEmailCategories(JsonPatch|array $patch): Response
+    public function patchToEmailCategories(JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchEmailSubscriptionToEmailCategoriesRequest($patch));
+        $this->fetch(new PatchEmailSubscriptionToEmailCategoriesRequest(patch: $patch));
     }
 }

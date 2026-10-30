@@ -6,23 +6,27 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnWeightings\CreateAssessmentColumnWeightingsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnWeightings\DeleteAssessmentColumnWeightingRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AssessmentColumnWeightingsResource extends BaseResource
+class AssessmentColumnWeightingsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>  $weightingElementIds
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnWeightings\CreateAssessmentColumnWeightingsRequest
      */
-    public function createMany(int $gradebookId, int $columnId, array $weightingElementIds): Response
+    public function createMany(int $gradebookId, int $columnId, array $weightingElementIds): Created
     {
-        return $this->connector->send(new CreateAssessmentColumnWeightingsRequest($gradebookId, $columnId, $weightingElementIds));
+        return $this->fetch(new CreateAssessmentColumnWeightingsRequest(gradebookId: $gradebookId, columnId: $columnId, weightingElementIds: $weightingElementIds));
     }
 
-    public function delete(int $gradebookId, int $columnId, int $weightingId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnWeightings\DeleteAssessmentColumnWeightingRequest
+     */
+    public function delete(int $gradebookId, int $columnId, int $weightingId): void
     {
-        return $this->connector->send(new DeleteAssessmentColumnWeightingRequest($gradebookId, $columnId, $weightingId));
+        $this->fetch(new DeleteAssessmentColumnWeightingRequest(gradebookId: $gradebookId, columnId: $columnId, weightingId: $weightingId));
     }
 }

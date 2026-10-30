@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\CreateTitleRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\DeleteTitleRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\GetTitlesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\UpdateTitleRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class TitlesResource extends BaseResource
+class TitlesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\GetTitlesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetTitlesRequest());
+        return $this->fetch(new GetTitlesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\CreateTitleRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateTitleRequest($listItem));
+        return $this->fetch(new CreateTitleRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\DeleteTitleRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteTitleRequest($id));
+        $this->fetch(new DeleteTitleRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Titles\UpdateTitleRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateTitleRequest($id, $listItem));
+        $this->fetch(new UpdateTitleRequest(id: $id, listItem: $listItem));
     }
 }

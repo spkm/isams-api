@@ -6,26 +6,37 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Admissions\AgencyBranches\AddApplicantAgencyBranchRequest;
 use spkm\IsamsApi\Requests\Admissions\AgencyBranches\GetApplicantAgencyBranchesRequest;
 use spkm\IsamsApi\Requests\Admissions\AgencyBranches\RemoveApplicantAgencyBranchRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AgencyBranchesResource extends BaseResource
+class AgencyBranchesResource extends IsamsResource
 {
-    public function add(string $schoolId, int $agencyBranchId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\AgencyBranches\AddApplicantAgencyBranchRequest
+     */
+    public function add(string $schoolId, int $agencyBranchId): Created
     {
-        return $this->connector->send(new AddApplicantAgencyBranchRequest($schoolId, $agencyBranchId));
+        return $this->fetch(new AddApplicantAgencyBranchRequest(schoolId: $schoolId, agencyBranchId: $agencyBranchId));
     }
 
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\Branch>
+     * @see \spkm\IsamsApi\Requests\Admissions\AgencyBranches\GetApplicantAgencyBranchesRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetApplicantAgencyBranchesRequest($schoolId));
+        return $this->fetch(new GetApplicantAgencyBranchesRequest(schoolId: $schoolId));
     }
 
-    public function remove(string $schoolId, int $agencyBranchId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\AgencyBranches\RemoveApplicantAgencyBranchRequest
+     */
+    public function remove(string $schoolId, int $agencyBranchId): void
     {
-        return $this->connector->send(new RemoveApplicantAgencyBranchRequest($schoolId, $agencyBranchId));
+        $this->fetch(new RemoveApplicantAgencyBranchRequest(schoolId: $schoolId, agencyBranchId: $agencyBranchId));
     }
 }

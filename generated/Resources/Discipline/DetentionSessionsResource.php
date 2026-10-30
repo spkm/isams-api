@@ -6,33 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\Discipline;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Discipline\DetentionSession;
 use spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetDetentionSessionRequest;
 use spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetDetentionSessionStudentsRequest;
 use spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetDetentionSessionsRequest;
 use spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetStudentDetentionSessionsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DetentionSessionsResource extends BaseResource
+class DetentionSessionsResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Discipline\DetentionSession>
+     * @see \spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetDetentionSessionsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetDetentionSessionsRequest($page, $pageSize, $filter));
+        return $this->each(new GetDetentionSessionsRequest(filter: $filter), DetentionSession::class);
     }
 
-    public function forStudent(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Discipline\DetentionSessionStudent>
+     * @see \spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetStudentDetentionSessionsRequest
+     */
+    public function forStudent(string $schoolId): Collection
     {
-        return $this->connector->send(new GetStudentDetentionSessionsRequest($schoolId));
+        return $this->fetch(new GetStudentDetentionSessionsRequest(schoolId: $schoolId));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetDetentionSessionRequest
+     */
+    public function get(int $id): DetentionSession
     {
-        return $this->connector->send(new GetDetentionSessionRequest($id));
+        return $this->fetch(new GetDetentionSessionRequest(id: $id));
     }
 
-    public function students(int $id): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Discipline\DetentionSessionStudent>
+     * @see \spkm\IsamsApi\Requests\Discipline\DetentionSessions\GetDetentionSessionStudentsRequest
+     */
+    public function students(int $id): Collection
     {
-        return $this->connector->send(new GetDetentionSessionStudentsRequest($id));
+        return $this->fetch(new GetDetentionSessionStudentsRequest(id: $id));
     }
 }

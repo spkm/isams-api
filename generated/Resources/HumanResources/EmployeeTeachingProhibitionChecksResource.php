@@ -6,26 +6,30 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\HumanResources\EmployeeTeachingProhibitionCheck;
 use spkm\IsamsApi\Data\HumanResources\EmployeeTeachingProhibitionCheckForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeTeachingProhibitionChecks\GetEmployeeTeachingProhibitionCheckRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeTeachingProhibitionChecks\UpdateEmployeeTeachingProhibitionCheckRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeTeachingProhibitionChecksResource extends BaseResource
+class EmployeeTeachingProhibitionChecksResource extends IsamsResource
 {
-    public function get(int $employeeId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeTeachingProhibitionChecks\GetEmployeeTeachingProhibitionCheckRequest
+     */
+    public function get(int $employeeId): EmployeeTeachingProhibitionCheck
     {
-        return $this->connector->send(new GetEmployeeTeachingProhibitionCheckRequest($employeeId));
+        return $this->fetch(new GetEmployeeTeachingProhibitionCheckRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeTeachingProhibitionCheckForUpdate|array<string, mixed>  $employeeTeachingProhibitionCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeTeachingProhibitionChecks\UpdateEmployeeTeachingProhibitionCheckRequest
      */
     public function update(
         int $employeeId,
         EmployeeTeachingProhibitionCheckForUpdate|array $employeeTeachingProhibitionCheck,
-    ): Response {
-        return $this->connector->send(new UpdateEmployeeTeachingProhibitionCheckRequest($employeeId, $employeeTeachingProhibitionCheck));
+    ): void {
+        $this->fetch(new UpdateEmployeeTeachingProhibitionCheckRequest(employeeId: $employeeId, employeeTeachingProhibitionCheck: $employeeTeachingProhibitionCheck));
     }
 }

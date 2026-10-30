@@ -6,21 +6,29 @@
 
 namespace spkm\IsamsApi\Resources\RewardsAndConduct;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Requests\RewardsAndConduct\Categories\GetCategoriesRequest;
 use spkm\IsamsApi\Requests\RewardsAndConduct\Categories\GetCategoryRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CategoriesResource extends BaseResource
+class CategoriesResource extends IsamsResource
 {
-    public function all(int $moduleTypeId, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\RewardsAndConduct\Category>
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Categories\GetCategoriesRequest
+     */
+    public function all(int $moduleTypeId, string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetCategoriesRequest($moduleTypeId, $filter));
+        return $this->fetch(new GetCategoriesRequest(moduleTypeId: $moduleTypeId, filter: $filter));
     }
 
-    public function get(int $moduleTypeId, int $categoryId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\RewardsAndConduct\Category>
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Categories\GetCategoryRequest
+     */
+    public function get(int $moduleTypeId, int $categoryId): Collection
     {
-        return $this->connector->send(new GetCategoryRequest($moduleTypeId, $categoryId));
+        return $this->fetch(new GetCategoryRequest(moduleTypeId: $moduleTypeId, categoryId: $categoryId));
     }
 }

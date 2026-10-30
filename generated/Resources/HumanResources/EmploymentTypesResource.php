@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\CreateEmploymentTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\DeleteEmploymentTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\GetEmploymentTypesRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\UpdateEmploymentTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmploymentTypesResource extends BaseResource
+class EmploymentTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\GetEmploymentTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetEmploymentTypesRequest());
+        return $this->fetch(new GetEmploymentTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\CreateEmploymentTypeRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateEmploymentTypeRequest($listItem));
+        return $this->fetch(new CreateEmploymentTypeRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\DeleteEmploymentTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteEmploymentTypeRequest($id));
+        $this->fetch(new DeleteEmploymentTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmploymentTypes\UpdateEmploymentTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateEmploymentTypeRequest($id, $listItem));
+        $this->fetch(new UpdateEmploymentTypeRequest(id: $id, listItem: $listItem));
     }
 }

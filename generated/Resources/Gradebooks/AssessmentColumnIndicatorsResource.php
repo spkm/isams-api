@@ -6,23 +6,27 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnIndicators\CreateAssessmentColumnIndicatorsRequest;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnIndicators\DeleteAssessmentColumnIndicatorRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class AssessmentColumnIndicatorsResource extends BaseResource
+class AssessmentColumnIndicatorsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>  $indicators
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnIndicators\CreateAssessmentColumnIndicatorsRequest
      */
-    public function createMany(int $gradebookId, int $columnId, array $indicators): Response
+    public function createMany(int $gradebookId, int $columnId, array $indicators): Created
     {
-        return $this->connector->send(new CreateAssessmentColumnIndicatorsRequest($gradebookId, $columnId, $indicators));
+        return $this->fetch(new CreateAssessmentColumnIndicatorsRequest(gradebookId: $gradebookId, columnId: $columnId, indicators: $indicators));
     }
 
-    public function delete(int $gradebookId, int $columnId, int $indicatorId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumnIndicators\DeleteAssessmentColumnIndicatorRequest
+     */
+    public function delete(int $gradebookId, int $columnId, int $indicatorId): void
     {
-        return $this->connector->send(new DeleteAssessmentColumnIndicatorRequest($gradebookId, $columnId, $indicatorId));
+        $this->fetch(new DeleteAssessmentColumnIndicatorRequest(gradebookId: $gradebookId, columnId: $columnId, indicatorId: $indicatorId));
     }
 }

@@ -6,40 +6,49 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ConcernAction;
 use spkm\IsamsApi\Data\WellbeingManager\ConcernActionForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\CreateConcernActionRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\DeleteConcernActionRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\GetConcernActionRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\PatchConcernActionRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernActionsResource extends BaseResource
+class ConcernActionsResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernActionForCreate|array<string, mixed>  $concernAction
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\CreateConcernActionRequest
      */
-    public function create(string $schoolId, int $concernId, ConcernActionForCreate|array $concernAction): Response
+    public function create(string $schoolId, int $concernId, ConcernActionForCreate|array $concernAction): Created
     {
-        return $this->connector->send(new CreateConcernActionRequest($schoolId, $concernId, $concernAction));
+        return $this->fetch(new CreateConcernActionRequest(schoolId: $schoolId, concernId: $concernId, concernAction: $concernAction));
     }
 
-    public function delete(string $schoolId, int $concernId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\DeleteConcernActionRequest
+     */
+    public function delete(string $schoolId, int $concernId, int $id): void
     {
-        return $this->connector->send(new DeleteConcernActionRequest($schoolId, $concernId, $id));
+        $this->fetch(new DeleteConcernActionRequest(schoolId: $schoolId, concernId: $concernId, id: $id));
     }
 
-    public function get(string $schoolId, int $concernId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\GetConcernActionRequest
+     */
+    public function get(string $schoolId, int $concernId, int $id): ConcernAction
     {
-        return $this->connector->send(new GetConcernActionRequest($schoolId, $concernId, $id));
+        return $this->fetch(new GetConcernActionRequest(schoolId: $schoolId, concernId: $concernId, id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActions\PatchConcernActionRequest
      */
-    public function patch(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, int $concernId, int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernActionRequest($schoolId, $concernId, $id, $patch));
+        $this->fetch(new PatchConcernActionRequest(schoolId: $schoolId, concernId: $concernId, id: $id, patch: $patch));
     }
 }

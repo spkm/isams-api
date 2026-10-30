@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\MedicalCentre\Stock\GetMedicalStockReasonsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StockResource extends BaseResource
+class StockResource extends IsamsResource
 {
-    public function getReasons(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\StockReason>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Stock\GetMedicalStockReasonsRequest
+     */
+    public function getReasons(): Collection
     {
-        return $this->connector->send(new GetMedicalStockReasonsRequest());
+        return $this->fetch(new GetMedicalStockReasonsRequest());
     }
 }

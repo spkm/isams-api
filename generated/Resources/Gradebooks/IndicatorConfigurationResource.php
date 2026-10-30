@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Gradebooks\Indicator;
 use spkm\IsamsApi\Requests\Gradebooks\IndicatorConfiguration\GetIndicatorConfigurationRequest;
 use spkm\IsamsApi\Requests\Gradebooks\IndicatorConfiguration\GetIndicatorConfigurationsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class IndicatorConfigurationResource extends BaseResource
+class IndicatorConfigurationResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\Indicator>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\IndicatorConfiguration\GetIndicatorConfigurationsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetIndicatorConfigurationsRequest());
+        return $this->fetch(new GetIndicatorConfigurationsRequest());
     }
 
-    public function get(int $indicatorId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\IndicatorConfiguration\GetIndicatorConfigurationRequest
+     */
+    public function get(int $indicatorId): Indicator
     {
-        return $this->connector->send(new GetIndicatorConfigurationRequest($indicatorId));
+        return $this->fetch(new GetIndicatorConfigurationRequest(indicatorId: $indicatorId));
     }
 }

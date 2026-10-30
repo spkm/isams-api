@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Admissions\EnquiryTypes\CreateEnquiryTypeRequest;
 use spkm\IsamsApi\Requests\Admissions\EnquiryTypes\DeleteEnquiryTypeRequest;
 use spkm\IsamsApi\Requests\Admissions\EnquiryTypes\GetEnquiryTypesRequest;
 use spkm\IsamsApi\Requests\Admissions\EnquiryTypes\UpdateEnquiryTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EnquiryTypesResource extends BaseResource
+class EnquiryTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\Admissions\EnquiryTypes\GetEnquiryTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetEnquiryTypesRequest());
+        return $this->fetch(new GetEnquiryTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\Admissions\EnquiryTypes\CreateEnquiryTypeRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateEnquiryTypeRequest($listItem));
+        return $this->fetch(new CreateEnquiryTypeRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\EnquiryTypes\DeleteEnquiryTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteEnquiryTypeRequest($id));
+        $this->fetch(new DeleteEnquiryTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\Admissions\EnquiryTypes\UpdateEnquiryTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateEnquiryTypeRequest($id, $listItem));
+        $this->fetch(new UpdateEnquiryTypeRequest(id: $id, listItem: $listItem));
     }
 }

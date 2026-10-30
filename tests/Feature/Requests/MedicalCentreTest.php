@@ -20,7 +20,7 @@ it('reads a student\'s conditions, archived ones included, as models keyed by th
         ['key' => '0b8f6d1e-3a51-4c43-9d0e-6f1c2b7a9e10', 'type' => 'Hay fever', 'archived' => true],
     ]])]);
 
-    $conditions = FakeIsams::connector()->medicalCentre()->studentConditions()->all('100001', includeArchive: true)->dto();
+    $conditions = FakeIsams::connector()->medicalCentre()->studentConditions()->all('100001', includeArchive: true);
 
     expect($conditions->first())->toBeInstanceOf(Condition::class)
         ->and($conditions->first()->key)->toBe('0b8f6d1e-3a51-4c43-9d0e-6f1c2b7a9e10')
@@ -30,7 +30,7 @@ it('reads a student\'s conditions, archived ones included, as models keyed by th
 it('archives a student\'s condition with a command that has no body', function () {
     $isams = FakeIsams::respondWith([ArchiveStudentConditionRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/medical/students/100001/conditions/0b8f6d1e-3a51-4c43-9d0e-6f1c2b7a9e10'])]);
 
-    $created = FakeIsams::connector()->medicalCentre()->studentConditions()->archive('100001', '0b8f6d1e-3a51-4c43-9d0e-6f1c2b7a9e10')->dto();
+    $created = FakeIsams::connector()->medicalCentre()->studentConditions()->archive('100001', '0b8f6d1e-3a51-4c43-9d0e-6f1c2b7a9e10');
 
     $sent = FakeIsams::received($isams, ArchiveStudentConditionRequest::class)->createPsrRequest();
     expect($created->id)->toBe('0b8f6d1e-3a51-4c43-9d0e-6f1c2b7a9e10')

@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Gradebooks\Gradeset;
 use spkm\IsamsApi\Requests\Gradebooks\GradesetConfiguration\GetGradesetConfigurationRequest;
 use spkm\IsamsApi\Requests\Gradebooks\GradesetConfiguration\GetGradesetConfigurationsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class GradesetConfigurationResource extends BaseResource
+class GradesetConfigurationResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\Gradeset>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\GradesetConfiguration\GetGradesetConfigurationsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetGradesetConfigurationsRequest());
+        return $this->fetch(new GetGradesetConfigurationsRequest());
     }
 
-    public function get(int $gradesetId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\GradesetConfiguration\GetGradesetConfigurationRequest
+     */
+    public function get(int $gradesetId): Gradeset
     {
-        return $this->connector->send(new GetGradesetConfigurationRequest($gradesetId));
+        return $this->fetch(new GetGradesetConfigurationRequest(gradesetId: $gradesetId));
     }
 }

@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Billing;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\CloudPortals\Billing\Invoices\GetInvoiceDocumentRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Billing\Invoices\GetInvoicesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class InvoicesResource extends BaseResource
+class InvoicesResource extends IsamsResource
 {
-    public function all(?bool $excludeCopyBills = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Billing\Invoice>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\Invoices\GetInvoicesRequest
+     */
+    public function all(?bool $excludeCopyBills = null): Collection
     {
-        return $this->connector->send(new GetInvoicesRequest($excludeCopyBills));
+        return $this->fetch(new GetInvoicesRequest(excludeCopyBills: $excludeCopyBills));
     }
 
-    public function getDocument(string $centralFileServiceId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\Invoices\GetInvoiceDocumentRequest
+     */
+    public function getDocument(string $centralFileServiceId): File
     {
-        return $this->connector->send(new GetInvoiceDocumentRequest($centralFileServiceId));
+        return $this->fetch(new GetInvoiceDocumentRequest(centralFileServiceId: $centralFileServiceId));
     }
 }

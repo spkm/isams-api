@@ -6,10 +6,9 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Curriculum\CyclesResource;
 
-class CurriculumResource extends BaseResource
+class CurriculumResource extends IsamsResource
 {
     public function cycles(): CyclesResource
     {

@@ -6,18 +6,19 @@
 
 namespace spkm\IsamsApi\Resources\Bulletin;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Bulletin\BulletinYearGroupsForCreate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Bulletin\YearGroup\CreateBulletinYearGroupsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class YearGroupResource extends BaseResource
+class YearGroupResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\Bulletin\BulletinYearGroupsForCreate|array<string, mixed>  $bulletinYearGroups
+     * @see \spkm\IsamsApi\Requests\Bulletin\YearGroup\CreateBulletinYearGroupsRequest
      */
-    public function createMany(int $bulletinId, BulletinYearGroupsForCreate|array $bulletinYearGroups): Response
+    public function createMany(int $bulletinId, BulletinYearGroupsForCreate|array $bulletinYearGroups): Created
     {
-        return $this->connector->send(new CreateBulletinYearGroupsRequest($bulletinId, $bulletinYearGroups));
+        return $this->fetch(new CreateBulletinYearGroupsRequest(bulletinId: $bulletinId, bulletinYearGroups: $bulletinYearGroups));
     }
 }

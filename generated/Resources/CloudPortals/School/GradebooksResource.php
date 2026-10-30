@@ -6,8 +6,6 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookMarkbooksWithPublishedColumnsForParentUserRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookMarkbooksWithPublishedColumnsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnCommentsForMarkbookForParentUserRequest;
@@ -16,59 +14,82 @@ use spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedC
 use spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnDetailForMarkbookRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnsForMarkbookForParentUserRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnsForMarkbookRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class GradebooksResource extends BaseResource
+class GradebooksResource extends IsamsResource
 {
-    public function getMarkbooksWithPublishedColumns(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookMarkbooksWithPublishedColumnsRequest
+     */
+    public function getMarkbooksWithPublishedColumns(string $schoolId): mixed
     {
-        return $this->connector->send(new GetGradebookMarkbooksWithPublishedColumnsRequest($schoolId));
+        return $this->fetch(new GetGradebookMarkbooksWithPublishedColumnsRequest(schoolId: $schoolId));
     }
 
-    public function getMarkbooksWithPublishedColumnsForParentUser(
-        string $schoolId,
-        string $viewedAsUserCode,
-    ): Response {
-        return $this->connector->send(new GetGradebookMarkbooksWithPublishedColumnsForParentUserRequest($schoolId, $viewedAsUserCode));
-    }
-
-    public function getPublishedColumnCommentsForMarkbook(int $markbookId, string $schoolId, int $columnId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookMarkbooksWithPublishedColumnsForParentUserRequest
+     */
+    public function getMarkbooksWithPublishedColumnsForParentUser(string $schoolId, string $viewedAsUserCode): mixed
     {
-        return $this->connector->send(new GetGradebookPublishedColumnCommentsForMarkbookRequest($markbookId, $schoolId, $columnId));
+        return $this->fetch(new GetGradebookMarkbooksWithPublishedColumnsForParentUserRequest(schoolId: $schoolId, viewedAsUserCode: $viewedAsUserCode));
     }
 
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnCommentsForMarkbookRequest
+     */
+    public function getPublishedColumnCommentsForMarkbook(int $markbookId, string $schoolId, int $columnId): mixed
+    {
+        return $this->fetch(new GetGradebookPublishedColumnCommentsForMarkbookRequest(markbookId: $markbookId, schoolId: $schoolId, columnId: $columnId));
+    }
+
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnCommentsForMarkbookForParentUserRequest
+     */
     public function getPublishedColumnCommentsForMarkbookForParentUser(
         int $markbookId,
         string $schoolId,
         string $viewedAsUserCode,
         int $columnId,
-    ): Response {
-        return $this->connector->send(new GetGradebookPublishedColumnCommentsForMarkbookForParentUserRequest($markbookId, $schoolId, $viewedAsUserCode, $columnId));
+    ): mixed {
+        return $this->fetch(new GetGradebookPublishedColumnCommentsForMarkbookForParentUserRequest(markbookId: $markbookId, schoolId: $schoolId, viewedAsUserCode: $viewedAsUserCode, columnId: $columnId));
     }
 
-    public function getPublishedColumnDetailForMarkbook(int $markbookId, string $schoolId, int $columnId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnDetailForMarkbookRequest
+     */
+    public function getPublishedColumnDetailForMarkbook(int $markbookId, string $schoolId, int $columnId): mixed
     {
-        return $this->connector->send(new GetGradebookPublishedColumnDetailForMarkbookRequest($markbookId, $schoolId, $columnId));
+        return $this->fetch(new GetGradebookPublishedColumnDetailForMarkbookRequest(markbookId: $markbookId, schoolId: $schoolId, columnId: $columnId));
     }
 
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnDetailForMarkbookForParentUserRequest
+     */
     public function getPublishedColumnDetailForMarkbookForParentUser(
         int $markbookId,
         string $schoolId,
         string $viewedAsUserCode,
         int $columnId,
-    ): Response {
-        return $this->connector->send(new GetGradebookPublishedColumnDetailForMarkbookForParentUserRequest($markbookId, $schoolId, $viewedAsUserCode, $columnId));
+    ): mixed {
+        return $this->fetch(new GetGradebookPublishedColumnDetailForMarkbookForParentUserRequest(markbookId: $markbookId, schoolId: $schoolId, viewedAsUserCode: $viewedAsUserCode, columnId: $columnId));
     }
 
-    public function getPublishedColumnsForMarkbook(int $markbookId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnsForMarkbookRequest
+     */
+    public function getPublishedColumnsForMarkbook(int $markbookId, string $schoolId): mixed
     {
-        return $this->connector->send(new GetGradebookPublishedColumnsForMarkbookRequest($markbookId, $schoolId));
+        return $this->fetch(new GetGradebookPublishedColumnsForMarkbookRequest(markbookId: $markbookId, schoolId: $schoolId));
     }
 
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Gradebooks\GetGradebookPublishedColumnsForMarkbookForParentUserRequest
+     */
     public function getPublishedColumnsForMarkbookForParentUser(
         int $markbookId,
         string $schoolId,
         string $viewedAsUserCode,
-    ): Response {
-        return $this->connector->send(new GetGradebookPublishedColumnsForMarkbookForParentUserRequest($markbookId, $schoolId, $viewedAsUserCode));
+    ): mixed {
+        return $this->fetch(new GetGradebookPublishedColumnsForMarkbookForParentUserRequest(markbookId: $markbookId, schoolId: $schoolId, viewedAsUserCode: $viewedAsUserCode));
     }
 }

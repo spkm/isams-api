@@ -6,40 +6,49 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\PastoralFlag;
 use spkm\IsamsApi\Data\WellbeingManager\PastoralFlagForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\Flag\CreateStudentFlagRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Flag\DeleteStudentFlagRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Flag\GetStudentFlagRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Flag\PatchStudentFlagRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class FlagResource extends BaseResource
+class FlagResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralFlagForCreate|array<string, mixed>  $pastoralFlag
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Flag\CreateStudentFlagRequest
      */
-    public function create(string $schoolId, PastoralFlagForCreate|array $pastoralFlag): Response
+    public function create(string $schoolId, PastoralFlagForCreate|array $pastoralFlag): Created
     {
-        return $this->connector->send(new CreateStudentFlagRequest($schoolId, $pastoralFlag));
+        return $this->fetch(new CreateStudentFlagRequest(schoolId: $schoolId, pastoralFlag: $pastoralFlag));
     }
 
-    public function delete(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Flag\DeleteStudentFlagRequest
+     */
+    public function delete(string $schoolId): void
     {
-        return $this->connector->send(new DeleteStudentFlagRequest($schoolId));
+        $this->fetch(new DeleteStudentFlagRequest(schoolId: $schoolId));
     }
 
-    public function get(string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Flag\GetStudentFlagRequest
+     */
+    public function get(string $schoolId): PastoralFlag
     {
-        return $this->connector->send(new GetStudentFlagRequest($schoolId));
+        return $this->fetch(new GetStudentFlagRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Flag\PatchStudentFlagRequest
      */
-    public function patch(string $schoolId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentFlagRequest($schoolId, $patch));
+        $this->fetch(new PatchStudentFlagRequest(schoolId: $schoolId, patch: $patch));
     }
 }

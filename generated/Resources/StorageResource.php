@@ -6,10 +6,9 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Storage\FilesResource;
 
-class StorageResource extends BaseResource
+class StorageResource extends IsamsResource
 {
     public function files(): FilesResource
     {

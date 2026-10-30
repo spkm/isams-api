@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\StudentRegisters\Register;
 use spkm\IsamsApi\Requests\StudentRegisters\GetRecordCollectionElementsRequest;
 use spkm\IsamsApi\Requests\StudentRegisters\GetStudentRegistersRequest;
 use spkm\IsamsApi\Resources\StudentRegisters\AssociationResource;
@@ -18,7 +19,7 @@ use spkm\IsamsApi\Resources\StudentRegisters\MetadataResource;
 use spkm\IsamsApi\Resources\StudentRegisters\RecordCollectionResource;
 use spkm\IsamsApi\Resources\StudentRegisters\ScreeningLogsResource;
 
-class StudentRegistersResource extends BaseResource
+class StudentRegistersResource extends IsamsResource
 {
     public function association(): AssociationResource
     {
@@ -55,13 +56,21 @@ class StudentRegistersResource extends BaseResource
         return new ScreeningLogsResource($this->connector);
     }
 
-    public function all(?int $page = null, ?int $pageSize = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\StudentRegisters\Register>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\GetStudentRegistersRequest
+     */
+    public function all(): LazyCollection
     {
-        return $this->connector->send(new GetStudentRegistersRequest($page, $pageSize));
+        return $this->each(new GetStudentRegistersRequest(), Register::class);
     }
 
-    public function getRecordCollectionElements(int $registerId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\StudentRegisters\RecordCollectionElement>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\GetRecordCollectionElementsRequest
+     */
+    public function getRecordCollectionElements(int $registerId): Collection
     {
-        return $this->connector->send(new GetRecordCollectionElementsRequest($registerId));
+        return $this->fetch(new GetRecordCollectionElementsRequest(registerId: $registerId));
     }
 }

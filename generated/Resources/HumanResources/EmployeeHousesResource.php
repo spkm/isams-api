@@ -6,26 +6,36 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\EmployeeHouses;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\AddEmployeeHouseRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\GetEmployeeHousesRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\RemoveEmployeeHouseRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeHousesResource extends BaseResource
+class EmployeeHousesResource extends IsamsResource
 {
-    public function add(int $employeeId, int $houseId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\AddEmployeeHouseRequest
+     */
+    public function add(int $employeeId, int $houseId): Created
     {
-        return $this->connector->send(new AddEmployeeHouseRequest($employeeId, $houseId));
+        return $this->fetch(new AddEmployeeHouseRequest(employeeId: $employeeId, houseId: $houseId));
     }
 
-    public function all(int $employeeId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\GetEmployeeHousesRequest
+     */
+    public function all(int $employeeId): EmployeeHouses
     {
-        return $this->connector->send(new GetEmployeeHousesRequest($employeeId));
+        return $this->fetch(new GetEmployeeHousesRequest(employeeId: $employeeId));
     }
 
-    public function remove(int $employeeId, int $houseId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\RemoveEmployeeHouseRequest
+     */
+    public function remove(int $employeeId, int $houseId): void
     {
-        return $this->connector->send(new RemoveEmployeeHouseRequest($employeeId, $houseId));
+        $this->fetch(new RemoveEmployeeHouseRequest(employeeId: $employeeId, houseId: $houseId));
     }
 }

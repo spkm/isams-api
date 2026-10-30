@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\WellbeingManager\ActionStatus;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionStatuses\GetConcernActionStatusRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionStatuses\GetConcernActionStatusesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ConcernActionStatusesResource extends BaseResource
+class ConcernActionStatusesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ActionStatus>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionStatuses\GetConcernActionStatusesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernActionStatusesRequest());
+        return $this->fetch(new GetConcernActionStatusesRequest());
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionStatuses\GetConcernActionStatusRequest
+     */
+    public function get(int $id): ActionStatus
     {
-        return $this->connector->send(new GetConcernActionStatusRequest($id));
+        return $this->fetch(new GetConcernActionStatusRequest(id: $id));
     }
 }

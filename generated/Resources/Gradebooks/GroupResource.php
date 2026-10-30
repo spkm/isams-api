@@ -6,40 +6,49 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Gradebooks\GroupStructure;
 use spkm\IsamsApi\Data\Gradebooks\GroupStructureForCreate;
 use spkm\IsamsApi\Requests\Gradebooks\Group\CreateGradebookGroupRequest;
 use spkm\IsamsApi\Requests\Gradebooks\Group\DeleteGradebookGroupRequest;
 use spkm\IsamsApi\Requests\Gradebooks\Group\GetGradebookGroupRequest;
 use spkm\IsamsApi\Requests\Gradebooks\Group\PatchGradebookGroupRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class GroupResource extends BaseResource
+class GroupResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\Gradebooks\GroupStructureForCreate|array<string, mixed>  $groupStructure
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Group\CreateGradebookGroupRequest
      */
-    public function create(int $gradebookId, GroupStructureForCreate|array $groupStructure): Response
+    public function create(int $gradebookId, GroupStructureForCreate|array $groupStructure): Created
     {
-        return $this->connector->send(new CreateGradebookGroupRequest($gradebookId, $groupStructure));
+        return $this->fetch(new CreateGradebookGroupRequest(gradebookId: $gradebookId, groupStructure: $groupStructure));
     }
 
-    public function delete(int $gradebookId, int $groupId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Group\DeleteGradebookGroupRequest
+     */
+    public function delete(int $gradebookId, int $groupId): void
     {
-        return $this->connector->send(new DeleteGradebookGroupRequest($gradebookId, $groupId));
+        $this->fetch(new DeleteGradebookGroupRequest(gradebookId: $gradebookId, groupId: $groupId));
     }
 
-    public function get(int $gradebookId, int $groupId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Group\GetGradebookGroupRequest
+     */
+    public function get(int $gradebookId, int $groupId): GroupStructure
     {
-        return $this->connector->send(new GetGradebookGroupRequest($gradebookId, $groupId));
+        return $this->fetch(new GetGradebookGroupRequest(gradebookId: $gradebookId, groupId: $groupId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Group\PatchGradebookGroupRequest
      */
-    public function patch(int $gradebookId, int $groupId, JsonPatch|array $patch): Response
+    public function patch(int $gradebookId, int $groupId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchGradebookGroupRequest($gradebookId, $groupId, $patch));
+        $this->fetch(new PatchGradebookGroupRequest(gradebookId: $gradebookId, groupId: $groupId, patch: $patch));
     }
 }

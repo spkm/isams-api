@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\EmployeeIdentityCheck;
 use spkm\IsamsApi\Data\HumanResources\EmployeeIdentityCheckForCreate;
 use spkm\IsamsApi\Data\HumanResources\EmployeeIdentityCheckForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\CreateEmployeeIdentityCheckRequest;
@@ -15,40 +16,53 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\DeleteEmployeeI
 use spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\GetEmployeeIdentityCheckRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\GetEmployeeIdentityChecksRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\UpdateEmployeeIdentityCheckRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeIdentityChecksResource extends BaseResource
+class EmployeeIdentityChecksResource extends IsamsResource
 {
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\EmployeeIdentityCheck>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\GetEmployeeIdentityChecksRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeIdentityChecksRequest($employeeId));
+        return $this->fetch(new GetEmployeeIdentityChecksRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeIdentityCheckForCreate|array<string, mixed>  $employeeIdentityCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\CreateEmployeeIdentityCheckRequest
      */
-    public function create(int $employeeId, EmployeeIdentityCheckForCreate|array $employeeIdentityCheck): Response
+    public function create(int $employeeId, EmployeeIdentityCheckForCreate|array $employeeIdentityCheck): Created
     {
-        return $this->connector->send(new CreateEmployeeIdentityCheckRequest($employeeId, $employeeIdentityCheck));
+        return $this->fetch(new CreateEmployeeIdentityCheckRequest(employeeId: $employeeId, employeeIdentityCheck: $employeeIdentityCheck));
     }
 
-    public function delete(int $employeeId, int $identityCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\DeleteEmployeeIdentityCheckRequest
+     */
+    public function delete(int $employeeId, int $identityCheckId): void
     {
-        return $this->connector->send(new DeleteEmployeeIdentityCheckRequest($employeeId, $identityCheckId));
+        $this->fetch(new DeleteEmployeeIdentityCheckRequest(employeeId: $employeeId, identityCheckId: $identityCheckId));
     }
 
-    public function get(int $employeeId, int $identityCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\GetEmployeeIdentityCheckRequest
+     */
+    public function get(int $employeeId, int $identityCheckId): EmployeeIdentityCheck
     {
-        return $this->connector->send(new GetEmployeeIdentityCheckRequest($employeeId, $identityCheckId));
+        return $this->fetch(new GetEmployeeIdentityCheckRequest(employeeId: $employeeId, identityCheckId: $identityCheckId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeIdentityCheckForUpdate|array<string, mixed>  $employeeIdentityCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeIdentityChecks\UpdateEmployeeIdentityCheckRequest
      */
     public function update(
         int $employeeId,
         int $identityCheckId,
         EmployeeIdentityCheckForUpdate|array $employeeIdentityCheck,
-    ): Response {
-        return $this->connector->send(new UpdateEmployeeIdentityCheckRequest($employeeId, $identityCheckId, $employeeIdentityCheck));
+    ): void {
+        $this->fetch(new UpdateEmployeeIdentityCheckRequest(employeeId: $employeeId, identityCheckId: $identityCheckId, employeeIdentityCheck: $employeeIdentityCheck));
     }
 }

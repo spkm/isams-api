@@ -110,8 +110,8 @@ abstract class IsamsRequest extends Request implements Cacheable
 
     public function createDtoFromResponse(Response $response): mixed
     {
-        if ($response->failed()) {
-            throw new IsamsApiException($response);
+        if (! $response->successful()) {
+            throw IsamsApiException::fromResponse($response);
         }
 
         return match ($this->responseShape) {

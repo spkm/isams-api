@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Estates;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Estates\BuildingRooms\GetBuildingRoomsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class BuildingRoomsResource extends BaseResource
+class BuildingRoomsResource extends IsamsResource
 {
-    public function all(int $buildingId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Estates\Room>
+     * @see \spkm\IsamsApi\Requests\Estates\BuildingRooms\GetBuildingRoomsRequest
+     */
+    public function all(int $buildingId): Collection
     {
-        return $this->connector->send(new GetBuildingRoomsRequest($buildingId));
+        return $this->fetch(new GetBuildingRoomsRequest(buildingId: $buildingId));
     }
 }

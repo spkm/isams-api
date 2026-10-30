@@ -6,13 +6,12 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Teaching\CurriculumSubjectCodesResource;
 use spkm\IsamsApi\Resources\Teaching\SetsResource;
 use spkm\IsamsApi\Resources\Teaching\SubjectTeachingDepartmentsResource;
 use spkm\IsamsApi\Resources\Teaching\SubjectsResource;
 
-class TeachingResource extends BaseResource
+class TeachingResource extends IsamsResource
 {
     public function curriculumSubjectCodes(): CurriculumSubjectCodesResource
     {

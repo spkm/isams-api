@@ -6,38 +6,47 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\CloudPortals\OutstandingFormInstance;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\ContinueOutstandingFormFillRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\SaveOutstandingFormDraftRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\StartOutstandingFormFillRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\SubmitOutstandingFormRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class OutstandingFormsResource extends BaseResource
+class OutstandingFormsResource extends IsamsResource
 {
-    public function continueFill(string $formId, string $instanceId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\ContinueOutstandingFormFillRequest
+     */
+    public function continueFill(string $formId, string $instanceId): OutstandingFormInstance
     {
-        return $this->connector->send(new ContinueOutstandingFormFillRequest($formId, $instanceId));
+        return $this->fetch(new ContinueOutstandingFormFillRequest(formId: $formId, instanceId: $instanceId));
     }
 
     /**
      * @param  array<mixed>  $bodyValue
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\SaveOutstandingFormDraftRequest
      */
-    public function saveDraft(string $formId, string $fillId, array $bodyValue): Response
+    public function saveDraft(string $formId, string $fillId, array $bodyValue): Created
     {
-        return $this->connector->send(new SaveOutstandingFormDraftRequest($formId, $fillId, $bodyValue));
+        return $this->fetch(new SaveOutstandingFormDraftRequest(formId: $formId, fillId: $fillId, bodyValue: $bodyValue));
     }
 
-    public function startFill(string $formId, ?string $studentId = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\StartOutstandingFormFillRequest
+     */
+    public function startFill(string $formId, ?string $studentId = null): OutstandingFormInstance
     {
-        return $this->connector->send(new StartOutstandingFormFillRequest($formId, $studentId));
+        return $this->fetch(new StartOutstandingFormFillRequest(formId: $formId, studentId: $studentId));
     }
 
     /**
      * @param  array<mixed>  $bodyValue
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\OutstandingForms\SubmitOutstandingFormRequest
      */
-    public function submit(string $formId, string $fillId, array $bodyValue): Response
+    public function submit(string $formId, string $fillId, array $bodyValue): Created
     {
-        return $this->connector->send(new SubmitOutstandingFormRequest($formId, $fillId, $bodyValue));
+        return $this->fetch(new SubmitOutstandingFormRequest(formId: $formId, fillId: $fillId, bodyValue: $bodyValue));
     }
 }

@@ -6,36 +6,41 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Parent;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\SchoolDirectory\Department;
+use spkm\IsamsApi\Data\SchoolDirectory\Staff;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\SchoolDirectory\GetSchoolDirectoryDepartmentsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\SchoolDirectory\GetSchoolDirectoryNonTeachingStaffRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Parent\SchoolDirectory\GetSchoolDirectoryTeachingStaffRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SchoolDirectoryResource extends BaseResource
+class SchoolDirectoryResource extends IsamsResource
 {
-    public function getDepartments(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetSchoolDirectoryDepartmentsRequest($page, $pageSize, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\SchoolDirectory\Department>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\SchoolDirectory\GetSchoolDirectoryDepartmentsRequest
+     */
+    public function getDepartments(string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetSchoolDirectoryDepartmentsRequest(filter: $filter), Department::class);
     }
 
-    public function getNonTeachingStaff(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetSchoolDirectoryNonTeachingStaffRequest($page, $pageSize, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\SchoolDirectory\Staff>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\SchoolDirectory\GetSchoolDirectoryNonTeachingStaffRequest
+     */
+    public function getNonTeachingStaff(string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetSchoolDirectoryNonTeachingStaffRequest(filter: $filter), Staff::class);
     }
 
-    public function getTeachingStaff(
-        ?int $page = null,
-        ?int $pageSize = null,
-        string|Stringable|null $filter = null,
-    ): Response {
-        return $this->connector->send(new GetSchoolDirectoryTeachingStaffRequest($page, $pageSize, $filter));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\SchoolDirectory\Staff>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\SchoolDirectory\GetSchoolDirectoryTeachingStaffRequest
+     */
+    public function getTeachingStaff(string|Stringable|null $filter = null): LazyCollection
+    {
+        return $this->each(new GetSchoolDirectoryTeachingStaffRequest(filter: $filter), Staff::class);
     }
 }

@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ReasonForDismissal;
 use spkm\IsamsApi\Data\WellbeingManager\ReasonForDismissalForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\CreateReasonForDismissalRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\DeleteReasonForDismissalRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\GetReasonForDismissalRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\GetReasonsForDismissalRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\PatchReasonForDismissalRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ReasonsForDismissalResource extends BaseResource
+class ReasonsForDismissalResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ReasonForDismissal>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\GetReasonsForDismissalRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetReasonsForDismissalRequest());
+        return $this->fetch(new GetReasonsForDismissalRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ReasonForDismissalForCreate|array<string, mixed>  $reasonForDismissal
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\CreateReasonForDismissalRequest
      */
-    public function create(ReasonForDismissalForCreate|array $reasonForDismissal): Response
+    public function create(ReasonForDismissalForCreate|array $reasonForDismissal): Created
     {
-        return $this->connector->send(new CreateReasonForDismissalRequest($reasonForDismissal));
+        return $this->fetch(new CreateReasonForDismissalRequest(reasonForDismissal: $reasonForDismissal));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\DeleteReasonForDismissalRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteReasonForDismissalRequest($id));
+        $this->fetch(new DeleteReasonForDismissalRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\GetReasonForDismissalRequest
+     */
+    public function get(int $id): ReasonForDismissal
     {
-        return $this->connector->send(new GetReasonForDismissalRequest($id));
+        return $this->fetch(new GetReasonForDismissalRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ReasonsForDismissal\PatchReasonForDismissalRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchReasonForDismissalRequest($id, $patch));
+        $this->fetch(new PatchReasonForDismissalRequest(id: $id, patch: $patch));
     }
 }

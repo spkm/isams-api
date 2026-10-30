@@ -6,13 +6,13 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\CloudPortals\Parent\NotificationsResource;
 use spkm\IsamsApi\Resources\CloudPortals\Parent\PushNotificationMessagesResource;
 use spkm\IsamsApi\Resources\CloudPortals\Parent\PushNotificationResource;
 use spkm\IsamsApi\Resources\CloudPortals\Parent\SchoolDirectoryResource;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ParentResource extends BaseResource
+class ParentResource extends IsamsResource
 {
     public function notifications(): NotificationsResource
     {

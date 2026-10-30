@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\List;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\CreateCountyRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\DeleteCountyRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\GetCountiesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\UpdateCountyRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CountiesResource extends BaseResource
+class CountiesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemWithCensusData>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\GetCountiesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetCountiesRequest());
+        return $this->fetch(new GetCountiesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\CreateCountyRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateCountyRequest($listItem));
+        return $this->fetch(new CreateCountyRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\DeleteCountyRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteCountyRequest($id));
+        $this->fetch(new DeleteCountyRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\List\Counties\UpdateCountyRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateCountyRequest($id, $listItem));
+        $this->fetch(new UpdateCountyRequest(id: $id, listItem: $listItem));
     }
 }

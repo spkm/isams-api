@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\MedicalCentre\Note\GetMedicalNoteTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class NoteResource extends BaseResource
+class NoteResource extends IsamsResource
 {
-    public function getTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\NoteType>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Note\GetMedicalNoteTypesRequest
+     */
+    public function getTypes(): Collection
     {
-        return $this->connector->send(new GetMedicalNoteTypesRequest());
+        return $this->fetch(new GetMedicalNoteTypesRequest());
     }
 }

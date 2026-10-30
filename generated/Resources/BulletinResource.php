@@ -6,10 +6,12 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Bulletin\Bulletin;
 use spkm\IsamsApi\Data\Bulletin\BulletinForCreate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Bulletin\CreateBulletinRequest;
 use spkm\IsamsApi\Requests\Bulletin\GetBulletinsByGroupRequest;
 use spkm\IsamsApi\Requests\Bulletin\GetBulletinsRequest;
@@ -17,7 +19,7 @@ use spkm\IsamsApi\Resources\Bulletin\CategoryResource;
 use spkm\IsamsApi\Resources\Bulletin\DivisionsResource;
 use spkm\IsamsApi\Resources\Bulletin\YearGroupResource;
 
-class BulletinResource extends BaseResource
+class BulletinResource extends IsamsResource
 {
     public function category(): CategoryResource
     {
@@ -34,21 +36,30 @@ class BulletinResource extends BaseResource
         return new YearGroupResource($this->connector);
     }
 
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Bulletin\Bulletin>
+     * @see \spkm\IsamsApi\Requests\Bulletin\GetBulletinsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetBulletinsRequest($page, $pageSize, $filter));
+        return $this->each(new GetBulletinsRequest(filter: $filter), Bulletin::class);
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Bulletin\BulletinForCreate|array<string, mixed>  $bulletin
+     * @see \spkm\IsamsApi\Requests\Bulletin\CreateBulletinRequest
      */
-    public function create(BulletinForCreate|array $bulletin): Response
+    public function create(BulletinForCreate|array $bulletin): Created
     {
-        return $this->connector->send(new CreateBulletinRequest($bulletin));
+        return $this->fetch(new CreateBulletinRequest(bulletin: $bulletin));
     }
 
-    public function getByGroup(int $groupId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Bulletin\Bulletin>
+     * @see \spkm\IsamsApi\Requests\Bulletin\GetBulletinsByGroupRequest
+     */
+    public function getByGroup(int $groupId): Collection
     {
-        return $this->connector->send(new GetBulletinsByGroupRequest($groupId));
+        return $this->fetch(new GetBulletinsByGroupRequest(groupId: $groupId));
     }
 }

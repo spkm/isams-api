@@ -27,7 +27,7 @@ it('updates a student\'s register fields as a JSON object keyed by field name', 
 it('records the nature of an absence as a bare JSON string', function () {
     $isams = FakeIsams::respondWith([CreateRegistrationNatureOfAbsenceRequest::class => MockResponse::make(status: 201, headers: ['Location' => 'https://isams.example.test/api/registration/natureofabsence/88'])]);
 
-    $created = FakeIsams::connector()->registration()->natureOfAbsence()->create(88, 'Medical appointment')->dto();
+    $created = FakeIsams::connector()->registration()->natureOfAbsence()->create(88, 'Medical appointment');
 
     $sent = FakeIsams::received($isams, CreateRegistrationNatureOfAbsenceRequest::class)->createPsrRequest();
     expect($created->id)->toBe('88')
@@ -70,7 +70,7 @@ it('serves conduct and register reference lists from the cache once caching is o
 
     foreach ([1, 2] as $time) {
         $connector->rewardsAndConduct()->moduleTypes()->all();
-        $connector->studentRegisters()->all();
+        $connector->studentRegisters()->all()->all();
         $connector->exclusions()->getCancellationReasons();
         $connector->rewardsAndConduct()->rewards()->all('100001');
     }

@@ -6,25 +6,30 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
+use Illuminate\Support\Collection;
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Students\StudentDocumentForCreate;
 use spkm\IsamsApi\Requests\Students\Document\CreateStudentDocumentRequest;
 use spkm\IsamsApi\Requests\Students\Document\GetStudentDocumentsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DocumentResource extends BaseResource
+class DocumentResource extends IsamsResource
 {
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\StudentDocument>
+     * @see \spkm\IsamsApi\Requests\Students\Document\GetStudentDocumentsRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetStudentDocumentsRequest($schoolId));
+        return $this->fetch(new GetStudentDocumentsRequest(schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentDocumentForCreate|array<string, mixed>  $data
+     * @see \spkm\IsamsApi\Requests\Students\Document\CreateStudentDocumentRequest
      */
-    public function create(string $schoolId, MultipartValue $binary, StudentDocumentForCreate|array $data): Response
+    public function create(string $schoolId, MultipartValue $binary, StudentDocumentForCreate|array $data): void
     {
-        return $this->connector->send(new CreateStudentDocumentRequest($schoolId, $binary, $data));
+        $this->fetch(new CreateStudentDocumentRequest(schoolId: $schoolId, binary: $binary, data: $data));
     }
 }

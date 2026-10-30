@@ -6,26 +6,37 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\AddEmployeeRoleRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\GetEmployeeRolesRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\RemoveEmployeeRoleRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeRolesResource extends BaseResource
+class EmployeeRolesResource extends IsamsResource
 {
-    public function add(int $employeeId, int $roleId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\AddEmployeeRoleRequest
+     */
+    public function add(int $employeeId, int $roleId): Created
     {
-        return $this->connector->send(new AddEmployeeRoleRequest($employeeId, $roleId));
+        return $this->fetch(new AddEmployeeRoleRequest(employeeId: $employeeId, roleId: $roleId));
     }
 
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\Role>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\GetEmployeeRolesRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeRolesRequest($employeeId));
+        return $this->fetch(new GetEmployeeRolesRequest(employeeId: $employeeId));
     }
 
-    public function remove(int $employeeId, int $roleId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRoles\RemoveEmployeeRoleRequest
+     */
+    public function remove(int $employeeId, int $roleId): void
     {
-        return $this->connector->send(new RemoveEmployeeRoleRequest($employeeId, $roleId));
+        $this->fetch(new RemoveEmployeeRoleRequest(employeeId: $employeeId, roleId: $roleId));
     }
 }

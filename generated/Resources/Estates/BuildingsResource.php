@@ -6,40 +6,51 @@
 
 namespace spkm\IsamsApi\Resources\Estates;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Estates\Building;
 use spkm\IsamsApi\Data\Estates\BuildingForCreate;
 use spkm\IsamsApi\Data\Estates\BuildingForUpdate;
 use spkm\IsamsApi\Requests\Estates\Buildings\CreateBuildingRequest;
 use spkm\IsamsApi\Requests\Estates\Buildings\GetBuildingRequest;
 use spkm\IsamsApi\Requests\Estates\Buildings\GetBuildingsRequest;
 use spkm\IsamsApi\Requests\Estates\Buildings\UpdateBuildingRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class BuildingsResource extends BaseResource
+class BuildingsResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Estates\Building>
+     * @see \spkm\IsamsApi\Requests\Estates\Buildings\GetBuildingsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetBuildingsRequest());
+        return $this->fetch(new GetBuildingsRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Estates\BuildingForCreate|array<string, mixed>  $building
+     * @see \spkm\IsamsApi\Requests\Estates\Buildings\CreateBuildingRequest
      */
-    public function create(BuildingForCreate|array $building): Response
+    public function create(BuildingForCreate|array $building): Created
     {
-        return $this->connector->send(new CreateBuildingRequest($building));
+        return $this->fetch(new CreateBuildingRequest(building: $building));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Estates\Buildings\GetBuildingRequest
+     */
+    public function get(int $id): Building
     {
-        return $this->connector->send(new GetBuildingRequest($id));
+        return $this->fetch(new GetBuildingRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Estates\BuildingForUpdate|array<string, mixed>  $building
+     * @see \spkm\IsamsApi\Requests\Estates\Buildings\UpdateBuildingRequest
      */
-    public function update(int $id, BuildingForUpdate|array $building): Response
+    public function update(int $id, BuildingForUpdate|array $building): void
     {
-        return $this->connector->send(new UpdateBuildingRequest($id, $building));
+        $this->fetch(new UpdateBuildingRequest(id: $id, building: $building));
     }
 }

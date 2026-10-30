@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Registration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Registration\PresentCodes\GetPresentCodesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PresentCodesResource extends BaseResource
+class PresentCodesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Registration\PresentCode>
+     * @see \spkm\IsamsApi\Requests\Registration\PresentCodes\GetPresentCodesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetPresentCodesRequest());
+        return $this->fetch(new GetPresentCodesRequest());
     }
 }

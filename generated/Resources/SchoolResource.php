@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\School\ConfigurationResource;
 use spkm\IsamsApi\Resources\School\DepartmentEmployeesResource;
 use spkm\IsamsApi\Resources\School\DepartmentsResource;
@@ -18,7 +17,7 @@ use spkm\IsamsApi\Resources\School\TermsResource;
 use spkm\IsamsApi\Resources\School\YearGroupDivisionsResource;
 use spkm\IsamsApi\Resources\School\YearGroupsResource;
 
-class SchoolResource extends BaseResource
+class SchoolResource extends IsamsResource
 {
     public function configuration(): ConfigurationResource
     {

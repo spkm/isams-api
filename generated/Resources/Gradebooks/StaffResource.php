@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Gradebooks\Staff\GetGradebookStaffRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StaffResource extends BaseResource
+class StaffResource extends IsamsResource
 {
-    public function get(int $gradebookId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\Staff>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Staff\GetGradebookStaffRequest
+     */
+    public function get(int $gradebookId): Collection
     {
-        return $this->connector->send(new GetGradebookStaffRequest($gradebookId));
+        return $this->fetch(new GetGradebookStaffRequest(gradebookId: $gradebookId));
     }
 }

@@ -6,29 +6,38 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Admissions\PassportCustomFields\GetApplicantPassportCustomFieldRequest;
 use spkm\IsamsApi\Requests\Admissions\PassportCustomFields\GetApplicantPassportCustomFieldsRequest;
 use spkm\IsamsApi\Requests\Admissions\PassportCustomFields\PatchApplicantPassportCustomFieldsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class PassportCustomFieldsResource extends BaseResource
+class PassportCustomFieldsResource extends IsamsResource
 {
-    public function all(string $schoolId, int $passportId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\CustomField>
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportCustomFields\GetApplicantPassportCustomFieldsRequest
+     */
+    public function all(string $schoolId, int $passportId): Collection
     {
-        return $this->connector->send(new GetApplicantPassportCustomFieldsRequest($schoolId, $passportId));
+        return $this->fetch(new GetApplicantPassportCustomFieldsRequest(schoolId: $schoolId, passportId: $passportId));
     }
 
-    public function get(string $schoolId, int $passportId, int $customFieldId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\CustomField>
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportCustomFields\GetApplicantPassportCustomFieldRequest
+     */
+    public function get(string $schoolId, int $passportId, int $customFieldId): Collection
     {
-        return $this->connector->send(new GetApplicantPassportCustomFieldRequest($schoolId, $passportId, $customFieldId));
+        return $this->fetch(new GetApplicantPassportCustomFieldRequest(schoolId: $schoolId, passportId: $passportId, customFieldId: $customFieldId));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @see \spkm\IsamsApi\Requests\Admissions\PassportCustomFields\PatchApplicantPassportCustomFieldsRequest
      */
-    public function patchMany(string $schoolId, int $passportId, array $customFields): Response
+    public function patchMany(string $schoolId, int $passportId, array $customFields): void
     {
-        return $this->connector->send(new PatchApplicantPassportCustomFieldsRequest($schoolId, $passportId, $customFields));
+        $this->fetch(new PatchApplicantPassportCustomFieldsRequest(schoolId: $schoolId, passportId: $passportId, customFields: $customFields));
     }
 }

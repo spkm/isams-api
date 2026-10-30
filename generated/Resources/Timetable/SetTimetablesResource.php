@@ -6,14 +6,17 @@
 
 namespace spkm\IsamsApi\Resources\Timetable;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Timetable\SetTimetable;
 use spkm\IsamsApi\Requests\Timetable\SetTimetables\GetSetTimetableRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SetTimetablesResource extends BaseResource
+class SetTimetablesResource extends IsamsResource
 {
-    public function get(int $setId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Timetable\SetTimetables\GetSetTimetableRequest
+     */
+    public function get(int $setId): SetTimetable
     {
-        return $this->connector->send(new GetSetTimetableRequest($setId));
+        return $this->fetch(new GetSetTimetableRequest(setId: $setId));
     }
 }

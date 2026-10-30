@@ -6,26 +6,35 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\File;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\File\DownloadFileRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\File\FileExistsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\File\GetFileLogoRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FileResource extends BaseResource
+class FileResource extends IsamsResource
 {
-    public function download(string $filePath): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\File\DownloadFileRequest
+     */
+    public function download(string $filePath): File
     {
-        return $this->connector->send(new DownloadFileRequest($filePath));
+        return $this->fetch(new DownloadFileRequest(filePath: $filePath));
     }
 
-    public function exists(string $path, string $filename): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\File\FileExistsRequest
+     */
+    public function exists(string $path, string $filename): mixed
     {
-        return $this->connector->send(new FileExistsRequest($path, $filename));
+        return $this->fetch(new FileExistsRequest(path: $path, filename: $filename));
     }
 
-    public function getLogo(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\File\GetFileLogoRequest
+     */
+    public function getLogo(): File
     {
-        return $this->connector->send(new GetFileLogoRequest());
+        return $this->fetch(new GetFileLogoRequest());
     }
 }

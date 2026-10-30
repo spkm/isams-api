@@ -6,42 +6,51 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Gradebooks\AssessmentColumnStructure;
 use spkm\IsamsApi\Data\Gradebooks\AssessmentColumnStructureForCreate;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\CreateAssessmentColumnRequest;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\DeleteAssessmentColumnRequest;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\GetAssessmentColumnRequest;
 use spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\PatchAssessmentColumnRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class AssessmentColumnResource extends BaseResource
+class AssessmentColumnResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\Gradebooks\AssessmentColumnStructureForCreate|array<string, mixed>  $assessmentColumnStructure
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\CreateAssessmentColumnRequest
      */
     public function create(
         int $gradebookId,
         AssessmentColumnStructureForCreate|array $assessmentColumnStructure,
-    ): Response {
-        return $this->connector->send(new CreateAssessmentColumnRequest($gradebookId, $assessmentColumnStructure));
+    ): Created {
+        return $this->fetch(new CreateAssessmentColumnRequest(gradebookId: $gradebookId, assessmentColumnStructure: $assessmentColumnStructure));
     }
 
-    public function delete(int $gradebookId, int $columnId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\DeleteAssessmentColumnRequest
+     */
+    public function delete(int $gradebookId, int $columnId): void
     {
-        return $this->connector->send(new DeleteAssessmentColumnRequest($gradebookId, $columnId));
+        $this->fetch(new DeleteAssessmentColumnRequest(gradebookId: $gradebookId, columnId: $columnId));
     }
 
-    public function get(int $gradebookId, int $columnId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\GetAssessmentColumnRequest
+     */
+    public function get(int $gradebookId, int $columnId): AssessmentColumnStructure
     {
-        return $this->connector->send(new GetAssessmentColumnRequest($gradebookId, $columnId));
+        return $this->fetch(new GetAssessmentColumnRequest(gradebookId: $gradebookId, columnId: $columnId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Gradebooks\AssessmentColumn\PatchAssessmentColumnRequest
      */
-    public function patch(int $gradebookId, int $columnId, JsonPatch|array $patch): Response
+    public function patch(int $gradebookId, int $columnId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchAssessmentColumnRequest($gradebookId, $columnId, $patch));
+        $this->fetch(new PatchAssessmentColumnRequest(gradebookId: $gradebookId, columnId: $columnId, patch: $patch));
     }
 }

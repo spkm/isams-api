@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeContacts\GetEmployeeContactsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeContactsResource extends BaseResource
+class EmployeeContactsResource extends IsamsResource
 {
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\EmployeeContact>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeContacts\GetEmployeeContactsRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeContactsRequest($employeeId));
+        return $this->fetch(new GetEmployeeContactsRequest(employeeId: $employeeId));
     }
 }

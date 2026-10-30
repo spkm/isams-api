@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Admissions\Statuses\CreateStatusRequest;
 use spkm\IsamsApi\Requests\Admissions\Statuses\DeleteStatusRequest;
 use spkm\IsamsApi\Requests\Admissions\Statuses\GetStatusesRequest;
 use spkm\IsamsApi\Requests\Admissions\Statuses\UpdateStatusRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StatusesResource extends BaseResource
+class StatusesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\Admissions\Statuses\GetStatusesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetStatusesRequest());
+        return $this->fetch(new GetStatusesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\Admissions\Statuses\CreateStatusRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateStatusRequest($listItem));
+        return $this->fetch(new CreateStatusRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\Statuses\DeleteStatusRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteStatusRequest($id));
+        $this->fetch(new DeleteStatusRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\Admissions\Statuses\UpdateStatusRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateStatusRequest($id, $listItem));
+        $this->fetch(new UpdateStatusRequest(id: $id, listItem: $listItem));
     }
 }

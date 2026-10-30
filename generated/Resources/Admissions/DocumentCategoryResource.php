@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Admissions\DocumentCategory\GetApplicantDocumentCategoriesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DocumentCategoryResource extends BaseResource
+class DocumentCategoryResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\DocumentCategory>
+     * @see \spkm\IsamsApi\Requests\Admissions\DocumentCategory\GetApplicantDocumentCategoriesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetApplicantDocumentCategoriesRequest());
+        return $this->fetch(new GetApplicantDocumentCategoriesRequest());
     }
 }

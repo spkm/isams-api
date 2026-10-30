@@ -6,13 +6,12 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Estates\BuildingDivisionsResource;
 use spkm\IsamsApi\Resources\Estates\BuildingRoomsResource;
 use spkm\IsamsApi\Resources\Estates\BuildingsResource;
 use spkm\IsamsApi\Resources\Estates\RoomsResource;
 
-class EstatesResource extends BaseResource
+class EstatesResource extends IsamsResource
 {
     public function buildingDivisions(): BuildingDivisionsResource
     {

@@ -6,30 +6,39 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Data\Gradebooks\MarkCollectionForPatch;
+use spkm\IsamsApi\Data\Gradebooks\Student;
 use spkm\IsamsApi\Requests\Gradebooks\Marks\GetGradebookMarksRequest;
 use spkm\IsamsApi\Requests\Gradebooks\Marks\GetGradebookStudentMarksRequest;
 use spkm\IsamsApi\Requests\Gradebooks\Marks\UpdateGradebookMarksRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class MarksResource extends BaseResource
+class MarksResource extends IsamsResource
 {
-    public function all(int $gradebookId, ?int $page = null, ?int $pageSize = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Gradebooks\Student>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Marks\GetGradebookMarksRequest
+     */
+    public function all(int $gradebookId): LazyCollection
     {
-        return $this->connector->send(new GetGradebookMarksRequest($gradebookId, $page, $pageSize));
+        return $this->each(new GetGradebookMarksRequest(gradebookId: $gradebookId), Student::class);
     }
 
-    public function forStudent(int $gradebookId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Marks\GetGradebookStudentMarksRequest
+     */
+    public function forStudent(int $gradebookId, string $schoolId): Student
     {
-        return $this->connector->send(new GetGradebookStudentMarksRequest($gradebookId, $schoolId));
+        return $this->fetch(new GetGradebookStudentMarksRequest(gradebookId: $gradebookId, schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Gradebooks\MarkCollectionForPatch|array<string, mixed>  $markCollection
+     * @see \spkm\IsamsApi\Requests\Gradebooks\Marks\UpdateGradebookMarksRequest
      */
-    public function updateMany(int $gradebookId, MarkCollectionForPatch|array $markCollection): Response
+    public function updateMany(int $gradebookId, MarkCollectionForPatch|array $markCollection): void
     {
-        return $this->connector->send(new UpdateGradebookMarksRequest($gradebookId, $markCollection));
+        $this->fetch(new UpdateGradebookMarksRequest(gradebookId: $gradebookId, markCollection: $markCollection));
     }
 }

@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\PastoralConcernArea;
 use spkm\IsamsApi\Data\WellbeingManager\PastoralConcernAreaForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\CreateConcernAreaRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\DeleteConcernAreaRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\GetConcernAreaRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\GetConcernAreasRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\PatchConcernAreaRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernAreasResource extends BaseResource
+class ConcernAreasResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\PastoralConcernArea>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\GetConcernAreasRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernAreasRequest());
+        return $this->fetch(new GetConcernAreasRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\PastoralConcernAreaForCreate|array<string, mixed>  $pastoralConcernArea
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\CreateConcernAreaRequest
      */
-    public function create(PastoralConcernAreaForCreate|array $pastoralConcernArea): Response
+    public function create(PastoralConcernAreaForCreate|array $pastoralConcernArea): Created
     {
-        return $this->connector->send(new CreateConcernAreaRequest($pastoralConcernArea));
+        return $this->fetch(new CreateConcernAreaRequest(pastoralConcernArea: $pastoralConcernArea));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\DeleteConcernAreaRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteConcernAreaRequest($id));
+        $this->fetch(new DeleteConcernAreaRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\GetConcernAreaRequest
+     */
+    public function get(int $id): PastoralConcernArea
     {
-        return $this->connector->send(new GetConcernAreaRequest($id));
+        return $this->fetch(new GetConcernAreaRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernAreas\PatchConcernAreaRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernAreaRequest($id, $patch));
+        $this->fetch(new PatchConcernAreaRequest(id: $id, patch: $patch));
     }
 }

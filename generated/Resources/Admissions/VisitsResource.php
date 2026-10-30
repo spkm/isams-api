@@ -6,15 +6,20 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Admissions\Visit;
 use spkm\IsamsApi\Requests\Admissions\Visits\GetAdmissionVisitsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class VisitsResource extends BaseResource
+class VisitsResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Admissions\Visit>
+     * @see \spkm\IsamsApi\Requests\Admissions\Visits\GetAdmissionVisitsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetAdmissionVisitsRequest($page, $pageSize, $filter));
+        return $this->each(new GetAdmissionVisitsRequest(filter: $filter), Visit::class);
     }
 }

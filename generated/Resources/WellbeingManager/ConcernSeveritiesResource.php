@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ConcernSeverity;
 use spkm\IsamsApi\Data\WellbeingManager\ConcernSeverityForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\CreateConcernSeverityRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\DeleteConcernSeverityRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\GetConcernSeveritiesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\GetConcernSeverityRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\PatchConcernSeverityRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernSeveritiesResource extends BaseResource
+class ConcernSeveritiesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ConcernSeverity>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\GetConcernSeveritiesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernSeveritiesRequest());
+        return $this->fetch(new GetConcernSeveritiesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ConcernSeverityForCreate|array<string, mixed>  $concernSeverity
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\CreateConcernSeverityRequest
      */
-    public function create(ConcernSeverityForCreate|array $concernSeverity): Response
+    public function create(ConcernSeverityForCreate|array $concernSeverity): Created
     {
-        return $this->connector->send(new CreateConcernSeverityRequest($concernSeverity));
+        return $this->fetch(new CreateConcernSeverityRequest(concernSeverity: $concernSeverity));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\DeleteConcernSeverityRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteConcernSeverityRequest($id));
+        $this->fetch(new DeleteConcernSeverityRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\GetConcernSeverityRequest
+     */
+    public function get(int $id): ConcernSeverity
     {
-        return $this->connector->send(new GetConcernSeverityRequest($id));
+        return $this->fetch(new GetConcernSeverityRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernSeverities\PatchConcernSeverityRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernSeverityRequest($id, $patch));
+        $this->fetch(new PatchConcernSeverityRequest(id: $id, patch: $patch));
     }
 }

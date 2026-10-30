@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\Tags;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\SystemConfiguration\PrivateEntityType;
 use spkm\IsamsApi\Requests\SystemConfiguration\Tags\EntityTypes\GetTagEntityTypeRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\Tags\EntityTypes\GetTagEntityTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EntityTypesResource extends BaseResource
+class EntityTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\PrivateEntityType>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\Tags\EntityTypes\GetTagEntityTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetTagEntityTypesRequest());
+        return $this->fetch(new GetTagEntityTypesRequest());
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\Tags\EntityTypes\GetTagEntityTypeRequest
+     */
+    public function get(int $id): PrivateEntityType
     {
-        return $this->connector->send(new GetTagEntityTypeRequest($id));
+        return $this->fetch(new GetTagEntityTypeRequest(id: $id));
     }
 }

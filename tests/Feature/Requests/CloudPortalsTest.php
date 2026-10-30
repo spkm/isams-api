@@ -13,7 +13,7 @@ use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 it('reaches the Cloud Portals requests through the default connection\'s resources', function () {
     $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => []])]);
 
-    FakeIsams::connector()->cloudPortals()->school()->bookmark()->all();
+    FakeIsams::connector()->cloudPortals()->school()->bookmark()->all()->all();
 
     $isams->assertSent(GetBookmarksRequest::class);
     expect(FakeIsams::received($isams, GetClientCredentialsTokenRequest::class)->body()->all()['scope'])->toBe('restapi');
@@ -23,7 +23,7 @@ it('asks for the Cloud Portals scope on a connection configured with it', functi
     config(['isams-api.connections.portals' => ['client_id' => 'portal-id', 'client_secret' => 'portal-secret', 'base_url' => FakeIsams::BASE_URL, 'scopes' => ['iSAMS.CloudPortals.Api']]]);
     $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => []])]);
 
-    Isams::connection('portals')->cloudPortals()->school()->bookmark()->all();
+    Isams::connection('portals')->cloudPortals()->school()->bookmark()->all()->all();
 
     expect(FakeIsams::received($isams, GetClientCredentialsTokenRequest::class)->body()->all())->toMatchArray(['client_id' => 'portal-id', 'scope' => 'iSAMS.CloudPortals.Api']);
 });

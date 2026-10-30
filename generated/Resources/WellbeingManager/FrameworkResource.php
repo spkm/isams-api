@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\WellbeingManager\Framework\GetWellbeingFrameworkModulesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FrameworkResource extends BaseResource
+class FrameworkResource extends IsamsResource
 {
-    public function getModules(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\Module>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Framework\GetWellbeingFrameworkModulesRequest
+     */
+    public function getModules(): Collection
     {
-        return $this->connector->send(new GetWellbeingFrameworkModulesRequest());
+        return $this->fetch(new GetWellbeingFrameworkModulesRequest());
     }
 }

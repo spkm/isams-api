@@ -6,55 +6,70 @@
 
 namespace spkm\IsamsApi\Resources\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Admissions\ApplicantVisa;
 use spkm\IsamsApi\Data\Admissions\ApplicantVisaForCreate;
 use spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\Admissions\Visas\CreateApplicantVisaRequest;
 use spkm\IsamsApi\Requests\Admissions\Visas\DeleteApplicantVisaRequest;
 use spkm\IsamsApi\Requests\Admissions\Visas\GetApplicantVisaRequest;
 use spkm\IsamsApi\Requests\Admissions\Visas\GetApplicantVisasRequest;
 use spkm\IsamsApi\Requests\Admissions\Visas\UpdateApplicantVisaRequest;
 use spkm\IsamsApi\Requests\Admissions\Visas\UpdateApplicantVisasRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class VisasResource extends BaseResource
+class VisasResource extends IsamsResource
 {
-    public function all(string $schoolId, ?string $expand = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\ApplicantVisa>
+     * @see \spkm\IsamsApi\Requests\Admissions\Visas\GetApplicantVisasRequest
+     */
+    public function all(string $schoolId, ?string $expand = null): Collection
     {
-        return $this->connector->send(new GetApplicantVisasRequest($schoolId, $expand));
+        return $this->fetch(new GetApplicantVisasRequest(schoolId: $schoolId, expand: $expand));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantVisaForCreate|array<string, mixed>  $applicantVisa
+     * @see \spkm\IsamsApi\Requests\Admissions\Visas\CreateApplicantVisaRequest
      */
-    public function create(string $schoolId, ApplicantVisaForCreate|array $applicantVisa): Response
+    public function create(string $schoolId, ApplicantVisaForCreate|array $applicantVisa): Created
     {
-        return $this->connector->send(new CreateApplicantVisaRequest($schoolId, $applicantVisa));
+        return $this->fetch(new CreateApplicantVisaRequest(schoolId: $schoolId, applicantVisa: $applicantVisa));
     }
 
-    public function delete(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\Visas\DeleteApplicantVisaRequest
+     */
+    public function delete(string $schoolId, int $id): void
     {
-        return $this->connector->send(new DeleteApplicantVisaRequest($schoolId, $id));
+        $this->fetch(new DeleteApplicantVisaRequest(schoolId: $schoolId, id: $id));
     }
 
-    public function get(string $schoolId, int $id, ?string $expand = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Admissions\Visas\GetApplicantVisaRequest
+     */
+    public function get(string $schoolId, int $id, ?string $expand = null): ApplicantVisa
     {
-        return $this->connector->send(new GetApplicantVisaRequest($schoolId, $id, $expand));
+        return $this->fetch(new GetApplicantVisaRequest(schoolId: $schoolId, id: $id, expand: $expand));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>  $applicantVisa
+     * @see \spkm\IsamsApi\Requests\Admissions\Visas\UpdateApplicantVisaRequest
      */
-    public function update(string $schoolId, int $id, ApplicantVisaForUpdate|array $applicantVisa): Response
+    public function update(string $schoolId, int $id, ApplicantVisaForUpdate|array $applicantVisa): void
     {
-        return $this->connector->send(new UpdateApplicantVisaRequest($schoolId, $id, $applicantVisa));
+        $this->fetch(new UpdateApplicantVisaRequest(schoolId: $schoolId, id: $id, applicantVisa: $applicantVisa));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Admissions\ApplicantVisaForUpdate|array<string, mixed>>  $applicantVisas
+     * @see \spkm\IsamsApi\Requests\Admissions\Visas\UpdateApplicantVisasRequest
      */
-    public function updateMany(string $schoolId, array $applicantVisas): Response
+    public function updateMany(string $schoolId, array $applicantVisas): void
     {
-        return $this->connector->send(new UpdateApplicantVisasRequest($schoolId, $applicantVisas));
+        $this->fetch(new UpdateApplicantVisasRequest(schoolId: $schoolId, applicantVisas: $applicantVisas));
     }
 }

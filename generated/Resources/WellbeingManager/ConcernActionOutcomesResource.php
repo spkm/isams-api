@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\ActionOutcome;
 use spkm\IsamsApi\Data\WellbeingManager\ActionOutcomeForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\CreateConcernActionOutcomeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\DeleteConcernActionOutcomeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\GetConcernActionOutcomeRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\GetConcernActionOutcomesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\PatchConcernActionOutcomeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ConcernActionOutcomesResource extends BaseResource
+class ConcernActionOutcomesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\ActionOutcome>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\GetConcernActionOutcomesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetConcernActionOutcomesRequest());
+        return $this->fetch(new GetConcernActionOutcomesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\ActionOutcomeForCreate|array<string, mixed>  $actionOutcome
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\CreateConcernActionOutcomeRequest
      */
-    public function create(ActionOutcomeForCreate|array $actionOutcome): Response
+    public function create(ActionOutcomeForCreate|array $actionOutcome): Created
     {
-        return $this->connector->send(new CreateConcernActionOutcomeRequest($actionOutcome));
+        return $this->fetch(new CreateConcernActionOutcomeRequest(actionOutcome: $actionOutcome));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\DeleteConcernActionOutcomeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteConcernActionOutcomeRequest($id));
+        $this->fetch(new DeleteConcernActionOutcomeRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\GetConcernActionOutcomeRequest
+     */
+    public function get(int $id): ActionOutcome
     {
-        return $this->connector->send(new GetConcernActionOutcomeRequest($id));
+        return $this->fetch(new GetConcernActionOutcomeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernActionOutcomes\PatchConcernActionOutcomeRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchConcernActionOutcomeRequest($id, $patch));
+        $this->fetch(new PatchConcernActionOutcomeRequest(id: $id, patch: $patch));
     }
 }

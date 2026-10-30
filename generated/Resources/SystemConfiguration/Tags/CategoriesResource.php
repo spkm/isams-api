@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\SystemConfiguration\Tags;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\SystemConfiguration\Tags\Categories\GetTagCategoriesRequest;
 use spkm\IsamsApi\Requests\SystemConfiguration\Tags\Categories\GetTagCategoryTagsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CategoriesResource extends BaseResource
+class CategoriesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\PrivateCategory>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\Tags\Categories\GetTagCategoriesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetTagCategoriesRequest());
+        return $this->fetch(new GetTagCategoriesRequest());
     }
 
-    public function getTags(int $id): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\PrivateTag>
+     * @see \spkm\IsamsApi\Requests\SystemConfiguration\Tags\Categories\GetTagCategoryTagsRequest
+     */
+    public function getTags(int $id): Collection
     {
-        return $this->connector->send(new GetTagCategoryTagsRequest($id));
+        return $this->fetch(new GetTagCategoryTagsRequest(id: $id));
     }
 }

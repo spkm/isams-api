@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\StudentRegisters;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\StudentRegisters\Lists\GetListItemsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ListsResource extends BaseResource
+class ListsResource extends IsamsResource
 {
-    public function getItems(int $listId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\StudentRegisters\ListItem>
+     * @see \spkm\IsamsApi\Requests\StudentRegisters\Lists\GetListItemsRequest
+     */
+    public function getItems(int $listId): Collection
     {
-        return $this->connector->send(new GetListItemsRequest($listId));
+        return $this->fetch(new GetListItemsRequest(listId: $listId));
     }
 }

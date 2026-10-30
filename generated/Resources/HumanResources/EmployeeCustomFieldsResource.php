@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
 use spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\GetEmployeeCustomFieldRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\GetEmployeeCustomFieldsRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeCustomFieldsResource extends BaseResource
+class EmployeeCustomFieldsResource extends IsamsResource
 {
-    public function all(int $employeeId, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\CustomField>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\GetEmployeeCustomFieldsRequest
+     */
+    public function all(int $employeeId, string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetEmployeeCustomFieldsRequest($employeeId, $filter));
+        return $this->fetch(new GetEmployeeCustomFieldsRequest(employeeId: $employeeId, filter: $filter));
     }
 
-    public function get(int $employeeId, int $customFieldId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\CustomField>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\GetEmployeeCustomFieldRequest
+     */
+    public function get(int $employeeId, int $customFieldId): Collection
     {
-        return $this->connector->send(new GetEmployeeCustomFieldRequest($employeeId, $customFieldId));
+        return $this->fetch(new GetEmployeeCustomFieldRequest(employeeId: $employeeId, customFieldId: $customFieldId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>  $customField
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldRequest
      */
-    public function patch(int $employeeId, int $customFieldId, CustomFieldForPatch|array $customField): Response
+    public function patch(int $employeeId, int $customFieldId, CustomFieldForPatch|array $customField): void
     {
-        return $this->connector->send(new PatchEmployeeCustomFieldRequest($employeeId, $customFieldId, $customField));
+        $this->fetch(new PatchEmployeeCustomFieldRequest(employeeId: $employeeId, customFieldId: $customFieldId, customField: $customField));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldsRequest
      */
-    public function patchMany(int $employeeId, array $customFields): Response
+    public function patchMany(int $employeeId, array $customFields): void
     {
-        return $this->connector->send(new PatchEmployeeCustomFieldsRequest($employeeId, $customFields));
+        $this->fetch(new PatchEmployeeCustomFieldsRequest(employeeId: $employeeId, customFields: $customFields));
     }
 }

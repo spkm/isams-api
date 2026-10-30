@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\CloudPortals\AdmissionsResource;
 use spkm\IsamsApi\Resources\CloudPortals\BillingResource;
 use spkm\IsamsApi\Resources\CloudPortals\BulletinResource;
@@ -19,7 +18,7 @@ use spkm\IsamsApi\Resources\CloudPortals\SchoolResource;
 use spkm\IsamsApi\Resources\CloudPortals\StudentsResource;
 use spkm\IsamsApi\Resources\CloudPortals\SystemConfigurationResource;
 
-class CloudPortalsResource extends BaseResource
+class CloudPortalsResource extends IsamsResource
 {
     public function admissions(): AdmissionsResource
     {

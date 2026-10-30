@@ -6,27 +6,31 @@
 
 namespace spkm\IsamsApi\Resources\Registration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Registration\RegistrationStatus;
 use spkm\IsamsApi\Data\Registration\UpdateRegistrationStatusCommand;
 use spkm\IsamsApi\Requests\Registration\StatusStudents\GetStudentRegistrationStatusRequest;
 use spkm\IsamsApi\Requests\Registration\StatusStudents\UpdateStudentRegistrationStatusRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StatusStudentsResource extends BaseResource
+class StatusStudentsResource extends IsamsResource
 {
-    public function get(int $registrationPeriodId, string $schoolId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Registration\StatusStudents\GetStudentRegistrationStatusRequest
+     */
+    public function get(int $registrationPeriodId, string $schoolId): RegistrationStatus
     {
-        return $this->connector->send(new GetStudentRegistrationStatusRequest($registrationPeriodId, $schoolId));
+        return $this->fetch(new GetStudentRegistrationStatusRequest(registrationPeriodId: $registrationPeriodId, schoolId: $schoolId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Registration\UpdateRegistrationStatusCommand|array<string, mixed>  $updateRegistrationStatus
+     * @see \spkm\IsamsApi\Requests\Registration\StatusStudents\UpdateStudentRegistrationStatusRequest
      */
     public function update(
         int $registrationPeriodId,
         string $schoolId,
         UpdateRegistrationStatusCommand|array $updateRegistrationStatus,
-    ): Response {
-        return $this->connector->send(new UpdateStudentRegistrationStatusRequest($registrationPeriodId, $schoolId, $updateRegistrationStatus));
+    ): void {
+        $this->fetch(new UpdateStudentRegistrationStatusRequest(registrationPeriodId: $registrationPeriodId, schoolId: $schoolId, updateRegistrationStatus: $updateRegistrationStatus));
     }
 }

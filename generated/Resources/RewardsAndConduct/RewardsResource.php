@@ -6,41 +6,52 @@
 
 namespace spkm\IsamsApi\Resources\RewardsAndConduct;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use Stringable;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\RewardsAndConduct\RewardForCreate;
 use spkm\IsamsApi\Data\RewardsAndConduct\RewardForUpdate;
 use spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\CreateRewardRequest;
 use spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\GetRewardRequest;
 use spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\GetRewardsRequest;
 use spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\UpdateRewardRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class RewardsResource extends BaseResource
+class RewardsResource extends IsamsResource
 {
-    public function all(string $schoolId, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\RewardsAndConduct\Reward>
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\GetRewardsRequest
+     */
+    public function all(string $schoolId, string|Stringable|null $filter = null): Collection
     {
-        return $this->connector->send(new GetRewardsRequest($schoolId, $filter));
+        return $this->fetch(new GetRewardsRequest(schoolId: $schoolId, filter: $filter));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\RewardsAndConduct\RewardForCreate|array<string, mixed>  $reward
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\CreateRewardRequest
      */
-    public function create(string $schoolId, RewardForCreate|array $reward): Response
+    public function create(string $schoolId, RewardForCreate|array $reward): Created
     {
-        return $this->connector->send(new CreateRewardRequest($schoolId, $reward));
+        return $this->fetch(new CreateRewardRequest(schoolId: $schoolId, reward: $reward));
     }
 
-    public function get(string $schoolId, int $rewardId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\RewardsAndConduct\Category>
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\GetRewardRequest
+     */
+    public function get(string $schoolId, int $rewardId): Collection
     {
-        return $this->connector->send(new GetRewardRequest($schoolId, $rewardId));
+        return $this->fetch(new GetRewardRequest(schoolId: $schoolId, rewardId: $rewardId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\RewardsAndConduct\RewardForUpdate|array<string, mixed>  $reward
+     * @see \spkm\IsamsApi\Requests\RewardsAndConduct\Rewards\UpdateRewardRequest
      */
-    public function update(string $schoolId, int $rewardId, RewardForUpdate|array $reward): Response
+    public function update(string $schoolId, int $rewardId, RewardForUpdate|array $reward): void
     {
-        return $this->connector->send(new UpdateRewardRequest($schoolId, $rewardId, $reward));
+        $this->fetch(new UpdateRewardRequest(schoolId: $schoolId, rewardId: $rewardId, reward: $reward));
     }
 }

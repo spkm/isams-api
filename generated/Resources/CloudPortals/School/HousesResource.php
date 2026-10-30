@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\School\Houses\GetHousesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class HousesResource extends BaseResource
+class HousesResource extends IsamsResource
 {
-    public function all(?string $houseType = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\House>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Houses\GetHousesRequest
+     */
+    public function all(?string $houseType = null): Collection
     {
-        return $this->connector->send(new GetHousesRequest($houseType));
+        return $this->fetch(new GetHousesRequest(houseType: $houseType));
     }
 }

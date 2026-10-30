@@ -6,14 +6,19 @@
 
 namespace spkm\IsamsApi\Resources\Registration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
+use spkm\IsamsApi\Data\Registration\RegistrationStatus;
 use spkm\IsamsApi\Requests\Registration\Status\GetRegistrationStatusesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StatusResource extends BaseResource
+class StatusResource extends IsamsResource
 {
-    public function all(int $registrationPeriodId, ?int $page = null, ?int $pageSize = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Registration\RegistrationStatus>
+     * @see \spkm\IsamsApi\Requests\Registration\Status\GetRegistrationStatusesRequest
+     */
+    public function all(int $registrationPeriodId): LazyCollection
     {
-        return $this->connector->send(new GetRegistrationStatusesRequest($registrationPeriodId, $page, $pageSize));
+        return $this->each(new GetRegistrationStatusesRequest(registrationPeriodId: $registrationPeriodId), RegistrationStatus::class);
     }
 }

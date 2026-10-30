@@ -7,25 +7,30 @@
 namespace spkm\IsamsApi\Resources\CloudPortals\Bulletin;
 
 use DateTimeInterface;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\LazyCollection;
 use Stringable;
+use spkm\IsamsApi\Data\Bulletin\Bulletin;
 use spkm\IsamsApi\Requests\CloudPortals\Bulletin\DailyBulletin\GetPortalDailyBulletinsByYearRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Bulletin\DailyBulletin\GetPortalDailyBulletinsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DailyBulletinResource extends BaseResource
+class DailyBulletinResource extends IsamsResource
 {
-    public function all(?int $page = null, ?int $pageSize = null, string|Stringable|null $filter = null): Response
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Bulletin\Bulletin>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Bulletin\DailyBulletin\GetPortalDailyBulletinsRequest
+     */
+    public function all(string|Stringable|null $filter = null): LazyCollection
     {
-        return $this->connector->send(new GetPortalDailyBulletinsRequest($page, $pageSize, $filter));
+        return $this->each(new GetPortalDailyBulletinsRequest(filter: $filter), Bulletin::class);
     }
 
-    public function getByYear(
-        DateTimeInterface|string $date,
-        ?string $yearGroups = null,
-        ?int $page = null,
-        ?int $pageSize = null,
-    ): Response {
-        return $this->connector->send(new GetPortalDailyBulletinsByYearRequest($date, $yearGroups, $page, $pageSize));
+    /**
+     * @return \Illuminate\Support\LazyCollection<int, \spkm\IsamsApi\Data\Bulletin\Bulletin>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Bulletin\DailyBulletin\GetPortalDailyBulletinsByYearRequest
+     */
+    public function getByYear(DateTimeInterface|string $date, ?string $yearGroups = null): LazyCollection
+    {
+        return $this->each(new GetPortalDailyBulletinsByYearRequest(date: $date, yearGroups: $yearGroups), Bulletin::class);
     }
 }

@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\Students\StudentVisa;
 use spkm\IsamsApi\Data\Students\StudentVisaForCreate;
 use spkm\IsamsApi\Data\Students\StudentVisaForUpdate;
 use spkm\IsamsApi\Requests\Students\Visas\CreateStudentVisaRequest;
@@ -16,45 +17,59 @@ use spkm\IsamsApi\Requests\Students\Visas\GetStudentVisaRequest;
 use spkm\IsamsApi\Requests\Students\Visas\GetStudentVisasRequest;
 use spkm\IsamsApi\Requests\Students\Visas\UpdateStudentVisaRequest;
 use spkm\IsamsApi\Requests\Students\Visas\UpdateStudentVisasRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class VisasResource extends BaseResource
+class VisasResource extends IsamsResource
 {
-    public function all(string $schoolId, ?string $expand = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\StudentVisa>
+     * @see \spkm\IsamsApi\Requests\Students\Visas\GetStudentVisasRequest
+     */
+    public function all(string $schoolId, ?string $expand = null): Collection
     {
-        return $this->connector->send(new GetStudentVisasRequest($schoolId, $expand));
+        return $this->fetch(new GetStudentVisasRequest(schoolId: $schoolId, expand: $expand));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentVisaForCreate|array<string, mixed>  $studentVisa
+     * @see \spkm\IsamsApi\Requests\Students\Visas\CreateStudentVisaRequest
      */
-    public function create(string $schoolId, StudentVisaForCreate|array $studentVisa): Response
+    public function create(string $schoolId, StudentVisaForCreate|array $studentVisa): Created
     {
-        return $this->connector->send(new CreateStudentVisaRequest($schoolId, $studentVisa));
+        return $this->fetch(new CreateStudentVisaRequest(schoolId: $schoolId, studentVisa: $studentVisa));
     }
 
-    public function delete(string $schoolId, int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Visas\DeleteStudentVisaRequest
+     */
+    public function delete(string $schoolId, int $id): void
     {
-        return $this->connector->send(new DeleteStudentVisaRequest($schoolId, $id));
+        $this->fetch(new DeleteStudentVisaRequest(schoolId: $schoolId, id: $id));
     }
 
-    public function get(string $schoolId, int $id, ?string $expand = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Students\Visas\GetStudentVisaRequest
+     */
+    public function get(string $schoolId, int $id, ?string $expand = null): StudentVisa
     {
-        return $this->connector->send(new GetStudentVisaRequest($schoolId, $id, $expand));
+        return $this->fetch(new GetStudentVisaRequest(schoolId: $schoolId, id: $id, expand: $expand));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Students\StudentVisaForUpdate|array<string, mixed>  $studentVisa
+     * @see \spkm\IsamsApi\Requests\Students\Visas\UpdateStudentVisaRequest
      */
-    public function update(string $schoolId, int $id, StudentVisaForUpdate|array $studentVisa): Response
+    public function update(string $schoolId, int $id, StudentVisaForUpdate|array $studentVisa): void
     {
-        return $this->connector->send(new UpdateStudentVisaRequest($schoolId, $id, $studentVisa));
+        $this->fetch(new UpdateStudentVisaRequest(schoolId: $schoolId, id: $id, studentVisa: $studentVisa));
     }
 
     /**
      * @param  list<\spkm\IsamsApi\Data\Students\StudentVisaForUpdate|array<string, mixed>>  $studentVisas
+     * @see \spkm\IsamsApi\Requests\Students\Visas\UpdateStudentVisasRequest
      */
-    public function updateMany(string $schoolId, array $studentVisas): Response
+    public function updateMany(string $schoolId, array $studentVisas): void
     {
-        return $this->connector->send(new UpdateStudentVisasRequest($schoolId, $studentVisas));
+        $this->fetch(new UpdateStudentVisasRequest(schoolId: $schoolId, studentVisas: $studentVisas));
     }
 }

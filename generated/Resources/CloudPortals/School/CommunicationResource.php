@@ -6,26 +6,36 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\CloudPortals\SmsDetails;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\CloudPortals\School\Communication\DeleteCommunicationSmsDetailsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Communication\GetCommunicationSmsDetailsRequest;
 use spkm\IsamsApi\Requests\CloudPortals\School\Communication\UpdateCommunicationSmsDetailsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CommunicationResource extends BaseResource
+class CommunicationResource extends IsamsResource
 {
-    public function deleteSmsDetails(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Communication\DeleteCommunicationSmsDetailsRequest
+     */
+    public function deleteSmsDetails(): void
     {
-        return $this->connector->send(new DeleteCommunicationSmsDetailsRequest());
+        $this->fetch(new DeleteCommunicationSmsDetailsRequest());
     }
 
-    public function getSmsDetails(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Communication\GetCommunicationSmsDetailsRequest
+     */
+    public function getSmsDetails(): SmsDetails
     {
-        return $this->connector->send(new GetCommunicationSmsDetailsRequest());
+        return $this->fetch(new GetCommunicationSmsDetailsRequest());
     }
 
-    public function updateSmsDetails(string $mobileNumber): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\School\Communication\UpdateCommunicationSmsDetailsRequest
+     */
+    public function updateSmsDetails(string $mobileNumber): Created
     {
-        return $this->connector->send(new UpdateCommunicationSmsDetailsRequest($mobileNumber));
+        return $this->fetch(new UpdateCommunicationSmsDetailsRequest(mobileNumber: $mobileNumber));
     }
 }

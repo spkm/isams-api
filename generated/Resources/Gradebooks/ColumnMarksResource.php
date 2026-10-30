@@ -6,18 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\Gradebooks\ColumnMarks\PatchGradebookColumnMarkRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class ColumnMarksResource extends BaseResource
+class ColumnMarksResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\Gradebooks\ColumnMarks\PatchGradebookColumnMarkRequest
      */
-    public function patch(int $gradebookId, int $columnId, string $schoolId, JsonPatch|array $patch): Response
+    public function patch(int $gradebookId, int $columnId, string $schoolId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchGradebookColumnMarkRequest($gradebookId, $columnId, $schoolId, $patch));
+        $this->fetch(new PatchGradebookColumnMarkRequest(gradebookId: $gradebookId, columnId: $columnId, schoolId: $schoolId, patch: $patch));
     }
 }

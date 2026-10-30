@@ -6,40 +6,50 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\QualificationTypes\CreateQualificationTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\QualificationTypes\DeleteQualificationTypeRequest;
 use spkm\IsamsApi\Requests\HumanResources\QualificationTypes\GetQualificationTypesRequest;
 use spkm\IsamsApi\Requests\HumanResources\QualificationTypes\UpdateQualificationTypeRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class QualificationTypesResource extends BaseResource
+class QualificationTypesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\HumanResources\QualificationTypes\GetQualificationTypesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetQualificationTypesRequest());
+        return $this->fetch(new GetQualificationTypesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForCreate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\HumanResources\QualificationTypes\CreateQualificationTypeRequest
      */
-    public function create(GlobalListItemForCreate|array $listItem): Response
+    public function create(GlobalListItemForCreate|array $listItem): Created
     {
-        return $this->connector->send(new CreateQualificationTypeRequest($listItem));
+        return $this->fetch(new CreateQualificationTypeRequest(listItem: $listItem));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\QualificationTypes\DeleteQualificationTypeRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteQualificationTypeRequest($id));
+        $this->fetch(new DeleteQualificationTypeRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\GlobalListItemForUpdate|array<string, mixed>  $listItem
+     * @see \spkm\IsamsApi\Requests\HumanResources\QualificationTypes\UpdateQualificationTypeRequest
      */
-    public function update(int $id, GlobalListItemForUpdate|array $listItem): Response
+    public function update(int $id, GlobalListItemForUpdate|array $listItem): void
     {
-        return $this->connector->send(new UpdateQualificationTypeRequest($id, $listItem));
+        $this->fetch(new UpdateQualificationTypeRequest(id: $id, listItem: $listItem));
     }
 }

@@ -170,6 +170,18 @@ it('throws a BatchApiException naming iSAMS\'s error when asked for the result o
     }
 });
 
+it('says whether a failed batch request is about the key\'s permissions', function (string $name, int $status, bool $isPermissionError) {
+    FakeIsams::respondWith([BatchRequest::class => MockResponse::make('<?xml version="1.0" encoding="utf-16"?><Message><MessageId>'.$name.'</MessageId></Message>', $status, ['Content-Type' => 'application/xml'])]);
+
+    expect(fn () => batchConnector()->send(new BatchRequest)->dto())
+        ->toThrow(fn (BatchApiException $exception) => expect($exception->isPermissionError())->toBe($isPermissionError));
+})->with([
+    'a method not allocated to the key' => ['MethodsNotAllocatedToKeyException', 403, true],
+    'a revoked key' => ['RevokedApiKey', 401, true],
+    'an unknown key' => ['InvalidApiKey', 401, true],
+    'too many requests' => ['ServiceThrottled', 429, false],
+]);
+
 it('throws a BatchApiException with just the status when iSAMS sends no error message', function () {
     FakeIsams::respondWith([BatchRequest::class => MockResponse::make('Bad gateway', 502)]);
 

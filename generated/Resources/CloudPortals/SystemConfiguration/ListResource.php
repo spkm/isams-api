@@ -6,8 +6,7 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListCountiesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListCountriesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListEthnicityRequest;
@@ -31,121 +30,214 @@ use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListSelectio
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListTitlesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListUniversitiesRequest;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ListResource extends BaseResource
+class ListResource extends IsamsResource
 {
-    public function getByType(string $listType): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListsRequest
+     */
+    public function getByType(string $listType): Collection
     {
-        return $this->connector->send(new GetListsRequest($listType));
+        return $this->fetch(new GetListsRequest(listType: $listType));
     }
 
-    public function getCounties(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListCountiesRequest
+     */
+    public function getCounties(): Collection
     {
-        return $this->connector->send(new GetListCountiesRequest());
+        return $this->fetch(new GetListCountiesRequest());
     }
 
-    public function getCountries(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListCountriesRequest
+     */
+    public function getCountries(): Collection
     {
-        return $this->connector->send(new GetListCountriesRequest());
+        return $this->fetch(new GetListCountriesRequest());
     }
 
-    public function getEthnicity(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListEthnicityRequest
+     */
+    public function getEthnicity(): Collection
     {
-        return $this->connector->send(new GetListEthnicityRequest());
+        return $this->fetch(new GetListEthnicityRequest());
     }
 
-    public function getLanguages(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListLanguagesRequest
+     */
+    public function getLanguages(): Collection
     {
-        return $this->connector->send(new GetListLanguagesRequest());
+        return $this->fetch(new GetListLanguagesRequest());
     }
 
-    public function getMedicalConditionSeverityTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalConditionSeverityType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalConditionSeverityTypesRequest
+     */
+    public function getMedicalConditionSeverityTypes(): Collection
     {
-        return $this->connector->send(new GetListMedicalConditionSeverityTypesRequest());
+        return $this->fetch(new GetListMedicalConditionSeverityTypesRequest());
     }
 
-    public function getMedicalConditionTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalConditionType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalConditionTypesRequest
+     */
+    public function getMedicalConditionTypes(): Collection
     {
-        return $this->connector->send(new GetListMedicalConditionTypesRequest());
+        return $this->fetch(new GetListMedicalConditionTypesRequest());
     }
 
-    public function getMedicalConsentTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalConsentType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalConsentTypesRequest
+     */
+    public function getMedicalConsentTypes(): Collection
     {
-        return $this->connector->send(new GetListMedicalConsentTypesRequest());
+        return $this->fetch(new GetListMedicalConsentTypesRequest());
     }
 
-    public function getMedicalDocumentCategories(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalDocumentCategory>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalDocumentCategoriesRequest
+     */
+    public function getMedicalDocumentCategories(): Collection
     {
-        return $this->connector->send(new GetListMedicalDocumentCategoriesRequest());
+        return $this->fetch(new GetListMedicalDocumentCategoriesRequest());
     }
 
-    public function getMedicalDocumentSources(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalDocumentSource>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalDocumentSourcesRequest
+     */
+    public function getMedicalDocumentSources(): Collection
     {
-        return $this->connector->send(new GetListMedicalDocumentSourcesRequest());
+        return $this->fetch(new GetListMedicalDocumentSourcesRequest());
     }
 
-    public function getMedicalMedicationLocations(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalMedicationLocation>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalMedicationLocationsRequest
+     */
+    public function getMedicalMedicationLocations(): Collection
     {
-        return $this->connector->send(new GetListMedicalMedicationLocationsRequest());
+        return $this->fetch(new GetListMedicalMedicationLocationsRequest());
     }
 
-    public function getMedicalMedicationSuppliers(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalMedicationSupplier>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalMedicationSuppliersRequest
+     */
+    public function getMedicalMedicationSuppliers(): Collection
     {
-        return $this->connector->send(new GetListMedicalMedicationSuppliersRequest());
+        return $this->fetch(new GetListMedicalMedicationSuppliersRequest());
     }
 
-    public function getMedicalMedicationTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalMedicationType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalMedicationTypesRequest
+     */
+    public function getMedicalMedicationTypes(): Collection
     {
-        return $this->connector->send(new GetListMedicalMedicationTypesRequest());
+        return $this->fetch(new GetListMedicalMedicationTypesRequest());
     }
 
-    public function getMedicalNoteTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalNoteType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalNoteTypesRequest
+     */
+    public function getMedicalNoteTypes(): Collection
     {
-        return $this->connector->send(new GetListMedicalNoteTypesRequest());
+        return $this->fetch(new GetListMedicalNoteTypesRequest());
     }
 
-    public function getMedicalVaccinationTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalVaccinationType>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListMedicalVaccinationTypesRequest
+     */
+    public function getMedicalVaccinationTypes(): Collection
     {
-        return $this->connector->send(new GetListMedicalVaccinationTypesRequest());
+        return $this->fetch(new GetListMedicalVaccinationTypesRequest());
     }
 
-    public function getNationalities(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListNationalitiesRequest
+     */
+    public function getNationalities(): Collection
     {
-        return $this->connector->send(new GetListNationalitiesRequest());
+        return $this->fetch(new GetListNationalitiesRequest());
     }
 
-    public function getPassportPlaceIssued(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListPassportPlaceIssuedRequest
+     */
+    public function getPassportPlaceIssued(): Collection
     {
-        return $this->connector->send(new GetListPassportPlaceIssuedRequest());
+        return $this->fetch(new GetListPassportPlaceIssuedRequest());
     }
 
-    public function getPassportType(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListPassportTypeRequest
+     */
+    public function getPassportType(): Collection
     {
-        return $this->connector->send(new GetListPassportTypeRequest());
+        return $this->fetch(new GetListPassportTypeRequest());
     }
 
-    public function getReligions(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListReligionsRequest
+     */
+    public function getReligions(): Collection
     {
-        return $this->connector->send(new GetListReligionsRequest());
+        return $this->fetch(new GetListReligionsRequest());
     }
 
-    public function getSchools(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\School\School>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListSchoolsRequest
+     */
+    public function getSchools(): Collection
     {
-        return $this->connector->send(new GetListSchoolsRequest());
+        return $this->fetch(new GetListSchoolsRequest());
     }
 
-    public function getSelectionCategories(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListSelectionCategoriesRequest
+     */
+    public function getSelectionCategories(): Collection
     {
-        return $this->connector->send(new GetListSelectionCategoriesRequest());
+        return $this->fetch(new GetListSelectionCategoriesRequest());
     }
 
-    public function getTitles(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\GlobalListItem>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListTitlesRequest
+     */
+    public function getTitles(): Collection
     {
-        return $this->connector->send(new GetListTitlesRequest());
+        return $this->fetch(new GetListTitlesRequest());
     }
 
-    public function getUniversities(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\University>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\List\GetListUniversitiesRequest
+     */
+    public function getUniversities(): Collection
     {
-        return $this->connector->send(new GetListUniversitiesRequest());
+        return $this->fetch(new GetListUniversitiesRequest());
     }
 }

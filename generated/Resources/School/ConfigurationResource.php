@@ -6,14 +6,17 @@
 
 namespace spkm\IsamsApi\Resources\School;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\School\SchoolDetails;
 use spkm\IsamsApi\Requests\School\Configuration\GetSchoolDetailsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ConfigurationResource extends BaseResource
+class ConfigurationResource extends IsamsResource
 {
-    public function getSchoolDetails(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\School\Configuration\GetSchoolDetailsRequest
+     */
+    public function getSchoolDetails(): SchoolDetails
     {
-        return $this->connector->send(new GetSchoolDetailsRequest());
+        return $this->fetch(new GetSchoolDetailsRequest());
     }
 }

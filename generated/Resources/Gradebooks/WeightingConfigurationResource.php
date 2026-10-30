@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Gradebooks\Weighting;
 use spkm\IsamsApi\Requests\Gradebooks\WeightingConfiguration\GetWeightingConfigurationRequest;
 use spkm\IsamsApi\Requests\Gradebooks\WeightingConfiguration\GetWeightingConfigurationsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class WeightingConfigurationResource extends BaseResource
+class WeightingConfigurationResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\Weighting>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\WeightingConfiguration\GetWeightingConfigurationsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetWeightingConfigurationsRequest());
+        return $this->fetch(new GetWeightingConfigurationsRequest());
     }
 
-    public function get(int $weightingId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\WeightingConfiguration\GetWeightingConfigurationRequest
+     */
+    public function get(int $weightingId): Weighting
     {
-        return $this->connector->send(new GetWeightingConfigurationRequest($weightingId));
+        return $this->fetch(new GetWeightingConfigurationRequest(weightingId: $weightingId));
     }
 }

@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheck;
 use spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheckForCreate;
 use spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheckForUpdate;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\CreateEmployeeRightToWorkCheckRequest;
@@ -15,42 +16,55 @@ use spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\DeleteEmploy
 use spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\GetEmployeeRightToWorkCheckRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\GetEmployeeRightToWorkChecksRequest;
 use spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\UpdateEmployeeRightToWorkCheckRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class EmployeeRightToWorkChecksResource extends BaseResource
+class EmployeeRightToWorkChecksResource extends IsamsResource
 {
-    public function all(int $employeeId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheck>
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\GetEmployeeRightToWorkChecksRequest
+     */
+    public function all(int $employeeId): Collection
     {
-        return $this->connector->send(new GetEmployeeRightToWorkChecksRequest($employeeId));
+        return $this->fetch(new GetEmployeeRightToWorkChecksRequest(employeeId: $employeeId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheckForCreate|array<string, mixed>  $employeeRightToWorkCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\CreateEmployeeRightToWorkCheckRequest
      */
     public function create(
         int $employeeId,
         EmployeeRightToWorkCheckForCreate|array $employeeRightToWorkCheck,
-    ): Response {
-        return $this->connector->send(new CreateEmployeeRightToWorkCheckRequest($employeeId, $employeeRightToWorkCheck));
+    ): Created {
+        return $this->fetch(new CreateEmployeeRightToWorkCheckRequest(employeeId: $employeeId, employeeRightToWorkCheck: $employeeRightToWorkCheck));
     }
 
-    public function delete(int $employeeId, int $rightToWorkCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\DeleteEmployeeRightToWorkCheckRequest
+     */
+    public function delete(int $employeeId, int $rightToWorkCheckId): void
     {
-        return $this->connector->send(new DeleteEmployeeRightToWorkCheckRequest($employeeId, $rightToWorkCheckId));
+        $this->fetch(new DeleteEmployeeRightToWorkCheckRequest(employeeId: $employeeId, rightToWorkCheckId: $rightToWorkCheckId));
     }
 
-    public function get(int $employeeId, int $rightToWorkCheckId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\GetEmployeeRightToWorkCheckRequest
+     */
+    public function get(int $employeeId, int $rightToWorkCheckId): EmployeeRightToWorkCheck
     {
-        return $this->connector->send(new GetEmployeeRightToWorkCheckRequest($employeeId, $rightToWorkCheckId));
+        return $this->fetch(new GetEmployeeRightToWorkCheckRequest(employeeId: $employeeId, rightToWorkCheckId: $rightToWorkCheckId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\EmployeeRightToWorkCheckForUpdate|array<string, mixed>  $employeeRightToWorkCheck
+     * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeRightToWorkChecks\UpdateEmployeeRightToWorkCheckRequest
      */
     public function update(
         int $employeeId,
         int $rightToWorkCheckId,
         EmployeeRightToWorkCheckForUpdate|array $employeeRightToWorkCheck,
-    ): Response {
-        return $this->connector->send(new UpdateEmployeeRightToWorkCheckRequest($employeeId, $rightToWorkCheckId, $employeeRightToWorkCheck));
+    ): void {
+        $this->fetch(new UpdateEmployeeRightToWorkCheckRequest(employeeId: $employeeId, rightToWorkCheckId: $rightToWorkCheckId, employeeRightToWorkCheck: $employeeRightToWorkCheck));
     }
 }

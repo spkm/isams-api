@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources\DisclosureAndProbation;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\CheckStatuses\GetCheckStatusesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CheckStatusesResource extends BaseResource
+class CheckStatusesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\DisclosureProbationCheckStatus>
+     * @see \spkm\IsamsApi\Requests\HumanResources\DisclosureAndProbation\CheckStatuses\GetCheckStatusesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetCheckStatusesRequest());
+        return $this->fetch(new GetCheckStatusesRequest());
     }
 }

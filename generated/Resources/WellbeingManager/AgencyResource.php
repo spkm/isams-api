@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\WellbeingManager;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\WellbeingManager\Agency;
 use spkm\IsamsApi\Data\WellbeingManager\AgencyForCreate;
 use spkm\IsamsApi\Requests\WellbeingManager\Agency\CreateAgencyRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Agency\DeleteAgencyRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Agency\GetAgenciesRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Agency\GetAgencyRequest;
 use spkm\IsamsApi\Requests\WellbeingManager\Agency\PatchAgencyRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class AgencyResource extends BaseResource
+class AgencyResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\WellbeingManager\Agency>
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Agency\GetAgenciesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetAgenciesRequest());
+        return $this->fetch(new GetAgenciesRequest());
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\WellbeingManager\AgencyForCreate|array<string, mixed>  $agency
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Agency\CreateAgencyRequest
      */
-    public function create(AgencyForCreate|array $agency): Response
+    public function create(AgencyForCreate|array $agency): Created
     {
-        return $this->connector->send(new CreateAgencyRequest($agency));
+        return $this->fetch(new CreateAgencyRequest(agency: $agency));
     }
 
-    public function delete(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Agency\DeleteAgencyRequest
+     */
+    public function delete(int $id): void
     {
-        return $this->connector->send(new DeleteAgencyRequest($id));
+        $this->fetch(new DeleteAgencyRequest(id: $id));
     }
 
-    public function get(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Agency\GetAgencyRequest
+     */
+    public function get(int $id): Agency
     {
-        return $this->connector->send(new GetAgencyRequest($id));
+        return $this->fetch(new GetAgencyRequest(id: $id));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\WellbeingManager\Agency\PatchAgencyRequest
      */
-    public function patch(int $id, JsonPatch|array $patch): Response
+    public function patch(int $id, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchAgencyRequest($id, $patch));
+        $this->fetch(new PatchAgencyRequest(id: $id, patch: $patch));
     }
 }

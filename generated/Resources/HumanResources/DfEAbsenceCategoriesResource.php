@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\HumanResources\DfEAbsenceCategories\GetDfEAbsenceCategoriesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class DfEAbsenceCategoriesResource extends BaseResource
+class DfEAbsenceCategoriesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\AbsenceCategory>
+     * @see \spkm\IsamsApi\Requests\HumanResources\DfEAbsenceCategories\GetDfEAbsenceCategoriesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetDfEAbsenceCategoriesRequest());
+        return $this->fetch(new GetDfEAbsenceCategoriesRequest());
     }
 }

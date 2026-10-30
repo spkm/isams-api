@@ -6,17 +6,19 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Visits\GetAdmissionVisitSummaryBySchoolIdsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class VisitsResource extends BaseResource
+class VisitsResource extends IsamsResource
 {
     /**
      * @param  array<mixed>|null  $schoolIds
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\AdmissionsVisitSummary>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Visits\GetAdmissionVisitSummaryBySchoolIdsRequest
      */
-    public function getSummaryBySchoolIds(?array $schoolIds = null): Response
+    public function getSummaryBySchoolIds(?array $schoolIds = null): Collection
     {
-        return $this->connector->send(new GetAdmissionVisitSummaryBySchoolIdsRequest($schoolIds));
+        return $this->fetch(new GetAdmissionVisitSummaryBySchoolIdsRequest(schoolIds: $schoolIds));
     }
 }

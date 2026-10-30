@@ -6,10 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Admissions\AdmissionsFormOrchardFormForCreate;
 use spkm\IsamsApi\Data\Admissions\SubmissionOwner;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormDefaultApplicationFormRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormDefaultEnquiryFormRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormDefaultRegistrationFormRequest;
@@ -26,101 +25,140 @@ use spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetRegistrationSummarie
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetRegistrationSummaryRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\SaveAdmissionsFormSubmittedFormRequest;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\UpdateAdmissionsFormSubmissionOwnerRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class FormsResource extends BaseResource
+class FormsResource extends IsamsResource
 {
-    public function getApplicationForm(int $code): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetApplicationFormRequest
+     */
+    public function getApplicationForm(int $code): mixed
     {
-        return $this->connector->send(new GetApplicationFormRequest($code));
+        return $this->fetch(new GetApplicationFormRequest(code: $code));
     }
 
     /**
      * @param  array<mixed>  $codes
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetApplicationSummaryRequest
      */
-    public function getApplicationSummary(array $codes): Response
+    public function getApplicationSummary(array $codes): mixed
     {
-        return $this->connector->send(new GetApplicationSummaryRequest($codes));
+        return $this->fetch(new GetApplicationSummaryRequest(codes: $codes));
     }
 
-    public function getDefaultApplicationForm(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormDefaultApplicationFormRequest
+     */
+    public function getDefaultApplicationForm(): mixed
     {
-        return $this->connector->send(new GetAdmissionsFormDefaultApplicationFormRequest());
+        return $this->fetch(new GetAdmissionsFormDefaultApplicationFormRequest());
     }
 
-    public function getDefaultEnquiryForm(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormDefaultEnquiryFormRequest
+     */
+    public function getDefaultEnquiryForm(): mixed
     {
-        return $this->connector->send(new GetAdmissionsFormDefaultEnquiryFormRequest());
+        return $this->fetch(new GetAdmissionsFormDefaultEnquiryFormRequest());
     }
 
-    public function getDefaultRegistrationForm(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormDefaultRegistrationFormRequest
+     */
+    public function getDefaultRegistrationForm(): mixed
     {
-        return $this->connector->send(new GetAdmissionsFormDefaultRegistrationFormRequest());
+        return $this->fetch(new GetAdmissionsFormDefaultRegistrationFormRequest());
     }
 
-    public function getEnquiryForm(int $code): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetEnquiryFormRequest
+     */
+    public function getEnquiryForm(int $code): mixed
     {
-        return $this->connector->send(new GetEnquiryFormRequest($code));
+        return $this->fetch(new GetEnquiryFormRequest(code: $code));
     }
 
-    public function getLegacyConfiguration(): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormLegacyConfigurationRequest
+     */
+    public function getLegacyConfiguration(): mixed
     {
-        return $this->connector->send(new GetAdmissionsFormLegacyConfigurationRequest());
+        return $this->fetch(new GetAdmissionsFormLegacyConfigurationRequest());
     }
 
-    public function getOriginalForm(int $code): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetOriginalFormRequest
+     */
+    public function getOriginalForm(int $code): mixed
     {
-        return $this->connector->send(new GetOriginalFormRequest($code));
+        return $this->fetch(new GetOriginalFormRequest(code: $code));
     }
 
-    public function getRegistrationForm(int $code): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetRegistrationFormRequest
+     */
+    public function getRegistrationForm(int $code): mixed
     {
-        return $this->connector->send(new GetRegistrationFormRequest($code));
+        return $this->fetch(new GetRegistrationFormRequest(code: $code));
     }
 
     /**
      * @param  array<mixed>  $codes
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetRegistrationSummariesRequest
      */
-    public function getRegistrationSummaries(array $codes): Response
+    public function getRegistrationSummaries(array $codes): mixed
     {
-        return $this->connector->send(new GetRegistrationSummariesRequest($codes));
+        return $this->fetch(new GetRegistrationSummariesRequest(codes: $codes));
     }
 
     /**
      * @param  array<mixed>  $codes
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetRegistrationSummaryRequest
      */
-    public function getRegistrationSummary(array $codes): Response
+    public function getRegistrationSummary(array $codes): mixed
     {
-        return $this->connector->send(new GetRegistrationSummaryRequest($codes));
+        return $this->fetch(new GetRegistrationSummaryRequest(codes: $codes));
     }
 
-    public function getSubmission(int $id): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetFormSubmissionRequest
+     */
+    public function getSubmission(int $id): mixed
     {
-        return $this->connector->send(new GetFormSubmissionRequest($id));
+        return $this->fetch(new GetFormSubmissionRequest(id: $id));
     }
 
-    public function getSubmissionByGlobalReferenceId(string $formSubmissionGlobalId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetFormSubmissionByGlobalReferenceIdRequest
+     */
+    public function getSubmissionByGlobalReferenceId(string $formSubmissionGlobalId): mixed
     {
-        return $this->connector->send(new GetFormSubmissionByGlobalReferenceIdRequest($formSubmissionGlobalId));
+        return $this->fetch(new GetFormSubmissionByGlobalReferenceIdRequest(formSubmissionGlobalId: $formSubmissionGlobalId));
     }
 
-    public function getSubmissionsByUserCode(?string $type = null, ?string $tempGuestUser = null): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\GetAdmissionsFormSubmissionsByUserCodeRequest
+     */
+    public function getSubmissionsByUserCode(?string $type = null, ?string $tempGuestUser = null): mixed
     {
-        return $this->connector->send(new GetAdmissionsFormSubmissionsByUserCodeRequest($type, $tempGuestUser));
+        return $this->fetch(new GetAdmissionsFormSubmissionsByUserCodeRequest(type: $type, tempGuestUser: $tempGuestUser));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\AdmissionsFormOrchardFormForCreate|array<string, mixed>  $admissionsFormOrchardForm
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\SaveAdmissionsFormSubmittedFormRequest
      */
-    public function saveSubmittedForm(AdmissionsFormOrchardFormForCreate|array $admissionsFormOrchardForm): Response
+    public function saveSubmittedForm(AdmissionsFormOrchardFormForCreate|array $admissionsFormOrchardForm): Created
     {
-        return $this->connector->send(new SaveAdmissionsFormSubmittedFormRequest($admissionsFormOrchardForm));
+        return $this->fetch(new SaveAdmissionsFormSubmittedFormRequest(admissionsFormOrchardForm: $admissionsFormOrchardForm));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\SubmissionOwner|array<string, mixed>  $submissionOwner
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Forms\UpdateAdmissionsFormSubmissionOwnerRequest
      */
-    public function updateSubmissionOwner(SubmissionOwner|array $submissionOwner): Response
+    public function updateSubmissionOwner(SubmissionOwner|array $submissionOwner): Created
     {
-        return $this->connector->send(new UpdateAdmissionsFormSubmissionOwnerRequest($submissionOwner));
+        return $this->fetch(new UpdateAdmissionsFormSubmissionOwnerRequest(submissionOwner: $submissionOwner));
     }
 }

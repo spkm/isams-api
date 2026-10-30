@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\Students;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\Students\SystemStatuses\GetStudentSystemStatusesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class SystemStatusesResource extends BaseResource
+class SystemStatusesResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Students\StudentSystemStatus>
+     * @see \spkm\IsamsApi\Requests\Students\SystemStatuses\GetStudentSystemStatusesRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetStudentSystemStatusesRequest());
+        return $this->fetch(new GetStudentSystemStatusesRequest());
     }
 }

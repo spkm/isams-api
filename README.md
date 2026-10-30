@@ -48,7 +48,8 @@ Code written for version 1 keeps working, apart from the PHP and Laravel minimum
   | `BatchApi\GetEndpointRequest`, `BatchApi\FilterEndpointRequest` | `Isams::batch()` with `Batch\BatchRequest` (see [Batch API](#batch-api)) |
 
 - `Students\GetStudentsRequest` and `Students\GetStudentRequest` keep their names and now return `Student` models
-  from `dto()` (it returned `null` before), and `dto()` throws an `IsamsApiException` when iSAMS returned an error.
+  from `dto()` (it returned `null` before), and `dto()` throws an [`IsamsApiException`](#errors) when iSAMS returned an
+  error.
 - From 2 November 2026 iSAMS rejects Batch API requests that send only the key; the deprecated batch requests do
   that, `Isams::batch()` does not.
 - The config file is published with `php artisan isams-api:install`, or `vendor:publish --tag=isams-api-config`.
@@ -77,21 +78,35 @@ ISAMS_BASE_URL=https://isams.your-school.example
 
 ## Usage
 
-Send a request through the `Isams` facade, which uses the configured credentials:
+### Two ways to call iSAMS
+
+The package has two layers, as Laravel has Eloquent and, beneath it, the query builder:
+
+| | Resources: the Eloquent-like way | Requests: the Saloon way |
+|---|---|---|
+| You write | `Isams::teaching()->subjects()->all()` | `Isams::send(new GetSubjectsRequest)` |
+| You get | the data: here a `Collection` of `Subject` models | Saloon's `Response`, with status, headers and body |
+| A list iSAMS pages | a `LazyCollection` that fetches pages as you loop | one page; loop through them with `Isams::paginate()` |
+| iSAMS returns an error | throws an `IsamsApiException` (see [Errors](#errors)) | returns the failed response for you to check |
+
+Use resources in application code. Use `send()` when you need the status or headers, or would rather check for errors
+than catch them; `$response->dto()` turns its body into the same models. Each resource method's docblock names the
+request it sends (`@see`), so your IDE takes you from one to the other.
 
 ```php
 use spkm\IsamsApi\Facades\Isams;
-use spkm\IsamsApi\Requests\Students\GetStudentRequest;
+use spkm\IsamsApi\Requests\Teaching\Subjects\GetSubjectsRequest;
 
-$response = Isams::send(new GetStudentRequest('100001'));
+$subjects = Isams::teaching()->subjects()->all(); // Collection of Subject models
 
-$student = $response->json();
+$response = Isams::send(new GetSubjectsRequest);  // Saloon\Http\Response, never throws
+
+if ($response->successful()) {
+    $subjects = $response->dto();
+}
 ```
 
-`send()` never throws when iSAMS returns an error: check `$response->failed()` or `$response->status()`, and read
-iSAMS's explanation from `$response->json('message')`.
-
-Or build a connector yourself:
+Both use the configured credentials. Or build a connector yourself, which has the same resources and `send()`:
 
 ```php
 use spkm\IsamsApi\IsamsConnector;
@@ -103,18 +118,30 @@ The connector fetches an access token from iSAMS and caches it, encrypted, until
 
 ### Resources
 
-Every request is also reachable through resources that follow iSAMS's areas, which your IDE can autocomplete. A
-resource's methods are named for what they do: `all()` for a list, `get()` for one item, `create()`, `update()`,
-`patch()` and `delete()`, `patchMany()` and the like for several at once, and actions of their own such as
-`archive()` or `moveToAlumni()`:
+Resources follow iSAMS's areas, and your IDE autocompletes them from `Isams::`. A resource's methods are named for
+what they do: `all()` for a list, `get()` for one item, `create()`, `update()`, `patch()` and `delete()`, `patchMany()`
+and the like for several at once, and actions of their own such as `archive()` or `moveToAlumni()`. Each returns what
+iSAMS sent back:
 
 ```php
-Isams::teaching()->subjects()->all();
-Isams::teaching()->subjects()->get(7);
-Isams::teaching()->sets()->addStudent(setId: 34, schoolId: '100001');
-Isams::medicalCentre()->studentConditions()->archive(schoolId: '100001', conditionId: $key);
+use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
+
+$subjects = Isams::teaching()->subjects()->all();          // Collection of Subject models
+$subject = Isams::teaching()->subjects()->get(7);          // a Subject
+$created = Isams::teaching()->subjects()->create(new SubjectForCreate(code: 'MA', name: 'Mathematics'));
+$created->id;                                              // Created: the new record's id and location
+$photo = Isams::students()->photos()->getCurrent('100001'); // File: contents, MIME type and filename
+Isams::teaching()->sets()->removeStudent(setId: 34, schoolId: '100001'); // returns nothing
 Isams::systemConfiguration()->list()->contactTypes()->all();
+
+foreach (Isams::students()->all() as $student) {           // LazyCollection of Student models
+    //
+}
 ```
+
+Lists iSAMS sends in pages, such as every student, come back as a `LazyCollection`, like Eloquent's `lazy()`: each
+page of 100 is fetched only when the loop reaches it, so the loop holds about one page at a time however large the
+school. Nothing is sent until you loop, and calling `all()` or `toArray()` on it holds every record at once.
 
 Path parameters always come in the order the URL has them.
 
@@ -129,35 +156,58 @@ Isams::humanResources()->employeeContracts()->v1()->all(employeeId: 40); // vers
 
 ### Models
 
-Requests turn iSAMS's JSON into typed, read-only models with `dto()`: one model, a `Collection` of models for
-lists, `Created` (the new record's `location` and `id`) for creations, or `File` for downloads.
+Resources, and `dto()` on a request's response, turn iSAMS's JSON into typed, read-only models: one model, a
+`Collection` of models for lists, `Created` (the new record's `location` and `id`) for creations, or `File` for
+downloads. Models are lenient: fields iSAMS leaves out are `null`, and fields the package doesn't know about are
+ignored. Fields with a fixed set of values also have an enum helper, such as `$student->genderEnum()`.
+
+### Errors
+
+Resource calls and `dto()` throw an `IsamsApiException` when iSAMS returns an error, or one of its subclasses for the
+statuses you are likely to handle differently:
+
+| Status | Exception (in `spkm\IsamsApi\Exceptions`) | Meaning |
+|---|---|---|
+| 404 | `NotFoundException` | the record doesn't exist |
+| 400, 409, 412, 415, 422 | `InvalidRequestException` | iSAMS rejected what was sent; its message says why |
+| 401 | `UnauthorizedException` | iSAMS rejected the credentials |
+| 403 | `MissingPermissionException` | the API client's permission for that area is too low |
+| 5xx | `ServerErrorException` | iSAMS failed; quote the `trackingNumber()` to iSAMS support |
+| anything else, such as 301 ("exists but not associated") | `IsamsApiException` | |
+
+Each has iSAMS's `isamsMessage()` and `trackingNumber()`, the status from `getStatus()` and the failed response from
+`getResponse()`. iSAMS sets each API client's permission per area (None, Read, Write, Modify or Full), so a
+`MissingPermissionException` also says which permission is needed and where:
 
 ```php
-use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
-use spkm\IsamsApi\Requests\Teaching\Subjects\CreateSubjectRequest;
+use spkm\IsamsApi\Exceptions\MissingPermissionException;
+use spkm\IsamsApi\Exceptions\NotFoundException;
 
-$created = Isams::send(new CreateSubjectRequest(new SubjectForCreate(code: 'MA', name: 'Mathematics')))->dto();
+try {
+    $subject = Isams::teaching()->subjects()->get(7);
+} catch (NotFoundException) {
+    $subject = null;
+} catch (MissingPermissionException $exception) {
+    $exception->requiredPermission(); // "Read"
+    $exception->area();               // "Teaching"
+}
 ```
 
-`dto()` throws an `IsamsApiException` (with iSAMS's `isamsMessage()` and `trackingNumber()`) when iSAMS returned an
-error, so check `$response->failed()` first if you'd rather handle errors yourself. Models are lenient: fields iSAMS
-leaves out are `null`, and fields the package doesn't know about are ignored. Fields with a fixed set of values also
-have an enum helper, such as `$student->genderEnum()`.
+`send()` never throws. `Isams::paginate()` and `$response->throw()` throw Saloon's own exceptions, as Saloon does.
 
 ### Paging through results
+
+Resources page for you. To page through a request yourself:
 
 ```php
 use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 
-foreach ($isams->paginate(new GetStudentsRequest)->collect() as $student) {
-    // $student is an array, read from the "students" list of each page.
+foreach (Isams::paginate(new GetStudentsRequest)->dtos() as $student) {
+    // $student is a Student model; collect() gives each item as an array instead.
 }
 ```
 
-Use `dtos()` instead of `collect()` to get models, for requests that have one.
-
-Each page is fetched only when the loop reaches it, so the loop holds about one page (100 records) at a time however
-large the school. Calling `all()` or `toArray()` on the collection holds every record at once instead.
+As with resources, each page is fetched only when the loop reaches it.
 
 ### Filtering and updating
 
@@ -246,7 +296,8 @@ does the same by node name, and `get($module, $rootNode)` returns plain arrays f
 for. The filter's module and method names are the ones iSAMS documents for filters, which can differ from the
 response's (for example `StudentManager` filters `PupilManager` methods). `cachedSecondsAgo()` says whether iSAMS
 served the response from its cache. A failed request's `dto()` throws a `BatchApiException` with iSAMS's error name,
-title and description.
+title and description; its `isPermissionError()` is true when the key is unknown, revoked or not allocated the methods
+asked for.
 
 Photos come as a zip, read by the student's or staff member's id:
 

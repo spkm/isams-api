@@ -6,7 +6,6 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\WellbeingManager\AgencyResource;
 use spkm\IsamsApi\Resources\WellbeingManager\ConcernActionOutcomesResource;
 use spkm\IsamsApi\Resources\WellbeingManager\ConcernActionStatusesResource;
@@ -39,7 +38,7 @@ use spkm\IsamsApi\Resources\WellbeingManager\WorkflowActionsResource;
 use spkm\IsamsApi\Resources\WellbeingManager\WorkflowRulesResource;
 use spkm\IsamsApi\Resources\WellbeingManager\WorkflowsResource;
 
-class WellbeingManagerResource extends BaseResource
+class WellbeingManagerResource extends IsamsResource
 {
     public function agency(): AgencyResource
     {

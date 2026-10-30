@@ -6,9 +6,11 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
+use Illuminate\Support\Collection;
 use Saloon\Data\MultipartValue;
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\File;
+use spkm\IsamsApi\Data\MedicalCentre\Document;
 use spkm\IsamsApi\Data\MedicalCentre\DocumentForCreate;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\ArchiveStudentDocumentRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\CreateStudentDocumentRequest;
@@ -18,53 +20,75 @@ use spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\GetStudentDocumentRequ
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\GetStudentDocumentsRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\PatchStudentDocumentRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\RestoreStudentDocumentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentDocumentsResource extends BaseResource
+class StudentDocumentsResource extends IsamsResource
 {
-    public function all(string $schoolId, ?bool $includeArchive = null): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\Document>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\GetStudentDocumentsRequest
+     */
+    public function all(string $schoolId, ?bool $includeArchive = null): Collection
     {
-        return $this->connector->send(new GetStudentDocumentsRequest($schoolId, $includeArchive));
+        return $this->fetch(new GetStudentDocumentsRequest(schoolId: $schoolId, includeArchive: $includeArchive));
     }
 
-    public function archive(string $schoolId, string $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\ArchiveStudentDocumentRequest
+     */
+    public function archive(string $schoolId, string $documentId): Created
     {
-        return $this->connector->send(new ArchiveStudentDocumentRequest($schoolId, $documentId));
+        return $this->fetch(new ArchiveStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\DocumentForCreate|array<string, mixed>  $data
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\CreateStudentDocumentRequest
      */
-    public function create(string $schoolId, MultipartValue $binary, DocumentForCreate|array $data): Response
+    public function create(string $schoolId, MultipartValue $binary, DocumentForCreate|array $data): Created
     {
-        return $this->connector->send(new CreateStudentDocumentRequest($schoolId, $binary, $data));
+        return $this->fetch(new CreateStudentDocumentRequest(schoolId: $schoolId, binary: $binary, data: $data));
     }
 
-    public function delete(string $schoolId, string $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\DeleteStudentDocumentRequest
+     */
+    public function delete(string $schoolId, string $documentId): void
     {
-        return $this->connector->send(new DeleteStudentDocumentRequest($schoolId, $documentId));
+        $this->fetch(new DeleteStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId));
     }
 
-    public function download(string $schoolId, string $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\DownloadStudentDocumentRequest
+     */
+    public function download(string $schoolId, string $documentId): File
     {
-        return $this->connector->send(new DownloadStudentDocumentRequest($schoolId, $documentId));
+        return $this->fetch(new DownloadStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId));
     }
 
-    public function get(string $schoolId, string $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\GetStudentDocumentRequest
+     */
+    public function get(string $schoolId, string $documentId): Document
     {
-        return $this->connector->send(new GetStudentDocumentRequest($schoolId, $documentId));
+        return $this->fetch(new GetStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\PatchStudentDocumentRequest
      */
-    public function patch(string $schoolId, string $documentId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $documentId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentDocumentRequest($schoolId, $documentId, $patch));
+        $this->fetch(new PatchStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId, patch: $patch));
     }
 
-    public function restore(string $schoolId, string $documentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentDocuments\RestoreStudentDocumentRequest
+     */
+    public function restore(string $schoolId, string $documentId): Created
     {
-        return $this->connector->send(new RestoreStudentDocumentRequest($schoolId, $documentId));
+        return $this->fetch(new RestoreStudentDocumentRequest(schoolId: $schoolId, documentId: $documentId));
     }
 }

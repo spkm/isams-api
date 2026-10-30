@@ -6,10 +6,9 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
 use spkm\IsamsApi\Resources\Discipline\DetentionSessionsResource;
 
-class DisciplineResource extends BaseResource
+class DisciplineResource extends IsamsResource
 {
     public function detentionSessions(): DetentionSessionsResource
     {

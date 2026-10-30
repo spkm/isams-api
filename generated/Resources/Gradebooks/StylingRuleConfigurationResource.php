@@ -6,20 +6,28 @@
 
 namespace spkm\IsamsApi\Resources\Gradebooks;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Gradebooks\StylingRule;
 use spkm\IsamsApi\Requests\Gradebooks\StylingRuleConfiguration\GetStylingRuleConfigurationRequest;
 use spkm\IsamsApi\Requests\Gradebooks\StylingRuleConfiguration\GetStylingRuleConfigurationsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class StylingRuleConfigurationResource extends BaseResource
+class StylingRuleConfigurationResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Gradebooks\StylingRule>
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StylingRuleConfiguration\GetStylingRuleConfigurationsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetStylingRuleConfigurationsRequest());
+        return $this->fetch(new GetStylingRuleConfigurationsRequest());
     }
 
-    public function get(int $stylingRuleId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\Gradebooks\StylingRuleConfiguration\GetStylingRuleConfigurationRequest
+     */
+    public function get(int $stylingRuleId): StylingRule
     {
-        return $this->connector->send(new GetStylingRuleConfigurationRequest($stylingRuleId));
+        return $this->fetch(new GetStylingRuleConfigurationRequest(stylingRuleId: $stylingRuleId));
     }
 }

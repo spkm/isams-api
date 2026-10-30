@@ -6,18 +6,19 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\Admissions;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Admissions\CallbackSubmissionForCreate;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Requests\CloudPortals\Admissions\CallbackSubmission\SaveCallbackSubmissionRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class CallbackSubmissionResource extends BaseResource
+class CallbackSubmissionResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\Admissions\CallbackSubmissionForCreate|array<string, mixed>  $callbackSubmission
+     * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\CallbackSubmission\SaveCallbackSubmissionRequest
      */
-    public function save(CallbackSubmissionForCreate|array $callbackSubmission): Response
+    public function save(CallbackSubmissionForCreate|array $callbackSubmission): Created
     {
-        return $this->connector->send(new SaveCallbackSubmissionRequest($callbackSubmission));
+        return $this->fetch(new SaveCallbackSubmissionRequest(callbackSubmission: $callbackSubmission));
     }
 }

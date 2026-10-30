@@ -6,8 +6,9 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\MedicalCentre\MedicalNote;
 use spkm\IsamsApi\Data\MedicalCentre\MedicalNoteForCreate;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\ArchiveStudentNoteRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\CreateStudentNoteRequest;
@@ -16,48 +17,67 @@ use spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\GetStudentNoteRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\GetStudentNotesRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\PatchStudentNoteRequest;
 use spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\RestoreStudentNoteRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class StudentNotesResource extends BaseResource
+class StudentNotesResource extends IsamsResource
 {
-    public function all(string $schoolId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\IMedicalNote>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\GetStudentNotesRequest
+     */
+    public function all(string $schoolId): Collection
     {
-        return $this->connector->send(new GetStudentNotesRequest($schoolId));
+        return $this->fetch(new GetStudentNotesRequest(schoolId: $schoolId));
     }
 
-    public function archive(string $schoolId, string $noteId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\ArchiveStudentNoteRequest
+     */
+    public function archive(string $schoolId, string $noteId): Created
     {
-        return $this->connector->send(new ArchiveStudentNoteRequest($schoolId, $noteId));
+        return $this->fetch(new ArchiveStudentNoteRequest(schoolId: $schoolId, noteId: $noteId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\MedicalCentre\MedicalNoteForCreate|array<string, mixed>  $medicalNote
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\CreateStudentNoteRequest
      */
-    public function create(string $schoolId, MedicalNoteForCreate|array $medicalNote): Response
+    public function create(string $schoolId, MedicalNoteForCreate|array $medicalNote): Created
     {
-        return $this->connector->send(new CreateStudentNoteRequest($schoolId, $medicalNote));
+        return $this->fetch(new CreateStudentNoteRequest(schoolId: $schoolId, medicalNote: $medicalNote));
     }
 
-    public function delete(string $schoolId, string $noteId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\DeleteStudentNoteRequest
+     */
+    public function delete(string $schoolId, string $noteId): void
     {
-        return $this->connector->send(new DeleteStudentNoteRequest($schoolId, $noteId));
+        $this->fetch(new DeleteStudentNoteRequest(schoolId: $schoolId, noteId: $noteId));
     }
 
-    public function get(string $schoolId, string $noteId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\GetStudentNoteRequest
+     */
+    public function get(string $schoolId, string $noteId): MedicalNote
     {
-        return $this->connector->send(new GetStudentNoteRequest($schoolId, $noteId));
+        return $this->fetch(new GetStudentNoteRequest(schoolId: $schoolId, noteId: $noteId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\PatchStudentNoteRequest
      */
-    public function patch(string $schoolId, string $noteId, JsonPatch|array $patch): Response
+    public function patch(string $schoolId, string $noteId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchStudentNoteRequest($schoolId, $noteId, $patch));
+        $this->fetch(new PatchStudentNoteRequest(schoolId: $schoolId, noteId: $noteId, patch: $patch));
     }
 
-    public function restore(string $schoolId, string $noteId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\StudentNotes\RestoreStudentNoteRequest
+     */
+    public function restore(string $schoolId, string $noteId): Created
     {
-        return $this->connector->send(new RestoreStudentNoteRequest($schoolId, $noteId));
+        return $this->fetch(new RestoreStudentNoteRequest(schoolId: $schoolId, noteId: $noteId));
     }
 }

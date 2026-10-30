@@ -6,18 +6,18 @@
 
 namespace spkm\IsamsApi\Resources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\News\NewsForCreate;
 use spkm\IsamsApi\Requests\News\CreateNewsRequest;
 
-class NewsResource extends BaseResource
+class NewsResource extends IsamsResource
 {
     /**
      * @param  \spkm\IsamsApi\Data\News\NewsForCreate|array<string, mixed>  $news
+     * @see \spkm\IsamsApi\Requests\News\CreateNewsRequest
      */
-    public function create(NewsForCreate|array $news): Response
+    public function create(NewsForCreate|array $news): Created
     {
-        return $this->connector->send(new CreateNewsRequest($news));
+        return $this->fetch(new CreateNewsRequest(news: $news));
     }
 }

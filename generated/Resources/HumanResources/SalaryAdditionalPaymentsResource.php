@@ -6,46 +6,60 @@
 
 namespace spkm\IsamsApi\Resources\HumanResources;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
+use spkm\IsamsApi\Data\Created;
+use spkm\IsamsApi\Data\HumanResources\AdditionalPayment;
 use spkm\IsamsApi\Data\HumanResources\AdditionalPaymentForCreate;
 use spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\CreateSalaryAdditionalPaymentRequest;
 use spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\DeleteSalaryAdditionalPaymentRequest;
 use spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\GetSalaryAdditionalPaymentRequest;
 use spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\GetSalaryAdditionalPaymentsRequest;
 use spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\PatchSalaryAdditionalPaymentRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 use spkm\IsamsApi\Support\JsonPatch;
 
-class SalaryAdditionalPaymentsResource extends BaseResource
+class SalaryAdditionalPaymentsResource extends IsamsResource
 {
-    public function all(int $salaryId): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\HumanResources\AdditionalPayment>
+     * @see \spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\GetSalaryAdditionalPaymentsRequest
+     */
+    public function all(int $salaryId): Collection
     {
-        return $this->connector->send(new GetSalaryAdditionalPaymentsRequest($salaryId));
+        return $this->fetch(new GetSalaryAdditionalPaymentsRequest(salaryId: $salaryId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Data\HumanResources\AdditionalPaymentForCreate|array<string, mixed>  $additionalPayment
+     * @see \spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\CreateSalaryAdditionalPaymentRequest
      */
-    public function create(int $salaryId, AdditionalPaymentForCreate|array $additionalPayment): Response
+    public function create(int $salaryId, AdditionalPaymentForCreate|array $additionalPayment): Created
     {
-        return $this->connector->send(new CreateSalaryAdditionalPaymentRequest($salaryId, $additionalPayment));
+        return $this->fetch(new CreateSalaryAdditionalPaymentRequest(salaryId: $salaryId, additionalPayment: $additionalPayment));
     }
 
-    public function delete(int $salaryId, int $additionalPaymentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\DeleteSalaryAdditionalPaymentRequest
+     */
+    public function delete(int $salaryId, int $additionalPaymentId): void
     {
-        return $this->connector->send(new DeleteSalaryAdditionalPaymentRequest($salaryId, $additionalPaymentId));
+        $this->fetch(new DeleteSalaryAdditionalPaymentRequest(salaryId: $salaryId, additionalPaymentId: $additionalPaymentId));
     }
 
-    public function get(int $salaryId, int $additionalPaymentId): Response
+    /**
+     * @see \spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\GetSalaryAdditionalPaymentRequest
+     */
+    public function get(int $salaryId, int $additionalPaymentId): AdditionalPayment
     {
-        return $this->connector->send(new GetSalaryAdditionalPaymentRequest($salaryId, $additionalPaymentId));
+        return $this->fetch(new GetSalaryAdditionalPaymentRequest(salaryId: $salaryId, additionalPaymentId: $additionalPaymentId));
     }
 
     /**
      * @param  \spkm\IsamsApi\Support\JsonPatch|list<array<string, mixed>>  $patch
+     * @see \spkm\IsamsApi\Requests\HumanResources\SalaryAdditionalPayments\PatchSalaryAdditionalPaymentRequest
      */
-    public function patch(int $salaryId, int $additionalPaymentId, JsonPatch|array $patch): Response
+    public function patch(int $salaryId, int $additionalPaymentId, JsonPatch|array $patch): void
     {
-        return $this->connector->send(new PatchSalaryAdditionalPaymentRequest($salaryId, $additionalPaymentId, $patch));
+        $this->fetch(new PatchSalaryAdditionalPaymentRequest(salaryId: $salaryId, additionalPaymentId: $additionalPaymentId, patch: $patch));
     }
 }

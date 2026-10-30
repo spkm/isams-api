@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\MedicalCentre;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\MedicalCentre\Inventory\GetMedicalInventoryTypesRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class InventoryResource extends BaseResource
+class InventoryResource extends IsamsResource
 {
-    public function getTypes(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\InventoryType>
+     * @see \spkm\IsamsApi\Requests\MedicalCentre\Inventory\GetMedicalInventoryTypesRequest
+     */
+    public function getTypes(): Collection
     {
-        return $this->connector->send(new GetMedicalInventoryTypesRequest());
+        return $this->fetch(new GetMedicalInventoryTypesRequest());
     }
 }

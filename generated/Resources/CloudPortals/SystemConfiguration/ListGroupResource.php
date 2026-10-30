@@ -6,14 +6,18 @@
 
 namespace spkm\IsamsApi\Resources\CloudPortals\SystemConfiguration;
 
-use Saloon\Http\BaseResource;
-use Saloon\Http\Response;
+use Illuminate\Support\Collection;
 use spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\ListGroup\GetListGroupsRequest;
+use spkm\IsamsApi\Resources\IsamsResource;
 
-class ListGroupResource extends BaseResource
+class ListGroupResource extends IsamsResource
 {
-    public function all(): Response
+    /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\SystemConfiguration\PrivateGlobalListGroup>
+     * @see \spkm\IsamsApi\Requests\CloudPortals\SystemConfiguration\ListGroup\GetListGroupsRequest
+     */
+    public function all(): Collection
     {
-        return $this->connector->send(new GetListGroupsRequest());
+        return $this->fetch(new GetListGroupsRequest());
     }
 }
