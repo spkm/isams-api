@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead.
+ */
+
+namespace spkm\IsamsApi\Requests\Students\VisaDocuments;
+
+use Saloon\Enums\Method;
+use spkm\IsamsApi\Attributes\Beta;
+use spkm\IsamsApi\Requests\IsamsRequest;
+
+/**
+ * Deletes a student visa document.
+ *
+ * DELETE /api/students/{schoolId}/visa/{visaId}/documents/{documentId}
+ */
+#[Beta]
+class DeleteStudentVisaDocumentRequest extends IsamsRequest
+{
+    protected Method $method = Method::DELETE;
+    protected string $responseShape = self::NONE;
+
+    public function __construct(
+        protected string $schoolId,
+        protected int $visaId,
+        protected int $documentId,
+    ) {
+    }
+
+    public function resolveEndpoint(): string
+    {
+        return '/api/students/'.rawurlencode((string) $this->schoolId).'/visa/'.rawurlencode((string) $this->visaId).'/documents/'.rawurlencode((string) $this->documentId);
+    }
+}

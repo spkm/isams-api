@@ -20,6 +20,9 @@ class Spec
     /** @var array<string, mixed>|null */
     private static ?array $manifest = null;
 
+    /** @var array<string, mixed>|null */
+    private static ?array $overrides = null;
+
     /**
      * @return array<string, mixed>
      */
@@ -34,6 +37,18 @@ class Spec
     public static function manifest(): array
     {
         return self::$manifest ??= json_decode((string) file_get_contents(dirname(__DIR__, 2).'/generator/manifest.json'), true);
+    }
+
+    /**
+     * The generator's documented correction to an operation, if any (overrides fix known mistakes in the spec).
+     *
+     * @return array<string, mixed>
+     */
+    public static function override(string $operationId): array
+    {
+        self::$overrides ??= require dirname(__DIR__, 2).'/generator/overrides.php';
+
+        return self::$overrides['operations'][$operationId] ?? [];
     }
 
     /**

@@ -203,8 +203,10 @@ final class Generator
     private function className(array $operation, array $response, array $parameters): string
     {
         $words = explode(' ', $this->tagParts($operation['tag'])['resource'] ?: $this->tagParts($operation['tag'])['area']);
-        $plural = $this->studly(implode(' ', $words));
-        $singular = $this->studly(implode(' ', [...array_slice($words, 0, -1), Str::singular((string) end($words))]));
+        $head = (string) end($words);
+        $uncountable = in_array($head, $this->overrides['uncountable'] ?? [], true);
+        $plural = $this->studly(implode(' ', [...array_slice($words, 0, -1), $uncountable ? $head : Str::plural(Str::singular($head))]));
+        $singular = $this->studly(implode(' ', [...array_slice($words, 0, -1), $uncountable ? $head : Str::singular($head)]));
         $action = $this->action($operation['spec']);
         $bodyIsList = ($parameters['body']['list'] ?? false) === true;
 
@@ -219,8 +221,11 @@ final class Generator
                 $verb = 'Remove';
             }
 
+            preg_match('/\{(\w+)\}$/', $operation['path'], $lastParameter);
+            $endsWithOwnId = isset($lastParameter[1]) && ($lastParameter[1] === 'id' || str_ends_with(strtolower($lastParameter[1]), strtolower(Str::singular($head)).'id'));
+
             $noun = match ($method) {
-                'get' => $response['shape'] === 'list' ? $plural : $singular,
+                'get' => $response['shape'] === 'list' && ! $endsWithOwnId ? $plural : $singular,
                 default => $bodyIsList ? $plural : $singular,
             };
 
@@ -281,6 +286,9 @@ final class Generator
         }
 
         foreach (array_filter($byClass, fn (array $indexes) => count($indexes) > 1) as $class => $indexes) {
+            usort($indexes, fn (int $a, int $b) => strlen($operations[$a]['path']) <=> strlen($operations[$b]['path']));
+            array_shift($indexes);
+
             foreach ($indexes as $index) {
                 $path = $operations[$index]['path'];
                 preg_match_all('/\{(\w+)\}/', $path, $parameters);
@@ -318,6 +326,7 @@ final class Generator
         $none = ['shape' => 'none', 'model' => null, 'resultKey' => '', 'paged' => false];
 
         $response = match (true) {
+            isset($override['response']['definition']) => $this->responseForDefinition($override['response']['definition']),
             isset($override['response']) => [...$none, 'shape' => $override['response']],
             $code === 201 => [...$none, 'shape' => 'created'],
             ($schema['type'] ?? null) === 'file', str_contains($produces, 'image/') || str_contains($produces, 'octet-stream') => [...$none, 'shape' => 'file'],
@@ -632,17 +641,24 @@ final class Generator
         $class->addImplement('Saloon\Contracts\Body\HasBody');
         $class->addTrait('Saloon\Traits\Body\HasMultipartBody');
 
-        $lines = [];
+        $required = [];
+        $optional = [];
 
         foreach ($parts as $name => $part) {
             $value = '$this->'.$part['php'];
-            $lines[] = $part['file']
-                ? "    $value,"
-                : "    $value === null ? null : new MultipartValue('$name', (string) json_encode($value instanceof Data ? {$value}->toArray() : $value)),";
+            $code = $part['file'] ? $value : "new MultipartValue('$name', (string) json_encode($value instanceof Data ? {$value}->toArray() : $value))";
+
+            if ($part['file'] && $part['required']) {
+                $required[] = $code;
+            } else {
+                $optional[] = "if ($value !== null) {\n    \$parts[] = $code;\n}\n";
+            }
         }
 
         $class->addMethod('defaultBody')->setProtected()->setReturnType('array')->addComment('@return list<MultipartValue>')
-            ->setBody("return array_values(array_filter([\n".implode("\n", $lines)."\n]));");
+            ->setBody($optional === []
+                ? 'return ['.implode(', ', $required).'];'
+                : '$parts = ['.implode(', ', $required)."];\n\n".implode("\n", $optional)."\nreturn \$parts;");
     }
 
     private function queueModel(string $definition): string

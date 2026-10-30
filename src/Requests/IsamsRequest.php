@@ -84,6 +84,14 @@ abstract class IsamsRequest extends Request implements Cacheable
         return $this->dto;
     }
 
+    /**
+     * @return array<string, string>
+     */
+    protected function defaultHeaders(): array
+    {
+        return $this->responseShape === self::FILE ? ['Accept' => '*/*'] : [];
+    }
+
     public function createDtoFromResponse(Response $response): mixed
     {
         if ($response->failed()) {

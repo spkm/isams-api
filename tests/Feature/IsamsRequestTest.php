@@ -87,3 +87,14 @@ it('sends a list in the query as repeated keys, the way iSAMS reads them', funct
 
     expect(FakeIsams::received($isams, ExampleRequest::class)->createPsrRequest()->getUri()->getQuery())->toBe('schoolIds=100001&schoolIds=100002&page=1');
 });
+
+it('accepts any content type when downloading a file, and JSON otherwise', function (string $shape, string $accept) {
+    $isams = FakeIsams::respondWith([ExampleRequest::class => MockResponse::make('bytes')]);
+
+    FakeIsams::connector()->send(new ExampleRequest($shape));
+
+    expect(FakeIsams::received($isams, ExampleRequest::class)->createPsrRequest()->getHeaderLine('Accept'))->toBe($accept);
+})->with([
+    'a download' => [IsamsRequest::FILE, '*/*'],
+    'a model' => [IsamsRequest::ONE, 'application/json'],
+]);

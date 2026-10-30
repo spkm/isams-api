@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching'],
+    'areas' => ['Teaching', 'Students'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -41,6 +41,17 @@ return [
         'TeachingSets_Get' => ['handwritten' => GetTeachingSetsRequest::class],
         'TeachingSets_GetStudentsInSetBySetid' => ['handwritten' => GetStudentsInSetBySetidRequest::class],
         'CurriculumSubjectCodes_Get' => ['handwritten' => GetCurriculumSubjectCodesRequest::class],
+
+        // Students
+        'StudentPassports_EditMultiplePassportsBySchoolidPassports' => ['class' => 'UpdateStudentPassportsRequest'],
+        'StudentVisas_EditMultipleVisasAsyncBySchoolidVisas' => ['class' => 'UpdateStudentVisasRequest'],
+        'StudentVisas_GetAllAsyncBySchoolidExpand' => ['response' => ['definition' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentVisas']],
+        'StudentVisas_GetAsyncBySchoolidIdExpand' => ['response' => ['definition' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentVisa']],
+        'StudentDocument_PostAsyncBySchoolid' => ['multipart' => ['data' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Post.StudentDocument']],
+        'StudentPassportDocuments_PostAsyncBySchoolidPassportid' => ['multipart' => ['data' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Post.StudentPassportDocument']],
+        'StudentVisaDocuments_PostAsyncBySchoolidVisaid' => ['multipart' => ['data' => 'iSAMS.Pupils.AppServices.Objects.Public.Resources.Post.StudentVisaDocument']],
+        'StudentPassportDocuments_DownloadAsyncBySchoolidPassportidDocumentid' => ['response' => 'file'],
+        'StudentVisaDocuments_DownloadAsyncBySchoolidVisaidDocumentid' => ['response' => 'file'],
 
         // Teaching
         'TeachingSets_PostBySetidSchoolid' => ['class' => 'AddStudentToTeachingSetRequest'],
@@ -64,6 +75,9 @@ return [
         'PaymentStatus_UpdateParentPortalPaymentStatusGlobalPaymentsAsyncByPaymentstatus' => $paymentWebhook,
         'PaymentStatus_UpdateParentPortalMultiplePaymentStatusGetnetStatusAsyncByGetnetpaymentdetails' => $paymentWebhook,
     ],
+
+    // Words that are the same singular and plural.
+    'uncountable' => ['Alumni', 'Staff', 'News', 'Homework', 'Information', 'Data', 'Metadata'],
 
     // Leading words dropped from a tag's resource name when choosing its namespace.
     'areaNouns' => [
