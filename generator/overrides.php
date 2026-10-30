@@ -454,4 +454,20 @@ return [
         'PortalManagement' => 'CloudPortals',
         'Web' => 'Common',
     ],
+
+    // Batch API calls are named from the method: without Get, a leading All, or the whole group name repeated at the
+    // start (School_GetSchoolTerms is school()->terms()). These read better named by hand.
+    'batchMethods' => [
+        'DailyBulletin_GetTodaysDailyBulletins' => 'today',
+        'DailyBulletin_GetTomorrowsDailyBulletins' => 'tomorrow',
+        'News_GetActiveNews' => 'active',
+        'News_GetArchivedNews' => 'archived',
+        'News_GetFutureNews' => 'future',
+        'Timetable_GetArchivedTimetables' => 'archived',
+        'Timetable_GetDevelopmentTimetables' => 'development',
+        'Timetable_GetPreliminaryTimetables' => 'preliminary',
+        'Timetable_GetPrepTimetables' => 'prep',
+        'Timetable_GetPublishedTimetables' => 'published',
+        'Timetable_GetPupilTimetables' => 'pupils',
+    ],
 ];

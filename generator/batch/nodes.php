@@ -1,7 +1,8 @@
 <?php
 
 // Facts about the iSAMS Batch API: each module's root nodes, the methods that fill them, their filters, and the
-// attributes and children of each node (a child in angle brackets is another node). Read by bin/generate.
+// attributes and children of each node (a child in angle brackets is another node); then, for each method that takes a
+// filter, the module and element iSAMS's filter XML names it by. Read by bin/generate.
 
 return [
     'modules' => [
@@ -7769,6 +7770,30 @@ return [
                 ],
             ],
         ],
+    ],
+    'methodFilters' => [
+        'Calendar_GetEvents' => ['module' => 'Calendar', 'element' => 'Events', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'ContactAdvanced_GetContacts' => ['module' => 'StudentManager', 'element' => 'Contacts', 'attributes' => ['ContactTypes' => 'String', 'ContactOnly' => 'Boolean', 'ContactLocations' => 'String', 'StudentHome' => 'Boolean', 'SystemStatusesToInclude' => 'String', 'AdmissionsStatusesToInclude' => 'String', 'EnrolmentSchoolYearsToInclude' => 'String'], 'required' => true],
+        'ContactAdvanced_GetContactsWithCustomFields' => ['module' => 'StudentManager', 'element' => 'ContactsWithCustomFields', 'attributes' => ['ContactTypes' => 'String', 'ContactOnly' => 'Boolean', 'ContactLocations' => 'String', 'StudentHome' => 'Boolean', 'SystemStatusesToInclude' => 'String', 'AdmissionsStatusesToInclude' => 'String', 'EnrolmentSchoolYearsToInclude' => 'String'], 'required' => true],
+        'Cover_GetAllLessonSuspensions' => ['module' => 'CoverManager', 'element' => 'AllLessonSuspensions', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'Cover_GetAllRoomClosuresAndCover' => ['module' => 'CoverManager', 'element' => 'AllRoomClosuresAndCover', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'DailyBulletin_GetDailyBulletins' => ['module' => 'DailyBulletin', 'element' => 'DailyBulletins', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'Discipline_GetDetentions' => ['module' => 'Discipline', 'element' => 'Detentions', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'ExternalExams_GetExamResults' => ['module' => 'ExamsManager', 'element' => 'ExamResultsFiltered', 'attributes' => ['ExamCycleIdsToInclude' => 'String'], 'required' => false],
+        'Pupil_GetCustomPupilGroupMembershipFiltered' => ['module' => 'StudentManager', 'element' => 'CustomPupilGroupMembershipFiltered', 'attributes' => ['SystemStatusesToInclude' => 'String'], 'required' => true],
+        'Pupil_GetPassports' => ['module' => 'StudentManager', 'element' => 'Passports', 'attributes' => ['SystemStatusesToInclude' => 'String'], 'required' => true],
+        'PupilRegisters_GetFreeSchoolMeals' => ['module' => 'PupilRegisters', 'element' => 'FreeSchoolMeals', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'PupilRegisters_GetGiftedAndTalentedRegister' => ['module' => 'PupilRegisters', 'element' => 'GiftedAndTalentedRegister', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => true],
+        'PupilRegisters_GetSENLessons' => ['module' => 'PupilRegisters', 'element' => 'SENLessons', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => true],
+        'PupilRegisters_GetSENRegister' => ['module' => 'PupilRegisters', 'element' => 'SENRegister', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => false],
+        'PupilRegisters_GetSENTypes' => ['module' => 'PupilRegisters', 'element' => 'SENTypes', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => true],
+        'Registration_GetOutOfSchoolPupils' => ['module' => 'Registration', 'element' => 'OutOfSchoolPupils', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'Registration_GetRegistrationPeriods' => ['module' => 'Registration', 'element' => 'RegistrationPeriods', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'Registration_GetRegistrationStatus' => ['module' => 'Registration', 'element' => 'RegistrationStatus', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'RewardsAndConduct_GetRecords' => ['module' => 'RewardsAndConduct', 'element' => 'Records', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
+        'SchoolReports_GetReportCycles' => ['module' => 'SchoolReports', 'element' => 'ReportCycles', 'attributes' => ['ReportTerm' => 'Integer', 'ReportCycleType' => 'Integer', 'ReportYear' => 'Integer'], 'required' => true],
+        'SchoolReports_GetReports' => ['module' => 'SchoolReports', 'element' => 'Reports', 'attributes' => ['reportCycleIdsToInclude' => 'String', 'ncYear' => 'Integer', 'reportType' => 'Integer', 'reportStatus' => 'Integer'], 'required' => true],
+        'Tracking_GetExternalData' => ['module' => 'TrackingManager', 'element' => 'ExternalData', 'attributes' => ['IDsToInclude' => 'String'], 'required' => true],
     ],
     'photos' => [
         'HumanResources_GetCurrentStaffPhotos' => 'staffphotos.ashx',

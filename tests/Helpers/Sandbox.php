@@ -8,6 +8,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use Saloon\Http\PendingRequest;
 use spkm\IsamsApi\Batch\IsamsBatchConnector;
+use spkm\IsamsApi\IsamsBaseConnector;
 use spkm\IsamsApi\IsamsConnector;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
@@ -43,12 +44,12 @@ class Sandbox
      * Refuses every request that is not a read, unless ISAMS_SANDBOX_ALLOW_WRITES is true, and every GET that makes
      * iSAMS do something.
      *
-     * @template TConnector of IsamsConnector
+     * @template TConnector of IsamsBaseConnector
      *
      * @param  TConnector  $connector
      * @return TConnector
      */
-    public static function guard(IsamsConnector $connector): IsamsConnector
+    public static function guard(IsamsBaseConnector $connector): IsamsBaseConnector
     {
         $connector->middleware()->onRequest(function (PendingRequest $pendingRequest): void {
             $request = $pendingRequest->getRequest();

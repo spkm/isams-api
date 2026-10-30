@@ -175,21 +175,24 @@ it('lists every resource call in ENDPOINTS.md as you would write it, with what i
         ->and((string) file_get_contents($root.'/README.md'))->toContain('(ENDPOINTS.md#rest-api)');
 })->group('spec');
 
-it('separates the REST calls from the Batch API methods in ENDPOINTS.md, listing every batch method and root node with its model and filters', function () {
+it('separates the REST calls from the Batch API calls in ENDPOINTS.md, listing a call for every batch method and each root node no method names', function () {
     $endpoints = (string) file_get_contents(dirname(__DIR__, 2).'/ENDPOINTS.md');
     $rest = Str::between($endpoints, "\n## REST API\n", "\n## Batch API\n");
     $batch = Str::after($endpoints, "\n## Batch API\n");
     $filled = array_map(fn (array $place) => implode('/', $place), BatchMap::METHODS);
     $unfilled = collect(BatchMap::ROOTS)->flatMap(fn (array $roots, string $module) => array_map(fn (string $root) => "$module/$root", array_keys($roots)))->diff($filled);
-    preg_match_all('/^\| `->(method|models)\(.+\)` \| .+ \| .+ \|$/m', $batch, $batchRows);
+    preg_match_all('/^\| `Isams::batch\(\)->\w+\(\)->\w+\(.*\)` \| `Collection<\w+>` \|$/m', $batch, $calls);
+    preg_match_all('/^\| `Isams::batch\(\)->send\(new BatchRequest\)->dto\(\)->models\(.+\)` \| `Collection<\w+>` \|$/m', $batch, $unnamed);
 
     expect($rest)->toContain('| `Isams::teaching()->subjects()->all()` |')
-        ->not->toContain('->method(')
+        ->not->toContain('Isams::batch()')
         ->and($batch)->not->toContain('| `Isams::teaching()')
-        ->toContain("| `->method('Calendar_GetEvents')` | `Collection<Event>` | `StartDate`, `EndDate` (required) |")
-        ->toContain("| `->method('Agent_GetActive')` | `Collection<Agency>` | none |")
-        ->toContain("| `->models('CurriculumManager', 'Levels')` |")
-        ->toContain('| `Isams::batch()->send(BatchPhotosRequest::students())->dto()` | `BatchPhotos`')
-        ->and($batchRows[0])->toHaveCount(count(BatchMap::METHODS) + $unfilled->count())
+        ->toContain('| `Isams::batch()->calendar()->events(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<Event>` |')
+        ->toContain('| `Isams::batch()->pupil()->passports(array $systemStatusesToInclude)` | `Collection<Pupil>` |')
+        ->toContain('| `Isams::batch()->pupil()->currentPupils()` | `Collection<Pupil>` |')
+        ->toContain("| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Levels')` |")
+        ->toContain('| `Isams::batch()->studentPhotos()` | `BatchPhotos`')
+        ->and($calls[0])->toHaveCount(count(BatchMap::METHODS))
+        ->and($unnamed[0])->toHaveCount($unfilled->count())
         ->and((string) file_get_contents(dirname(__DIR__, 2).'/README.md'))->toContain('(ENDPOINTS.md#batch-api)');
 })->group('spec');
