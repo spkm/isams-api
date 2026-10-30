@@ -6,16 +6,16 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\EstateManager\Buildings\Building;
 
 class EstateGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, Building>
+     * @return LazyCollection<int, Building>
      */
-    public function buildingsAndClassrooms(): Collection
+    public function buildingsAndClassrooms(): LazyCollection
     {
         return $this->run('Estate_GetAllBuildingsAndClassrooms', Building::class);
     }

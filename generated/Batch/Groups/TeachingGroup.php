@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\TeachingManager\Departments\Department;
 use spkm\IsamsApi\Data\Batch\TeachingManager\SetLists\SetList;
@@ -16,33 +16,33 @@ use spkm\IsamsApi\Data\Batch\TeachingManager\TeachingForms\TeachingForm;
 class TeachingGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, Department>
+     * @return LazyCollection<int, Department>
      */
-    public function departmentsAndSubjects(): Collection
+    public function departmentsAndSubjects(): LazyCollection
     {
         return $this->run('Teaching_GetDepartmentsAndSubjects', Department::class);
     }
 
     /**
-     * @return Collection<int, TeachingForm>
+     * @return LazyCollection<int, TeachingForm>
      */
-    public function forms(): Collection
+    public function forms(): LazyCollection
     {
         return $this->run('Teaching_GetTeachingForms', TeachingForm::class);
     }
 
     /**
-     * @return Collection<int, SetList>
+     * @return LazyCollection<int, SetList>
      */
-    public function setLists(): Collection
+    public function setLists(): LazyCollection
     {
         return $this->run('Teaching_GetTeachingSetLists', SetList::class);
     }
 
     /**
-     * @return Collection<int, Set>
+     * @return LazyCollection<int, Set>
      */
-    public function sets(): Collection
+    public function sets(): LazyCollection
     {
         return $this->run('Teaching_GetTeachingSets', Set::class);
     }

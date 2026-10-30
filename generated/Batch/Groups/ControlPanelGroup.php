@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\ControlPanel\ContactTypes\ContactType;
 use spkm\IsamsApi\Data\Batch\ControlPanel\GlobalLists\GlobalList;
@@ -18,49 +18,49 @@ use spkm\IsamsApi\Data\Batch\ControlPanel\Users\User;
 class ControlPanelGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, ContactType>
+     * @return LazyCollection<int, ContactType>
      */
-    public function contactTypeGlobalList(): Collection
+    public function contactTypeGlobalList(): LazyCollection
     {
         return $this->run('ControlPanel_GetContactTypeGlobalList', ContactType::class);
     }
 
     /**
-     * @return Collection<int, GlobalList>
+     * @return LazyCollection<int, GlobalList>
      */
-    public function globalLists(): Collection
+    public function globalLists(): LazyCollection
     {
         return $this->run('ControlPanel_GetAllGlobalLists', GlobalList::class);
     }
 
     /**
-     * @return Collection<int, Groups>
+     * @return LazyCollection<int, Groups>
      */
-    public function groupedModules(): Collection
+    public function groupedModules(): LazyCollection
     {
         return $this->run('ControlPanel_GetGroupedModules', Groups::class);
     }
 
     /**
-     * @return Collection<int, Permission>
+     * @return LazyCollection<int, Permission>
      */
-    public function modulePermissions(): Collection
+    public function modulePermissions(): LazyCollection
     {
         return $this->run('ControlPanel_GetModulePermissions', Permission::class);
     }
 
     /**
-     * @return Collection<int, Group>
+     * @return LazyCollection<int, Group>
      */
-    public function userGroups(): Collection
+    public function userGroups(): LazyCollection
     {
         return $this->run('ControlPanel_GetAllUserGroups', Group::class);
     }
 
     /**
-     * @return Collection<int, User>
+     * @return LazyCollection<int, User>
      */
-    public function users(): Collection
+    public function users(): LazyCollection
     {
         return $this->run('ControlPanel_GetAllUsers', User::class);
     }

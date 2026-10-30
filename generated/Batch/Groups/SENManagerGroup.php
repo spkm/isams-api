@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\SENManager\Lessons\Lesson;
 use spkm\IsamsApi\Data\Batch\SENManager\Requirements\Type;
@@ -14,49 +14,49 @@ use spkm\IsamsApi\Data\Batch\SENManager\Requirements\Type;
 class SENManagerGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\SENManager\ExternalExams\Exam>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\SENManager\ExternalExams\Exam>
      */
-    public function externalExams(): Collection
+    public function externalExams(): LazyCollection
     {
         return $this->run('SENManager_GetExternalExams', \spkm\IsamsApi\Data\Batch\SENManager\ExternalExams\Exam::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\SENManager\GiftedAndTalented\Register>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\SENManager\GiftedAndTalented\Register>
      */
-    public function giftedAndTalentedRegister(): Collection
+    public function giftedAndTalentedRegister(): LazyCollection
     {
         return $this->run('SENManager_GetGiftedAndTalentedRegister', \spkm\IsamsApi\Data\Batch\SENManager\GiftedAndTalented\Register::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\SENManager\InternalExams\Exam>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\SENManager\InternalExams\Exam>
      */
-    public function internalExams(): Collection
+    public function internalExams(): LazyCollection
     {
         return $this->run('SENManager_GetInternalExams', \spkm\IsamsApi\Data\Batch\SENManager\InternalExams\Exam::class);
     }
 
     /**
-     * @return Collection<int, Lesson>
+     * @return LazyCollection<int, Lesson>
      */
-    public function senLessons(): Collection
+    public function senLessons(): LazyCollection
     {
         return $this->run('SENManager_GetSENLessons', Lesson::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\SENManager\SEN\Register>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\SENManager\SEN\Register>
      */
-    public function senRegister(): Collection
+    public function senRegister(): LazyCollection
     {
         return $this->run('SENManager_GetSENRegister', \spkm\IsamsApi\Data\Batch\SENManager\SEN\Register::class);
     }
 
     /**
-     * @return Collection<int, Type>
+     * @return LazyCollection<int, Type>
      */
-    public function types(): Collection
+    public function types(): LazyCollection
     {
         return $this->run('SENManager_GetTypes', Type::class);
     }

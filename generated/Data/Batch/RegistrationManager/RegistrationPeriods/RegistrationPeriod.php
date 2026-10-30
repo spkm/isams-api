@@ -16,7 +16,7 @@ readonly class RegistrationPeriod extends BatchData
         public ?CarbonImmutable $start = null,
         public ?CarbonImmutable $finish = null,
         public ?CarbonImmutable $time = null,
-        public ?int $registratonRuleId = null,
+        public ?int $registrationRuleId = null,
         public ?string $registrationType = null,
         public ?string $friendlyName = null,
     ) {

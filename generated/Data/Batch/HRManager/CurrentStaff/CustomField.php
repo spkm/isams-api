@@ -16,6 +16,7 @@ readonly class CustomField extends BatchData
         public ?string $name = null,
         public ?string $section = null,
         public ?string $value = null,
+        public ?int $order = null,
     ) {
     }
 }

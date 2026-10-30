@@ -48,6 +48,7 @@ readonly class ExamEntry extends BatchData
         public ?CarbonImmutable $examEnd = null,
         public ?string $location = null,
         public ?CarbonImmutable $lastUpdated = null,
+        public ?string $editor = null,
     ) {
     }
 }

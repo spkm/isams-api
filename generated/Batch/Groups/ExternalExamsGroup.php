@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\ExamsManager\ExamArrangements\ExamArrangement;
 use spkm\IsamsApi\Data\Batch\ExamsManager\ExamCentres\ExamCentre;
@@ -20,66 +20,65 @@ use spkm\IsamsApi\Data\Batch\ExamsManager\UABIdentifiers\UABIdentifier;
 class ExternalExamsGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, ExamArrangement>
+     * @return LazyCollection<int, ExamArrangement>
      */
-    public function examArrangements(): Collection
+    public function examArrangements(): LazyCollection
     {
         return $this->run('ExternalExams_GetExamArrangements', ExamArrangement::class);
     }
 
     /**
-     * @return Collection<int, ExamCentre>
+     * @return LazyCollection<int, ExamCentre>
      */
-    public function examCentres(): Collection
+    public function examCentres(): LazyCollection
     {
         return $this->run('ExternalExams_GetExamCentres', ExamCentre::class);
     }
 
     /**
-     * @return Collection<int, ExamCycle>
+     * @return LazyCollection<int, ExamCycle>
      */
-    public function examCycles(): Collection
+    public function examCycles(): LazyCollection
     {
         return $this->run('ExternalExams_GetExamCycles', ExamCycle::class);
     }
 
     /**
-     * @return Collection<int, ExamEntry>
+     * @return LazyCollection<int, ExamEntry>
      */
-    public function examEntries(): Collection
+    public function examEntries(): LazyCollection
     {
         return $this->run('ExternalExams_GetExamEntries', ExamEntry::class);
     }
 
     /**
-     * @param  list<int|string>|null  $examCycleIdsToInclude
-     * @return Collection<int, ExamResult>
+     * @return LazyCollection<int, ExamResult>
      */
-    public function examResults(?array $examCycleIdsToInclude = null): Collection
+    public function examResults(): LazyCollection
     {
-        return $this->run('ExternalExams_GetExamResults', ExamResult::class, ['module' => 'ExamsManager', 'element' => 'ExamResultsFiltered', 'attributes' => ['ExamCycleIdsToInclude' => $examCycleIdsToInclude], 'required' => false]);
+        return $this->run('ExternalExams_GetExamResults', ExamResult::class);
     }
 
     /**
-     * @return Collection<int, Qualification>
+     * @return LazyCollection<int, Qualification>
      */
-    public function qualifications(): Collection
+    public function qualifications(): LazyCollection
     {
         return $this->run('ExternalExams_GetQualifications', Qualification::class);
     }
 
     /**
-     * @return Collection<int, UABGroup>
+     * @return LazyCollection<int, UABGroup>
      */
-    public function uabGroups(): Collection
+    public function uabGroups(): LazyCollection
     {
         return $this->run('ExternalExams_GetUABGroups', UABGroup::class);
     }
 
     /**
-     * @return Collection<int, UABIdentifier>
+     * @return LazyCollection<int, UABIdentifier>
      */
-    public function uabIdentifiers(): Collection
+    public function uabIdentifiers(): LazyCollection
     {
         return $this->run('ExternalExams_GetUABIdentifiers', UABIdentifier::class);
     }

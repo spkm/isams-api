@@ -20,6 +20,7 @@ readonly class Type extends BatchData
         public ?bool $categoryActive = null,
         public ?string $categoryDescription = null,
         public ?int $categoryValue = null,
+        public ?string $description = null,
     ) {
     }
 }

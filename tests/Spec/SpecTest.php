@@ -189,15 +189,15 @@ it('separates the REST calls from the Batch API calls in ENDPOINTS.md, listing a
     $batch = Str::after($endpoints, "\n## Batch API\n");
     $filled = array_map(fn (array $place) => implode('/', $place), BatchMap::METHODS);
     $unfilled = collect(BatchMap::ROOTS)->flatMap(fn (array $roots, string $module) => array_map(fn (string $root) => "$module/$root", array_keys($roots)))->diff($filled);
-    preg_match_all('/^\| `Isams::batch\(\)->\w+\(\)->\w+\(.*\)` \| `Collection<\w+>` \|$/m', $batch, $calls);
+    preg_match_all('/^\| `Isams::batch\(\)->\w+\(\)->\w+\(.*\)` \| `LazyCollection<\w+>` \|$/m', $batch, $calls);
     preg_match_all('/^\| `Isams::batch\(\)->send\(new BatchRequest\)->dto\(\)->models\(.+\)` \| `Collection<\w+>` \|$/m', $batch, $unnamed);
 
     expect($rest)->toContain('| `Isams::teaching()->subjects()->all()` |')
         ->not->toContain('Isams::batch()')
         ->and($batch)->not->toContain('| `Isams::teaching()')
-        ->toContain('| `Isams::batch()->calendar()->events(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `Collection<Event>` |')
-        ->toContain('| `Isams::batch()->pupil()->passports(array $systemStatusesToInclude)` | `Collection<Pupil>` |')
-        ->toContain('| `Isams::batch()->pupil()->currentPupils()` | `Collection<Pupil>` |')
+        ->toContain('| `Isams::batch()->calendar()->events(DateTimeInterface $startDate, DateTimeInterface $endDate)` | `LazyCollection<Event>` |')
+        ->toContain('| `Isams::batch()->pupil()->passports(array $systemStatusesToInclude)` | `LazyCollection<Pupil>` |')
+        ->toContain('| `Isams::batch()->pupil()->currentPupils()` | `LazyCollection<Pupil>` |')
         ->toContain("| `Isams::batch()->send(new BatchRequest)->dto()->models('CurriculumManager', 'Levels')` |")
         ->toContain('| `Isams::batch()->studentPhotos()` | `BatchPhotos`')
         ->and($calls[0])->toHaveCount(count(BatchMap::METHODS))

@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Batch\Groups;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\RegistrationManager\DatesAndTimes\DateTime;
 use spkm\IsamsApi\Data\Batch\RegistrationManager\OutOfSchool\Pupil;
@@ -19,49 +19,49 @@ use spkm\IsamsApi\Data\Batch\RegistrationManager\RegistrationStatuses\Registrati
 class RegistrationGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, RegistrationCode>
+     * @return LazyCollection<int, RegistrationCode>
      */
-    public function codes(): Collection
+    public function codes(): LazyCollection
     {
         return $this->run('Registration_GetRegistrationCodes', RegistrationCode::class);
     }
 
     /**
-     * @return Collection<int, DateTime>
+     * @return LazyCollection<int, DateTime>
      */
-    public function datesAndTimes(): Collection
+    public function datesAndTimes(): LazyCollection
     {
         return $this->run('Registration_GetDatesAndTimes', DateTime::class);
     }
 
     /**
-     * @return Collection<int, Pupil>
+     * @return LazyCollection<int, Pupil>
      */
-    public function outOfSchoolPupils(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function outOfSchoolPupils(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('Registration_GetOutOfSchoolPupils', Pupil::class, ['module' => 'Registration', 'element' => 'OutOfSchoolPupils', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
-     * @return Collection<int, RegistrationPeriod>
+     * @return LazyCollection<int, RegistrationPeriod>
      */
-    public function periods(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function periods(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('Registration_GetRegistrationPeriods', RegistrationPeriod::class, ['module' => 'Registration', 'element' => 'RegistrationPeriods', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
-     * @return Collection<int, PresentCode>
+     * @return LazyCollection<int, PresentCode>
      */
-    public function presentCodes(): Collection
+    public function presentCodes(): LazyCollection
     {
         return $this->run('Registration_GetPresentCodes', PresentCode::class);
     }
 
     /**
-     * @return Collection<int, RegistrationStatus>
+     * @return LazyCollection<int, RegistrationStatus>
      */
-    public function status(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function status(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('Registration_GetRegistrationStatus', RegistrationStatus::class, ['module' => 'Registration', 'element' => 'RegistrationStatus', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }

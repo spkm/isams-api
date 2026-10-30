@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\PendingRequest;
 use spkm\IsamsApi\Batch\BatchData;
@@ -118,7 +118,7 @@ function batchCalls(): array
     return $calls;
 }
 
-it('gives every Batch API method one call that runs only it and returns its root node\'s models', function () {
+it('gives every Batch API method one call that runs only it and returns its root node\'s models, lazily', function () {
     $calls = batchCalls();
 
     expect(array_keys($calls))->toEqualCanonicalizing(array_keys(BatchMap::METHODS));
@@ -126,7 +126,7 @@ it('gives every Batch API method one call that runs only it and returns its root
     foreach ($calls as $method => ['returned' => $returned]) {
         [$module, $root] = BatchMap::METHODS[$method];
 
-        expect($returned)->toBeInstanceOf(Collection::class)
+        expect($returned)->toBeInstanceOf(LazyCollection::class)
             ->and($returned->first())->toBeInstanceOf(BatchMap::ROOTS[$module][$root]['model']);
     }
 })->group('spec');

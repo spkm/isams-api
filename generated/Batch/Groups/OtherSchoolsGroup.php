@@ -6,7 +6,7 @@
 
 namespace spkm\IsamsApi\Batch\Groups;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\OtherSchools\BoardingTypes\BoardingType;
 use spkm\IsamsApi\Data\Batch\OtherSchools\GovernanceTypes\GovernanceType;
@@ -17,41 +17,41 @@ use spkm\IsamsApi\Data\Batch\OtherSchools\Schools\School;
 class OtherSchoolsGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, School>
+     * @return LazyCollection<int, School>
      */
-    public function all(): Collection
+    public function all(): LazyCollection
     {
         return $this->run('OtherSchools_GetOtherSchools', School::class);
     }
 
     /**
-     * @return Collection<int, BoardingType>
+     * @return LazyCollection<int, BoardingType>
      */
-    public function boardingTypes(): Collection
+    public function boardingTypes(): LazyCollection
     {
         return $this->run('OtherSchools_BoardingTypes', BoardingType::class);
     }
 
     /**
-     * @return Collection<int, GovernanceType>
+     * @return LazyCollection<int, GovernanceType>
      */
-    public function governanceTypes(): Collection
+    public function governanceTypes(): LazyCollection
     {
         return $this->run('OtherSchools_GovernanceTypes', GovernanceType::class);
     }
 
     /**
-     * @return Collection<int, IntakeType>
+     * @return LazyCollection<int, IntakeType>
      */
-    public function intakeTypes(): Collection
+    public function intakeTypes(): LazyCollection
     {
         return $this->run('OtherSchools_IntakeTypes', IntakeType::class);
     }
 
     /**
-     * @return Collection<int, SchoolType>
+     * @return LazyCollection<int, SchoolType>
      */
-    public function schoolTypes(): Collection
+    public function schoolTypes(): LazyCollection
     {
         return $this->run('OtherSchools_GetSchoolTypes', SchoolType::class);
     }

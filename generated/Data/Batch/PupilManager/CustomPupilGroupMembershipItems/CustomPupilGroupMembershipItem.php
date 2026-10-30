@@ -12,11 +12,11 @@ readonly class CustomPupilGroupMembershipItem extends BatchData
 {
     public function __construct(
         public ?int $id = null,
-        public ?int $pupilId = null,
+        public ?int $pupilID = null,
         public ?int $personId = null,
         public ?string $personGuid = null,
         public ?string $schoolId = null,
-        public ?int $customGroupID = null,
+        public ?int $customGroupId = null,
         public ?bool $deleted = null,
         public ?bool $hidden = null,
     ) {

@@ -1,8 +1,9 @@
 <?php
 
 // Facts about the iSAMS Batch API: each module's root nodes, the methods that fill them, their filters, and the
-// attributes and children of each node (a child in angle brackets is another node); then, for each method that takes a
-// filter, the module and element iSAMS's filter XML names it by. Read by bin/generate.
+// attributes and children of each node (a child in angle brackets is another node, and one ending [] is that node
+// repeated directly, as a list); then, for each method that takes a filter, the module and element iSAMS's filter XML
+// names it by. Read by bin/generate.
 
 return [
     'modules' => [
@@ -632,7 +633,7 @@ return [
                     'Groups' => [
                         'attributes' => [],
                         'children' => [
-                            'Group' => '<Group>',
+                            'Group' => '<Group>[]',
                         ],
                     ],
                     'Group' => [
@@ -681,6 +682,7 @@ return [
                             'Modify' => 'Bit',
                             'Full' => 'Bit',
                             'LastUpdated' => 'DateTime',
+                            'Author' => 'String',
                         ],
                     ],
                 ],
@@ -3921,7 +3923,7 @@ return [
                             'Dictionary' => 'Bit',
                             'Prompter' => 'Bit',
                             'Reader' => 'Bit',
-                            'SeparateInvigilation' => 'Bit',
+                            'SeperateInvigilation' => 'Bit',
                             'Scribe' => 'Bit',
                             'ColourNaming' => 'Bit',
                             'Notes' => 'String',
@@ -4028,6 +4030,7 @@ return [
                             'ExamEnd' => 'DateTime',
                             'Location' => 'String',
                             'LastUpdated' => 'DateTime',
+                            'Editor' => 'String',
                         ],
                     ],
                 ],
@@ -4083,7 +4086,7 @@ return [
                         'attributes' => [
                             'Id' => 'Integer',
                             'PupilId' => 'Integer',
-                            'CycleId' => 'Integer',
+                            'Cycle' => 'Integer',
                             'AuthorId' => 'Integer',
                         ],
                         'children' => [
@@ -4263,6 +4266,7 @@ return [
                             'Name' => 'String',
                             'Section' => 'String',
                             'Value' => 'String',
+                            'Order' => 'Integer',
                         ],
                     ],
                 ],
@@ -5199,13 +5203,13 @@ return [
                     'CustomPupilGroupMembershipItem' => [
                         'attributes' => [
                             'Id' => 'Integer',
-                            'PupilId' => 'Integer',
+                            'PupilID' => 'Integer',
                             'PersonId' => 'Integer',
                             'PersonGuid' => 'String',
                         ],
                         'children' => [
                             'SchoolId' => 'String',
-                            'CustomGroupID' => 'Integer',
+                            'CustomGroupId' => 'Integer',
                             'Deleted' => 'Bit',
                             'Hidden' => 'Bit',
                         ],
@@ -5222,7 +5226,7 @@ return [
                     'CustomPupilGroup' => [
                         'attributes' => [
                             'Id' => 'Integer',
-                            'AuthorId' => 'Integer',
+                            'AuthorID' => 'Integer',
                         ],
                         'children' => [
                             'Author' => 'String',
@@ -5561,7 +5565,7 @@ return [
                             'Start' => 'DateTime',
                             'Finish' => 'DateTime',
                             'Time' => 'DateTime',
-                            'RegistratonRuleId' => 'Integer',
+                            'RegistrationRuleId' => 'Integer',
                             'RegistrationType' => 'String',
                             'FriendlyName' => 'String',
                         ],
@@ -5647,6 +5651,7 @@ return [
                             'Active' => 'Bit',
                             'Author' => 'String',
                             'LastUpdated' => 'DateTime',
+                            'LastEdited' => 'DateTime',
                         ],
                     ],
                 ],
@@ -5720,6 +5725,7 @@ return [
                             'CategoryActive' => 'Bit',
                             'CategoryDescription' => 'String',
                             'CategoryValue' => 'Integer',
+                            'Description' => 'String',
                         ],
                     ],
                 ],
@@ -6693,7 +6699,7 @@ return [
                     'Divisions' => [
                         'attributes' => [],
                         'children' => [
-                            'DivisionName' => 'String',
+                            'Division' => '<Division>',
                         ],
                     ],
                     'Division' => [
@@ -7597,7 +7603,7 @@ return [
                     'Pupils' => [
                         'attributes' => [],
                         'children' => [
-                            'Pupil' => '<Pupil>',
+                            'Pupil' => '<Pupil>[]',
                         ],
                     ],
                     'Pupil' => [
@@ -7758,7 +7764,7 @@ return [
                             'Active' => 'Bit',
                             'StartDate' => 'DateTime',
                             'EndDate' => 'DateTime',
-                            'Ordinal' => 'Bit',
+                            'Ordinal' => 'Integer',
                             'Directory' => 'String',
                             'Filename' => 'String',
                             'Author' => 'String',
@@ -7779,13 +7785,12 @@ return [
         'Cover_GetAllRoomClosuresAndCover' => ['module' => 'CoverManager', 'element' => 'AllRoomClosuresAndCover', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
         'DailyBulletin_GetDailyBulletins' => ['module' => 'DailyBulletin', 'element' => 'DailyBulletins', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
         'Discipline_GetDetentions' => ['module' => 'Discipline', 'element' => 'Detentions', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
-        'ExternalExams_GetExamResults' => ['module' => 'ExamsManager', 'element' => 'ExamResultsFiltered', 'attributes' => ['ExamCycleIdsToInclude' => 'String'], 'required' => false],
         'Pupil_GetCustomPupilGroupMembershipFiltered' => ['module' => 'StudentManager', 'element' => 'CustomPupilGroupMembershipFiltered', 'attributes' => ['SystemStatusesToInclude' => 'String'], 'required' => true],
         'Pupil_GetPassports' => ['module' => 'StudentManager', 'element' => 'Passports', 'attributes' => ['SystemStatusesToInclude' => 'String'], 'required' => true],
         'PupilRegisters_GetFreeSchoolMeals' => ['module' => 'PupilRegisters', 'element' => 'FreeSchoolMeals', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
         'PupilRegisters_GetGiftedAndTalentedRegister' => ['module' => 'PupilRegisters', 'element' => 'GiftedAndTalentedRegister', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => true],
         'PupilRegisters_GetSENLessons' => ['module' => 'PupilRegisters', 'element' => 'SENLessons', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => true],
-        'PupilRegisters_GetSENRegister' => ['module' => 'PupilRegisters', 'element' => 'SENRegister', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => false],
+        'PupilRegisters_GetSENRegister' => ['module' => 'PupilRegisters', 'element' => 'SENRegister', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => true],
         'PupilRegisters_GetSENTypes' => ['module' => 'PupilRegisters', 'element' => 'SENTypes', 'attributes' => ['systemStatusesToInclude' => 'String'], 'required' => true],
         'Registration_GetOutOfSchoolPupils' => ['module' => 'Registration', 'element' => 'OutOfSchoolPupils', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],
         'Registration_GetRegistrationPeriods' => ['module' => 'Registration', 'element' => 'RegistrationPeriods', 'attributes' => ['StartDate' => 'Date', 'EndDate' => 'Date'], 'required' => true],

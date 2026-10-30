@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Batch\Groups;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\CalendarManager\Categories\Category;
 use spkm\IsamsApi\Data\Batch\CalendarManager\Types\Type;
@@ -15,73 +15,73 @@ use spkm\IsamsApi\Data\Batch\CalendarManager\Types\Type;
 class CalendarGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, Category>
+     * @return LazyCollection<int, Category>
      */
-    public function categories(): Collection
+    public function categories(): LazyCollection
     {
         return $this->run('Calendar_GetCategories', Category::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\Events\Event>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\Events\Event>
      */
-    public function events(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function events(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('Calendar_GetEvents', \spkm\IsamsApi\Data\Batch\CalendarManager\Events\Event::class, ['module' => 'Calendar', 'element' => 'Events', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextMonth\Event>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextMonth\Event>
      */
-    public function eventsNextMonth(): Collection
+    public function eventsNextMonth(): LazyCollection
     {
         return $this->run('Calendar_GetEventsNextMonth', \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextMonth\Event::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextWeek\Event>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextWeek\Event>
      */
-    public function eventsNextWeek(): Collection
+    public function eventsNextWeek(): LazyCollection
     {
         return $this->run('Calendar_GetEventsNextWeek', \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextWeek\Event::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextYear\Event>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextYear\Event>
      */
-    public function eventsNextYear(): Collection
+    public function eventsNextYear(): LazyCollection
     {
         return $this->run('Calendar_GetEventsNextYear', \spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextYear\Event::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisMonth\Event>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisMonth\Event>
      */
-    public function eventsThisMonth(): Collection
+    public function eventsThisMonth(): LazyCollection
     {
         return $this->run('Calendar_GetEventsThisMonth', \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisMonth\Event::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisWeek\Event>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisWeek\Event>
      */
-    public function eventsThisWeek(): Collection
+    public function eventsThisWeek(): LazyCollection
     {
         return $this->run('Calendar_GetEventsThisWeek', \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisWeek\Event::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisYear\Event>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisYear\Event>
      */
-    public function eventsThisYear(): Collection
+    public function eventsThisYear(): LazyCollection
     {
         return $this->run('Calendar_GetEventsThisYear', \spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisYear\Event::class);
     }
 
     /**
-     * @return Collection<int, Type>
+     * @return LazyCollection<int, Type>
      */
-    public function types(): Collection
+    public function types(): LazyCollection
     {
         return $this->run('Calendar_GetTypes', Type::class);
     }

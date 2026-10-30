@@ -7,31 +7,31 @@
 namespace spkm\IsamsApi\Batch\Groups;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 
 class DisciplineGroup extends BatchGroup
 {
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\DisciplineManager\Detentions\Session>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\DisciplineManager\Detentions\Session>
      */
-    public function detentions(DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    public function detentions(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
         return $this->run('Discipline_GetDetentions', \spkm\IsamsApi\Data\Batch\DisciplineManager\Detentions\Session::class, ['module' => 'Discipline', 'element' => 'Detentions', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisMonth\Session>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisMonth\Session>
      */
-    public function detentionsThisMonth(): Collection
+    public function detentionsThisMonth(): LazyCollection
     {
         return $this->run('Discipline_GetDetentionsThisMonth', \spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisMonth\Session::class);
     }
 
     /**
-     * @return Collection<int, \spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisTerm\Session>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisTerm\Session>
      */
-    public function detentionsThisTerm(): Collection
+    public function detentionsThisTerm(): LazyCollection
     {
         return $this->run('Discipline_GetDetentionsThisTerm', \spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisTerm\Session::class);
     }
