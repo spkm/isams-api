@@ -19,7 +19,7 @@ return [
     'operations' => [
         // Where iSAMS answers differently from its spec (found by the sandbox checks)
         'Sms_GetBatchMessagesAsyncByPagePagesize' => ['response' => ['list' => 'iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.SmsBatch', 'key' => 'smsBatches', 'paged' => true]],
-        'Gradebooks_GetAll' => ['response' => ['list' => 'iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookOverview', 'key' => '']],
+        'Gradebooks_GetAll' => ['response' => ['list' => 'iSAMS.Markbooks.AppServices.Objects.Public.Get.Gradebook', 'key' => '']],
         'ApplicantAlumniCustomFields_GetAsyncBySchoolidCustomfieldid' => ['response' => ['list' => 'iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField', 'key' => 'customFields']],
         'ApplicantCustomFields_GetAsyncBySchoolidCustomfieldid' => ['response' => ['list' => 'iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField', 'key' => 'customFields']],
         'ApplicantStudentCustomFields_GetAsyncBySchoolidCustomfieldid' => ['response' => ['list' => 'iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField', 'key' => 'customFields']],
@@ -462,6 +462,11 @@ return [
         'Registers' => 'StudentRegisters',
         'PortalManagement' => 'CloudPortals',
         'Web' => 'Common',
+    ],
+
+    // Fields iSAMS sends that its spec's definitions leave out (found by the sandbox checks).
+    'properties' => [
+        'iSAMS.MedicalCentre.Entities.Public.Resources.Get.MedicalVaccinationType' => ['deleted' => ['type' => 'boolean']],
     ],
 
     // Batch API calls are named from the method: without Get, a leading All, or the whole group name repeated at the

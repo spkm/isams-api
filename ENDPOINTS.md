@@ -454,7 +454,7 @@ throws an `IsamsApiException`. See [Two ways to call iSAMS](README.md#two-ways-t
 
 | Call | Returns |
 |---|---|
-| `Isams::gradebooks()->all(string\|Stringable\|null $filter = null)` | `Collection<GradebookOverview>` |
+| `Isams::gradebooks()->all(string\|Stringable\|null $filter = null)` | `Collection<Gradebook>` |
 | `Isams::gradebooks()->assessmentColumn()->create(int $gradebookId, AssessmentColumnStructureForCreate\|array $assessmentColumnStructure)` | `Created` |
 | `Isams::gradebooks()->assessmentColumn()->delete(int $gradebookId, int $columnId)` | `bool` |
 | `Isams::gradebooks()->assessmentColumn()->get(int $gradebookId, int $columnId)` | `AssessmentColumnStructure` |

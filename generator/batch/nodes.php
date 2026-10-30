@@ -641,6 +641,8 @@ return [
                             'Id' => 'Integer',
                         ],
                         'children' => [
+                            'Name' => 'String',
+                            'Description' => 'String',
                             'Modules' => '<Modules>',
                         ],
                     ],
@@ -6706,7 +6708,9 @@ return [
                         'attributes' => [
                             'Id' => 'Integer',
                         ],
-                        'children' => [],
+                        'children' => [
+                            'DivisionName' => 'String',
+                        ],
                     ],
                     'Subjects' => [
                         'attributes' => [],

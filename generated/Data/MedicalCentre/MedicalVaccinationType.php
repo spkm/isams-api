@@ -13,6 +13,7 @@ readonly class MedicalVaccinationType extends Data
     public function __construct(
         public ?int $id = null,
         public ?string $name = null,
+        public ?bool $deleted = null,
     ) {
     }
 }

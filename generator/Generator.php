@@ -76,6 +76,12 @@ final class Generator
         $this->specV2 = json_decode((string) file_get_contents($root.'/generator/spec/isams-v2.json'), true, flags: JSON_THROW_ON_ERROR);
         $this->spec['definitions'] += $this->specV2['definitions'];
         $this->overrides = require $root.'/generator/overrides.php';
+
+        foreach ($this->overrides['properties'] ?? [] as $definition => $properties) {
+            if (isset($this->spec['definitions'][$definition])) {
+                $this->spec['definitions'][$definition]['properties'] = [...$this->spec['definitions'][$definition]['properties'] ?? [], ...$properties];
+            }
+        }
     }
 
     /**
@@ -163,9 +169,11 @@ final class Generator
             }
         }
 
-        foreach (array_keys($this->overrides['models'] ?? []) as $definition) {
-            if (! isset($this->spec['definitions'][$definition])) {
-                $problems[] = "models.$definition: no such definition in the spec";
+        foreach (['models', 'properties'] as $setting) {
+            foreach (array_keys($this->overrides[$setting] ?? []) as $definition) {
+                if (! isset($this->spec['definitions'][$definition])) {
+                    $problems[] = "$setting.$definition: no such definition in the spec";
+                }
             }
         }
 

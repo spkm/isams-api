@@ -91,3 +91,11 @@ it('refuses a response correction naming a definition the spec does not have', f
         return $overrides;
     }))->toThrow(RuntimeException::class, 'operations.Subjects_GetAll.response: no such definition iSAMS.Nowhere.Get.Thing');
 });
+
+it('refuses a property correction for a definition the spec does not have', function () {
+    expect(fn () => generateWithOverrides(function (array $overrides) {
+        $overrides['properties']['iSAMS.Nowhere.Get.Thing'] = ['deleted' => ['type' => 'boolean']];
+
+        return $overrides;
+    }))->toThrow(RuntimeException::class, 'properties.iSAMS.Nowhere.Get.Thing: no such definition in the spec');
+});

@@ -12,6 +12,7 @@ readonly class Division extends BatchData
 {
     public function __construct(
         public ?int $id = null,
+        public ?string $divisionName = null,
     ) {
     }
 }

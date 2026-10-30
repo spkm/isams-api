@@ -4,7 +4,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use Saloon\Http\Faking\MockResponse;
 use spkm\IsamsApi\Data\Admissions\CustomField;
-use spkm\IsamsApi\Data\Gradebooks\GradebookOverview;
+use spkm\IsamsApi\Data\Gradebooks\Gradebook;
 use spkm\IsamsApi\Data\MedicalCentre\MedicalVaccinationType;
 use spkm\IsamsApi\Data\RewardsAndConduct\Category;
 use spkm\IsamsApi\Data\RewardsAndConduct\Reward;
@@ -41,15 +41,15 @@ it('reads a response shaped as iSAMS sends it, not as its spec says', function (
     ],
     'vaccination types, under vaccinationTypes' => [
         GetMedicalVaccinationTypesRequest::class,
-        ['vaccinationTypes' => [['id' => 3, 'name' => 'Made-up vaccine']]],
+        ['vaccinationTypes' => [['id' => 3, 'name' => 'Made-up vaccine', 'deleted' => true]]],
         fn (IsamsConnector $isams) => $isams->medicalCentre()->vaccination()->getTypes(),
-        fn (mixed $types) => expect($types)->toBeInstanceOf(Collection::class)->and($types->first())->toBeInstanceOf(MedicalVaccinationType::class)->and($types->first()->name)->toBe('Made-up vaccine'),
+        fn (mixed $types) => expect($types)->toBeInstanceOf(Collection::class)->and($types->first())->toBeInstanceOf(MedicalVaccinationType::class)->and($types->first()->name)->toBe('Made-up vaccine')->and($types->first()->deleted)->toBeTrue(),
     ],
-    'gradebooks, as a bare list' => [
+    'gradebooks, as a bare list of whole gradebooks' => [
         GetGradebooksRequest::class,
-        [['id' => 5, 'name' => 'Made-up gradebook']],
+        [['id' => 5, 'name' => 'Made-up gradebook', 'archived' => true]],
         fn (IsamsConnector $isams) => $isams->gradebooks()->all(),
-        fn (mixed $gradebooks) => expect($gradebooks->first())->toBeInstanceOf(GradebookOverview::class)->and($gradebooks->first()->name)->toBe('Made-up gradebook'),
+        fn (mixed $gradebooks) => expect($gradebooks->first())->toBeInstanceOf(Gradebook::class)->and($gradebooks->first()->archived)->toBeTrue(),
     ],
     'one reward category, as one object' => [
         GetCategoryRequest::class,
