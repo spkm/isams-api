@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News', 'Gradebooks'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -260,6 +260,46 @@ return [
         'OtherSchools_GetAllByPagePagesize' => ['cacheable' => true],
         'OtherSchools_GetById' => ['cacheable' => true],
         'Professions_GetAll' => ['cacheable' => true],
+
+        // Gradebooks
+        'GradesetConfiguration_GetAll' => ['cacheable' => true],
+        'GradesetConfiguration_GetByGradesetid' => ['cacheable' => true],
+        'IndicatorConfiguration_GetAll' => ['cacheable' => true],
+        'IndicatorConfiguration_GetByIndicatorid' => ['cacheable' => true],
+        'StylingDesignConfiguration_GetAll' => ['cacheable' => true],
+        'StylingDesignConfiguration_GetByStylingdesignid' => ['cacheable' => true],
+        'StylingRuleConfiguration_GetAll' => ['cacheable' => true],
+        'StylingRuleConfiguration_GetByStylingruleid' => ['cacheable' => true],
+        'TransposeConfiguration_GetAll' => ['cacheable' => true],
+        'TransposeConfiguration_GetByTransposeid' => ['cacheable' => true],
+        'WeightingConfiguration_GetAll' => ['cacheable' => true],
+        'WeightingConfiguration_GetByWeightingid' => ['cacheable' => true],
+        'AssessmentColumnStructure_CreateAssessmentColumnByGradebookidAssessmentcolumnstructure' => ['class' => 'CreateAssessmentColumnRequest'],
+        'AssessmentColumnStructure_DeleteByGradebookidColumnid' => ['class' => 'DeleteAssessmentColumnRequest'],
+        'AssessmentColumnStructure_GetByGradebookidColumnid' => ['class' => 'GetAssessmentColumnRequest'],
+        'AssessmentColumnStructure_UpdateAssessmentColumnByGradebookidColumnidAssessmentcolumnstructure' => ['class' => 'PatchAssessmentColumnRequest'],
+        'CalculationColumnStructure_CreateByGradebookidCalculationcolumnstructure' => ['class' => 'CreateCalculationColumnRequest'],
+        'CalculationColumnStructure_DeleteByGradebookidColumnid' => ['class' => 'DeleteCalculationColumnRequest'],
+        'CalculationColumnStructure_GetByGradebookidColumnid' => ['class' => 'GetCalculationColumnRequest'],
+        'CalculationColumnStructure_UpdateByGradebookidColumnidCalculationcolumnstructure' => ['class' => 'PatchCalculationColumnRequest'],
+        'ColumnStructureReportMappings_CreateByGradebookidColumnidReportmappings' => ['class' => 'CreateColumnReportMappingsRequest'],
+        'ColumnStructureReportMappings_DeleteByGradebookidColumnidReportmappingid' => ['class' => 'DeleteColumnReportMappingRequest'],
+        'ColumnStructureReportMappings_GetByGradebookidColumnid' => ['class' => 'GetColumnReportMappingsRequest'],
+        'GroupStructure_CreateByGradebookidGroupstructure' => ['class' => 'CreateGradebookGroupRequest'],
+        'GroupStructure_DeleteByGradebookidGroupid' => ['class' => 'DeleteGradebookGroupRequest'],
+        'GroupStructure_GetByGradebookidGroupid' => ['class' => 'GetGradebookGroupRequest'],
+        'GroupStructure_UpdateByGradebookidGroupidGroupstructure' => ['class' => 'PatchGradebookGroupRequest'],
+        'GradebookStaffAllocations_GetAllocationByGradebookidCriteria' => ['class' => 'GetGradebookStaffAllocationsRequest'],
+        'GradebookStaffAllocations_PostAllocatedByGradebookidCriteriaStaffallocations' => ['class' => 'CreateGradebookStaffAllocationsRequest'],
+        'GradebookStudentAllocations_PostAllocationsByGradebookidCriteriaStudentallocations' => ['class' => 'CreateGradebookStudentAllocationsRequest'],
+        'Marks_GetAllByGradebookidPagePagesize' => ['class' => 'GetGradebookMarksRequest'],
+        'Marks_GetByGradebookidSchoolid' => ['class' => 'GetGradebookStudentMarksRequest'],
+        'Marks_UpdateMarksByGradebookidMarkcollection' => ['class' => 'UpdateGradebookMarksRequest'],
+        'Structure_GetByGradebookid' => ['class' => 'GetGradebookStructureRequest'],
+        'StudentExclusions_GetByGradebookidColumnid' => ['class' => 'GetStudentExclusionsRequest'],
+        'StudentExclusions_PostStudentExclusionByGradebookidColumnidSchoolids' => ['class' => 'CreateStudentExclusionsRequest'],
+        'Tags_DeleteTagByGradebookidCategoryidCategoryentityid' => ['class' => 'DeleteGradebookTagRequest'],
+        'Tags_PostTagsByGradebookidTags' => ['class' => 'CreateGradebookTagsRequest'],
 
         // System Configuration
         'List_GetAsyncByListtype' => ['class' => 'GetListByTypeRequest', 'cacheable' => true],

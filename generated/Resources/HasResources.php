@@ -48,6 +48,11 @@ trait HasResources
         return new ExclusionsResource($this);
     }
 
+    public function gradebooks(): GradebooksResource
+    {
+        return new GradebooksResource($this);
+    }
+
     public function humanResources(): HumanResourcesResource
     {
         return new HumanResourcesResource($this);
