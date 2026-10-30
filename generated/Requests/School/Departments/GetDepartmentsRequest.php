@@ -7,7 +7,6 @@
 namespace spkm\IsamsApi\Requests\School\Departments;
 
 use Saloon\Enums\Method;
-use spkm\IsamsApi\Data\School\IDepartment;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -19,7 +18,6 @@ class GetDepartmentsRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
     protected string $responseShape = self::LIST;
-    protected ?string $dto = IDepartment::class;
     public string $resultKey = 'departments';
     protected bool $cacheable = true;
 
