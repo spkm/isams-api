@@ -30,18 +30,23 @@
         "larastan/larastan": "^3.13",
         "laravel/pint": "^1.20",
         "mockery/mockery": "^1.6",
+        "nette/php-generator": "^4.1",
         "orchestra/testbench": "^10.0||^11.0",
         "pestphp/pest": "^4.0",
         "symfony/var-dumper": "^7.2"
     },
     "autoload": {
         "psr-4": {
-            "spkm\\IsamsApi\\": "src/"
+            "spkm\\IsamsApi\\": [
+                "src/",
+                "generated/"
+            ]
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "spkm\\IsamsApi\\Tests\\": "tests/"
+            "spkm\\IsamsApi\\Tests\\": "tests/",
+            "spkm\\IsamsApi\\Generator\\": "generator/"
         }
     },
     "extra": {
@@ -62,7 +67,9 @@
         "test": "pest",
         "analyse": "phpstan analyse --memory-limit=1G",
         "format": "pint",
-        "format:check": "pint --test"
+        "format:check": "pint --test",
+        "generate": "@php bin/generate",
+        "generate:check": "@php bin/generate --check"
     },
     "config": {
         "allow-plugins": {

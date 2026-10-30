@@ -15,4 +15,4 @@ use spkm\IsamsApi\Tests\TestCase;
 
 Config::preventStrayRequests();
 
-pest()->extend(TestCase::class)->in('Feature', 'Unit');
+pest()->extend(TestCase::class)->in('Feature', 'Unit', 'Spec');

@@ -8,21 +8,40 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use JsonException;
+use JsonSerializable;
+use Saloon\Config;
 use Saloon\Contracts\OAuthAuthenticator;
+use Saloon\Enums\Method;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 use Saloon\Helpers\OAuth2\OAuthConfig;
 use Saloon\Http\Auth\AccessTokenAuthenticator;
 use Saloon\Http\Connector;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
+use Saloon\Http\PendingRequest;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\PaginationPlugin\PagedPaginator;
 use Saloon\Traits\OAuth2\ClientCredentialsGrant;
+use Saloon\Traits\Plugins\HasTimeout;
+use spkm\IsamsApi\Requests\AdhocRequest;
+use spkm\IsamsApi\Requests\ConfigurablePaginatedRequest;
+use spkm\IsamsApi\Resources\HasResources;
+use spkm\IsamsApi\Support\CircuitBreaker;
 
 class IsamsConnector extends Connector implements HasPagination
 {
     use ClientCredentialsGrant;
+    use HasResources;
+    use HasTimeout;
 
     protected string $baseUrl;
+
+    protected float $connectTimeout;
+
+    protected float $requestTimeout;
 
     public function __construct(string $clientId, string $clientSecret, string $baseUrl, array $scopes = ['restapi'])
     {
@@ -31,8 +50,69 @@ class IsamsConnector extends Connector implements HasPagination
         $this->oauthConfig()->setDefaultScopes($scopes);
         $this->baseUrl = $baseUrl;
 
+        $this->connectTimeout = (float) config('isams-api.timeouts.connect', Config::$defaultConnectionTimeout);
+        $this->requestTimeout = (float) config('isams-api.timeouts.request', Config::$defaultRequestTimeout);
+
+        if (config('isams-api.retries.times')) {
+            $this->tries = (int) config('isams-api.retries.times');
+            $this->retryInterval = (int) config('isams-api.retries.interval_ms', 500);
+            $this->useExponentialBackoff = true;
+            $this->throwOnMaxTries = false;
+        }
+
+        if (CircuitBreaker::enabled()) {
+            $this->watchForOutages(CircuitBreaker::for($baseUrl));
+        }
+
         $authenticator = $this->getCachedAccessToken();
         $this->authenticate($authenticator);
+    }
+
+    public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
+    {
+        $response = parent::send($request, $mockClient, $handleRetry);
+
+        if ($response->status() === 401 && config('isams-api.reauthenticate') && ! $request instanceof GetClientCredentialsTokenRequest) {
+            Cache::forget($this->getCacheKey());
+            $this->authenticate($this->cacheAccessToken());
+
+            return parent::send($request, $mockClient, $handleRetry);
+        }
+
+        return $response;
+    }
+
+    public function handleRetry(FatalRequestException|RequestException $exception, Request $request): bool
+    {
+        if ($request->getMethod() !== Method::GET || $exception instanceof IsamsUnavailable) {
+            return false;
+        }
+
+        return $exception instanceof FatalRequestException
+            || $exception->getResponse()->status() === 429
+            || $exception->getResponse()->serverError();
+    }
+
+    private function watchForOutages(CircuitBreaker $breaker): void
+    {
+        $this->middleware()
+            ->onRequest(function (PendingRequest $pendingRequest) use ($breaker): void {
+                if ($breaker->isOpen()) {
+                    throw IsamsUnavailable::for($pendingRequest);
+                }
+            })
+            ->onResponse(function (Response $response) use ($breaker): void {
+                if ($response->isCached()) {
+                    return;
+                }
+
+                $response->serverError() ? $breaker->recordFailure() : $breaker->recordSuccess();
+            })
+            ->onFatalException(function (FatalRequestException $exception) use ($breaker): void {
+                if (! $exception instanceof IsamsUnavailable) {
+                    $breaker->recordFailure();
+                }
+            });
     }
 
     public function getCachedAccessToken(): OAuthAuthenticator|Response
@@ -103,43 +183,66 @@ class IsamsConnector extends Connector implements HasPagination
         ];
     }
 
+    /**
+     * @return IsamsPaginator
+     */
     public function paginate(Request $request): PagedPaginator
     {
-        return new class(connector: $this, request: $request) extends PagedPaginator
-        {
-            protected ?int $perPageLimit = 100;
+        return new IsamsPaginator($this, $request);
+    }
 
-            protected function isLastPage(Response $response): bool
-            {
-                return $this->currentPage >= (int) $response->json('totalPages');
-            }
+    /**
+     * @param  array<string, mixed>  $query
+     */
+    public function get(string $path, array $query = []): Response
+    {
+        return $this->send(new AdhocRequest(Method::GET, $path, $query));
+    }
 
-            protected function getPageItems(Response $response, Request $request): array
-            {
-                if (property_exists($request, 'resultKey')
-                    && ! empty($request->resultKey)
-                    && array_key_exists($request->resultKey, $response->json())) {
-                    return $response->json($request->resultKey) ?? [];
-                }
+    /**
+     * @param  array<mixed>|JsonSerializable  $body
+     * @param  array<string, mixed>  $query
+     */
+    public function post(string $path, array|JsonSerializable $body = [], array $query = []): Response
+    {
+        return $this->send(new AdhocRequest(Method::POST, $path, $query, $body));
+    }
 
-                return $response->json();
-            }
+    /**
+     * @param  array<mixed>|JsonSerializable  $body
+     * @param  array<string, mixed>  $query
+     */
+    public function put(string $path, array|JsonSerializable $body = [], array $query = []): Response
+    {
+        return $this->send(new AdhocRequest(Method::PUT, $path, $query, $body));
+    }
 
-            protected function applyPagination(Request $request): Request
-            {
-                $request->query()->add('page', $this->currentPage + 1);
+    /**
+     * @param  array<mixed>|JsonSerializable  $body
+     * @param  array<string, mixed>  $query
+     */
+    public function patch(string $path, array|JsonSerializable $body = [], array $query = []): Response
+    {
+        return $this->send(new AdhocRequest(Method::PATCH, $path, $query, $body));
+    }
 
-                if (isset($this->perPageLimit)) {
-                    $request->query()->add('pageSize', $this->perPageLimit);
-                }
+    /**
+     * @param  array<string, mixed>  $query
+     */
+    public function delete(string $path, array $query = []): Response
+    {
+        return $this->send(new AdhocRequest(Method::DELETE, $path, $query));
+    }
 
-                return $request;
-            }
+    /**
+     * @param  array<string, mixed>  $query
+     * @return IsamsPaginator
+     */
+    public function paginateEndpoint(string $path, string $resultKey, array $query = []): PagedPaginator
+    {
+        $request = new ConfigurablePaginatedRequest($path, resultKey: $resultKey);
+        $request->query()->merge($query);
 
-            protected function getTotalPages(Response $response): int
-            {
-                return $response->json('totalPages');
-            }
-        };
+        return $this->paginate($request);
     }
 }

@@ -62,6 +62,32 @@ $isams = new IsamsConnector($clientId, $clientSecret, $baseUrl);
 
 The connector fetches an access token from iSAMS and caches it, encrypted, until shortly before it expires.
 
+### Resources
+
+Every request is also reachable by area, which your IDE can autocomplete:
+
+```php
+Isams::teaching()->subjects()->getSubjects();
+Isams::teaching()->teachingSets()->addStudentToTeachingSet(setId: 34, schoolId: '100001');
+```
+
+### Models
+
+Requests turn iSAMS's JSON into typed, read-only models with `dto()`: one model, a `Collection` of models for
+lists, `Created` (the new record's `location` and `id`) for creations, or `File` for downloads.
+
+```php
+use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
+use spkm\IsamsApi\Requests\Teaching\Subjects\CreateSubjectRequest;
+
+$created = Isams::send(new CreateSubjectRequest(new SubjectForCreate(code: 'MA', name: 'Mathematics')))->dto();
+```
+
+`dto()` throws an `IsamsApiException` (with iSAMS's `isamsMessage()` and `trackingNumber()`) when iSAMS returned an
+error, so check `$response->failed()` first if you'd rather handle errors yourself. Models are lenient: fields iSAMS
+leaves out are `null`, and fields the package doesn't know about are ignored. Fields with a fixed set of values also
+have an enum helper, such as `$student->genderEnum()`.
+
 ### Paging through results
 
 ```php
@@ -72,28 +98,72 @@ foreach ($isams->paginate(new GetStudentsRequest)->collect() as $student) {
 }
 ```
 
-### Models
+Use `dtos()` instead of `collect()` to get models, for requests that have one.
 
-Some requests turn the response into objects, for example a student's contacts:
+### Filtering and updating
 
 ```php
-use spkm\IsamsApi\Requests\Students\Contacts\GetContactsBySchoolidRequest;
+use spkm\IsamsApi\Support\Filter;
+use spkm\IsamsApi\Support\JsonPatch;
 
-$contacts = Isams::send(new GetContactsBySchoolidRequest('100001'))->dto(); // Collection of StudentContact
+$filter = Filter::where('surname', 'eq', "O'Brien")->and('enrolmentDate', 'ge', now()->subYear());
+
+$patch = JsonPatch::make()->replace('/preferredName', 'Alex');
 ```
+
+`Filter` produces iSAMS's OData `$filter` syntax (only `eq`, `ne`, `gt`, `ge`, `lt` and `le` are supported) and can be
+passed wherever a request takes a `filter`. iSAMS's PATCH endpoints take a `JsonPatch`.
 
 ### Endpoints the package doesn't cover yet
 
-Send a request to any iSAMS path relative to your base URL:
+Call any iSAMS path relative to your base URL:
 
 ```php
-use spkm\IsamsApi\Requests\ConfigurableRequest;
-use spkm\IsamsApi\Requests\ConfigurablePaginatedRequest;
+$groups = Isams::get('/api/students/customgroups', ['$filter' => "Name eq 'Choir'"])->json();
+Isams::post('/api/students/customgroups', ['name' => 'Choir']);
 
-$response = Isams::send(new ConfigurableRequest('/api/school/terms'));
-
-$terms = $isams->paginate(new ConfigurablePaginatedRequest('/api/school/terms', resultKey: 'terms'))->collect();
+foreach (Isams::paginateEndpoint('/api/students/customgroups', 'customGroups')->collect() as $group) {
+    //
+}
 ```
+
+`put()`, `patch()` and `delete()` work the same way. The older `ConfigurableRequest` and `ConfigurablePaginatedRequest`
+still work too.
+
+### Several schools
+
+Add named connections to `config/isams-api.php`:
+
+```php
+'connections' => [
+    'prep' => [
+        'client_id' => env('ISAMS_PREP_CLIENT_ID'),
+        'client_secret' => env('ISAMS_PREP_CLIENT_SECRET'),
+        'base_url' => env('ISAMS_PREP_BASE_URL'),
+    ],
+],
+```
+
+```php
+Isams::connection('prep')->teaching()->subjects()->getSubjects();
+```
+
+The top-level `client_id`, `client_secret` and `base_url` remain the default connection.
+
+### When iSAMS is slow or offline
+
+All of these are off unless you configure them (see `config/isams-api.php`):
+
+- **Timeouts:** `ISAMS_CONNECT_TIMEOUT` and `ISAMS_REQUEST_TIMEOUT` (seconds; 10 and 30 by default). Lower them for
+  web requests so pages don't hang.
+- **Circuit breaker:** `ISAMS_CIRCUIT_BREAKER=true`. After repeated failures, requests fail instantly with an
+  `IsamsUnavailable` exception for a cooldown period instead of waiting for timeouts. `Isams::isAvailable()` tells you,
+  without contacting iSAMS, whether requests are currently paused.
+- **Retries:** `ISAMS_RETRIES=3` retries GET requests that fail with a server error, rate limit or connection error.
+  Writes are never retried.
+- **Re-authentication:** `ISAMS_REAUTHENTICATE=true` fetches a new token and repeats the request once when iSAMS rejects
+  a cached token.
+- **Caching:** `ISAMS_CACHE=true` caches slow-changing reference lists in your Laravel cache.
 
 ## Testing
 
@@ -104,6 +174,12 @@ composer format:check
 ```
 
 The tests never contact a real iSAMS: every response is faked.
+
+## Contributing
+
+Most requests and models are generated from iSAMS's API spec, pinned in `generator/spec`. Don't edit files in
+`generated/`: change `generator/overrides.php` (or the generator) and run `composer generate`.
+`composer generate:check` fails if the generated code is out of date.
 
 ## Security
 

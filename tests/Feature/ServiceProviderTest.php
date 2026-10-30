@@ -3,8 +3,8 @@
 use Illuminate\Support\ServiceProvider;
 use spkm\IsamsApi\IsamsApiServiceProvider;
 
-it('gives the app an isams-api config of client id, client secret and base URL', function () {
-    expect(config('isams-api'))->toBe(['client_id' => null, 'client_secret' => null, 'base_url' => null]);
+it('gives the app an isams-api config of client id, client secret, base URL and named connections', function () {
+    expect(config('isams-api'))->toMatchArray(['client_id' => null, 'client_secret' => null, 'base_url' => null, 'connections' => []]);
 });
 
 it('reads its client id and secret from ISAMS_REST_CLIENT_ID and ISAMS_REST_CLIENT_SECRET', function () {

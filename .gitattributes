@@ -1,3 +1,5 @@
+/bin export-ignore
+/generator export-ignore
 /.githooks export-ignore
 /.github export-ignore
 /tests export-ignore
@@ -6,3 +8,4 @@
 /phpstan.neon export-ignore
 /phpstan-baseline.neon export-ignore
 /phpunit.xml export-ignore
+/pint.json export-ignore

@@ -19,6 +19,10 @@ it('builds the isams service once, from the isams-api config, asking for a token
     $isams = FakeIsams::respondWith();
 
     expect(app('isams'))->toBe(app('isams'));
+    $isams->assertNothingSent();
+
+    Isams::getCachedAccessToken();
+    Isams::getCachedAccessToken();
 
     $isams->assertSentCount(1);
     $tokenRequest = FakeIsams::received($isams, GetClientCredentialsTokenRequest::class);
@@ -48,9 +52,9 @@ it('refuses a method the connector does not have', function () {
     expect(fn () => Isams::doesNotExist())->toThrow(BadMethodCallException::class, 'Method doesNotExist does not exist.');
 });
 
-it('cannot build the isams service until its client id, secret and base URL are configured', function () {
+it('cannot use the default connection until its client id, secret and base URL are configured', function () {
     config(['isams-api.client_id' => null, 'isams-api.client_secret' => null, 'isams-api.base_url' => null]);
 
-    // TODO: Characterised as-is, decide whether this is intended. A missing setting surfaces as a TypeError from the IsamsConnector constructor rather than a message naming the setting. (src/IsamsService.php, __construct())
-    expect(fn () => app('isams'))->toThrow(TypeError::class);
+    // TODO: Characterised as-is, decide whether this is intended. A missing setting surfaces as a TypeError from the IsamsConnector constructor rather than a message naming the setting. (src/IsamsService.php, __call())
+    expect(fn () => Isams::get('/api/school/terms'))->toThrow(TypeError::class);
 })->group('as-is');
