@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Requests\RewardsAndConduct\Rewards;
 
 use Saloon\Enums\Method;
-use spkm\IsamsApi\Data\RewardsAndConduct\Category;
+use spkm\IsamsApi\Data\RewardsAndConduct\Reward;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -18,9 +18,8 @@ use spkm\IsamsApi\Requests\IsamsRequest;
 class GetRewardRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
-    protected string $responseShape = self::LIST;
-    protected ?string $dto = Category::class;
-    public string $resultKey = 'categories';
+    protected string $responseShape = self::ONE;
+    protected ?string $dto = Reward::class;
 
     public function __construct(
         protected string $schoolId,

@@ -75,3 +75,19 @@ it('refuses an enum rename for an enum the generator does not make', function ()
         return $overrides;
     }))->toThrow(RuntimeException::class, 'enums.Gradebooks\Kind: no such enum');
 });
+
+it('refuses a required query parameter the operation does not have', function () {
+    expect(fn () => generateWithOverrides(function (array $overrides) {
+        $overrides['operations']['Subjects_GetAll'] = ['required' => ['changeDate']];
+
+        return $overrides;
+    }))->toThrow(RuntimeException::class, 'operations.Subjects_GetAll.required: no query parameter changeDate');
+});
+
+it('refuses a response correction naming a definition the spec does not have', function () {
+    expect(fn () => generateWithOverrides(function (array $overrides) {
+        $overrides['operations']['Subjects_GetAll'] = ['response' => ['list' => 'iSAMS.Nowhere.Get.Thing', 'key' => 'things']];
+
+        return $overrides;
+    }))->toThrow(RuntimeException::class, 'operations.Subjects_GetAll.response: no such definition iSAMS.Nowhere.Get.Thing');
+});

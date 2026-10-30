@@ -21,7 +21,7 @@ class PushNotificationMessagesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Parent\PushNotificationMessages\GetPushNotificationMessagesRequest
      */
-    public function all(?string $read = null): UserMessage
+    public function all(?string $read = null): ?UserMessage
     {
         return $this->fetch(new GetPushNotificationMessagesRequest(read: $read));
     }

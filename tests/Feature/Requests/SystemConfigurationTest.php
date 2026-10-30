@@ -40,13 +40,13 @@ it('serves the school\'s lists from the cache once caching is on, but not SMS ba
     config(['isams-api.cache.enabled' => true]);
     $isams = FakeIsams::respondWith([
         GetContactTypesRequest::class => MockResponse::make(['contactTypes' => []]),
-        GetSmsBatchMessagesRequest::class => MockResponse::make(['batches' => []]),
+        GetSmsBatchMessagesRequest::class => MockResponse::make(['smsBatches' => [], 'totalPages' => 1]),
     ]);
     $systemConfiguration = FakeIsams::connector()->systemConfiguration();
 
     foreach ([1, 2] as $time) {
         $systemConfiguration->list()->contactTypes()->all();
-        $systemConfiguration->sms()->getBatchMessages();
+        $systemConfiguration->sms()->getBatchMessages()->all();
     }
 
     expect(FakeIsams::queriesReceived($isams, GetContactTypesRequest::class))->toHaveCount(1)

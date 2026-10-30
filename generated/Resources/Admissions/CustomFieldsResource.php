@@ -8,7 +8,6 @@ namespace spkm\IsamsApi\Resources\Admissions;
 
 use Illuminate\Support\Collection;
 use Stringable;
-use spkm\IsamsApi\Data\Admissions\CustomField;
 use spkm\IsamsApi\Data\Admissions\CustomFieldForPatch;
 use spkm\IsamsApi\Requests\Admissions\CustomFields\GetApplicantCustomFieldRequest;
 use spkm\IsamsApi\Requests\Admissions\CustomFields\GetApplicantCustomFieldsRequest;
@@ -28,9 +27,10 @@ class CustomFieldsResource extends IsamsResource
     }
 
     /**
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\Admissions\CustomField>
      * @see \spkm\IsamsApi\Requests\Admissions\CustomFields\GetApplicantCustomFieldRequest
      */
-    public function get(string $schoolId, int $customFieldId): CustomField
+    public function get(string $schoolId, int $customFieldId): Collection
     {
         return $this->fetch(new GetApplicantCustomFieldRequest(schoolId: $schoolId, customFieldId: $customFieldId));
     }

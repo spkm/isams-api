@@ -17,7 +17,7 @@ class EmployeeTeachingProhibitionChecksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeTeachingProhibitionChecks\GetEmployeeTeachingProhibitionCheckRequest
      */
-    public function get(int $employeeId): EmployeeTeachingProhibitionCheck
+    public function get(int $employeeId): ?EmployeeTeachingProhibitionCheck
     {
         return $this->fetch(new GetEmployeeTeachingProhibitionCheckRequest(employeeId: $employeeId));
     }

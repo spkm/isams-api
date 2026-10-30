@@ -16,7 +16,7 @@ class DepositsResource extends IsamsResource
      * @param  array<mixed>|null  $schoolIds
      * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\Deposits\GetDepositBySchoolIdsRequest
      */
-    public function getBySchoolIds(?array $schoolIds = null): DepositCollection
+    public function getBySchoolIds(?array $schoolIds = null): ?DepositCollection
     {
         return $this->fetch(new GetDepositBySchoolIdsRequest(schoolIds: $schoolIds));
     }

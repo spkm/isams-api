@@ -43,7 +43,7 @@ class VaccinationResource extends IsamsResource
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\Vaccination>
+     * @return \Illuminate\Support\Collection<int, \spkm\IsamsApi\Data\MedicalCentre\MedicalVaccinationType>
      * @see \spkm\IsamsApi\Requests\MedicalCentre\Vaccination\GetMedicalVaccinationTypesRequest
      */
     public function getTypes(): Collection

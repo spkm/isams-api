@@ -19,7 +19,7 @@ class AccountResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\Account\GetAccountProfileInformationRequest
      */
-    public function getProfileInformation(): PortalProfileInformation
+    public function getProfileInformation(): ?PortalProfileInformation
     {
         return $this->fetch(new GetAccountProfileInformationRequest());
     }

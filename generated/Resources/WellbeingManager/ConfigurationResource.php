@@ -15,7 +15,7 @@ class ConfigurationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\Configuration\GetWellbeingConfigurationRequest
      */
-    public function get(): Configuration
+    public function get(): ?Configuration
     {
         return $this->fetch(new GetWellbeingConfigurationRequest());
     }

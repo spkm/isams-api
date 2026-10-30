@@ -28,7 +28,7 @@ class EmailOptionsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\EmailOptions\GetEmailOptionEmailDetailsRequest
      */
-    public function getDetails(): PortalEmailDetails
+    public function getDetails(): ?PortalEmailDetails
     {
         return $this->fetch(new GetEmailOptionEmailDetailsRequest());
     }

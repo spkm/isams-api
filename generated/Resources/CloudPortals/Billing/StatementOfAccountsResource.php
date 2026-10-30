@@ -22,14 +22,14 @@ class StatementOfAccountsResource extends IsamsResource
         DateTimeInterface|string|null $startDate = null,
         DateTimeInterface|string|null $endDate = null,
         ?string $studentName = null,
-    ): Statement {
+    ): ?Statement {
         return $this->fetch(new GetStatementOfAccountsRequest(startDate: $startDate, endDate: $endDate, studentName: $studentName));
     }
 
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Billing\StatementOfAccounts\GetStatementOfAccountCurrentBillingCycleRequest
      */
-    public function getCurrentBillingCycle(): BillingCycle
+    public function getCurrentBillingCycle(): ?BillingCycle
     {
         return $this->fetch(new GetStatementOfAccountCurrentBillingCycleRequest());
     }

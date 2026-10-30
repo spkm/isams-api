@@ -20,7 +20,7 @@ class SelfRegistrationResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\Students\SelfRegistration\GetSelfRegistrationConfigRequest
      */
-    public function getConfig(): StudentSelfRegistrationConfiguration
+    public function getConfig(): ?StudentSelfRegistrationConfiguration
     {
         return $this->fetch(new GetSelfRegistrationConfigRequest());
     }

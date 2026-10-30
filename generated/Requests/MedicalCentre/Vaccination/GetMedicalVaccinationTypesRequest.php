@@ -7,7 +7,7 @@
 namespace spkm\IsamsApi\Requests\MedicalCentre\Vaccination;
 
 use Saloon\Enums\Method;
-use spkm\IsamsApi\Data\MedicalCentre\Vaccination;
+use spkm\IsamsApi\Data\MedicalCentre\MedicalVaccinationType;
 use spkm\IsamsApi\Requests\IsamsRequest;
 
 /**
@@ -19,8 +19,8 @@ class GetMedicalVaccinationTypesRequest extends IsamsRequest
 {
     protected Method $method = Method::GET;
     protected string $responseShape = self::LIST;
-    protected ?string $dto = Vaccination::class;
-    public string $resultKey = 'vaccinations';
+    protected ?string $dto = MedicalVaccinationType::class;
+    public string $resultKey = 'vaccinationTypes';
     protected bool $cacheable = true;
 
     public function resolveEndpoint(): string

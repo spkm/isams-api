@@ -229,7 +229,7 @@ class GradebooksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\GetGradebookStructureRequest
      */
-    public function getStructure(int $gradebookId): GradebookStructure
+    public function getStructure(int $gradebookId): ?GradebookStructure
     {
         return $this->fetch(new GetGradebookStructureRequest(gradebookId: $gradebookId));
     }

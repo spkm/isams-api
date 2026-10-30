@@ -23,7 +23,7 @@ class CommunicationsResource extends IsamsResource
      * @param  array<mixed>|null  $schoolIds
      * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Communications\GetCommunicationEmailByIdRequest
      */
-    public function getEmail(int $id, ?array $schoolIds = null): AdmissionsCommunicationMessage
+    public function getEmail(int $id, ?array $schoolIds = null): ?AdmissionsCommunicationMessage
     {
         return $this->fetch(new GetCommunicationEmailByIdRequest(id: $id, schoolIds: $schoolIds));
     }
@@ -55,7 +55,7 @@ class CommunicationsResource extends IsamsResource
      * @param  array<mixed>|null  $schoolIds
      * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Communications\GetCommunicationLetterByIdRequest
      */
-    public function getLetter(int $id, ?array $schoolIds = null): AdmissionsCommunicationMessage
+    public function getLetter(int $id, ?array $schoolIds = null): ?AdmissionsCommunicationMessage
     {
         return $this->fetch(new GetCommunicationLetterByIdRequest(id: $id, schoolIds: $schoolIds));
     }
@@ -74,7 +74,7 @@ class CommunicationsResource extends IsamsResource
      * @param  array<mixed>|null  $schoolIds
      * @see \spkm\IsamsApi\Requests\CloudPortals\Admissions\Communications\GetCommunicationSMSByIdRequest
      */
-    public function getSMS(int $id, ?array $schoolIds = null): AdmissionsCommunicationMessage
+    public function getSMS(int $id, ?array $schoolIds = null): ?AdmissionsCommunicationMessage
     {
         return $this->fetch(new GetCommunicationSMSByIdRequest(id: $id, schoolIds: $schoolIds));
     }

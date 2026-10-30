@@ -17,7 +17,7 @@ class NotificationsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\CloudPortals\School\Notifications\GetUserNotificationSettingsRequest
      */
-    public function getUserSettings(): UserNotificationSettings
+    public function getUserSettings(): ?UserNotificationSettings
     {
         return $this->fetch(new GetUserNotificationSettingsRequest());
     }

@@ -26,7 +26,7 @@ class EmployeeHousesResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeHouses\GetEmployeeHousesRequest
      */
-    public function all(int $employeeId): EmployeeHouses
+    public function all(int $employeeId): ?EmployeeHouses
     {
         return $this->fetch(new GetEmployeeHousesRequest(employeeId: $employeeId));
     }

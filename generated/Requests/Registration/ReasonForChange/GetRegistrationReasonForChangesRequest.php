@@ -26,7 +26,7 @@ class GetRegistrationReasonForChangesRequest extends IsamsRequest implements Pag
     public string $resultKey = 'attendanceCodeReasonForChanges';
 
     public function __construct(
-        protected \DateTimeInterface|string|null $changeDateStart = null,
+        protected \DateTimeInterface|string $changeDateStart,
         protected \DateTimeInterface|string|null $changeDateEnd = null,
         protected ?int $page = null,
         protected ?int $pageSize = null,

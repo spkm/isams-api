@@ -18,7 +18,7 @@ class StudentExclusionsResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\Gradebooks\StudentExclusions\GetStudentExclusionsRequest
      */
-    public function all(int $gradebookId, int $columnId): StudentExclusion
+    public function all(int $gradebookId, int $columnId): ?StudentExclusion
     {
         return $this->fetch(new GetStudentExclusionsRequest(gradebookId: $gradebookId, columnId: $columnId));
     }

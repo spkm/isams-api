@@ -31,7 +31,7 @@ class EmployeeDisclosureBarringServiceChecksResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeDisclosureBarringServiceChecks\GetEmployeeDisclosureBarringServiceCheckRequest
      */
-    public function get(int $employeeId): DisclosureBarringServiceCheck
+    public function get(int $employeeId): ?DisclosureBarringServiceCheck
     {
         return $this->fetch(new GetEmployeeDisclosureBarringServiceCheckRequest(employeeId: $employeeId));
     }

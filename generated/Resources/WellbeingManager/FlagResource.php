@@ -40,7 +40,7 @@ class FlagResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\Flag\GetStudentFlagRequest
      */
-    public function get(string $schoolId): PastoralFlag
+    public function get(string $schoolId): ?PastoralFlag
     {
         return $this->fetch(new GetStudentFlagRequest(schoolId: $schoolId));
     }

@@ -32,7 +32,7 @@ class ConcernGirfecResource extends IsamsResource
     /**
      * @see \spkm\IsamsApi\Requests\WellbeingManager\ConcernGirfec\GetConcernGirfecFormRequest
      */
-    public function getForm(string $schoolId, int $concernId): ConcernGirfecForm
+    public function getForm(string $schoolId, int $concernId): ?ConcernGirfecForm
     {
         return $this->fetch(new GetConcernGirfecFormRequest(schoolId: $schoolId, concernId: $concernId));
     }

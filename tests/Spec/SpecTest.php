@@ -55,10 +55,16 @@ it('turns each generated request\'s documented response into the right kind of r
     $code = (int) ($codes[0] ?? 200);
     $schema = match (true) {
         isset($correction['definition']) => ['$ref' => '#/definitions/'.$correction['definition']],
+        isset($correction['list']) => ['type' => 'array'],
         $correction === 'file' => ['type' => 'file'],
         default => $spec['responses'][$code]['schema'] ?? null,
     };
-    $body = $schema === null ? '' : Spec::value($schema);
+    $items = isset($correction['list']) ? [Spec::sample($correction['list'])] : null;
+    $body = match (true) {
+        $items !== null => $correction['key'] === '' ? $items : [$correction['key'] => $items, 'totalPages' => 1],
+        $schema === null => '',
+        default => Spec::value($schema),
+    };
     $request = new $class(...Spec::arguments($class));
 
     FakeIsams::respondWith([$class => MockResponse::make(is_array($body) || $body === '' ? $body : (string) json_encode($body), $code, ['Location' => 'https://isams.example.test'.$path, 'Content-Type' => 'application/json'])]);
@@ -73,7 +79,7 @@ it('turns each generated request\'s documented response into the right kind of r
         default => expect($result)->toBe($body),
     };
 
-    expect($request instanceof Paginatable)->toBe(collect($spec['parameters'] ?? [])->contains('name', 'page') && isset(Spec::spec()['definitions'][Str::after($schema['$ref'] ?? '', '#/definitions/')]['properties']['totalPages']));
+    expect($request instanceof Paginatable)->toBe(collect($spec['parameters'] ?? [])->contains('name', 'page') && ($correction['paged'] ?? isset(Spec::spec()['definitions'][Str::after($schema['$ref'] ?? '', '#/definitions/')]['properties']['totalPages'])));
 })->with(Spec::generatedOperations())->group('spec');
 
 it('gives each hand-written request the model the spec documents for its response', function (string $id) {
@@ -84,8 +90,9 @@ it('gives each hand-written request the model the spec documents for its respons
         ->and($request->dtoClass())->toBe($operation['model'] ?? null);
 })->with(fn () => array_keys(array_filter(Spec::manifest()['operations'], fn (array $operation) => $operation['source'] === 'handwritten')))->group('spec');
 
-it('gives each resource method the return type its request\'s response calls for, and points it to that request', function () {
+it('gives each resource method the return type its request\'s response calls for (null allowed for a single record not read by id), and points it to that request', function () {
     $directory = dirname(__DIR__, 2).'/generated/Resources';
+    $paths = array_column(Spec::manifest()['operations'], 'path', 'class');
     $mismatches = [];
     $checked = 0;
 
@@ -102,7 +109,8 @@ it('gives each resource method the return type its request\'s response calls for
             $expected = match (true) {
                 $request->implementsInterface(Paginatable::class) => LazyCollection::class,
                 $shape === IsamsRequest::LIST => Collection::class,
-                $shape === IsamsRequest::ONE => $request->getProperty('dto')->getDefaultValue() ?? 'array',
+                $shape === IsamsRequest::ONE && $request->getProperty('dto')->getDefaultValue() === null => 'array',
+                $shape === IsamsRequest::ONE => (str_ends_with($paths[$see[1]], '}') ? '' : '?').$request->getProperty('dto')->getDefaultValue(),
                 $shape === IsamsRequest::CREATED => Created::class,
                 $shape === IsamsRequest::FILE => File::class,
                 $shape === IsamsRequest::RAW => 'mixed',
