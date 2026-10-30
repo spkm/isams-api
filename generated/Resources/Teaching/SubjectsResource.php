@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Generated from the iSAMS API spec by bin/generate: edit generator/overrides.php instead.
+ */
+
+namespace spkm\IsamsApi\Resources\Teaching;
+
+use Saloon\Http\BaseResource;
+use Saloon\Http\Response;
+use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
+use spkm\IsamsApi\Data\Teaching\SubjectForUpdate;
+use spkm\IsamsApi\Requests\Teaching\GetSubjectByIdRequest;
+use spkm\IsamsApi\Requests\Teaching\GetSubjectsRequest;
+use spkm\IsamsApi\Requests\Teaching\Subjects\CreateSubjectRequest;
+use spkm\IsamsApi\Requests\Teaching\Subjects\UpdateSubjectRequest;
+
+class SubjectsResource extends BaseResource
+{
+    /**
+     * @param  \spkm\IsamsApi\Data\Teaching\SubjectForCreate|array<string, mixed>  $subject
+     */
+    public function createSubject(SubjectForCreate|array $subject): Response
+    {
+        return $this->connector->send(new CreateSubjectRequest($subject));
+    }
+
+    public function getSubjectById(int $id): Response
+    {
+        return $this->connector->send(new GetSubjectByIdRequest($id));
+    }
+
+    public function getSubjects(): Response
+    {
+        return $this->connector->send(new GetSubjectsRequest());
+    }
+
+    /**
+     * @param  \spkm\IsamsApi\Data\Teaching\SubjectForUpdate|array<string, mixed>  $subject
+     */
+    public function updateSubject(int $id, SubjectForUpdate|array $subject): Response
+    {
+        return $this->connector->send(new UpdateSubjectRequest($id, $subject));
+    }
+}

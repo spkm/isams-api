@@ -3,7 +3,7 @@ set -e
 
 composer validate --strict --no-check-lock --quiet
 
-STAGED_PHP=$(git diff --cached --name-only --diff-filter=ACMR -- '*.php')
+STAGED_PHP=$(git diff --cached --name-only --diff-filter=ACMR -- '*.php' ':!generated/*')
 PARTLY_STAGED=$(git diff --name-only -- $STAGED_PHP)
 if [ -n "$PARTLY_STAGED" ]; then
     echo "These files have unstaged changes, so the checks wouldn't see what you're committing. Stage them fully first:"
@@ -17,5 +17,6 @@ if [ -n "$STAGED_PHP" ]; then
     fi
 fi
 
+composer generate:check
 vendor/bin/phpstan analyse --memory-limit=1G --no-progress
 vendor/bin/pest --parallel
