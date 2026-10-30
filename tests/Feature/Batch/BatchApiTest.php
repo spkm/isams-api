@@ -219,6 +219,18 @@ it('builds a batch connector for a configured key, for the default school or a n
     ]);
 });
 
+it('uses the default batch key when none is named', function () {
+    config([
+        'isams-api.base_url' => FakeIsams::BASE_URL,
+        'isams-api.batch_keys.default' => ['api_key' => 'DEFAULT-KEY', 'client_secret' => 'secret'],
+    ]);
+    $isams = FakeIsams::respondWith([BatchRequest::class => MockResponse::make(['iSAMS' => []])]);
+
+    Isams::batch()->send(new BatchRequest);
+
+    expect(FakeIsams::received($isams, BatchRequest::class)->query()->all())->toBe(['apiKey' => 'DEFAULT-KEY']);
+});
+
 it('explains which setting is missing when a batch key is not configured', function () {
     expect(fn () => Isams::batch('nonexistent'))->toThrow(InvalidArgumentException::class, 'No iSAMS batch key named "nonexistent" is configured in isams-api.batch_keys.');
 });

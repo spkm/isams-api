@@ -5,7 +5,18 @@ return [
     'client_secret' => env('ISAMS_REST_CLIENT_SECRET'),
     'base_url' => env('ISAMS_BASE_URL', env('IASMS_BASE_URL')),
 
-    'batch_keys' => [],
+    'batch_keys' => [
+        'default' => [
+            'api_key' => env('ISAMS_BATCH_API_KEY'),
+            'client_secret' => env('ISAMS_BATCH_CLIENT_SECRET'),
+        ],
+
+        // A separate key for one area, used with Isams::batch('timetable'):
+        // 'timetable' => [
+        //     'api_key' => env('ISAMS_BATCH_TIMETABLE_API_KEY'),
+        //     'client_secret' => env('ISAMS_BATCH_TIMETABLE_CLIENT_SECRET'),
+        // ],
+    ],
 
     'connections' => [],
 
