@@ -21,7 +21,7 @@ $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it t
 
 return [
     // Areas generated so far; the rest of the spec is listed in the manifest as pending.
-    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR'],
+    'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration'],
 
     'operations' => [
         // Requests written by hand before the generator existed: never generated over.
@@ -230,6 +230,33 @@ return [
         'LifeEventTypes_GetById' => ['cacheable' => true],
 
         // System Configuration
+        'List_GetAsyncByListtype' => ['class' => 'GetListByTypeRequest', 'cacheable' => true],
+        'PassportPlaceIssued_Get' => ['class' => 'GetPassportPlacesIssuedRequest', 'cacheable' => true],
+        'ListGroup_GetAllCustomAsync' => ['class' => 'GetCustomListGroupsRequest', 'cacheable' => true],
+        'ListGroup_PostCustomByGloballistgroup' => ['class' => 'CreateCustomListGroupRequest'],
+        'ListGroup_GetCustomGroupItemsAsyncByListtype' => ['class' => 'GetCustomListGroupItemsRequest', 'cacheable' => true],
+        'ListGroup_PostCustomGroupItemAsyncByListtypeGloballistitem' => ['class' => 'CreateCustomListGroupItemRequest'],
+        'TagCategories_GetAll' => ['class' => 'GetTagCategoriesRequest', 'cacheable' => true],
+        'CategoryTags_GetById' => ['class' => 'GetTagCategoryTagsRequest', 'cacheable' => true],
+        'EntityTypes_GetAll' => ['class' => 'GetTagEntityTypesRequest', 'cacheable' => true],
+        'EntityTypes_GetById' => ['class' => 'GetTagEntityTypeRequest', 'cacheable' => true],
+        'AdmissionsStatus_GetAsync' => ['cacheable' => true],
+        'ContactTypes_GetAllAsync' => ['cacheable' => true],
+        'Counties_GetAsync' => ['cacheable' => true],
+        'Countries_GetAsync' => ['cacheable' => true],
+        'Ethnicity_GetAsync' => ['cacheable' => true],
+        'Languages_GetAsync' => ['cacheable' => true],
+        'Nationalities_GetAsync' => ['cacheable' => true],
+        'OfferTypes_Get' => ['cacheable' => true],
+        'PassportType_Get' => ['cacheable' => true],
+        'PupilEntryType_GetAsync' => ['cacheable' => true],
+        'PupilLeavingReasons_GetAsync' => ['cacheable' => true],
+        'Religions_GetAsync' => ['cacheable' => true],
+        'SelectionCategory_Get' => ['cacheable' => true],
+        'Titles_Get' => ['cacheable' => true],
+        'Universities_Get' => ['cacheable' => true],
+        'Universities_GetById' => ['cacheable' => true],
+        'VisaTypes_Get' => ['cacheable' => true],
         'PaymentStatus_GetGetnetPaymentProcessingPage' => $paymentWebhook,
         'PaymentStatus_GetGetnetPaymentCancelledPage' => $paymentWebhook,
         'PaymentStatus_UpdateAdmissionsPaymentStatusPaystackAsyncByTrxrefReference' => $paymentWebhook,

@@ -235,7 +235,7 @@ final class Generator
 
         $segments = [$this->areaName($parts['area']), ...array_map($this->studly(...), $parts['middle'])];
 
-        if ($words !== []) {
+        if ($words !== [] && $this->studly(implode(' ', $words)) !== end($segments)) {
             $segments[] = $this->studly(implode(' ', $words));
         }
 

@@ -42,4 +42,11 @@ foreach ($files as $path => $contents) {
     file_put_contents("$root/$path", $contents);
 }
 
+$directories = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root.'/generated', FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST);
+foreach ($directories as $directory) {
+    if ($directory->isDir() && (new FilesystemIterator($directory->getPathname()))->valid() === false) {
+        rmdir($directory->getPathname());
+    }
+}
+
 printf("Wrote %d files (%d changed, %d removed).\n", count($files), count($changed), count($removed));

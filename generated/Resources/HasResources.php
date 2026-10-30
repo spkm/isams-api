@@ -58,6 +58,11 @@ trait HasResources
         return new StudentsResource($this);
     }
 
+    public function systemConfiguration(): SystemConfigurationResource
+    {
+        return new SystemConfigurationResource($this);
+    }
+
     public function teaching(): TeachingResource
     {
         return new TeachingResource($this);

@@ -124,22 +124,26 @@
         "AdmissionsStatus_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/admissionsstatus/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\AdmissionsStatus\\DeleteAdmissionsStatusRequest"
         },
         "AdmissionsStatus_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/admissionsstatus",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\AdmissionsStatus\\GetAdmissionsStatusesRequest"
         },
         "AdmissionsStatus_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/admissionsstatus",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\AdmissionsStatus\\CreateAdmissionsStatusRequest"
         },
         "AdmissionsStatus_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/admissionsstatus/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\AdmissionsStatus\\UpdateAdmissionsStatusRequest"
         },
         "AdmissionsVisits_GetAllByPagePagesize": {
             "method": "GET",
@@ -836,7 +840,8 @@
         "CategoryTags_GetById": {
             "method": "GET",
             "path": "/api/systemconfiguration/tags/categories/{id}/tags",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\Tags\\Categories\\GetTagCategoryTagsRequest"
         },
         "ColumnStructureReportMappings_CreateByGradebookidColumnidReportmappings": {
             "method": "POST",
@@ -1320,7 +1325,8 @@
         "ContactTypes_GetAllAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/contacttypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\ContactTypes\\GetContactTypesRequest"
         },
         "ContractEmployeeLevels_DeleteById": {
             "method": "DELETE",
@@ -1349,42 +1355,50 @@
         "Counties_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/counties/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Counties\\DeleteCountyRequest"
         },
         "Counties_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/counties",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Counties\\GetCountiesRequest"
         },
         "Counties_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/counties",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Counties\\CreateCountyRequest"
         },
         "Counties_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/counties/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Counties\\UpdateCountyRequest"
         },
         "Countries_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/countries/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Countries\\DeleteCountryRequest"
         },
         "Countries_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/countries",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Countries\\GetCountriesRequest"
         },
         "Countries_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/countries",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Countries\\CreateCountryRequest"
         },
         "Countries_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/countries/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Countries\\UpdateCountryRequest"
         },
         "CurriculumSubjectCodes_DeleteById": {
             "method": "DELETE",
@@ -2121,32 +2135,38 @@
         "EntityTypes_GetAll": {
             "method": "GET",
             "path": "/api/systemconfiguration/tags/entitytypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\Tags\\EntityTypes\\GetTagEntityTypesRequest"
         },
         "EntityTypes_GetById": {
             "method": "GET",
             "path": "/api/systemconfiguration/tags/entitytypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\Tags\\EntityTypes\\GetTagEntityTypeRequest"
         },
         "Ethnicity_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/ethnicity/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Ethnicity\\DeleteEthnicityRequest"
         },
         "Ethnicity_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/ethnicity",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Ethnicity\\GetEthnicitiesRequest"
         },
         "Ethnicity_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/ethnicity",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Ethnicity\\CreateEthnicityRequest"
         },
         "Ethnicity_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/ethnicity/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Ethnicity\\UpdateEthnicityRequest"
         },
         "Exams_GetExamsArrangementsBySchoolid": {
             "method": "GET",
@@ -2696,22 +2716,26 @@
         "Languages_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/languages/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Languages\\DeleteLanguageRequest"
         },
         "Languages_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/languages",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Languages\\GetLanguagesRequest"
         },
         "Languages_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/languages",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Languages\\CreateLanguageRequest"
         },
         "Languages_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/languages/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Languages\\UpdateLanguageRequest"
         },
         "LeaveRequests_CancelLeaveRequestByIdSchoolid": {
             "method": "POST",
@@ -2829,27 +2853,32 @@
         "ListGroup_GetAllCustomAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/listgroup/custom",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\ListGroup\\GetCustomListGroupsRequest"
         },
         "ListGroup_GetCustomGroupItemsAsyncByListtype": {
             "method": "GET",
             "path": "/api/systemconfiguration/listgroup/custom/{listType}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\ListGroup\\GetCustomListGroupItemsRequest"
         },
         "ListGroup_PostCustomByGloballistgroup": {
             "method": "POST",
             "path": "/api/systemconfiguration/listgroup/custom",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\ListGroup\\CreateCustomListGroupRequest"
         },
         "ListGroup_PostCustomGroupItemAsyncByListtypeGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/listgroup/custom/{listType}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\ListGroup\\CreateCustomListGroupItemRequest"
         },
         "List_GetAsyncByListtype": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/{listType}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\GetListByTypeRequest"
         },
         "Lists_GetListItemsByListid": {
             "method": "GET",
@@ -3121,22 +3150,26 @@
         "Nationalities_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/nationalities/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Nationalities\\DeleteNationalityRequest"
         },
         "Nationalities_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/nationalities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Nationalities\\GetNationalitiesRequest"
         },
         "Nationalities_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/nationalities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Nationalities\\CreateNationalityRequest"
         },
         "Nationalities_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/nationalities/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Nationalities\\UpdateNationalityRequest"
         },
         "NewsPublic_PostAsyncByNews": {
             "method": "POST",
@@ -3186,22 +3219,26 @@
         "OfferTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/offertypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\OfferTypes\\DeleteOfferTypeRequest"
         },
         "OfferTypes_Get": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/offertypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\OfferTypes\\GetOfferTypesRequest"
         },
         "OfferTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/offertypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\OfferTypes\\CreateOfferTypeRequest"
         },
         "OfferTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/offertypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\OfferTypes\\UpdateOfferTypeRequest"
         },
         "OtherSchools_GetAllByPagePagesize": {
             "method": "GET",
@@ -3251,42 +3288,50 @@
         "PassportPlaceIssued_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/passportplaceissued/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportPlaceIssued\\DeletePassportPlaceIssuedRequest"
         },
         "PassportPlaceIssued_Get": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/passportplaceissued",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportPlaceIssued\\GetPassportPlacesIssuedRequest"
         },
         "PassportPlaceIssued_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/passportplaceissued",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportPlaceIssued\\CreatePassportPlaceIssuedRequest"
         },
         "PassportPlaceIssued_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/passportplaceissued/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportPlaceIssued\\UpdatePassportPlaceIssuedRequest"
         },
         "PassportType_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/passporttype/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportType\\DeletePassportTypeRequest"
         },
         "PassportType_Get": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/passporttype",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportType\\GetPassportTypesRequest"
         },
         "PassportType_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/passporttype",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportType\\CreatePassportTypeRequest"
         },
         "PassportType_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/passporttype/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\PassportType\\UpdatePassportTypeRequest"
         },
         "PastoralConfiguration_GetConfiguration": {
             "method": "GET",
@@ -3789,42 +3834,50 @@
         "PupilEntryType_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/pupilentrytype/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentEntryType\\DeleteStudentEntryTypeRequest"
         },
         "PupilEntryType_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/pupilentrytype",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentEntryType\\GetStudentEntryTypesRequest"
         },
         "PupilEntryType_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/pupilentrytype",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentEntryType\\CreateStudentEntryTypeRequest"
         },
         "PupilEntryType_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/pupilentrytype/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentEntryType\\UpdateStudentEntryTypeRequest"
         },
         "PupilLeavingReasons_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/pupilleavingreasons/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentLeavingReasons\\DeleteStudentLeavingReasonRequest"
         },
         "PupilLeavingReasons_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/pupilleavingreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentLeavingReasons\\GetStudentLeavingReasonsRequest"
         },
         "PupilLeavingReasons_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/pupilleavingreasons",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentLeavingReasons\\CreateStudentLeavingReasonRequest"
         },
         "PupilLeavingReasons_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/pupilleavingreasons/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\StudentLeavingReasons\\UpdateStudentLeavingReasonRequest"
         },
         "PushNotificationMessagesPortal_GetByRead": {
             "method": "GET",
@@ -4199,22 +4252,26 @@
         "Religions_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/religions/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Religions\\DeleteReligionRequest"
         },
         "Religions_GetAsync": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/religions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Religions\\GetReligionsRequest"
         },
         "Religions_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/religions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Religions\\CreateReligionRequest"
         },
         "Religions_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/religions/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Religions\\UpdateReligionRequest"
         },
         "RewardsAndConduct_GetRewardTypes": {
             "method": "GET",
@@ -4444,22 +4501,26 @@
         "SelectionCategory_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/selectioncategories/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\SelectionCategory\\DeleteSelectionCategoryRequest"
         },
         "SelectionCategory_Get": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/selectioncategories",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\SelectionCategory\\GetSelectionCategoriesRequest"
         },
         "SelectionCategory_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/selectioncategories",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\SelectionCategory\\CreateSelectionCategoryRequest"
         },
         "SelectionCategory_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/selectioncategories/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\SelectionCategory\\UpdateSelectionCategoryRequest"
         },
         "SelfRegistration_GetSelfRegistrationConfigAsync": {
             "method": "GET",
@@ -4495,7 +4556,8 @@
         "Sms_GetBatchMessagesAsyncByPagePagesize": {
             "method": "GET",
             "path": "/api/systemconfiguration/sms/batch",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\Sms\\GetSmsBatchMessagesRequest"
         },
         "StaffContactsPortal_AssociatePortalContactByPortalcontact": {
             "method": "POST",
@@ -5418,7 +5480,8 @@
         "TagCategories_GetAll": {
             "method": "GET",
             "path": "/api/systemconfiguration/tags/categories",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\Tags\\Categories\\GetTagCategoriesRequest"
         },
         "Tags_DeleteTagByGradebookidCategoryidCategoryentityid": {
             "method": "DELETE",
@@ -5582,22 +5645,26 @@
         "Titles_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/titles/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Titles\\DeleteTitleRequest"
         },
         "Titles_Get": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/titles",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Titles\\GetTitlesRequest"
         },
         "Titles_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/titles",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Titles\\CreateTitleRequest"
         },
         "Titles_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/titles/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Titles\\UpdateTitleRequest"
         },
         "TransposeConfiguration_GetAll": {
             "method": "GET",
@@ -5612,37 +5679,44 @@
         "Universities_Get": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/universities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Universities\\GetUniversitiesRequest"
         },
         "Universities_GetById": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/universities/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Universities\\GetUniversityRequest"
         },
         "Universities_PostByUniversity": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/universities",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\Universities\\CreateUniversityRequest"
         },
         "VisaTypes_DeleteById": {
             "method": "DELETE",
             "path": "/api/systemconfiguration/list/visatypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\VisaTypes\\DeleteVisaTypeRequest"
         },
         "VisaTypes_Get": {
             "method": "GET",
             "path": "/api/systemconfiguration/list/visatypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\VisaTypes\\GetVisaTypesRequest"
         },
         "VisaTypes_PostByGloballistitem": {
             "method": "POST",
             "path": "/api/systemconfiguration/list/visatypes",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\VisaTypes\\CreateVisaTypeRequest"
         },
         "VisaTypes_PutByIdGloballistitem": {
             "method": "PUT",
             "path": "/api/systemconfiguration/list/visatypes/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\SystemConfiguration\\List\\VisaTypes\\UpdateVisaTypeRequest"
         },
         "VisibilityGroups_GetDefaultGroupId": {
             "method": "GET",
@@ -6102,6 +6176,20 @@
         "iSAMS.School.AppServices.Objects.Public.Resources.Get.Term": "spkm\\IsamsApi\\Data\\School\\Term",
         "iSAMS.School.AppServices.Objects.Public.Resources.Get.YearGroup": "spkm\\IsamsApi\\Data\\School\\YearGroup",
         "iSAMS.School.AppServices.Objects.Public.Resources.Get.YearGroupDivision": "spkm\\IsamsApi\\Data\\School\\YearGroupDivision",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Private.Resources.Get.Category": "spkm\\IsamsApi\\Data\\SystemConfiguration\\PrivateCategory",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Private.Resources.Get.EntityType": "spkm\\IsamsApi\\Data\\SystemConfiguration\\PrivateEntityType",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Private.Resources.Get.Tag": "spkm\\IsamsApi\\Data\\SystemConfiguration\\PrivateTag",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.CensusData": "spkm\\IsamsApi\\Data\\SystemConfiguration\\CensusData",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.ContactType": "spkm\\IsamsApi\\Data\\SystemConfiguration\\ContactType",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.GlobalListGroup": "spkm\\IsamsApi\\Data\\SystemConfiguration\\GlobalListGroup",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.GlobalListItem": "spkm\\IsamsApi\\Data\\SystemConfiguration\\GlobalListItem",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.GlobalListItemWithCensusData": "spkm\\IsamsApi\\Data\\SystemConfiguration\\GlobalListItemWithCensusData",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.SmsBatch": "spkm\\IsamsApi\\Data\\SystemConfiguration\\SmsBatch",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.University": "spkm\\IsamsApi\\Data\\SystemConfiguration\\University",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Post.GlobalListItem": "spkm\\IsamsApi\\Data\\SystemConfiguration\\GlobalListItemForCreate",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Post.GlobalListRule": "spkm\\IsamsApi\\Data\\SystemConfiguration\\GlobalListRuleForCreate",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Post.University": "spkm\\IsamsApi\\Data\\SystemConfiguration\\UniversityForCreate",
+        "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\SystemConfiguration\\GlobalListItemForUpdate",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Post.GlobalListItem": "spkm\\IsamsApi\\Data\\Teaching\\GlobalListItemForCreate",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Post.Subject": "spkm\\IsamsApi\\Data\\Teaching\\SubjectForCreate",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\Teaching\\GlobalListItemForUpdate",
