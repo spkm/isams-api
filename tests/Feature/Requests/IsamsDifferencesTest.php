@@ -25,7 +25,7 @@ use spkm\IsamsApi\Support\Filter;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 /*
-| Responses as iSAMS sends them where its API spec says otherwise.
+| Responses as iSAMS sends them where its API spec says otherwise (see ISAMS-API-DIFFERENCES.md).
 */
 
 it('reads a response shaped as iSAMS sends it, not as its spec says', function (string $request, array $body, Closure $call, Closure $expect) {

@@ -204,3 +204,10 @@ it('separates the REST calls from the Batch API calls in ENDPOINTS.md, listing a
         ->and($unnamed[0])->toHaveCount($unfilled->count())
         ->and((string) file_get_contents(dirname(__DIR__, 2).'/README.md'))->toContain('(ENDPOINTS.md#batch-api)');
 })->group('spec');
+
+it('documents where iSAMS\'s API differs from its documentation, linked from the README', function () {
+    $root = dirname(__DIR__, 2);
+
+    expect(file_exists($root.'/ISAMS-API-DIFFERENCES.md'))->toBeTrue()
+        ->and((string) file_get_contents($root.'/README.md'))->toContain('(ISAMS-API-DIFFERENCES.md)');
+})->group('spec');

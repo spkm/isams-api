@@ -17,7 +17,7 @@ return [
     'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News', 'Gradebooks', 'Cloud Portals'],
 
     'operations' => [
-        // Where iSAMS answers differently from its spec (found by the sandbox checks)
+        // Where iSAMS answers differently from its spec (found by the sandbox checks; see ISAMS-API-DIFFERENCES.md)
         'Sms_GetBatchMessagesAsyncByPagePagesize' => ['response' => ['list' => 'iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Get.SmsBatch', 'key' => 'smsBatches', 'paged' => true]],
         'Gradebooks_GetAll' => ['response' => ['list' => 'iSAMS.Markbooks.AppServices.Objects.Public.Get.Gradebook', 'key' => '']],
         'ApplicantAlumniCustomFields_GetAsyncBySchoolidCustomfieldid' => ['response' => ['list' => 'iSAMS.Admissions.AppServices.Objects.Public.Get.CustomField', 'key' => 'customFields']],
@@ -464,7 +464,7 @@ return [
         'Web' => 'Common',
     ],
 
-    // Fields iSAMS sends that its spec's definitions leave out (found by the sandbox checks).
+    // Fields iSAMS sends that its spec's definitions leave out (found by the sandbox checks; see ISAMS-API-DIFFERENCES.md).
     'properties' => [
         'iSAMS.MedicalCentre.Entities.Public.Resources.Get.MedicalVaccinationType' => ['deleted' => ['type' => 'boolean']],
     ],
