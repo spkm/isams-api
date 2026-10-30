@@ -8,7 +8,7 @@ use spkm\IsamsApi\IsamsApiException;
 
 /**
  * iSAMS refused because the API client's permission for the request's area is too low (iSAMS sets None, Read, Write,
- * Modify or Full per area).
+ * Modify or Full per area). iSAMS answers some of these 401 and others 403.
  */
 class MissingPermissionException extends IsamsApiException
 {
@@ -21,7 +21,8 @@ class MissingPermissionException extends IsamsApiException
     }
 
     /**
-     * The iSAMS area of the refused request, such as "Medical Centre"; null for an endpoint named by its path.
+     * The iSAMS area of the refused request, such as "Medical Centre": the module iSAMS names, or the request's area;
+     * null for an endpoint named by its path when iSAMS names none.
      */
     public function area(): ?string
     {
@@ -34,7 +35,7 @@ class MissingPermissionException extends IsamsApiException
         $area = self::areaOf($response);
         $message = self::field($response, 'message');
 
-        return 'The iSAMS API client '.($permission ? "needs $permission permission" : 'lacks permission').($area ? " for $area" : '').($message ? ": $message" : '');
+        return 'The iSAMS API client '.($permission ? "needs $permission permission" : 'lacks permission').($area ? " for $area" : '').' to '.self::requestLine($response).($message ? ": $message" : '');
     }
 
     private static function permissionIn(Response $response): ?string
@@ -44,6 +45,10 @@ class MissingPermissionException extends IsamsApiException
 
     private static function areaOf(Response $response): ?string
     {
+        if (preg_match('/ for ([A-Za-z]+)\.?$/', (string) self::field($response, 'message'), $matches)) {
+            return Str::headline($matches[1]);
+        }
+
         $namespace = Str::after($response->getRequest()::class, 'spkm\IsamsApi\Requests\\');
 
         return str_contains($namespace, '\\') ? Str::headline(Str::before($namespace, '\\')) : null;

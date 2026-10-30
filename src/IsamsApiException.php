@@ -3,6 +3,7 @@
 namespace spkm\IsamsApi;
 
 use Saloon\Exceptions\Request\RequestException;
+use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use Saloon\Http\Response;
 use spkm\IsamsApi\Exceptions\InvalidRequestException;
 use spkm\IsamsApi\Exceptions\MissingPermissionException;
@@ -18,16 +19,20 @@ class IsamsApiException extends RequestException
     }
 
     /**
-     * The exception for iSAMS's error status: a subclass for the statuses callers handle differently.
+     * The exception for iSAMS's error status: a subclass for the errors callers handle differently.
      */
     public static function fromResponse(Response $response): self
     {
+        $status = $response->status();
+        $refusal = $status === 403 || ($status === 401 && preg_match('/permissions? (are|is) required/i', (string) self::field($response, 'message')) === 1);
+
         return match (true) {
-            $response->status() === 404 => new NotFoundException($response),
-            in_array($response->status(), [400, 409, 412, 415, 422], true) => new InvalidRequestException($response),
-            $response->status() === 401 => new UnauthorizedException($response),
-            $response->status() === 403 => new MissingPermissionException($response),
-            $response->serverError() => new ServerErrorException($response),
+            $response->getRequest() instanceof GetClientCredentialsTokenRequest => new UnauthorizedException($response),
+            $refusal => new MissingPermissionException($response),
+            $status === 404 => new NotFoundException($response),
+            in_array($status, [400, 409, 412, 415, 422], true) => new InvalidRequestException($response),
+            $status === 401 => new UnauthorizedException($response),
+            $status === 408 || $response->serverError() => new ServerErrorException($response),
             default => new self($response),
         };
     }
@@ -44,9 +49,44 @@ class IsamsApiException extends RequestException
 
     protected function describe(Response $response): string
     {
-        $message = self::field($response, 'message');
+        $text = 'iSAMS responded '.$response->status().' to '.self::requestLine($response);
+        $page = self::htmlTitle($response);
 
-        return 'iSAMS responded '.$response->status().($message ? ': '.$message : '');
+        if ($page !== null) {
+            return $text.' with an HTML error page'.($page !== '' ? " ('$page')" : '').($response->status() === 500 ? "; iSAMS sends one for a path it doesn't have, among other faults" : '');
+        }
+
+        $message = self::field($response, 'message');
+        $trackingNumber = self::field($response, 'trackingNumber');
+        $text .= ($message ? ": $message" : '').($trackingNumber ? " (tracking number $trackingNumber)" : '');
+
+        if ($response->status() === 500 && $message === 'An error occurred.' && $response->getPendingRequest()->query()->get('$filter') !== null) {
+            $text .= ". iSAMS answers this to any \$filter it can't apply: use the model's property names (in PascalCase), and only eq, ne, gt, ge, lt, le and and.";
+        }
+
+        return $text;
+    }
+
+    /**
+     * The failed request's method and path, without its query string.
+     */
+    protected static function requestLine(Response $response): string
+    {
+        $pendingRequest = $response->getPendingRequest();
+
+        return $pendingRequest->getMethod()->value.' '.(parse_url($pendingRequest->getUrl(), PHP_URL_PATH) ?: '/');
+    }
+
+    /**
+     * The title of an HTML error page ('' when it has none), or null when iSAMS didn't send HTML.
+     */
+    private static function htmlTitle(Response $response): ?string
+    {
+        if (! str_contains(strtolower((string) $response->header('Content-Type')), 'html') && ! str_starts_with(ltrim($response->body()), '<')) {
+            return null;
+        }
+
+        return preg_match('#<title>(.*?)</title>#is', $response->body(), $matches) ? trim(html_entity_decode($matches[1])) : '';
     }
 
     /**

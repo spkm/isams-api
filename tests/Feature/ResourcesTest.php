@@ -124,7 +124,7 @@ it('says which permission the API client needs, and for which area, when iSAMS r
         ->toThrow(function (MissingPermissionException $exception) {
             expect($exception->requiredPermission())->toBe('Modify')
                 ->and($exception->area())->toBe('Medical Centre')
-                ->and($exception->getMessage())->toBe('The iSAMS API client needs Modify permission for Medical Centre: Modify permissions are required');
+                ->and($exception->getMessage())->toBe('The iSAMS API client needs Modify permission for Medical Centre to GET /api/medical/students/100001/conditions: Modify permissions are required');
         });
 });
 
@@ -135,7 +135,7 @@ it('still reports a missing permission when iSAMS words the refusal differently'
         ->toThrow(function (MissingPermissionException $exception) {
             expect($exception->requiredPermission())->toBeNull()
                 ->and($exception->area())->toBe('Medical Centre')
-                ->and($exception->getMessage())->toBe('The iSAMS API client lacks permission for Medical Centre: Access denied');
+                ->and($exception->getMessage())->toBe('The iSAMS API client lacks permission for Medical Centre to GET /api/medical/students/100001/conditions: Access denied');
         });
 });
 
@@ -143,7 +143,7 @@ it('throws iSAMS\'s error when a page of a paged list fails', function () {
     FakeIsams::respondWith([GetStudentsRequest::class => MockResponse::make(['message' => 'Read permissions are required'], 403)]);
 
     expect(fn () => FakeIsams::connector()->students()->all()->all())
-        ->toThrow(MissingPermissionException::class, 'The iSAMS API client needs Read permission for Students: Read permissions are required');
+        ->toThrow(MissingPermissionException::class, 'The iSAMS API client needs Read permission for Students to GET /api/students: Read permissions are required');
 });
 
 it('names no area when iSAMS refuses an endpoint named by its path', function () {
@@ -153,7 +153,7 @@ it('names no area when iSAMS refuses an endpoint named by its path', function ()
 
     expect($exception)->toBeInstanceOf(MissingPermissionException::class)
         ->and($exception->area())->toBeNull()
-        ->and($exception->getMessage())->toBe('The iSAMS API client needs Read permission: Read permissions are required');
+        ->and($exception->getMessage())->toBe('The iSAMS API client needs Read permission to GET /api/students/customgroups: Read permissions are required');
 });
 
 it('throws a server error with no iSAMS message when iSAMS sends an error page instead of JSON', function () {
@@ -163,6 +163,6 @@ it('throws a server error with no iSAMS message when iSAMS sends an error page i
         ->toThrow(function (ServerErrorException $exception) {
             expect($exception->isamsMessage())->toBeNull()
                 ->and($exception->trackingNumber())->toBeNull()
-                ->and($exception->getMessage())->toBe('iSAMS responded 503');
+                ->and($exception->getMessage())->toBe('iSAMS responded 503 to GET /api/teaching/subjects/7 with an HTML error page');
         });
 });

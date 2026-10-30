@@ -15,8 +15,9 @@ class BatchApiException extends RequestException
         $this->details = self::details($response);
         $name = $this->name();
         $title = $this->title();
+        $description = $this->description();
 
-        parent::__construct($response, 'iSAMS Batch API responded '.$response->status().($name ? ': '.$name : '').($title ? ': '.$title : ''));
+        parent::__construct($response, 'iSAMS Batch API responded '.$response->status().($name ? ': '.$name : '').($title ? ': '.$title : '').($description ? ': '.$description : ''));
     }
 
     public function name(): ?string
