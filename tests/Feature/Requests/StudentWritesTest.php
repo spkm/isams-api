@@ -9,9 +9,10 @@ use spkm\IsamsApi\Data\Students\CustomFieldForPatch;
 use spkm\IsamsApi\Data\Students\StudentDocumentForCreate;
 use spkm\IsamsApi\Data\Students\StudentVisa;
 use spkm\IsamsApi\Requests\Students\Alumni\GetAlumniRequest;
-use spkm\IsamsApi\Requests\Students\Contacts\GetContactsBySchoolidRequest;
+use spkm\IsamsApi\Requests\Students\Contacts\GetStudentContactsRequest;
 use spkm\IsamsApi\Requests\Students\CustomFields\PatchStudentCustomFieldsRequest;
 use spkm\IsamsApi\Requests\Students\Document\CreateStudentDocumentRequest;
+use spkm\IsamsApi\Requests\Students\GetStudentRequest;
 use spkm\IsamsApi\Requests\Students\MoveStudentToAlumniRequest;
 use spkm\IsamsApi\Requests\Students\PassportDocuments\DownloadStudentPassportDocumentRequest;
 use spkm\IsamsApi\Requests\Students\PatchStudentRequest;
@@ -94,13 +95,16 @@ it('moves a student to the alumni with a command', function () {
 it('reaches generated and hand-written student requests through resources', function () {
     $isams = FakeIsams::respondWith([
         PatchStudentCustomFieldsRequest::class => MockResponse::make(),
-        GetContactsBySchoolidRequest::class => MockResponse::make(['contacts' => []]),
+        GetStudentContactsRequest::class => MockResponse::make(['contacts' => []]),
+        GetStudentRequest::class => MockResponse::make(['schoolId' => '100001']),
     ]);
     $students = FakeIsams::connector()->students();
 
     $students->customFields()->patchStudentCustomFields('100001', [['id' => 53, 'value' => 'Yes']]);
-    $students->contacts()->getContactsBySchoolid('100001');
+    $students->contacts()->getStudentContacts('100001');
+    $students->getStudent('100001');
 
     $isams->assertSent(PatchStudentCustomFieldsRequest::class);
-    $isams->assertSent(GetContactsBySchoolidRequest::class);
+    $isams->assertSent(GetStudentContactsRequest::class);
+    $isams->assertSent(GetStudentRequest::class);
 });

@@ -5,6 +5,9 @@ namespace spkm\IsamsApi\Requests\Teaching;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+/**
+ * @deprecated Use \spkm\IsamsApi\Requests\Teaching\Subjects\GetSubjectRequest instead.
+ */
 class GetSubjectByIdRequest extends Request
 {
     protected Method $method = Method::GET;

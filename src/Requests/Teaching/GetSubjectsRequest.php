@@ -7,6 +7,8 @@ use Saloon\Http\Request;
 
 /**
  * The 'subjects' property is an array of Subject objects.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Teaching\Subjects\GetSubjectsRequest instead.
  */
 class GetSubjectsRequest extends Request
 {

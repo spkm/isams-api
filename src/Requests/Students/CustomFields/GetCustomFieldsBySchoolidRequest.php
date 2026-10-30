@@ -7,6 +7,8 @@ use Saloon\Http\Request;
 
 /**
  * The 'customFields' property is an array of CustomField objects.
+ *
+ * @deprecated Use \spkm\IsamsApi\Requests\Students\CustomFields\GetStudentCustomFieldsRequest instead.
  */
 class GetCustomFieldsBySchoolidRequest extends Request
 {

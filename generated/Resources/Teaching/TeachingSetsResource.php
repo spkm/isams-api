@@ -8,9 +8,9 @@ namespace spkm\IsamsApi\Resources\Teaching;
 
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
-use spkm\IsamsApi\Requests\Teaching\GetStudentsInSetBySetidRequest;
-use spkm\IsamsApi\Requests\Teaching\GetTeachingSetsRequest;
 use spkm\IsamsApi\Requests\Teaching\TeachingSets\AddStudentToTeachingSetRequest;
+use spkm\IsamsApi\Requests\Teaching\TeachingSets\GetTeachingSetStudentsRequest;
+use spkm\IsamsApi\Requests\Teaching\TeachingSets\GetTeachingSetsRequest;
 use spkm\IsamsApi\Requests\Teaching\TeachingSets\RemoveStudentFromTeachingSetRequest;
 
 class TeachingSetsResource extends BaseResource
@@ -20,9 +20,9 @@ class TeachingSetsResource extends BaseResource
         return $this->connector->send(new AddStudentToTeachingSetRequest($setId, $schoolId));
     }
 
-    public function getStudentsInSetBySetid(int $setId): Response
+    public function getTeachingSetStudents(int $setId): Response
     {
-        return $this->connector->send(new GetStudentsInSetBySetidRequest($setId));
+        return $this->connector->send(new GetTeachingSetStudentsRequest($setId));
     }
 
     public function getTeachingSets(): Response

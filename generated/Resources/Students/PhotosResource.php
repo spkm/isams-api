@@ -10,8 +10,8 @@ use Saloon\Data\MultipartValue;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 use spkm\IsamsApi\Requests\Students\Photos\CreateStudentPhotoRequest;
-use spkm\IsamsApi\Requests\Students\Photos\GetCurrentPhotoBySchoolidRequest;
-use spkm\IsamsApi\Requests\Students\Photos\GetPhotosBySchoolidPhotoidRequest;
+use spkm\IsamsApi\Requests\Students\Photos\GetCurrentStudentPhotoRequest;
+use spkm\IsamsApi\Requests\Students\Photos\GetStudentPhotoRequest;
 
 class PhotosResource extends BaseResource
 {
@@ -20,13 +20,13 @@ class PhotosResource extends BaseResource
         return $this->connector->send(new CreateStudentPhotoRequest($schoolId, $photo));
     }
 
-    public function getCurrentPhotoBySchoolid(string $schoolId): Response
+    public function getCurrentStudentPhoto(string $schoolId): Response
     {
-        return $this->connector->send(new GetCurrentPhotoBySchoolidRequest($schoolId));
+        return $this->connector->send(new GetCurrentStudentPhotoRequest($schoolId));
     }
 
-    public function getPhotosBySchoolidPhotoid(string $schoolId, int $photoId): Response
+    public function getStudentPhoto(string $schoolId, int $photoId): Response
     {
-        return $this->connector->send(new GetPhotosBySchoolidPhotoidRequest($schoolId, $photoId));
+        return $this->connector->send(new GetStudentPhotoRequest($schoolId, $photoId));
     }
 }

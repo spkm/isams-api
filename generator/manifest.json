@@ -1545,8 +1545,8 @@
         "CurriculumSubjectCodes_Get": {
             "method": "GET",
             "path": "/api/teaching/curriculumsubjectcodes",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\GetCurriculumSubjectCodesRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\CurriculumSubjectCodes\\GetCurriculumSubjectCodesRequest"
         },
         "CurriculumSubjectCodes_PostByGloballistitem": {
             "method": "POST",
@@ -5181,26 +5181,26 @@
         "StudentContacts_GetBySchoolidIncludedeceasedExpand": {
             "method": "GET",
             "path": "/api/students/{schoolId}/contacts",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\Contacts\\GetContactsBySchoolidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\Contacts\\GetStudentContactsRequest"
         },
         "StudentCustomFields_GetAllAsyncBySchoolid": {
             "method": "GET",
             "path": "/api/students/{schoolId}/customFields",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\CustomFields\\GetCustomFieldsBySchoolidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\CustomFields\\GetStudentCustomFieldsRequest"
         },
         "StudentCustomFields_GetAsyncBySchoolidCustomfieldid": {
             "method": "GET",
             "path": "/api/students/{schoolId}/customFields/{customFieldId}",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\CustomFields\\GetCustomFieldsBySchoolidAndCustomfieldidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\CustomFields\\GetStudentCustomFieldRequest"
         },
         "StudentCustomFields_PatchBySchoolidCustomfieldidPubliccustomfield": {
             "method": "PATCH",
             "path": "/api/students/{schoolId}/customFields/{customFieldId}",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\CustomFields\\UpdateCustomFieldValueBySchoolidAndCustomfieldidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\CustomFields\\PatchStudentCustomFieldRequest"
         },
         "StudentCustomFields_PatchBySchoolidCustomfields": {
             "method": "PATCH",
@@ -5535,14 +5535,14 @@
         "StudentPhotos_GetBySchoolidPhotoid": {
             "method": "GET",
             "path": "/api/students/{schoolId}/photos/{photoId}",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\Photos\\GetPhotosBySchoolidPhotoidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\Photos\\GetStudentPhotoRequest"
         },
         "StudentPhotos_GetCurrentBySchoolid": {
             "method": "GET",
             "path": "/api/students/{schoolId}/photos/current",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\Photos\\GetCurrentPhotoBySchoolidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\Photos\\GetCurrentStudentPhotoRequest"
         },
         "StudentPhotos_PostAsyncBySchoolid": {
             "method": "POST",
@@ -5565,8 +5565,8 @@
         "StudentSystemStatuses_GetAllAsync": {
             "method": "GET",
             "path": "/api/students/systemstatuses",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\GetStudentSystemStatusesRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\SystemStatuses\\GetStudentSystemStatusesRequest"
         },
         "StudentTimetables_GetBySchoolid": {
             "method": "GET",
@@ -5727,8 +5727,8 @@
         "StudentsContacts_GetAllAsyncByPagePagesizeExpand": {
             "method": "GET",
             "path": "/api/students/contacts",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Students\\Contacts\\GetContactsRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Students\\Contacts\\GetAllStudentContactsRequest"
         },
         "StudentsPortal_GetStudentBySchoolIdAsyncBySchoolid": {
             "method": "GET",
@@ -5805,8 +5805,8 @@
         "SubjectTeachingDepartments_GetBySubjectid": {
             "method": "GET",
             "path": "/api/teaching/subjects/{subjectId}/departments",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\GetSubjectTeachingDepartmentsBySubjectidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\SubjectTeachingDepartments\\GetSubjectTeachingDepartmentsRequest"
         },
         "SubjectTeachingDepartments_PostBySubjectidDepartmentid": {
             "method": "POST",
@@ -5823,14 +5823,14 @@
         "Subjects_GetAll": {
             "method": "GET",
             "path": "/api/teaching/subjects",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\GetSubjectsRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\Subjects\\GetSubjectsRequest"
         },
         "Subjects_GetById": {
             "method": "GET",
             "path": "/api/teaching/subjects/{id}",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\GetSubjectByIdRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\Subjects\\GetSubjectRequest"
         },
         "Subjects_PostBySubject": {
             "method": "POST",
@@ -5937,14 +5937,14 @@
         "TeachingSets_Get": {
             "method": "GET",
             "path": "/api/teaching/sets",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\GetTeachingSetsRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\TeachingSets\\GetTeachingSetsRequest"
         },
         "TeachingSets_GetStudentsInSetBySetid": {
             "method": "GET",
             "path": "/api/teaching/sets/{setId}/setList",
-            "source": "handwritten",
-            "class": "spkm\\IsamsApi\\Requests\\Teaching\\GetStudentsInSetBySetidRequest"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Teaching\\TeachingSets\\GetTeachingSetStudentsRequest"
         },
         "TeachingSets_PostBySetidSchoolid": {
             "method": "POST",
@@ -6677,6 +6677,7 @@
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.InternalExamEntry": "spkm\\IsamsApi\\Data\\Students\\InternalExamEntry",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.InternalExamResult": "spkm\\IsamsApi\\Data\\Students\\InternalExamResult",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.InternalExamSession": "spkm\\IsamsApi\\Data\\Students\\InternalExamSession",
+        "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.IsoMapping": "spkm\\IsamsApi\\Data\\Students\\IsoMapping",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Language": "spkm\\IsamsApi\\Data\\Students\\Language",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.PortalExamArrangement": "spkm\\IsamsApi\\Data\\Students\\PortalExamArrangement",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.PortalStudentContact": "spkm\\IsamsApi\\Data\\Students\\PortalStudentContact",
@@ -6690,10 +6691,13 @@
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.RewardTeacher": "spkm\\IsamsApi\\Data\\Students\\RewardTeacher",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.RewardType": "spkm\\IsamsApi\\Data\\Students\\RewardType",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.SmsMessage": "spkm\\IsamsApi\\Data\\Students\\SmsMessage",
+        "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentContact": "spkm\\IsamsApi\\Data\\Students\\StudentContact",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentDocument": "spkm\\IsamsApi\\Data\\Students\\StudentDocument",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentPassportDocument": "spkm\\IsamsApi\\Data\\Students\\StudentPassportDocument",
+        "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentSystemStatus": "spkm\\IsamsApi\\Data\\Students\\StudentSystemStatus",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentVisa": "spkm\\IsamsApi\\Data\\Students\\StudentVisa",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentVisaDocument": "spkm\\IsamsApi\\Data\\Students\\StudentVisaDocument",
+        "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.StudentsContact": "spkm\\IsamsApi\\Data\\Students\\StudentsContact",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.Teacher": "spkm\\IsamsApi\\Data\\Students\\Teacher",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.TeachingGroup": "spkm\\IsamsApi\\Data\\Students\\TeachingGroup",
         "iSAMS.Pupils.AppServices.Objects.Public.Resources.Get.TeachingGroupAdditionHistory": "spkm\\IsamsApi\\Data\\Students\\TeachingGroupAdditionHistory",
@@ -6831,6 +6835,11 @@
         "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\SystemConfiguration\\GlobalListItemForUpdate",
         "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Put.ProfileInformation": "spkm\\IsamsApi\\Data\\SystemConfiguration\\ProfileInformationForUpdate",
         "iSAMS.SystemConfiguration.AppServices.Objects.Public.Resources.Put.SecurityQuestionInformation": "spkm\\IsamsApi\\Data\\SystemConfiguration\\SecurityQuestionInformationForUpdate",
+        "iSAMS.Teaching.AppServices.Objects.Public.Resources.Get.GlobalListItem": "spkm\\IsamsApi\\Data\\Teaching\\GlobalListItem",
+        "iSAMS.Teaching.AppServices.Objects.Public.Resources.Get.Student": "spkm\\IsamsApi\\Data\\Teaching\\Student",
+        "iSAMS.Teaching.AppServices.Objects.Public.Resources.Get.Subject": "spkm\\IsamsApi\\Data\\Teaching\\Subject",
+        "iSAMS.Teaching.AppServices.Objects.Public.Resources.Get.TeachingDepartment": "spkm\\IsamsApi\\Data\\Teaching\\TeachingDepartment",
+        "iSAMS.Teaching.AppServices.Objects.Public.Resources.Get.TeachingSet": "spkm\\IsamsApi\\Data\\Teaching\\TeachingSet",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Post.GlobalListItem": "spkm\\IsamsApi\\Data\\Teaching\\GlobalListItemForCreate",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Post.Subject": "spkm\\IsamsApi\\Data\\Teaching\\SubjectForCreate",
         "iSAMS.Teaching.AppServices.Objects.Public.Resources.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\Teaching\\GlobalListItemForUpdate",

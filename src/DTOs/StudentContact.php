@@ -2,6 +2,9 @@
 
 namespace spkm\IsamsApi\DTOs;
 
+/**
+ * @deprecated Use \spkm\IsamsApi\Data\Students\StudentContact, which GetStudentContactsRequest returns.
+ */
 #[\AllowDynamicProperties]
 class StudentContact
 {

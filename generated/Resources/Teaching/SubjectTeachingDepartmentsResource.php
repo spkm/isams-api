@@ -8,8 +8,8 @@ namespace spkm\IsamsApi\Resources\Teaching;
 
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
-use spkm\IsamsApi\Requests\Teaching\GetSubjectTeachingDepartmentsBySubjectidRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\AddSubjectTeachingDepartmentRequest;
+use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\GetSubjectTeachingDepartmentsRequest;
 use spkm\IsamsApi\Requests\Teaching\SubjectTeachingDepartments\RemoveSubjectTeachingDepartmentRequest;
 
 class SubjectTeachingDepartmentsResource extends BaseResource
@@ -19,9 +19,9 @@ class SubjectTeachingDepartmentsResource extends BaseResource
         return $this->connector->send(new AddSubjectTeachingDepartmentRequest($subjectId, $departmentId));
     }
 
-    public function getSubjectTeachingDepartmentsBySubjectid(int $subjectId): Response
+    public function getSubjectTeachingDepartments(int $subjectId): Response
     {
-        return $this->connector->send(new GetSubjectTeachingDepartmentsBySubjectidRequest($subjectId));
+        return $this->connector->send(new GetSubjectTeachingDepartmentsRequest($subjectId));
     }
 
     public function removeSubjectTeachingDepartment(int $subjectId, int $departmentId): Response

@@ -5,6 +5,9 @@ namespace spkm\IsamsApi\Requests\Students\Photos;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
+/**
+ * @deprecated Use \spkm\IsamsApi\Requests\Students\Photos\GetStudentPhotoRequest instead.
+ */
 class GetPhotosBySchoolidPhotoidRequest extends Request
 {
     protected Method $method = Method::GET;

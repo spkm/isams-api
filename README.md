@@ -2,9 +2,16 @@
 
 [![Tests](https://github.com/spkm/isams-api/actions/workflows/tests.yml/badge.svg)](https://github.com/spkm/isams-api/actions/workflows/tests.yml)
 [![Latest version](https://img.shields.io/packagist/v/spkm/isams-api)](https://packagist.org/packages/spkm/isams-api)
+[![PHP version](https://img.shields.io/packagist/php-v/spkm/isams-api)](https://packagist.org/packages/spkm/isams-api)
 
-A Laravel package for the [iSAMS](https://www.isams.com) REST API, built with [Saloon](https://docs.saloon.dev).
-See iSAMS's [API reference](https://developerdemo.isams.cloud/Main/swagger/ui/index) for the available endpoints.
+A Laravel package for the [iSAMS](https://www.isams.com) REST API and Batch API, built with
+[Saloon](https://docs.saloon.dev). It has a request and typed models for every endpoint in iSAMS's
+[API reference](https://developerdemo.isams.cloud/Main/swagger/ui/index), grouped by area: `admissions()`, `agent()`,
+`billing()`, `bulletin()`, `cloudPortals()`, `curriculum()`, `discipline()`, `estates()`, `exclusions()`,
+`gradebooks()`, `humanResources()`, `medicalCentre()`, `news()`, `otherSchools()`, `registration()`,
+`rewardsAndConduct()`, `school()`, `storage()`, `studentRegisters()`, `students()`, `systemConfiguration()`,
+`teaching()`, `timetable()` and `wellbeingManager()`. iSAMS's payment-provider webhooks are left out: iSAMS receives
+those, not your app.
 
 ## Requirements
 
@@ -13,6 +20,36 @@ See iSAMS's [API reference](https://developerdemo.isams.cloud/Main/swagger/ui/in
 - iSAMS REST API credentials (a client id and client secret) for your school
 
 Apps on Laravel 11, or on Laravel 12 below 12.39, need to update to Laravel 12.39 or later before updating to version 2.
+
+## Upgrading from version 1
+
+Code written for version 1 keeps working, apart from the Laravel minimum above and the config file's publish tag
+(below). Some changes are worth making:
+
+- The early requests whose names don't follow the package's naming are deprecated in favour of generated ones, which
+  return models:
+
+  | Deprecated | Use instead |
+  |---|---|
+  | `Students\GetStudentSystemStatusesRequest` | `Students\SystemStatuses\GetStudentSystemStatusesRequest` |
+  | `Students\Photos\GetCurrentPhotoBySchoolidRequest` | `Students\Photos\GetCurrentStudentPhotoRequest` |
+  | `Students\Photos\GetPhotosBySchoolidPhotoidRequest` | `Students\Photos\GetStudentPhotoRequest` |
+  | `Students\Contacts\GetContactsRequest` | `Students\Contacts\GetAllStudentContactsRequest` |
+  | `Students\Contacts\GetContactsBySchoolidRequest` | `Students\Contacts\GetStudentContactsRequest` |
+  | `Students\CustomFields\GetCustomFieldsBySchoolidRequest` | `Students\CustomFields\GetStudentCustomFieldsRequest` |
+  | `Students\CustomFields\GetCustomFieldsBySchoolidAndCustomfieldidRequest` | `Students\CustomFields\GetStudentCustomFieldRequest` |
+  | `Students\CustomFields\UpdateCustomFieldValueBySchoolidAndCustomfieldidRequest` | `Students\CustomFields\PatchStudentCustomFieldRequest` (sends JSON, as iSAMS documents; the old request sends a form) |
+  | `Teaching\GetSubjectsRequest` | `Teaching\Subjects\GetSubjectsRequest` |
+  | `Teaching\GetSubjectByIdRequest` | `Teaching\Subjects\GetSubjectRequest` |
+  | `Teaching\GetSubjectTeachingDepartmentsBySubjectidRequest` | `Teaching\SubjectTeachingDepartments\GetSubjectTeachingDepartmentsRequest` |
+  | `Teaching\GetTeachingSetsRequest` | `Teaching\TeachingSets\GetTeachingSetsRequest` |
+  | `Teaching\GetStudentsInSetBySetidRequest` | `Teaching\TeachingSets\GetTeachingSetStudentsRequest` |
+  | `Teaching\GetCurriculumSubjectCodesRequest` | `Teaching\CurriculumSubjectCodes\GetCurriculumSubjectCodesRequest` |
+  | `BatchApi\GetEndpointRequest`, `BatchApi\FilterEndpointRequest` | `Isams::batch()` with `Batch\BatchRequest` (see [Batch API](#batch-api)) |
+
+- From 2 November 2026 iSAMS rejects Batch API requests that send only the key; the deprecated batch requests do
+  that, `Isams::batch()` does not.
+- The config file is published with `php artisan isams-api:install`, or `vendor:publish --tag=isams-api-config`.
 
 ## Installation
 
@@ -121,7 +158,7 @@ $patch = JsonPatch::make()->replace('/preferredName', 'Alex');
 `Filter` produces iSAMS's OData `$filter` syntax (only `eq`, `ne`, `gt`, `ge`, `lt` and `le` are supported) and can be
 passed wherever a request takes a `filter`. iSAMS's PATCH endpoints take a `JsonPatch`.
 
-### Endpoints the package doesn't cover yet
+### Endpoints iSAMS adds later
 
 Call any iSAMS path relative to your base URL:
 
@@ -257,11 +294,36 @@ composer format:check
 
 The tests never contact a real iSAMS: every response is faked.
 
+### Checking the package against your iSAMS sandbox
+
+iSAMS's documentation isn't always what its API does. The separate `Sandbox` test suite calls your own iSAMS sandbox,
+reads every list it can without arguments (and every root node a Batch API key returns), and prints the field names
+that differ from the package's models. It never prints values, and nothing it reads is saved.
+
+```dotenv
+ISAMS_SANDBOX_BASE_URL=https://your-sandbox.example
+ISAMS_SANDBOX_CLIENT_ID=your-client-id
+ISAMS_SANDBOX_CLIENT_SECRET=your-client-secret
+# optional
+ISAMS_SANDBOX_SCOPES="restapi"
+ISAMS_SANDBOX_BATCH_KEY=your-batch-api-key
+ISAMS_SANDBOX_BATCH_SECRET=your-batch-api-secret
+```
+
+```bash
+vendor/bin/pest --testsuite=Sandbox
+```
+
+The checks only read: anything else is refused unless `ISAMS_SANDBOX_ALLOW_WRITES=true`, and the few GETs that make
+iSAMS do something (such as running wellbeing workflows) are never sent. Only allow writes on a sandbox whose data you
+may change.
+
 ## Contributing
 
 Most requests and models are generated from iSAMS's API spec, pinned in `generator/spec`. Don't edit files in
 `generated/`: change `generator/overrides.php` (or the generator) and run `composer generate`.
-`composer generate:check` fails if the generated code is out of date.
+`composer generate:check` fails if the generated code is out of date. The Batch API models are generated from
+`generator/batch/nodes.php`, the node lists from iSAMS's Batch API documentation.
 
 ## Security
 

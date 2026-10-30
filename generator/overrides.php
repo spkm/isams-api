@@ -1,21 +1,7 @@
 <?php
 
-use spkm\IsamsApi\Requests\Students\Contacts\GetContactsBySchoolidRequest;
-use spkm\IsamsApi\Requests\Students\Contacts\GetContactsRequest;
-use spkm\IsamsApi\Requests\Students\CustomFields\GetCustomFieldsBySchoolidAndCustomfieldidRequest;
-use spkm\IsamsApi\Requests\Students\CustomFields\GetCustomFieldsBySchoolidRequest;
-use spkm\IsamsApi\Requests\Students\CustomFields\UpdateCustomFieldValueBySchoolidAndCustomfieldidRequest;
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
 use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
-use spkm\IsamsApi\Requests\Students\GetStudentSystemStatusesRequest;
-use spkm\IsamsApi\Requests\Students\Photos\GetCurrentPhotoBySchoolidRequest;
-use spkm\IsamsApi\Requests\Students\Photos\GetPhotosBySchoolidPhotoidRequest;
-use spkm\IsamsApi\Requests\Teaching\GetCurriculumSubjectCodesRequest;
-use spkm\IsamsApi\Requests\Teaching\GetStudentsInSetBySetidRequest;
-use spkm\IsamsApi\Requests\Teaching\GetSubjectByIdRequest;
-use spkm\IsamsApi\Requests\Teaching\GetSubjectsRequest;
-use spkm\IsamsApi\Requests\Teaching\GetSubjectTeachingDepartmentsBySubjectidRequest;
-use spkm\IsamsApi\Requests\Teaching\GetTeachingSetsRequest;
 
 $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it takes no API credentials.'];
 
@@ -24,23 +10,19 @@ return [
     'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News', 'Gradebooks', 'Cloud Portals'],
 
     'operations' => [
-        // Requests written by hand before the generator existed: never generated over.
+        // Requests written by hand before the generator existed, already named as the generator names them: never
+        // generated over. The other early hand-written requests are deprecated in favour of the generated ones.
         'Students_GetAllByPagePagesizeExpand' => ['handwritten' => GetStudentsRequest::class],
         'Students_GetBySchoolidExpand' => ['handwritten' => GetStudentRequest::class],
-        'StudentSystemStatuses_GetAllAsync' => ['handwritten' => GetStudentSystemStatusesRequest::class],
-        'StudentPhotos_GetCurrentBySchoolid' => ['handwritten' => GetCurrentPhotoBySchoolidRequest::class],
-        'StudentPhotos_GetBySchoolidPhotoid' => ['handwritten' => GetPhotosBySchoolidPhotoidRequest::class],
-        'StudentsContacts_GetAllAsyncByPagePagesizeExpand' => ['handwritten' => GetContactsRequest::class],
-        'StudentContacts_GetBySchoolidIncludedeceasedExpand' => ['handwritten' => GetContactsBySchoolidRequest::class],
-        'StudentCustomFields_GetAllAsyncBySchoolid' => ['handwritten' => GetCustomFieldsBySchoolidRequest::class],
-        'StudentCustomFields_GetAsyncBySchoolidCustomfieldid' => ['handwritten' => GetCustomFieldsBySchoolidAndCustomfieldidRequest::class],
-        'StudentCustomFields_PatchBySchoolidCustomfieldidPubliccustomfield' => ['handwritten' => UpdateCustomFieldValueBySchoolidAndCustomfieldidRequest::class],
-        'Subjects_GetAll' => ['handwritten' => GetSubjectsRequest::class],
-        'Subjects_GetById' => ['handwritten' => GetSubjectByIdRequest::class],
-        'SubjectTeachingDepartments_GetBySubjectid' => ['handwritten' => GetSubjectTeachingDepartmentsBySubjectidRequest::class],
-        'TeachingSets_Get' => ['handwritten' => GetTeachingSetsRequest::class],
-        'TeachingSets_GetStudentsInSetBySetid' => ['handwritten' => GetStudentsInSetBySetidRequest::class],
-        'CurriculumSubjectCodes_Get' => ['handwritten' => GetCurriculumSubjectCodesRequest::class],
+
+        // Replacements for the deprecated hand-written requests
+        'StudentPhotos_GetCurrentBySchoolid' => ['class' => 'GetCurrentStudentPhotoRequest'],
+        'StudentsContacts_GetAllAsyncByPagePagesizeExpand' => ['class' => 'GetAllStudentContactsRequest'],
+        'TeachingSets_GetStudentsInSetBySetid' => ['class' => 'GetTeachingSetStudentsRequest'],
+        'StudentSystemStatuses_GetAllAsync' => ['cacheable' => true],
+        'Subjects_GetAll' => ['cacheable' => true],
+        'Subjects_GetById' => ['cacheable' => true],
+        'CurriculumSubjectCodes_Get' => ['cacheable' => true],
 
         // Students
         'StudentPassports_EditMultiplePassportsBySchoolidPassports' => ['class' => 'UpdateStudentPassportsRequest'],

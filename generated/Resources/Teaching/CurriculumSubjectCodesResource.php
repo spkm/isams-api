@@ -12,8 +12,8 @@ use spkm\IsamsApi\Data\Teaching\GlobalListItemForCreate;
 use spkm\IsamsApi\Data\Teaching\GlobalListItemForUpdate;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\CreateCurriculumSubjectCodeRequest;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\DeleteCurriculumSubjectCodeRequest;
+use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\GetCurriculumSubjectCodesRequest;
 use spkm\IsamsApi\Requests\Teaching\CurriculumSubjectCodes\UpdateCurriculumSubjectCodeRequest;
-use spkm\IsamsApi\Requests\Teaching\GetCurriculumSubjectCodesRequest;
 
 class CurriculumSubjectCodesResource extends BaseResource
 {
