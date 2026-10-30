@@ -646,52 +646,62 @@
         "AssessmentColumnIndicators_DeleteByGradebookidColumnidIndicatorid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/indicators/{indicatorId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnIndicators\\DeleteAssessmentColumnIndicatorRequest"
         },
         "AssessmentColumnIndicators_PostByGradebookidColumnidIndicators": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/indicators",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnIndicators\\CreateAssessmentColumnIndicatorsRequest"
         },
         "AssessmentColumnStructure_CreateAssessmentColumnByGradebookidAssessmentcolumnstructure": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\CreateAssessmentColumnRequest"
         },
         "AssessmentColumnStructure_DeleteByGradebookidColumnid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\DeleteAssessmentColumnRequest"
         },
         "AssessmentColumnStructure_GetByGradebookidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\GetAssessmentColumnRequest"
         },
         "AssessmentColumnStructure_UpdateAssessmentColumnByGradebookidColumnidAssessmentcolumnstructure": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnStructure\\PatchAssessmentColumnRequest"
         },
         "AssessmentColumnTranspose_DeleteByGradebookidColumnidTransposeid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/transpose/{transposeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnTranspose\\DeleteAssessmentColumnTransposeRequest"
         },
         "AssessmentColumnTranspose_PostByGradebookidColumnidTransposeids": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/transpose",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnTranspose\\CreateAssessmentColumnTransposesRequest"
         },
         "AssessmentColumnWeightings_CreateByGradebookidColumnidWeightingelementids": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/weightingelements",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnWeightings\\CreateAssessmentColumnWeightingsRequest"
         },
         "AssessmentColumnWeightings_DeleteByGradebookidColumnidWeightingid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/weightingelements/{weightingId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\AssessmentColumnWeightings\\DeleteAssessmentColumnWeightingRequest"
         },
         "AttendanceRecords_GetAttendanceLessonRegistrationAsyncBySchoolidTermid": {
             "method": "GET",
@@ -844,42 +854,50 @@
         "CalculationColumnStructure_CreateByGradebookidCalculationcolumnstructure": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\CreateCalculationColumnRequest"
         },
         "CalculationColumnStructure_DeleteByGradebookidColumnid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\DeleteCalculationColumnRequest"
         },
         "CalculationColumnStructure_GetByGradebookidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\GetCalculationColumnRequest"
         },
         "CalculationColumnStructure_UpdateByGradebookidColumnidCalculationcolumnstructure": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnStructure\\PatchCalculationColumnRequest"
         },
         "CalculationColumnTranspose_DeleteByGradebookidColumnidTransposeid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}/transpose/{transposeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnTranspose\\DeleteCalculationColumnTransposeRequest"
         },
         "CalculationColumnTranspose_PostByGradebookidColumnidTransposeids": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}/transpose",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnTranspose\\CreateCalculationColumnTransposesRequest"
         },
         "CalculationColumnWeightings_CreateByGradebookidColumnidWeightingelementids": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}/weightingelements",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnWeightings\\CreateCalculationColumnWeightingsRequest"
         },
         "CalculationColumnWeightings_DeleteByGradebookidColumnidWeightingid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/calculationcolumns/{columnId}/weightingelements/{weightingId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CalculationColumnWeightings\\DeleteCalculationColumnWeightingRequest"
         },
         "Calendar_GetPublishedEventsByKeyPhraseByKeyphraseTargetid": {
             "method": "GET",
@@ -917,17 +935,20 @@
         "ColumnStructureReportMappings_CreateByGradebookidColumnidReportmappings": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/columns/{columnId}/reportmappings",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnStructureReportMappings\\CreateColumnReportMappingsRequest"
         },
         "ColumnStructureReportMappings_DeleteByGradebookidColumnidReportmappingid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/columns/{columnId}/reportmappings/{reportMappingId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnStructureReportMappings\\DeleteColumnReportMappingRequest"
         },
         "ColumnStructureReportMappings_GetByGradebookidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/columns/{columnId}/reportmappings",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnStructureReportMappings\\GetColumnReportMappingsRequest"
         },
         "CommunicationHistory_GetPortalEmailCommunicationHistory": {
             "method": "GET",
@@ -2443,147 +2464,176 @@
         "GradebookCharacteristics_DeleteByGradebookidCharacteristic": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/characteristics/{characteristic}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Characteristics\\DeleteGradebookCharacteristicRequest"
         },
         "GradebookCharacteristics_PostByGradebookidCharacteristics": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/characteristics",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Characteristics\\CreateGradebookCharacteristicsRequest"
         },
         "GradebookColumnMarks_UpdateMarkByGradebookidColumnidSchoolidMark": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/columns/{columnId}/students/{schoolId}/marks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\ColumnMarks\\PatchGradebookColumnMarkRequest"
         },
         "GradebookDisassociatedStudent_RemoveByGradebookidSchoolid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/students/dissociated/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\DisassociatedStudent\\RemoveGradebookDisassociatedStudentRequest"
         },
         "GradebookStaffAllocations_DeleteAllocationByGradebookidCriteriaAllocationid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/staff/allocations/{criteria}/{allocationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StaffAllocations\\DeleteGradebookStaffAllocationRequest"
         },
         "GradebookStaffAllocations_GetAllocationByGradebookidCriteria": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/staff/allocations/{criteria}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StaffAllocations\\GetGradebookStaffAllocationsRequest"
         },
         "GradebookStaffAllocations_PostAllocatedByGradebookidCriteriaStaffallocations": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/staff/allocations/{criteria}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StaffAllocations\\CreateGradebookStaffAllocationsRequest"
         },
         "GradebookStaffAssignments_AddAssignmentsByGradebookidStaffids": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/staff/assignments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StaffAssignments\\AddGradebookStaffAssignmentsRequest"
         },
         "GradebookStaffAssignments_DeleteAssignmentByGradebookidStaffid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/staff/assignments/{staffId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StaffAssignments\\DeleteGradebookStaffAssignmentRequest"
         },
         "GradebookStaffAssignments_GetAssignmentsByGradebookid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/staff/assignments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StaffAssignments\\GetGradebookStaffAssignmentsRequest"
         },
         "GradebookStaff_GetByGradebookid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/staff",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Staff\\GetGradebookStaffRequest"
         },
         "GradebookStudentAllocations_DeleteAllocationByGradebookidCriteriaAllocationid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/students/allocations/{criteria}/{allocationId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentAllocations\\DeleteGradebookStudentAllocationRequest"
         },
         "GradebookStudentAllocations_GetAllocationsByGradebookidCriteria": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/students/allocations/{criteria}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentAllocations\\GetGradebookStudentAllocationsRequest"
         },
         "GradebookStudentAllocations_PostAllocationsByGradebookidCriteriaStudentallocations": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/students/allocations/{criteria}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentAllocations\\CreateGradebookStudentAllocationsRequest"
         },
         "GradebookStudentAssignments_AddAssignmentsByGradebookidSchoolids": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/students/assignments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentAssignments\\AddGradebookStudentAssignmentsRequest"
         },
         "GradebookStudentAssignments_DeleteAssignmentByGradebookidSchoolid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/students/assignments/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentAssignments\\DeleteGradebookStudentAssignmentRequest"
         },
         "GradebookStudentAssignments_GetAssignmentsByGradebookid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/students/assignments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentAssignments\\GetGradebookStudentAssignmentsRequest"
         },
         "GradebookStudent_GetStudentsByGradebookid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/students",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Student\\GetGradebookStudentsRequest"
         },
         "Gradebooks_CreateGradebookByGradebook": {
             "method": "POST",
             "path": "/api/gradebooks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\CreateGradebookRequest"
         },
         "Gradebooks_DeleteById": {
             "method": "DELETE",
             "path": "/api/gradebooks/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\DeleteGradebookRequest"
         },
         "Gradebooks_GetAll": {
             "method": "GET",
             "path": "/api/gradebooks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GetGradebooksRequest"
         },
         "Gradebooks_GetByGradebookid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GetGradebookRequest"
         },
         "Gradebooks_UpdateGradebookByIdGradebook": {
             "method": "PATCH",
             "path": "/api/gradebooks/{id}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\PatchGradebookRequest"
         },
         "GradesetConfiguration_GetAll": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/gradesets",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GradesetConfiguration\\GetGradesetConfigurationsRequest"
         },
         "GradesetConfiguration_GetByGradesetid": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/gradesets/{gradesetId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GradesetConfiguration\\GetGradesetConfigurationRequest"
         },
         "GroupStructure_CreateByGradebookidGroupstructure": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/groups",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\CreateGradebookGroupRequest"
         },
         "GroupStructure_DeleteByGradebookidGroupid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/groups/{groupId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\DeleteGradebookGroupRequest"
         },
         "GroupStructure_GetByGradebookidGroupid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/groups/{groupId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\GetGradebookGroupRequest"
         },
         "GroupStructure_UpdateByGradebookidGroupidGroupstructure": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/structure/groups/{groupId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\GroupStructure\\PatchGradebookGroupRequest"
         },
         "HomeworkSubmission_GetAsyncByHomeworkidSchoolid": {
             "method": "GET",
@@ -2659,12 +2709,14 @@
         "IndicatorConfiguration_GetAll": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/indicators",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\IndicatorConfiguration\\GetIndicatorConfigurationsRequest"
         },
         "IndicatorConfiguration_GetByIndicatorid": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/indicators/{indicatorId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\IndicatorConfiguration\\GetIndicatorConfigurationRequest"
         },
         "IndicatorStatuses_GetAllIndicatorStatuses": {
             "method": "GET",
@@ -2978,22 +3030,26 @@
         "MarkComments_CreateCommentByGradebookidSchoolidColumnidComment": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/columns/{columnId}/students/{schoolId}/comments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\MarkComments\\CreateMarkCommentRequest"
         },
         "MarkComments_DeleteByGradebookidSchoolidColumnidCommentid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/columns/{columnId}/students/{schoolId}/comments/{commentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\MarkComments\\DeleteMarkCommentRequest"
         },
         "MarkComments_GetCommentsByGradebookidSchoolidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/columns/{columnId}/students/{schoolId}/comments",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\MarkComments\\GetMarkCommentsRequest"
         },
         "MarkComments_UpdateByGradebookidSchoolidColumnidCommentidComment": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/columns/{columnId}/students/{schoolId}/comments/{commentId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\MarkComments\\PatchMarkCommentRequest"
         },
         "MarkbooksPortals_GetMarkbooksWithPublishedColumnsBySchoolid": {
             "method": "GET",
@@ -3038,17 +3094,20 @@
         "Marks_GetAllByGradebookidPagePagesize": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/marks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Marks\\GetGradebookMarksRequest"
         },
         "Marks_GetByGradebookidSchoolid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/marks/students/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Marks\\GetGradebookStudentMarksRequest"
         },
         "Marks_UpdateMarksByGradebookidMarkcollection": {
             "method": "PATCH",
             "path": "/api/gradebooks/{gradebookId}/marks",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Marks\\UpdateGradebookMarksRequest"
         },
         "MedicalCondition_GetAllSeverities": {
             "method": "GET",
@@ -4712,7 +4771,8 @@
         "Structure_GetByGradebookid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Structure\\GetGradebookStructureRequest"
         },
         "StudentApplicantCustomFields_GetAllAsyncBySchoolid": {
             "method": "GET",
@@ -5023,17 +5083,20 @@
         "StudentExclusions_DeleteStudentExclusionByGradebookidColumnidSchoolid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/studentexclusions/{schoolId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentExclusions\\DeleteStudentExclusionRequest"
         },
         "StudentExclusions_GetByGradebookidColumnid": {
             "method": "GET",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/studentexclusions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentExclusions\\GetStudentExclusionsRequest"
         },
         "StudentExclusions_PostStudentExclusionByGradebookidColumnidSchoolids": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/structure/assessmentcolumns/{columnId}/studentexclusions",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StudentExclusions\\CreateStudentExclusionsRequest"
         },
         "StudentInventoryCommands_ArchiveBySchoolidInventoryid": {
             "method": "POST",
@@ -5492,22 +5555,26 @@
         "StylingDesignConfiguration_GetAll": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/stylingdesigns",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StylingDesignConfiguration\\GetStylingDesignConfigurationsRequest"
         },
         "StylingDesignConfiguration_GetByStylingdesignid": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/stylingdesigns/{stylingDesignId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StylingDesignConfiguration\\GetStylingDesignConfigurationRequest"
         },
         "StylingRuleConfiguration_GetAll": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/stylingrules",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StylingRuleConfiguration\\GetStylingRuleConfigurationsRequest"
         },
         "StylingRuleConfiguration_GetByStylingruleid": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/stylingrules/{stylingRuleId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\StylingRuleConfiguration\\GetStylingRuleConfigurationRequest"
         },
         "SubjectTeachingDepartments_DeleteBySubjectidDepartmentid": {
             "method": "DELETE",
@@ -5586,12 +5653,14 @@
         "Tags_DeleteTagByGradebookidCategoryidCategoryentityid": {
             "method": "DELETE",
             "path": "/api/gradebooks/{gradebookId}/tags/categories/{categoryId}/entities/{categoryEntityId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Tags\\DeleteGradebookTagRequest"
         },
         "Tags_PostTagsByGradebookidTags": {
             "method": "POST",
             "path": "/api/gradebooks/{gradebookId}/tags",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\Tags\\CreateGradebookTagsRequest"
         },
         "TeachingDepartmentSubjects_DeleteByDepartmentidSubjectid": {
             "method": "DELETE",
@@ -5769,12 +5838,14 @@
         "TransposeConfiguration_GetAll": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/transpose",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\TransposeConfiguration\\GetTransposeConfigurationsRequest"
         },
         "TransposeConfiguration_GetByTransposeid": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/transpose/{transposeId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\TransposeConfiguration\\GetTransposeConfigurationRequest"
         },
         "Universities_Get": {
             "method": "GET",
@@ -5850,12 +5921,14 @@
         "WeightingConfiguration_GetAll": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/weightings",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\WeightingConfiguration\\GetWeightingConfigurationsRequest"
         },
         "WeightingConfiguration_GetByWeightingid": {
             "method": "GET",
             "path": "/api/gradebooks/configuration/weightings/{weightingId}",
-            "source": "pending"
+            "source": "generated",
+            "class": "spkm\\IsamsApi\\Requests\\Gradebooks\\WeightingConfiguration\\GetWeightingConfigurationRequest"
         },
         "WorkflowActions_Types": {
             "method": "GET",
@@ -6123,6 +6196,45 @@
         "iSAMS.HR.AppServices.Objects.Public.Resources.Put.GlobalListItem": "spkm\\IsamsApi\\Data\\HumanResources\\GlobalListItemForUpdate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Put.Qualification": "spkm\\IsamsApi\\Data\\HumanResources\\QualificationForUpdate",
         "iSAMS.HR.AppServices.Objects.Public.Resources.Put.Role": "spkm\\IsamsApi\\Data\\HumanResources\\RoleForUpdate",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Base.AllocationCriteriaBase": "spkm\\IsamsApi\\Data\\Gradebooks\\AllocationCriteriaBase",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Base.GradesetItemBase": "spkm\\IsamsApi\\Data\\Gradebooks\\GradesetItemBase",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Base.StylingRuleItemBase": "spkm\\IsamsApi\\Data\\Gradebooks\\StylingRuleItemBase",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Base.TagBase": "spkm\\IsamsApi\\Data\\Gradebooks\\TagBase",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Base.TransposeItemBase": "spkm\\IsamsApi\\Data\\Gradebooks\\TransposeItemBase",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Allocation": "spkm\\IsamsApi\\Data\\Gradebooks\\Allocation",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.AssessmentColumnStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\AssessmentColumnStructure",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.CalculationColumnStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\CalculationColumnStructure",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Comment": "spkm\\IsamsApi\\Data\\Gradebooks\\Comment",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Gradebook": "spkm\\IsamsApi\\Data\\Gradebooks\\Gradebook",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookOverview": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookOverview",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookStructure",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.GradebookStructureOrderedItem": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookStructureOrderedItem",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Gradeset": "spkm\\IsamsApi\\Data\\Gradebooks\\Gradeset",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.GroupStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\GroupStructure",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Indicator": "spkm\\IsamsApi\\Data\\Gradebooks\\Indicator",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.StaffAssignment": "spkm\\IsamsApi\\Data\\Gradebooks\\StaffAssignment",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Student": "spkm\\IsamsApi\\Data\\Gradebooks\\Student",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.StudentAssignment": "spkm\\IsamsApi\\Data\\Gradebooks\\StudentAssignment",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.StylingDesign": "spkm\\IsamsApi\\Data\\Gradebooks\\StylingDesign",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.StylingRule": "spkm\\IsamsApi\\Data\\Gradebooks\\StylingRule",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Transpose": "spkm\\IsamsApi\\Data\\Gradebooks\\Transpose",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.TransposeMark": "spkm\\IsamsApi\\Data\\Gradebooks\\TransposeMark",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Get.Weighting": "spkm\\IsamsApi\\Data\\Gradebooks\\Weighting",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Patch.Collections.MarkCollection": "spkm\\IsamsApi\\Data\\Gradebooks\\MarkCollectionForPatch",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Patch.Student": "spkm\\IsamsApi\\Data\\Gradebooks\\StudentForPatch",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Post.AssessmentColumnStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\AssessmentColumnStructureForCreate",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Post.CalculationColumnStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\CalculationColumnStructureForCreate",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Post.Comment": "spkm\\IsamsApi\\Data\\Gradebooks\\CommentForCreate",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Post.Gradebook": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookForCreate",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Post.Tag": "spkm\\IsamsApi\\Data\\Gradebooks\\TagForCreate",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Get.ColumnMark": "spkm\\IsamsApi\\Data\\Gradebooks\\ColumnMark",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Get.GradebookStudent": "spkm\\IsamsApi\\Data\\Gradebooks\\GradebookStudent",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Get.ReportMapping": "spkm\\IsamsApi\\Data\\Gradebooks\\ReportMapping",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Get.Staff": "spkm\\IsamsApi\\Data\\Gradebooks\\Staff",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Get.StudentExclusion": "spkm\\IsamsApi\\Data\\Gradebooks\\StudentExclusion",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Patch.ColumnMark": "spkm\\IsamsApi\\Data\\Gradebooks\\ColumnMarkForPatch",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Post.GroupStructure": "spkm\\IsamsApi\\Data\\Gradebooks\\GroupStructureForCreate",
+        "iSAMS.Markbooks.AppServices.Objects.Public.Resources.Post.ReportMapping": "spkm\\IsamsApi\\Data\\Gradebooks\\ReportMappingForCreate",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Contracts.IMedicalNote": "spkm\\IsamsApi\\Data\\MedicalCentre\\IMedicalNote",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Bmi": "spkm\\IsamsApi\\Data\\MedicalCentre\\Bmi",
         "iSAMS.MedicalCentre.AppServices.Objects.Public.Resources.Get.Condition": "spkm\\IsamsApi\\Data\\MedicalCentre\\Condition",
