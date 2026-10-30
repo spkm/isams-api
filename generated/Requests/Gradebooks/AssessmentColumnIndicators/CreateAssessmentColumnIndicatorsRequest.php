@@ -46,6 +46,6 @@ class CreateAssessmentColumnIndicatorsRequest extends IsamsRequest implements Ha
      */
     protected function defaultBody(): array
     {
-        return $this->indicators;
+        return array_values($this->indicators);
     }
 }

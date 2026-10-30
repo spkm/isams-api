@@ -69,7 +69,7 @@ class PassportsResource extends IsamsResource
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\ApplicantPassportForUpdate|array<string, mixed>>  $applicantPassports
+     * @param  array<int, \spkm\IsamsApi\Data\Admissions\ApplicantPassportForUpdate|array<string, mixed>>  $applicantPassports
      * @see \spkm\IsamsApi\Requests\Admissions\Passports\UpdateApplicantPassportsRequest
      */
     public function updateMany(string $schoolId, array $applicantPassports): bool

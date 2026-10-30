@@ -46,6 +46,6 @@ class CreateGradebookStaffAllocationsRequest extends IsamsRequest implements Has
      */
     protected function defaultBody(): array
     {
-        return $this->staffAllocations;
+        return array_values($this->staffAllocations);
     }
 }

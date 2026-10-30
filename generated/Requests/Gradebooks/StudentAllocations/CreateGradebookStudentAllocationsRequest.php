@@ -46,6 +46,6 @@ class CreateGradebookStudentAllocationsRequest extends IsamsRequest implements H
      */
     protected function defaultBody(): array
     {
-        return $this->studentAllocations;
+        return array_values($this->studentAllocations);
     }
 }

@@ -28,6 +28,14 @@ class BatchRequest extends IsamsRequest implements HasBody
     }
 
     /**
+     * Always a read: a POST only carries the filters.
+     */
+    public function isSafe(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return array<string, string>
      */
     protected function defaultHeaders(): array

@@ -47,7 +47,7 @@ class EmployeeCustomFieldsResource extends IsamsResource
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @param  array<int, \spkm\IsamsApi\Data\HumanResources\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\HumanResources\EmployeeCustomFields\PatchEmployeeCustomFieldsRequest
      */
     public function patchMany(int $employeeId, array $customFields): bool

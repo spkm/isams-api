@@ -42,6 +42,6 @@ class DeleteIndicatorsRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return $this->ids;
+        return array_values($this->ids);
     }
 }

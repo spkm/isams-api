@@ -27,7 +27,7 @@ class CreateColumnReportMappingsRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::CREATED;
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Gradebooks\ReportMappingForCreate|array<string, mixed>>  $reportMappings
+     * @param  array<int, \spkm\IsamsApi\Data\Gradebooks\ReportMappingForCreate|array<string, mixed>>  $reportMappings
      */
     public function __construct(
         protected int $gradebookId,
@@ -46,6 +46,6 @@ class CreateColumnReportMappingsRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->reportMappings);
+        return array_values(array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->reportMappings));
     }
 }

@@ -46,6 +46,6 @@ class CreateCalculationColumnTransposesRequest extends IsamsRequest implements H
      */
     protected function defaultBody(): array
     {
-        return $this->transposeIds;
+        return array_values($this->transposeIds);
     }
 }

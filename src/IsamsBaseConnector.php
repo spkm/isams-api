@@ -71,9 +71,13 @@ abstract class IsamsBaseConnector extends Connector
 
     public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
     {
+        if (! $request instanceof GetClientCredentialsTokenRequest && $this->tokenExpiresWithinAMinute()) {
+            $this->authenticate($this->getCachedAccessToken());
+        }
+
         $response = parent::send($request, $mockClient, $handleRetry);
 
-        if ($response->status() === 401 && config('isams-api.reauthenticate') && ! $request instanceof GetClientCredentialsTokenRequest) {
+        if ($response->status() === 401 && config('isams-api.reauthenticate') && ! $request instanceof GetClientCredentialsTokenRequest && ! IsamsApiException::refusesPermission($response)) {
             Cache::forget($this->getCacheKey());
             $this->authenticate($this->cacheAccessToken());
 
@@ -109,7 +113,11 @@ abstract class IsamsBaseConnector extends Connector
                     return;
                 }
 
-                $response->serverError() ? $breaker->recordFailure() : $breaker->recordSuccess();
+                if (in_array($response->status(), [502, 503, 504], true)) {
+                    $breaker->recordFailure();
+                } elseif ($response->status() !== 500) {
+                    $breaker->recordSuccess();
+                }
             })
             ->onFatalException(function (FatalRequestException $exception) use ($breaker): void {
                 if (! $exception instanceof IsamsUnavailable) {
@@ -135,6 +143,17 @@ abstract class IsamsBaseConnector extends Connector
         }
 
         return $this->cacheAccessToken();
+    }
+
+    /**
+     * Whether the token the connector holds is a minute or less from expiring, as it will be in a long-running worker.
+     */
+    private function tokenExpiresWithinAMinute(): bool
+    {
+        $authenticator = $this->getAuthenticator();
+        $expiresAt = $authenticator instanceof AccessTokenAuthenticator ? $authenticator->getExpiresAt() : null;
+
+        return $expiresAt !== null && $expiresAt->getTimestamp() - 60 <= Config::now()->getTimestamp();
     }
 
     private function getCacheKey(): string

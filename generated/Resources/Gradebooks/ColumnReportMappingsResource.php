@@ -25,7 +25,7 @@ class ColumnReportMappingsResource extends IsamsResource
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Gradebooks\ReportMappingForCreate|array<string, mixed>>  $reportMappings
+     * @param  array<int, \spkm\IsamsApi\Data\Gradebooks\ReportMappingForCreate|array<string, mixed>>  $reportMappings
      * @see \spkm\IsamsApi\Requests\Gradebooks\ColumnReportMappings\CreateColumnReportMappingsRequest
      */
     public function createMany(int $gradebookId, int $columnId, array $reportMappings): Created

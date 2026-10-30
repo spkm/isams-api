@@ -25,7 +25,7 @@ class UpdateStudentPassportsRequest extends IsamsRequest implements HasBody
     protected string $responseShape = self::NONE;
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Students\StudentPassportForUpdate|array<string, mixed>>  $studentPassports
+     * @param  array<int, \spkm\IsamsApi\Data\Students\StudentPassportForUpdate|array<string, mixed>>  $studentPassports
      */
     public function __construct(
         protected string $schoolId,
@@ -43,6 +43,6 @@ class UpdateStudentPassportsRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->studentPassports);
+        return array_values(array_map(fn (mixed $item) => $item instanceof Data ? $item->toArray() : $item, $this->studentPassports));
     }
 }

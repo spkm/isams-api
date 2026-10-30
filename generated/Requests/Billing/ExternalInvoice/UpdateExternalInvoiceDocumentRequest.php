@@ -41,6 +41,6 @@ class UpdateExternalInvoiceDocumentRequest extends IsamsRequest implements HasBo
      */
     protected function defaultBody(): array
     {
-        return [$this->document];
+        return [new MultipartValue('document', $this->document->value, $this->document->filename, $this->document->headers)];
     }
 }

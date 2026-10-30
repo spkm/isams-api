@@ -27,6 +27,6 @@ class UnauthorizedException extends IsamsApiException
             default => self::field($response, 'error_description'),
         };
 
-        return 'iSAMS refused the token request for API client "'.$body?->get('client_id').'": '.$error.($reason ? ", $reason" : '');
+        return 'iSAMS refused the token request: '.$error.($reason ? ", $reason" : '');
     }
 }

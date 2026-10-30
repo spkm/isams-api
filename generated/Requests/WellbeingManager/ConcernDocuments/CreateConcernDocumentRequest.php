@@ -47,6 +47,6 @@ class CreateConcernDocumentRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return [$this->document, new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
+        return [new MultipartValue('document', $this->document->value, $this->document->filename, $this->document->headers), new MultipartValue('data', (string) json_encode($this->data instanceof Data ? $this->data->toArray() : $this->data))];
     }
 }

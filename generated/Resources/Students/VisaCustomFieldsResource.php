@@ -33,7 +33,7 @@ class VisaCustomFieldsResource extends IsamsResource
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @param  array<int, \spkm\IsamsApi\Data\Students\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\Students\VisaCustomFields\PatchStudentVisaCustomFieldsRequest
      */
     public function patchMany(string $schoolId, int $visaId, array $customFields): bool

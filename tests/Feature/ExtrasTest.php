@@ -6,6 +6,9 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use Saloon\Http\PendingRequest;
+use spkm\IsamsApi\Batch\BatchFilters;
+use spkm\IsamsApi\Batch\BatchRequest;
+use spkm\IsamsApi\Batch\IsamsBatchConnector;
 use spkm\IsamsApi\Facades\Isams;
 use spkm\IsamsApi\IsamsConnector;
 use spkm\IsamsApi\IsamsUnavailable;
@@ -119,6 +122,26 @@ it('fetches a new token once and repeats the request when iSAMS rejects the cach
         ->and($response->getPendingRequest()->headers()->get('Authorization'))->toBe('Bearer second-token');
 });
 
+it('does not fetch a new token when iSAMS refuses for want of a permission, which a new token won\'t change', function () {
+    config(['isams-api.reauthenticate' => true]);
+    $isams = FakeIsams::respondWith([ExampleRequest::class => MockResponse::make(['message' => 'The user is not authorised for this request - Read permissions are required.'], 401)]);
+
+    FakeIsams::connector()->send(new ExampleRequest);
+
+    expect(requestsSent($isams, GetClientCredentialsTokenRequest::class))->toBe(1)
+        ->and(requestsSent($isams, ExampleRequest::class))->toBe(1);
+});
+
+it('retries a Batch API call, which is a read although its filters are posted', function () {
+    config(['isams-api.retries.times' => 2]);
+    $isams = FakeIsams::respondWith([BatchRequest::class => inTurn([MockResponse::make([], 503), MockResponse::make(['iSAMS' => []])])]);
+
+    $response = (new IsamsBatchConnector('BATCH-KEY', 'batch-secret', FakeIsams::BASE_URL))->send(new BatchRequest(BatchFilters::make()->methods('Pupil_GetCurrentPupils')));
+
+    expect($response->status())->toBe(200)
+        ->and(requestsSent($isams, BatchRequest::class))->toBe(2);
+});
+
 it('returns a second 401 after re-authenticating as an ordinary response', function () {
     config(['isams-api.reauthenticate' => true]);
     $isams = FakeIsams::respondWith([ExampleRequest::class => MockResponse::make([], 401)]);
@@ -157,7 +180,7 @@ it('keeps cached responses separate for each school', function () {
 it('fails instantly with IsamsUnavailable once iSAMS has failed repeatedly, until the cooldown passes', function () {
     config(['isams-api.circuit_breaker' => ['enabled' => true, 'failures' => 2, 'window_seconds' => 60, 'cooldown_seconds' => 30]]);
     $this->freezeTime();
-    $isams = FakeIsams::respondWith([ExampleRequest::class => inTurn([MockResponse::make([], 503), MockResponse::make([], 500), MockResponse::make(['ok' => true])])]);
+    $isams = FakeIsams::respondWith([ExampleRequest::class => inTurn([MockResponse::make([], 503), MockResponse::make([], 504), MockResponse::make(['ok' => true])])]);
     $connector = FakeIsams::connector();
 
     $connector->send(new ExampleRequest);
@@ -170,6 +193,30 @@ it('fails instantly with IsamsUnavailable once iSAMS has failed repeatedly, unti
 
     expect($connector->send(new ExampleRequest)->json())->toBe(['ok' => true])
         ->and(fn () => $connector->send(new ExampleRequest))->not->toThrow(IsamsUnavailable::class);
+});
+
+it('does not count iSAMS\'s 500s towards opening the circuit, since it also answers 500 to a filter it can\'t apply', function () {
+    config(['isams-api.circuit_breaker' => ['enabled' => true, 'failures' => 2, 'window_seconds' => 60, 'cooldown_seconds' => 30]]);
+    $isams = FakeIsams::respondWith([ExampleRequest::class => MockResponse::make(['message' => 'An error occurred.'], 500)]);
+    $connector = FakeIsams::connector();
+
+    foreach (range(1, 3) as $attempt) {
+        $connector->send(new ExampleRequest);
+    }
+
+    expect(requestsSent($isams, ExampleRequest::class))->toBe(3);
+});
+
+it('does not let iSAMS\'s 500s reset the count of outages either', function () {
+    config(['isams-api.circuit_breaker' => ['enabled' => true, 'failures' => 2, 'window_seconds' => 60, 'cooldown_seconds' => 30]]);
+    FakeIsams::respondWith([ExampleRequest::class => inTurn([MockResponse::make([], 503), MockResponse::make(['message' => 'An error occurred.'], 500), MockResponse::make([], 503)])]);
+    $connector = FakeIsams::connector();
+
+    foreach (range(1, 3) as $attempt) {
+        $connector->send(new ExampleRequest);
+    }
+
+    expect(fn () => $connector->send(new ExampleRequest))->toThrow(IsamsUnavailable::class);
 });
 
 it('counts connection failures towards opening the circuit', function () {

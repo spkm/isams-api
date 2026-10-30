@@ -46,6 +46,6 @@ class CreateAssessmentColumnTransposesRequest extends IsamsRequest implements Ha
      */
     protected function defaultBody(): array
     {
-        return $this->transposeIds;
+        return array_values($this->transposeIds);
     }
 }

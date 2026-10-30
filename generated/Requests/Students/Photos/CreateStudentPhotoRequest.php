@@ -41,6 +41,6 @@ class CreateStudentPhotoRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return [$this->photo];
+        return [new MultipartValue('photo', $this->photo->value, $this->photo->filename, $this->photo->headers)];
     }
 }

@@ -33,7 +33,7 @@ class PassportCustomFieldsResource extends IsamsResource
     }
 
     /**
-     * @param  list<\spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
+     * @param  array<int, \spkm\IsamsApi\Data\Admissions\CustomFieldForPatch|array<string, mixed>>  $customFields
      * @see \spkm\IsamsApi\Requests\Admissions\PassportCustomFields\PatchApplicantPassportCustomFieldsRequest
      */
     public function patchMany(string $schoolId, int $passportId, array $customFields): bool

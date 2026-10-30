@@ -8,6 +8,7 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use spkm\IsamsApi\Exceptions\UnauthorizedException;
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
+use spkm\IsamsApi\Tests\Fixtures\ExampleRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 it('asks iSAMS for a client credentials token as soon as it is built', function () {
@@ -99,6 +100,29 @@ it('asks for a new token once the cached one is a minute from expiring', functio
     $this->travel(1)->minutes();
     FakeIsams::connector();
     $isams->assertSentCount(2);
+});
+
+it('fetches a new token before sending once the one it holds is a minute from expiring, as a long-running worker needs', function () {
+    FakeIsams::syncSaloonClockWithLaravel();
+    $this->freezeTime();
+    $tokensIssued = 0;
+    $isams = FakeIsams::respondWith([
+        GetClientCredentialsTokenRequest::class => function () use (&$tokensIssued) {
+            return FakeIsams::token('token-'.++$tokensIssued);
+        },
+        ExampleRequest::class => MockResponse::make(['ok' => true]),
+    ]);
+    $connector = FakeIsams::connector();
+
+    $this->travel(58)->minutes();
+    $connector->send(new ExampleRequest);
+    $isams->assertSentCount(1, GetClientCredentialsTokenRequest::class);
+
+    $this->travel(1)->minutes();
+    $response = $connector->send(new ExampleRequest);
+    $isams->assertSentCount(2, GetClientCredentialsTokenRequest::class);
+
+    expect($response->getPendingRequest()->headers()->get('Authorization'))->toBe('Bearer token-2');
 });
 
 it('cannot be built when iSAMS refuses its credentials, saying so, and caches nothing', function () {

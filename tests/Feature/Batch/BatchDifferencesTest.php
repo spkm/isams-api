@@ -63,6 +63,15 @@ it('refuses, before asking iSAMS, a call whose filter iSAMS requires but was giv
     $isams->assertNotSent(BatchRequest::class);
 });
 
+it('refuses, before asking iSAMS, a call whose required filter was given only an empty list', function () {
+    $isams = FakeIsams::respondWith();
+
+    expect(fn () => new IsamsBatchConnector('BATCH-KEY', 'batch-secret', FakeIsams::BASE_URL)->schoolReports()->reports(reportCycleIdsToInclude: [])->all())
+        ->toThrow(InvalidArgumentException::class, 'SchoolReports_GetReports needs at least one of its filters');
+
+    $isams->assertNotSent(BatchRequest::class);
+});
+
 it('requires the filter iSAMS insists on for the SEN register', function () {
     expect((new ReflectionMethod(PupilRegistersGroup::class, 'senRegister'))->getParameters()[0]->isOptional())->toBeFalse();
 });

@@ -56,6 +56,6 @@ class UploadFileRequest extends IsamsRequest implements HasBody
      */
     protected function defaultBody(): array
     {
-        return [$this->file];
+        return [new MultipartValue('file', $this->file->value, $this->file->filename, $this->file->headers)];
     }
 }

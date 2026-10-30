@@ -14,7 +14,7 @@ use spkm\IsamsApi\Resources\IsamsResource;
 class TagsResource extends IsamsResource
 {
     /**
-     * @param  list<\spkm\IsamsApi\Data\Gradebooks\TagForCreate|array<string, mixed>>  $tags
+     * @param  array<int, \spkm\IsamsApi\Data\Gradebooks\TagForCreate|array<string, mixed>>  $tags
      * @see \spkm\IsamsApi\Requests\Gradebooks\Tags\CreateGradebookTagsRequest
      */
     public function createMany(int $gradebookId, array $tags): Created
