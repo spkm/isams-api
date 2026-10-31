@@ -25,6 +25,9 @@ final class ApiSpec
     /** @var list<string>|null */
     private ?array $tags = null;
 
+    /** @var list<array{id: string, method: string, path: string, spec: array<string, mixed>, apiVersion: ?string, superseded: bool}>|null */
+    private ?array $operations = null;
+
     /**
      * @param  array<string, array<string, array<string, mixed>>>  $properties  definition => property => schema: fields iSAMS sends that its spec leaves out
      */
@@ -49,6 +52,10 @@ final class ApiSpec
      */
     public function operations(): array
     {
+        if ($this->operations !== null) {
+            return $this->operations;
+        }
+
         $operations = [];
 
         foreach (['1.0' => $this->spec, '2.0' => $this->specV2] as $version => $spec) {
@@ -70,7 +77,7 @@ final class ApiSpec
             }
         }
 
-        return $operations;
+        return $this->operations = $operations;
     }
 
     /**

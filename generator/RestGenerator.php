@@ -23,11 +23,7 @@ final class RestGenerator
     /** @var array<string, array<string, mixed>> */
     private array $manifest = [];
 
-    private readonly RequestNaming $requestNaming;
-
     private readonly ModelNaming $modelNaming;
-
-    private readonly ResourceNaming $resourceNaming;
 
     private readonly ModelRegistry $models;
 
@@ -45,15 +41,14 @@ final class RestGenerator
 
     public function __construct(private readonly ApiSpec $spec, private readonly Corrections $corrections)
     {
-        $this->requestNaming = new RequestNaming($spec, $corrections);
+        $requestNaming = new RequestNaming($spec, $corrections);
         $this->modelNaming = new ModelNaming($spec, $corrections);
-        $this->resourceNaming = new ResourceNaming($corrections, $this->requestNaming);
         $this->models = new ModelRegistry($this->modelNaming);
-        $this->operations = new Operations($spec, $corrections, $this->requestNaming, $this->models);
+        $this->operations = new Operations($spec, $corrections, $requestNaming, $this->models);
         $this->files = new PhpFiles(self::MARKER);
         $this->requestEmitter = new RequestEmitter($this->files);
         $this->modelEmitter = new ModelEmitter($this->files, $spec, $this->models, $this->modelNaming);
-        $this->resourceEmitter = new ResourceEmitter($this->files, $this->resourceNaming);
+        $this->resourceEmitter = new ResourceEmitter($this->files, new ResourceNaming($corrections, $requestNaming));
         $this->facadeEmitter = new FacadeEmitter($this->files);
     }
 

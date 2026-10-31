@@ -19,7 +19,8 @@ Never edit a generated file: change `overrides.php` (or the generator) and run `
 
 One array in five sections. `Corrections` reads it and refuses a key or setting the generator does not read, a value of
 the wrong shape, settings nothing reads together, and anything that names something the spec does not have, so a
-correction is never silently lost when the spec is updated. Every mistake is listed at once.
+correction is never silently lost when the spec is updated. Problems are listed together, by kind: the file's shape
+first, then what the spec lacks.
 
 ### What to generate
 
