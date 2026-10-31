@@ -20,6 +20,11 @@
     <source>
         <include>
             <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./generator</directory>
         </include>
+        <exclude>
+            <file>./generator/overrides.php</file>
+            <directory>./generator/batch</directory>
+        </exclude>
     </source>
 </phpunit>
