@@ -61,6 +61,7 @@ it('keeps only the file name from a downloaded file\'s Content-Disposition, neve
     'an absolute path' => ['attachment; filename="/var/www/.env"', '.env'],
     'a Windows path' => ['attachment; filename="..\\..\\boot.ini"', 'boot.ini'],
     'an encoded path' => ["attachment; filename*=UTF-8''..%2F..%2Fnotes.pdf", 'notes.pdf'],
+    'a multibyte name' => ['attachment; filename="Évaluation.pdf"', 'Évaluation.pdf'],
     'only dots' => ['attachment; filename=".."', null],
 ]);
 

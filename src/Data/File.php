@@ -2,6 +2,7 @@
 
 namespace spkm\IsamsApi\Data;
 
+use Illuminate\Support\Str;
 use Saloon\Http\Response;
 
 readonly class File
@@ -19,7 +20,7 @@ readonly class File
     public static function fromResponse(Response $response): self
     {
         preg_match('/filename\*?=(?:UTF-8\'\')?"?([^";]+)"?/i', (string) $response->header('Content-Disposition'), $matches);
-        $filename = isset($matches[1]) ? basename(str_replace('\\', '/', rawurldecode($matches[1]))) : '';
+        $filename = isset($matches[1]) ? Str::afterLast(str_replace('\\', '/', rawurldecode($matches[1])), '/') : '';
 
         return new self($response->body(), $response->header('Content-Type'), in_array($filename, ['', '.', '..'], true) ? null : $filename);
     }

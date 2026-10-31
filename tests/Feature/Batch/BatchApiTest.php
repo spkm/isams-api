@@ -198,6 +198,14 @@ it('throws a BatchApiException when iSAMS answers a success with a body that is 
     'through a call' => [fn (IsamsBatchConnector $isams) => $isams->calendar()->categories()->all()],
 ]);
 
+it('describes an XML error iSAMS sends with a success status as the error it is, not as a body that is not JSON', function () {
+    FakeIsams::respondWith([BatchRequest::class => MockResponse::make('<?xml version="1.0" encoding="utf-16"?><Message><MessageId>MethodsNotAllocatedToKeyException</MessageId><Title>Methods Not Allocated To Key</Title></Message>', 200, ['Content-Type' => 'application/xml'])]);
+
+    expect(fn () => batchConnector()->send(new BatchRequest)->dto())
+        ->toThrow(fn (BatchApiException $exception) => expect($exception->getMessage())->toBe('iSAMS Batch API responded 200: MethodsNotAllocatedToKeyException: Methods Not Allocated To Key')
+            ->and($exception->isPermissionError())->toBeTrue());
+});
+
 it('downloads the current students\' photos and reads each one by the student\'s id', function () {
     $zip = tempnam(sys_get_temp_dir(), 'photos');
     $archive = new ZipArchive;
