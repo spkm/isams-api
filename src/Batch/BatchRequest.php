@@ -2,6 +2,7 @@
 
 namespace spkm\IsamsApi\Batch;
 
+use JsonException;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
@@ -54,6 +55,10 @@ class BatchRequest extends IsamsRequest implements HasBody
             throw new BatchApiException($response);
         }
 
-        return BatchResponse::fromResponse($response);
+        try {
+            return BatchResponse::fromResponse($response);
+        } catch (JsonException) {
+            throw new BatchApiException($response);
+        }
     }
 }

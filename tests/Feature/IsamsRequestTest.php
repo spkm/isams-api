@@ -52,6 +52,18 @@ it('returns a downloaded file with its contents, type and name', function () {
     expect($file)->toEqual(new File('PNG-BYTES', 'image/png', 'photo.png'));
 });
 
+it('keeps only the file name from a downloaded file\'s Content-Disposition, never a directory', function (string $disposition, ?string $filename) {
+    $file = sendExample(new ExampleRequest(IsamsRequest::FILE), MockResponse::make('BYTES', 200, ['Content-Disposition' => $disposition]));
+
+    expect($file->filename)->toBe($filename);
+})->with([
+    'a relative path' => ['attachment; filename="../../etc/passwd"', 'passwd'],
+    'an absolute path' => ['attachment; filename="/var/www/.env"', '.env'],
+    'a Windows path' => ['attachment; filename="..\\..\\boot.ini"', 'boot.ini'],
+    'an encoded path' => ["attachment; filename*=UTF-8''..%2F..%2Fnotes.pdf", 'notes.pdf'],
+    'only dots' => ['attachment; filename=".."', null],
+]);
+
 it('returns an untyped response as an array', function () {
     $raw = sendExample(new ExampleRequest(IsamsRequest::RAW), MockResponse::make(['anything' => true]));
 

@@ -9,16 +9,17 @@ namespace spkm\IsamsApi\Batch\Groups;
 use DateTimeInterface;
 use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
+use spkm\IsamsApi\Data\Batch\DailyBulletin\Bulletin;
 use spkm\IsamsApi\Data\Batch\DailyBulletin\Categories\Category;
 
 class DailyBulletinGroup extends BatchGroup
 {
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\DailyBulletin\Bulletins\Bulletin>
+     * @return LazyCollection<int, Bulletin>
      */
     public function all(DateTimeInterface $startDate, DateTimeInterface $endDate): LazyCollection
     {
-        return $this->run('DailyBulletin_GetDailyBulletins', \spkm\IsamsApi\Data\Batch\DailyBulletin\Bulletins\Bulletin::class, ['module' => 'DailyBulletin', 'element' => 'DailyBulletins', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
+        return $this->run('DailyBulletin_GetDailyBulletins', Bulletin::class, ['module' => 'DailyBulletin', 'element' => 'DailyBulletins', 'attributes' => ['StartDate' => $startDate, 'EndDate' => $endDate], 'required' => true]);
     }
 
     /**
@@ -30,18 +31,18 @@ class DailyBulletinGroup extends BatchGroup
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\DailyBulletin\TodaysDailyBulletins\Bulletin>
+     * @return LazyCollection<int, Bulletin>
      */
     public function today(): LazyCollection
     {
-        return $this->run('DailyBulletin_GetTodaysDailyBulletins', \spkm\IsamsApi\Data\Batch\DailyBulletin\TodaysDailyBulletins\Bulletin::class);
+        return $this->run('DailyBulletin_GetTodaysDailyBulletins', Bulletin::class);
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\DailyBulletin\TomorrowsDailyBulletins\Bulletin>
+     * @return LazyCollection<int, Bulletin>
      */
     public function tomorrow(): LazyCollection
     {
-        return $this->run('DailyBulletin_GetTomorrowsDailyBulletins', \spkm\IsamsApi\Data\Batch\DailyBulletin\TomorrowsDailyBulletins\Bulletin::class);
+        return $this->run('DailyBulletin_GetTomorrowsDailyBulletins', Bulletin::class);
     }
 }

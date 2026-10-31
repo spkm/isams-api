@@ -27,10 +27,9 @@ abstract readonly class Data implements JsonSerializable
      */
     public static function from(array $attributes): static
     {
-        $class = new ReflectionClass(static::class);
         $arguments = [];
 
-        foreach ($class->getConstructor()?->getParameters() ?? [] as $parameter) {
+        foreach (self::parameters(static::class) as $parameter) {
             $value = static::cast($parameter, $attributes[$parameter->getName()] ?? null);
 
             if ($value === null && ! $parameter->isDefaultValueAvailable() && ! $parameter->allowsNull()) {
@@ -42,7 +41,7 @@ abstract readonly class Data implements JsonSerializable
             }
         }
 
-        return $class->newInstanceArgs($arguments);
+        return self::reflect(static::class)->newInstanceArgs($arguments);
     }
 
     /**
@@ -59,13 +58,11 @@ abstract readonly class Data implements JsonSerializable
      */
     public function toArray(): array
     {
-        $emptyByDefault = collect((new ReflectionClass($this))->getConstructor()?->getParameters() ?? [])
-            ->filter(fn (ReflectionParameter $parameter) => $parameter->isDefaultValueAvailable() && static::serialise($parameter->getDefaultValue()) === [])
-            ->map(fn (ReflectionParameter $parameter) => $parameter->getName());
+        $emptyByDefault = self::emptyByDefault(static::class);
 
         return collect(get_object_vars($this))
             ->map(fn (mixed $value) => static::serialise($value))
-            ->reject(fn (mixed $value, string $name) => $value === null || ($value === [] && $emptyByDefault->contains($name)))
+            ->reject(fn (mixed $value, string $name) => $value === null || ($value === [] && isset($emptyByDefault[$name])))
             ->all();
     }
 
@@ -75,6 +72,57 @@ abstract readonly class Data implements JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    /**
+     * A model's constructor parameters, read once per class: reflecting them for every record is slow over a whole
+     * school. (A readonly class can't have static properties, so the cache is a static variable.)
+     *
+     * @param  class-string<self>  $class
+     * @return list<ReflectionParameter>
+     */
+    private static function parameters(string $class): array
+    {
+        static $parameters = [];
+
+        return $parameters[$class] ??= self::reflect($class)->getConstructor()?->getParameters() ?? [];
+    }
+
+    /**
+     * @template TModel of self
+     *
+     * @param  class-string<TModel>  $class
+     * @return ReflectionClass<TModel>
+     */
+    private static function reflect(string $class): ReflectionClass
+    {
+        static $classes = [];
+
+        return $classes[$class] ??= new ReflectionClass($class);
+    }
+
+    /**
+     * The properties whose default serialises to an empty list (an empty collection or array), which toArray() leaves
+     * out while they are still empty, keyed by name.
+     *
+     * @param  class-string<self>  $class
+     * @return array<string, true>
+     */
+    private static function emptyByDefault(string $class): array
+    {
+        static $names = [];
+
+        if (! isset($names[$class])) {
+            $names[$class] = [];
+
+            foreach (self::parameters($class) as $parameter) {
+                if ($parameter->isDefaultValueAvailable() && static::serialise($parameter->getDefaultValue()) === []) {
+                    $names[$class][$parameter->getName()] = true;
+                }
+            }
+        }
+
+        return $names[$class];
     }
 
     protected static function cast(ReflectionParameter $parameter, mixed $value): mixed

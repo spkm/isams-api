@@ -38,6 +38,16 @@ class FakeIsams
     }
 
     /**
+     * The cache key a connector keeps its token under.
+     *
+     * @param  list<string>  $scopes
+     */
+    public static function tokenCacheKey(string $clientId = 'client-id', array $scopes = ['restapi'], string $baseUrl = self::BASE_URL): string
+    {
+        return 'isams-api.token.'.sha1($baseUrl.'|'.$clientId.'|'.implode(' ', $scopes));
+    }
+
+    /**
      * Send one request through a connector to a faked iSAMS that answers it with the given body.
      */
     public static function send(Request $request, array|string $body = []): Response

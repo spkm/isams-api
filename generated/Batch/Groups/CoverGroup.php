@@ -33,11 +33,11 @@ class CoverGroup extends BatchGroup
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\EventReasons\Reason>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\Reason>
      */
     public function eventReasons(): LazyCollection
     {
-        return $this->run('Cover_GetAllEventReasons', \spkm\IsamsApi\Data\Batch\CoverManager\EventReasons\Reason::class);
+        return $this->run('Cover_GetAllEventReasons', \spkm\IsamsApi\Data\Batch\CoverManager\Reason::class);
     }
 
     /**
@@ -49,11 +49,11 @@ class CoverGroup extends BatchGroup
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\RoomClosureReasons\Reason>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\Reason>
      */
     public function roomClosureReasons(): LazyCollection
     {
-        return $this->run('Cover_GetAllRoomClosureReasons', \spkm\IsamsApi\Data\Batch\CoverManager\RoomClosureReasons\Reason::class);
+        return $this->run('Cover_GetAllRoomClosureReasons', \spkm\IsamsApi\Data\Batch\CoverManager\Reason::class);
     }
 
     /**
@@ -73,10 +73,10 @@ class CoverGroup extends BatchGroup
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\UnavailableReasons\Reason>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\CoverManager\Reason>
      */
     public function unavailableReasons(): LazyCollection
     {
-        return $this->run('Cover_GetAllUnavailableReasons', \spkm\IsamsApi\Data\Batch\CoverManager\UnavailableReasons\Reason::class);
+        return $this->run('Cover_GetAllUnavailableReasons', \spkm\IsamsApi\Data\Batch\CoverManager\Reason::class);
     }
 }

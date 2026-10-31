@@ -17,7 +17,9 @@ class BatchApiException extends RequestException
         $title = $this->title();
         $description = $this->description();
 
-        parent::__construct($response, 'iSAMS Batch API responded '.$response->status().($name ? ': '.$name : '').($title ? ': '.$title : '').($description ? ': '.$description : ''));
+        $unreadable = $response->successful() && $response->body() !== '' && ! json_validate($response->body()) ? ' with a body that is not JSON' : '';
+
+        parent::__construct($response, 'iSAMS Batch API responded '.$response->status().$unreadable.($name ? ': '.$name : '').($title ? ': '.$title : '').($description ? ': '.$description : ''));
     }
 
     public function name(): ?string

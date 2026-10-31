@@ -3,11 +3,13 @@
 namespace spkm\IsamsApi;
 
 use Illuminate\Support\LazyCollection;
+use JsonException;
 use LogicException;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\PagedPaginator;
 use spkm\IsamsApi\Data\Data;
+use spkm\IsamsApi\Exceptions\ServerErrorException;
 use spkm\IsamsApi\Requests\IsamsRequest;
 use UnexpectedValueException;
 
@@ -57,7 +59,7 @@ class IsamsPaginator extends PagedPaginator
 
     protected function isLastPage(Response $response): bool
     {
-        return $this->currentPage >= (int) $response->json('totalPages');
+        return $this->currentPage >= $this->totalPagesIn($response);
     }
 
     /**
@@ -65,13 +67,15 @@ class IsamsPaginator extends PagedPaginator
      */
     protected function getPageItems(Response $response, Request $request): array
     {
+        $page = $this->page($response);
+
         if (property_exists($request, 'resultKey')
             && ! empty($request->resultKey)
-            && array_key_exists($request->resultKey, $response->json())) {
-            return $response->json($request->resultKey) ?? [];
+            && array_key_exists($request->resultKey, $page)) {
+            return (array) ($page[$request->resultKey] ?? []);
         }
 
-        return $response->json();
+        return $page;
     }
 
     protected function applyPagination(Request $request): Request
@@ -87,6 +91,38 @@ class IsamsPaginator extends PagedPaginator
 
     protected function getTotalPages(Response $response): int
     {
-        return (int) $response->json('totalPages');
+        return $this->totalPagesIn($response);
+    }
+
+    /**
+     * The number of pages iSAMS reports. Without one the response is not a paged list, and paging through it would
+     * otherwise stop silently after the first page.
+     */
+    private function totalPagesIn(Response $response): int
+    {
+        $totalPages = $this->page($response)['totalPages'] ?? null;
+
+        if (! is_numeric($totalPages)) {
+            $request = $this->getOriginalRequest();
+
+            throw new UnexpectedValueException("iSAMS's response to ".$request->getMethod()->value.' '.$request->resolveEndpoint().' has no totalPages, so it is not a paged list: send the request instead of paging through it.');
+        }
+
+        return (int) $totalPages;
+    }
+
+    /**
+     * A page as iSAMS's JSON, or a ServerErrorException when iSAMS answered with something else, such as a proxy's or
+     * maintenance page.
+     *
+     * @return array<mixed>
+     */
+    private function page(Response $response): array
+    {
+        try {
+            return (array) $response->json();
+        } catch (JsonException) {
+            throw new ServerErrorException($response);
+        }
     }
 }

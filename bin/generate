@@ -3,53 +3,32 @@
 
 use spkm\IsamsApi\Generator\BatchGenerator;
 use spkm\IsamsApi\Generator\Generator;
+use spkm\IsamsApi\Generator\Writer;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $root = dirname(__DIR__);
-$check = in_array('--check', $argv, true);
 $batch = new BatchGenerator($root);
 $files = (new Generator($root))->build($batch->endpoints()) + $batch->build();
-ksort($files);
+$writer = new Writer($root);
 
-$existing = ['generator/manifest.json'];
-$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root.'/generated', FilesystemIterator::SKIP_DOTS));
-foreach ($iterator as $file) {
-    $existing[] = substr($file->getPathname(), strlen($root) + 1);
-}
+if (in_array('--check', $_SERVER['argv'] ?? [], true)) {
+    $plan = $writer->plan($files);
+    $stale = [...$plan['changed'], ...$plan['removed']];
 
-$changed = array_keys(array_filter($files, fn (string $contents, string $path) => ! is_file("$root/$path") || file_get_contents("$root/$path") !== $contents, ARRAY_FILTER_USE_BOTH));
-$removed = array_values(array_diff($existing, array_keys($files)));
-
-if ($check) {
-    if ($changed === [] && $removed === []) {
+    if ($stale === []) {
         echo "Generated code is up to date.\n";
         exit(0);
     }
 
     echo "Generated code is out of date; run composer generate.\n";
-    foreach ([...$changed, ...$removed] as $path) {
+
+    foreach ($stale as $path) {
         echo "  $path\n";
     }
+
     exit(1);
 }
 
-foreach ($removed as $path) {
-    unlink("$root/$path");
-}
-
-foreach ($files as $path => $contents) {
-    if (! is_dir(dirname("$root/$path"))) {
-        mkdir(dirname("$root/$path"), 0755, true);
-    }
-    file_put_contents("$root/$path", $contents);
-}
-
-$directories = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root.'/generated', FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST);
-foreach ($directories as $directory) {
-    if ($directory->isDir() && (new FilesystemIterator($directory->getPathname()))->valid() === false) {
-        rmdir($directory->getPathname());
-    }
-}
-
-printf("Wrote %d files (%d changed, %d removed).\n", count($files), count($changed), count($removed));
+$plan = $writer->write($files);
+printf("Built %d files: %d written, %d removed.\n", count($files), count($plan['changed']), count($plan['removed']));

@@ -10,6 +10,7 @@ use spkm\IsamsApi\Batch\BatchRequest;
 use spkm\IsamsApi\Batch\BatchResponse;
 use spkm\IsamsApi\Batch\HasBatchGroups;
 use spkm\IsamsApi\Batch\IsamsBatchConnector;
+use spkm\IsamsApi\Data\Batch\CalendarManager\Event;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 /**
@@ -147,3 +148,33 @@ it('names each batch call after its iSAMS method, without Get, All or a repeat o
     ['News_GetActiveNews', 'news()->active()'],
     ['Timetable_GetPublishedTimetables', 'timetable()->published()'],
 ])->group('spec');
+
+it('writes one model for records that have the same shape under several of a module\'s root nodes', function () {
+    $shapes = [];
+
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__DIR__, 2).'/generated/Data/Batch', FilesystemIterator::SKIP_DOTS)) as $file) {
+        $class = 'spkm\\IsamsApi\\Data\\Batch\\'.str_replace('/', '\\', substr($file->getPathname(), strlen(dirname(__DIR__, 2).'/generated/Data/Batch/'), -4));
+        $reflection = new ReflectionClass($class);
+        $properties = array_map(fn (ReflectionParameter $parameter) => $parameter->getName().': '.$parameter->getType(), $reflection->getConstructor()?->getParameters() ?? []);
+        $module = explode('\\', $class)[4];
+        $shapes[$module.' '.$reflection->getShortName().' '.json_encode([$properties, $reflection->getConstant('LISTS')])][] = $class;
+    }
+
+    expect(array_filter($shapes, fn (array $classes) => count($classes) > 1))->toBe([]);
+})->group('spec');
+
+it('returns one Event model from every calendar events call, so it can be type-hinted across them', function () {
+    $models = collect(BatchMap::METHODS)
+        ->filter(fn (array $root, string $method) => str_starts_with($method, 'Calendar_GetEvents'))
+        ->map(fn (array $root) => BatchMap::ROOTS[$root[0]][$root[1]]['model']);
+
+    expect($models)->toHaveCount(7)
+        ->and($models->unique()->values()->all())->toBe([Event::class]);
+})->group('spec');
+
+it('keeps a root node\'s own model where its records differ from the same node\'s under other root nodes', function () {
+    expect(BatchMap::ROOTS['PupilManager']['CurrentPupils']['model'])->toBe('spkm\IsamsApi\Data\Batch\PupilManager\CurrentPupils\Pupil')
+        ->and(BatchMap::ROOTS['PupilManager']['Applicants']['model'])->toBe('spkm\IsamsApi\Data\Batch\PupilManager\Applicants\Pupil')
+        ->and(BatchMap::ROOTS['TimetableManager']['PublishedTimetables']['model'])->toBe('spkm\IsamsApi\Data\Batch\TimetableManager\PublishedTimetables\Timetable')
+        ->and(BatchMap::ROOTS['TimetableManager']['ArchivedTimetables']['model'])->toBe('spkm\IsamsApi\Data\Batch\TimetableManager\Timetable');
+})->group('spec');

@@ -28,15 +28,6 @@ jobs:
           tag_prefix: v
           dry_run: true
 
-      - name: Commit & push version bump
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          branch: main
-          file_pattern: package*.json
-          commit_message: 'chore(release): Bump version to ${{ steps.tag_version.outputs.new_tag }}'
-          commit_user_name: GitHub Actions
-          commit_user_email: actions@github.com
-
       - name: Bump version and push tag
         uses: mathieudutour/github-tag-action@v6.2
         with:

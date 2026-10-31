@@ -484,4 +484,10 @@ return [
         'Timetable_GetPublishedTimetables' => 'published',
         'Timetable_GetPupilTimetables' => 'pupils',
     ],
+
+    // Class names for Batch API records that several root nodes share (by default the node's name), where that name
+    // would mislead: the calendar's events hold their types as Type nodes, unlike the Types root node's calendar types.
+    'batchModels' => [
+        'CalendarManager' => ['Type' => 'EventType'],
+    ],
 ];

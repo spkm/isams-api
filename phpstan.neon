@@ -7,3 +7,5 @@ parameters:
     paths:
         - src
         - generated
+        - generator
+        - bin/generate

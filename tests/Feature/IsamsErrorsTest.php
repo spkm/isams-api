@@ -2,6 +2,7 @@
 
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
+use spkm\IsamsApi\Batch\BatchRequest;
 use spkm\IsamsApi\Batch\IsamsBatchConnector;
 use spkm\IsamsApi\Exceptions\MissingPermissionException;
 use spkm\IsamsApi\Exceptions\NotFoundException;
@@ -91,7 +92,7 @@ it('retries a GET that iSAMS times out on, when retries are configured', functio
 it('explains a refused token request as rejected credentials, with OAuth\'s reason', function (string $error, array $scopes, string $expected) {
     FakeIsams::respondWith([GetClientCredentialsTokenRequest::class => MockResponse::make(['error' => $error], 400)]);
 
-    expect(fn () => new IsamsConnector('made-up-client', 'made-up-secret', FakeIsams::BASE_URL, $scopes))
+    expect(fn () => (new IsamsConnector('made-up-client', 'made-up-secret', FakeIsams::BASE_URL, $scopes))->send(new GetSubjectRequest(7)))
         ->toThrow(UnauthorizedException::class, $expected);
 })->with([
     'a wrong client id or secret' => ['invalid_client', ['restapi'], 'iSAMS refused the token request: invalid_client, the client id or secret is wrong'],
@@ -101,18 +102,22 @@ it('explains a refused token request as rejected credentials, with OAuth\'s reas
 it('keeps the Batch API key, which iSAMS takes as the client id, out of a refused token request\'s message', function () {
     FakeIsams::respondWith([GetClientCredentialsTokenRequest::class => MockResponse::make(['error' => 'invalid_client'], 400)]);
 
-    expect(fn () => new IsamsBatchConnector('MADE-UP-BATCH-KEY', 'made-up-secret', FakeIsams::BASE_URL))
+    expect(fn () => (new IsamsBatchConnector('MADE-UP-BATCH-KEY', 'made-up-secret', FakeIsams::BASE_URL))->send(new BatchRequest))
         ->toThrow(fn (UnauthorizedException $exception) => expect($exception->getMessage())->not->toContain('MADE-UP-BATCH-KEY'));
 });
 
 it('keeps a separate token for each set of scopes, so a Cloud Portals connection never borrows a REST token', function () {
-    $isams = FakeIsams::respondWith();
+    $isams = FakeIsams::respondWith([GetSubjectRequest::class => MockResponse::make(['id' => 7])]);
 
-    new IsamsConnector('client-id', 'client-secret', FakeIsams::BASE_URL, ['restapi']);
-    new IsamsConnector('client-id', 'client-secret', FakeIsams::BASE_URL, ['iSAMS.CloudPortals.Api']);
-    new IsamsConnector('client-id', 'client-secret', FakeIsams::BASE_URL, ['restapi']);
+    (new IsamsConnector('client-id', 'client-secret', FakeIsams::BASE_URL, ['restapi']))->send(new GetSubjectRequest(7));
+    (new IsamsConnector('client-id', 'client-secret', FakeIsams::BASE_URL, ['iSAMS.CloudPortals.Api']))->send(new GetSubjectRequest(7));
+    (new IsamsConnector('client-id', 'client-secret', FakeIsams::BASE_URL, ['restapi']))->send(new GetSubjectRequest(7));
 
-    $scopes = collect($isams->getRecordedResponses())->map(fn ($response) => $response->getPendingRequest()->body()->get('scope'))->all();
+    $scopes = collect($isams->getRecordedResponses())
+        ->filter(fn ($response) => $response->getRequest() instanceof GetClientCredentialsTokenRequest)
+        ->map(fn ($response) => $response->getPendingRequest()->body()->get('scope'))
+        ->values()
+        ->all();
 
     expect($scopes)->toBe(['restapi', 'iSAMS.CloudPortals.Api']);
 });

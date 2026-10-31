@@ -1,5 +1,6 @@
 <?php
 
+use spkm\IsamsApi\Generator\BatchGenerator;
 use spkm\IsamsApi\Generator\Generator;
 
 /**
@@ -98,4 +99,54 @@ it('refuses a property correction for a definition the spec does not have', func
 
         return $overrides;
     }))->toThrow(RuntimeException::class, 'properties.iSAMS.Nowhere.Get.Thing: no such definition in the spec');
+});
+
+/**
+ * Runs the Batch API generator over the real node lists with the real overrides, changed by $change.
+ */
+function generateBatchWithOverrides(Closure $change): void
+{
+    $package = dirname(__DIR__, 2);
+    $root = sys_get_temp_dir().'/isams-api-batch-generator-'.getmypid().'-'.uniqid();
+    mkdir($root.'/generator', recursive: true);
+    symlink($package.'/generator/batch', $root.'/generator/batch');
+    $overrides = $change(require $package.'/generator/overrides.php');
+    file_put_contents($root.'/generator/overrides.php', '<?php return '.var_export($overrides, true).';');
+
+    try {
+        (new BatchGenerator($root))->build();
+    } finally {
+        unlink($root.'/generator/overrides.php');
+        unlink($root.'/generator/batch');
+        rmdir($root.'/generator');
+        rmdir($root);
+    }
+}
+
+it('accepts the package\'s own Batch API overrides', function () {
+    expect(fn () => generateBatchWithOverrides(fn (array $overrides) => $overrides))->not->toThrow(RuntimeException::class);
+});
+
+it('refuses a Batch model name for records no two root nodes share', function () {
+    expect(fn () => generateBatchWithOverrides(function (array $overrides) {
+        $overrides['batchModels']['CalendarManager']['Category'] = 'EventCategory';
+
+        return $overrides;
+    }))->toThrow(RuntimeException::class, "batchModels.CalendarManager.Category: no Category records have the same shape under several of CalendarManager's root nodes");
+});
+
+it('refuses a Batch model name for a module the node lists do not have', function () {
+    expect(fn () => generateBatchWithOverrides(function (array $overrides) {
+        $overrides['batchModels']['NowhereManager']['Thing'] = 'Thing';
+
+        return $overrides;
+    }))->toThrow(RuntimeException::class, 'batchModels.NowhereManager.Thing');
+});
+
+it('refuses Batch model names that would give two shapes of record one class', function () {
+    expect(fn () => generateBatchWithOverrides(function (array $overrides) {
+        $overrides['batchModels']['TimetableManager']['Teacher'] = 'Timetable';
+
+        return $overrides;
+    }))->toThrow(RuntimeException::class, 'would all be spkm\\IsamsApi\\Data\\Batch\\TimetableManager\\Timetable');
 });

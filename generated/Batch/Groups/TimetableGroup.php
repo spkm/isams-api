@@ -16,27 +16,27 @@ use spkm\IsamsApi\Data\Batch\TimetableManager\TimetableAllocations\TimetableAllo
 class TimetableGroup extends BatchGroup
 {
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\ArchivedTimetables\Timetable>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\Timetable>
      */
     public function archived(): LazyCollection
     {
-        return $this->run('Timetable_GetArchivedTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\ArchivedTimetables\Timetable::class);
+        return $this->run('Timetable_GetArchivedTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\Timetable::class);
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\DevelopmentTimetables\Timetable>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\Timetable>
      */
     public function development(): LazyCollection
     {
-        return $this->run('Timetable_GetDevelopmentTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\DevelopmentTimetables\Timetable::class);
+        return $this->run('Timetable_GetDevelopmentTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\Timetable::class);
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\PreliminaryTimetables\Timetable>
+     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\TimetableManager\Timetable>
      */
     public function preliminary(): LazyCollection
     {
-        return $this->run('Timetable_GetPreliminaryTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\PreliminaryTimetables\Timetable::class);
+        return $this->run('Timetable_GetPreliminaryTimetables', \spkm\IsamsApi\Data\Batch\TimetableManager\Timetable::class);
     }
 
     /**

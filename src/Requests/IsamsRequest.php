@@ -3,6 +3,7 @@
 namespace spkm\IsamsApi\Requests;
 
 use Illuminate\Support\Facades\Cache;
+use JsonException;
 use Psr\Http\Message\RequestInterface;
 use Saloon\CachePlugin\Contracts\Cacheable;
 use Saloon\CachePlugin\Contracts\Driver;
@@ -15,6 +16,7 @@ use Saloon\Http\Response;
 use spkm\IsamsApi\Data\Created;
 use spkm\IsamsApi\Data\Data;
 use spkm\IsamsApi\Data\File;
+use spkm\IsamsApi\Exceptions\ServerErrorException;
 use spkm\IsamsApi\IsamsApiException;
 use spkm\IsamsApi\IsamsBaseConnector;
 
@@ -124,15 +126,20 @@ abstract class IsamsRequest extends Request implements Cacheable
             throw IsamsApiException::fromResponse($response);
         }
 
-        return match ($this->responseShape) {
-            self::ONE => $this->one($response),
-            self::LIST => collect((array) ($this->resultKey === '' ? $response->json() : $response->json($this->resultKey)))
-                ->map(fn (mixed $item) => $this->dto && is_array($item) ? $this->dto::from($item) : $item)
-                ->values(),
-            self::CREATED => Created::fromResponse($response),
-            self::FILE => File::fromResponse($response),
-            self::RAW => $response->body() === '' ? [] : json_decode($response->body(), true, flags: JSON_THROW_ON_ERROR),
-            default => null,
-        };
+        try {
+            return match ($this->responseShape) {
+                self::ONE => $this->one($response),
+                self::LIST => collect((array) ($this->resultKey === '' ? $response->json() : $response->json($this->resultKey)))
+                    ->map(fn (mixed $item) => $this->dto && is_array($item) ? $this->dto::from($item) : $item)
+                    ->values(),
+                self::CREATED => Created::fromResponse($response),
+                self::FILE => File::fromResponse($response),
+                self::RAW => $response->body() === '' ? [] : json_decode($response->body(), true, flags: JSON_THROW_ON_ERROR),
+                default => null,
+            };
+        } catch (JsonException) {
+            // A successful status with something other than JSON, such as a proxy's or maintenance page.
+            throw new ServerErrorException($response);
+        }
     }
 }

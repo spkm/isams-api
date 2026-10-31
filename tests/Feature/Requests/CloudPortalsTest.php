@@ -11,7 +11,7 @@ use spkm\IsamsApi\Requests\CloudPortals\School\Schools\GetPortalSchoolsRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
 it('reaches the Cloud Portals requests through the default connection\'s resources', function () {
-    $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => []])]);
+    $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => [], 'totalPages' => 0])]);
 
     FakeIsams::connector()->cloudPortals()->school()->bookmark()->all()->all();
 
@@ -21,7 +21,7 @@ it('reaches the Cloud Portals requests through the default connection\'s resourc
 
 it('asks for the Cloud Portals scope on a connection configured with it', function () {
     config(['isams-api.connections.portals' => ['client_id' => 'portal-id', 'client_secret' => 'portal-secret', 'base_url' => FakeIsams::BASE_URL, 'scopes' => ['iSAMS.CloudPortals.Api']]]);
-    $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => []])]);
+    $isams = FakeIsams::respondWith([GetBookmarksRequest::class => MockResponse::make(['bookmarks' => [], 'totalPages' => 0])]);
 
     Isams::connection('portals')->cloudPortals()->school()->bookmark()->all()->all();
 

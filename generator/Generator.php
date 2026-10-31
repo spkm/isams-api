@@ -67,7 +67,7 @@ final class Generator
     /** @var list<string>|null every tag in the spec, cleaned */
     private ?array $tags = null;
 
-    /** @var array<string, array<string, Method>> resource class => method name => method */
+    /** @var array<string, array<string, array{method: Method, request: string, short: string}>> resource class => method name => method, its request class and its short name */
     private array $resources = [];
 
     public function __construct(private readonly string $root)
@@ -87,6 +87,7 @@ final class Generator
     /**
      * Every generated file, keyed by its path relative to the package root.
      *
+     * @param  array{contents: list<string>, section: string}  $batchEndpoints  the Batch API part of ENDPOINTS.md
      * @return array<string, string>
      */
     public function build(array $batchEndpoints = ['contents' => [], 'section' => '']): array
@@ -318,9 +319,29 @@ final class Generator
         }
 
         $resource = substr($resource, 0, -strlen(' Commands'));
-        $this->tags ??= collect($this->spec['paths'])->flatten(1)->pluck('tags')->flatten()->map($this->cleanTag(...))->unique()->values()->all();
+        $this->tags ??= $this->specTags();
 
         return in_array($area.' - '.Str::plural($resource), $this->tags, true) ? Str::plural($resource) : $resource;
+    }
+
+    /**
+     * Every tag the spec's operations have, cleaned.
+     *
+     * @return list<string>
+     */
+    private function specTags(): array
+    {
+        $tags = [];
+
+        foreach ($this->spec['paths'] as $operations) {
+            foreach ($operations as $operation) {
+                foreach ($operation['tags'] ?? [] as $tag) {
+                    $tags[] = $this->cleanTag($tag);
+                }
+            }
+        }
+
+        return array_values(array_unique($tags));
     }
 
     private function cleanTag(string $tag): string
@@ -640,10 +661,6 @@ final class Generator
     }
 
     /**
-     * @param  array<string, mixed>  $parameter
-     * @return array<string, mixed>
-     */
-    /**
      * A parameter's PHP name, with "Value" added where it would clash with a property of the request classes.
      */
     private function phpName(string $name): string
@@ -666,6 +683,10 @@ final class Generator
         return $this->phpName(lcfirst((string) preg_replace(['/^(Global|Private)(?=[A-Z])/', '/(ForCreate|ForUpdate|ForPatch|Command)$/'], '', class_basename($modelClass))));
     }
 
+    /**
+     * @param  array<string, mixed>  $parameter
+     * @return array<string, mixed>
+     */
     private function body(array $parameter): array
     {
         $schema = $parameter['schema'] ?? [];
@@ -1454,15 +1475,6 @@ final class Generator
      */
     private function emitEndpoints(array $areas, array $children, array $calls, array $batchEndpoints): void
     {
-        $chains = [];
-        $walk = function (string $resource, string $chain) use (&$walk, &$chains, $children): void {
-            $chains[$resource] = $chain;
-
-            foreach ($children[$resource] ?? [] as $name => $child) {
-                $walk($child, "$chain->$name()");
-            }
-        };
-
         $contents = [];
         $sections = [];
         $total = 0;
@@ -1470,11 +1482,9 @@ final class Generator
         foreach ($areas as $area) {
             $name = lcfirst((string) preg_replace('/Resource$/', '', class_basename($area)));
             $title = Str::headline($name);
-            $chains = [];
-            $walk($area, "Isams::$name()");
             $rows = [];
 
-            foreach ($chains as $resource => $chain) {
+            foreach ($this->chains($area, "Isams::$name()", $children) as $resource => $chain) {
                 foreach ($calls[$resource] ?? [] as $method) {
                     $call = $chain.'->'.$method->getName().'('.implode(', ', array_map($this->endpointParameter(...), $method->getParameters())).')';
                     $rows[] = '| `'.str_replace('|', '\\|', $call).'` | '.str_replace('|', '\\|', $this->endpointReturn($method)).' |';
@@ -1511,9 +1521,27 @@ final class Generator
         ]);
     }
 
+    /**
+     * The call that reaches a resource and each of its child resources, as a caller writes it, keyed by resource class.
+     *
+     * @param  array<string, array<string, string>>  $children  resource class => accessor => child resource class
+     * @return array<string, string>
+     */
+    private function chains(string $resource, string $chain, array $children): array
+    {
+        $chains = [$resource => $chain];
+
+        foreach ($children[$resource] ?? [] as $name => $child) {
+            $chains += $this->chains($child, "$chain->$name()", $children);
+        }
+
+        return $chains;
+    }
+
     private function endpointParameter(Parameter $parameter): string
     {
-        $type = implode('|', array_map(fn (string $part) => (str_starts_with($part, '?') ? '?' : '').class_basename(ltrim($part, '?')), explode('|', (string) $parameter->getType())));
+        $declared = (string) $parameter->getType();
+        $type = $declared === '' ? '' : implode('|', array_map(fn (string $part) => (str_starts_with($part, '?') ? '?' : '').class_basename(ltrim($part, '?')), explode('|', $declared)));
         $type = $parameter->isNullable() && $type !== '' && ! str_contains($type, '|') && ! str_contains($type, 'null') && ! str_starts_with($type, '?') && $type !== 'mixed' ? "?$type" : $type;
         $default = $parameter->hasDefaultValue() ? ' = '.($parameter->getDefaultValue() === null ? 'null' : var_export($parameter->getDefaultValue(), true)) : '';
 
