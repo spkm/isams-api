@@ -41,6 +41,7 @@ jobs:
           coverage: pcov
       - run: composer update --prefer-dist --no-interaction
       - run: composer validate --strict --no-check-lock
+      - run: composer generate:check
       - run: vendor/bin/pint --test
       - run: vendor/bin/phpstan analyse --memory-limit=1G
       - run: vendor/bin/pest --coverage --min=80

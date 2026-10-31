@@ -4,13 +4,13 @@ set -e
 composer validate --strict --no-check-lock --quiet
 
 STAGED_PHP=$(git diff --cached --name-only --diff-filter=ACMR -- '*.php' ':!generated/*')
-PARTLY_STAGED=$(git diff --name-only -- $STAGED_PHP)
-if [ -n "$PARTLY_STAGED" ]; then
-    echo "These files have unstaged changes, so the checks wouldn't see what you're committing. Stage them fully first:"
-    echo "$PARTLY_STAGED"
-    exit 1
-fi
 if [ -n "$STAGED_PHP" ]; then
+    PARTLY_STAGED=$(git diff --name-only -- $STAGED_PHP)
+    if [ -n "$PARTLY_STAGED" ]; then
+        echo "These files have unstaged changes, so the checks wouldn't see what you're committing. Stage them fully first:"
+        echo "$PARTLY_STAGED"
+        exit 1
+    fi
     if ! vendor/bin/pint --test $STAGED_PHP; then
         echo "Code style needs fixing: vendor/bin/pint $STAGED_PHP"
         exit 1
