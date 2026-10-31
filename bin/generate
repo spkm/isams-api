@@ -1,15 +1,13 @@
 #!/usr/bin/env php
 <?php
 
-use spkm\IsamsApi\Generator\BatchGenerator;
 use spkm\IsamsApi\Generator\Generator;
 use spkm\IsamsApi\Generator\Writer;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $root = dirname(__DIR__);
-$batch = new BatchGenerator($root);
-$files = (new Generator($root))->build($batch->endpoints()) + $batch->build();
+$files = (new Generator($root))->build();
 $writer = new Writer($root);
 
 if (in_array('--check', $_SERVER['argv'] ?? [], true)) {

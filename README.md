@@ -469,6 +469,7 @@ Most requests and models are generated from iSAMS's API spec, pinned in `generat
 `generated/`: change `generator/overrides.php` (or the generator) and run `composer generate`.
 `composer generate:check` fails if the generated code is out of date. The Batch API models are generated from
 `generator/batch/nodes.php`, the node lists from iSAMS's Batch API documentation.
+[generator/README.md](generator/README.md) explains how the generator works, what each override does and how to add one.
 
 ## Security
 

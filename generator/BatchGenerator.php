@@ -4,16 +4,18 @@ namespace spkm\IsamsApi\Generator;
 
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\Literal;
-use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\PsrPrinter;
 use RuntimeException;
 use spkm\IsamsApi\Batch\BatchData;
+use spkm\IsamsApi\Generator\Emit\PhpFiles;
 
 /**
  * Builds a model for each Batch API node from the facts in generator/batch/nodes.php. A node whose records have the same
  * shape under several of a module's root nodes (the calendar's events this week, this month and so on) gets one model,
  * Data\Batch\{Module}\{Node}; any other node gets its root node's own, Data\Batch\{Module}\{RootNode}\{Node}, since the
  * same name can mean different records under different root nodes (PupilManager has eight kinds of Pupil).
+ *
+ * @phpstan-type BatchCall array{name: string, method: string, model: string, filter: array{module: string, element: string, attributes: array<string, string>, required: bool}|null, parameters: list<array{name: string, attribute: string, type: string, required: bool, signature: string}>}
+ * @phpstan-type BatchGroup array{accessor: string, calls: list<BatchCall>}
  */
 final class BatchGenerator
 {
@@ -34,13 +36,12 @@ final class BatchGenerator
     /** @var array{modules: array<string, array<string, array<string, mixed>>>, methodFilters: array<string, array{module: string, element: string, attributes: array<string, string>, required: bool}>, photos: array<string, string>} */
     private array $facts;
 
-    /** @var array<string, string> */
-    private array $files = [];
+    private readonly PhpFiles $files;
 
     /** @var array<string, string> */
     private array $names;
 
-    /** @var array<string, array{accessor: string, calls: list<array<string, mixed>>}> */
+    /** @var array<string, BatchGroup> */
     private array $groups;
 
     /** @var array<string, array<string, string>> module => node => class name, for nodes several root nodes share */
@@ -49,12 +50,12 @@ final class BatchGenerator
     /** @var array<string, array<string, array<string, string>>>|null module => root node => node => model class */
     private ?array $classes = null;
 
-    public function __construct(string $root)
+    public function __construct(string $root, Corrections $corrections)
     {
         $this->facts = require $root.'/generator/batch/nodes.php';
-        $overrides = require $root.'/generator/overrides.php';
-        $this->names = $overrides['batchMethods'] ?? [];
-        $this->modelNames = $overrides['batchModels'] ?? [];
+        $this->files = new PhpFiles(self::MARKER);
+        $this->names = $corrections->batchMethods();
+        $this->modelNames = $corrections->batchModels();
     }
 
     /**
@@ -79,104 +80,28 @@ final class BatchGenerator
         ksort($methods);
         $this->emitMap($roots, $methods);
         $this->emitGroups();
-        ksort($this->files);
 
-        return $this->files;
+        return $this->files->all();
     }
 
     /**
-     * The Batch API part of ENDPOINTS.md: each group's calls with what they return, the root nodes no known method
-     * fills, and the photo feeds.
+     * What ENDPOINTS.md lists for the Batch API: each group's calls, and the root nodes no known method fills.
      *
-     * @return array{contents: list<string>, section: string}
+     * @return array{groups: array<string, BatchGroup>, unnamed: list<array{module: string, root: string, model: string}>}
      */
-    public function endpoints(): array
+    public function calls(): array
     {
-        $contents = [];
-        $sections = [];
-
-        foreach ($this->groups() as $group => ['accessor' => $accessor, 'calls' => $calls]) {
-            $rows = array_map(fn (array $call) => '| `Isams::batch()->'.$accessor.'()->'.$call['name'].'('.implode(', ', array_map(fn (array $parameter) => $parameter['signature'], $call['parameters'])).')` | `LazyCollection<'.class_basename($call['model']).'>` |', $calls);
-            sort($rows);
-            $contents[] = "  - [$group](#batch-".strtolower($group).') ('.count($rows).')';
-            $sections[] = "### Batch: $group\n\n| Call | Returns |\n|---|---|\n".implode("\n", $rows)."\n";
-        }
-
         $unnamed = [];
 
         foreach ($this->facts['modules'] as $module => $roots) {
             foreach ($roots as $root => $facts) {
                 if ($facts['methods'] === []) {
-                    $unnamed[] = "| `Isams::batch()->send(new BatchRequest)->dto()->models('$module', '$root')` | `Collection<".class_basename($this->classes()[$module][$root][$facts['entity']] ?? $this->className($facts['entity'])).'>` |';
+                    $unnamed[] = ['module' => $module, 'root' => $root, 'model' => $this->classes()[$module][$root][$facts['entity']] ?? $this->className($facts['entity'])];
                 }
             }
         }
 
-        $section = implode("\n", [
-            '## Batch API',
-            '',
-            'Each call runs one Batch API method and returns its records as a lazy collection of models, taking the method\'s filters as named',
-            'parameters; a failure throws a `BatchApiException`. Pass a key\'s name to `Isams::batch()` to use a key other than the',
-            'default. To run several methods in one request, send a `BatchRequest` and read each method from the response; see',
-            '[Batch API](README.md#batch-api).',
-            '',
-            '```php',
-            '$students = Isams::batch()->pupil()->currentPupils(); // LazyCollection<Pupil>',
-            '',
-            '// Mother and father contacts, at their work and company locations, of students with system status 0 or 1',
-            '// who live at home and enrol in 2026 or 2027',
-            '$contacts = Isams::batch()->contactAdvanced()->contacts(',
-            '    contactTypes: [\'Mother\', \'Father\'],',
-            '    contactLocations: [\'Work\', \'Company\'],',
-            '    studentHome: true,',
-            '    systemStatusesToInclude: [0, 1],',
-            '    enrolmentSchoolYearsToInclude: [2026, 2027],',
-            '); // LazyCollection<Contact>',
-            '',
-            '// Several methods in one request, each filtered under the names iSAMS documents for its filter',
-            '$batch = Isams::batch()->send(new BatchRequest(',
-            '    BatchFilters::make()',
-            '        ->methods(\'Pupil_GetCurrentPupils\', \'Pupil_GetPassports\', \'ContactAdvanced_GetContacts\')',
-            '        ->filter(\'StudentManager\', \'Passports\', [\'SystemStatusesToInclude\' => [0, 1]])',
-            '        ->filter(\'StudentManager\', \'Contacts\', [',
-            '            \'ContactTypes\' => [\'Mother\', \'Father\'],',
-            '            \'StudentHome\' => true,',
-            '            \'SystemStatusesToInclude\' => [0, 1],',
-            '        ])',
-            '))->dto();',
-            '',
-            '$students = $batch->method(\'Pupil_GetCurrentPupils\');',
-            '$passports = $batch->method(\'Pupil_GetPassports\');',
-            '$contacts = $batch->method(\'ContactAdvanced_GetContacts\');',
-            '```',
-            '',
-            implode("\n", $sections),
-            '### Batch: root nodes no method names',
-            '',
-            'These arrive when a request runs everything allocated to the key.',
-            '',
-            '| Call | Returns |',
-            '|---|---|',
-            implode("\n", $unnamed),
-            '',
-            '### Batch: photos',
-            '',
-            '| Call | Returns |',
-            '|---|---|',
-            '| `Isams::batch()->staffPhotos()` | `BatchPhotos`: `photos()` yields each staff id and PNG |',
-            '| `Isams::batch()->studentPhotos()` | `BatchPhotos`: `photos()` yields each student id and PNG |',
-            '',
-        ]);
-
-        return [
-            'contents' => [
-                '- [Batch API](#batch-api) ('.array_sum(array_map(fn (array $group) => count($group['calls']), $this->groups())).' calls)',
-                ...$contents,
-                '  - [Root nodes no method names](#batch-root-nodes-no-method-names) ('.count($unnamed).')',
-                '  - [Photos](#batch-photos) (2)',
-            ],
-            'section' => $section,
-        ];
+        return ['groups' => $this->groups(), 'unnamed' => $unnamed];
     }
 
     /**
@@ -185,16 +110,12 @@ final class BatchGenerator
      */
     private function emitGroups(): void
     {
-        $traitFile = new PhpFile;
-        $traitFile->addComment(self::MARKER);
-        $traitNamespace = $traitFile->addNamespace('spkm\\IsamsApi\\Batch');
+        [$traitNamespace, $traitFile] = $this->files->start('spkm\\IsamsApi\\Batch');
         $trait = $traitNamespace->addTrait('HasBatchGroups');
 
         foreach ($this->groups() as $group => ['accessor' => $accessor, 'calls' => $calls]) {
             $class = 'spkm\\IsamsApi\\Batch\\Groups\\'.$group.'Group';
-            $file = new PhpFile;
-            $file->addComment(self::MARKER);
-            $namespace = $file->addNamespace('spkm\\IsamsApi\\Batch\\Groups');
+            [$namespace, $file] = $this->files->start('spkm\\IsamsApi\\Batch\\Groups');
             $namespace->addUse('Illuminate\\Support\\LazyCollection');
             $namespace->addUse('spkm\\IsamsApi\\Batch\\BatchGroup');
             $groupClass = $namespace->addClass($group.'Group')->setExtends('spkm\\IsamsApi\\Batch\\BatchGroup');
@@ -235,17 +156,17 @@ final class BatchGenerator
 
             $traitNamespace->addUse($class);
             $trait->addMethod($accessor)->setPublic()->setReturnType($class)->setBody("return new {$group}Group(\$this);");
-            $this->files[$this->pathFor($class)] = (new PsrPrinter)->printFile($file);
+            $this->files->add($class, $file);
         }
 
-        $this->files['generated/Batch/HasBatchGroups.php'] = (new PsrPrinter)->printFile($traitFile);
+        $this->files->add('spkm\\IsamsApi\\Batch\\HasBatchGroups', $traitFile);
     }
 
     /**
      * Each group's accessor and calls: the call's name, iSAMS method, model and filter, and a parameter per filter
      * attribute (required when the filter is and has at most two attributes, such as a date range).
      *
-     * @return array<string, array{accessor: string, calls: list<array{name: string, method: string, model: string, filter: array{module: string, element: string, attributes: array<string, string>, required: bool}|null, parameters: list<array{name: string, attribute: string, type: string, required: bool, signature: string}>}>}>
+     * @return array<string, BatchGroup>
      */
     private function groups(): array
     {
@@ -355,14 +276,12 @@ final class BatchGenerator
     {
         $class = $this->classes()[$module][$root][$node];
 
-        if (isset($this->files[$this->pathFor($class)])) {
+        if ($this->files->has($class)) {
             return $class;
         }
 
-        $this->files[$this->pathFor($class)] = '';
-        $file = new PhpFile;
-        $file->addComment(self::MARKER);
-        $phpNamespace = $file->addNamespace(Str::beforeLast($class, '\\'));
+        $this->files->reserve($class);
+        [$phpNamespace, $file] = $this->files->start(Str::beforeLast($class, '\\'));
         $phpNamespace->addUse(BatchData::class);
         $model = $phpNamespace->addClass(class_basename($class))->setExtends(BatchData::class)->setReadOnly();
         $constructor = $model->addMethod('__construct');
@@ -412,7 +331,7 @@ final class BatchGenerator
             $model->removeMethod('__construct');
         }
 
-        $this->files[$this->pathFor($class)] = (new PsrPrinter)->printFile($file);
+        $this->files->add($class, $file);
 
         return $class;
     }
@@ -592,23 +511,17 @@ final class BatchGenerator
      */
     private function emitMap(array $roots, array $methods): void
     {
-        $file = new PhpFile;
-        $file->addComment(self::MARKER);
-        $class = $file->addNamespace('spkm\IsamsApi\Batch')->addClass('BatchMap')->setFinal();
+        [$namespace, $file] = $this->files->start('spkm\IsamsApi\Batch');
+        $class = $namespace->addClass('BatchMap')->setFinal();
         $class->addComment('Where each Batch API method\'s records sit in a response, and the model for each root node\'s records.');
         $class->addConstant('ROOTS', $roots)->addComment('@var array<string, array<string, array{entity: string, model: class-string<\spkm\IsamsApi\Batch\BatchData>|null}>>');
         $class->addConstant('METHODS', $methods)->addComment('@var array<string, array{string, string}>');
 
-        $this->files['generated/Batch/BatchMap.php'] = (new PsrPrinter)->printFile($file);
+        $this->files->add('spkm\IsamsApi\Batch\BatchMap', $file);
     }
 
     private function className(string $node): string
     {
         return in_array($node, self::RESERVED, true) ? $node.'Node' : $node;
-    }
-
-    private function pathFor(string $class): string
-    {
-        return 'generated/'.str_replace('\\', '/', Str::after($class, 'spkm\IsamsApi\\')).'.php';
     }
 }

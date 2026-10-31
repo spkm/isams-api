@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Corrections the generator applies to iSAMS's API spec: which areas to generate, better class and model names,
- * response and body fixes where the spec is wrong, cacheable and unsafe requests, hand-written requests to keep, and
- * operations to skip. Edit this file, not generated/, then run composer generate, which fails if this file names
- * anything the spec doesn't have.
+ * Corrections the generator applies to iSAMS's API spec and Batch API node lists, in five sections: what to generate,
+ * naming rules, corrections to the spec, each operation's settings, and the Batch API. Edit this file, not generated/,
+ * then run composer generate, which refuses a key or shape it does not read and anything the spec does not have.
+ * generator/README.md explains each key with an example.
  */
 
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
@@ -13,8 +13,129 @@ use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 $paymentWebhook = ['skip' => 'Payment provider webhook that iSAMS receives; it takes no API credentials.'];
 
 return [
-    // Areas generated so far; the rest of the spec is listed in the manifest as pending.
+    /*
+    |--------------------------------------------------------------------------
+    | What to generate
+    |--------------------------------------------------------------------------
+    |
+    | The areas of the spec (the first part of an operation's tag) whose requests,
+    | models and resources are generated. Anything else is listed in
+    | generator/manifest.json as pending.
+    |
+    */
+
     'areas' => ['Teaching', 'Students', 'School', 'Estates', 'Timetable', 'Registration', 'Student Registers', 'Rewards And Conduct', 'Discipline', 'Exclusions', 'Medical Centre', 'Wellbeing Manager', 'HR', 'System Configuration', 'Admissions', 'Billing', 'Bulletin', 'Other Schools', 'Storage', 'Agent', 'Curriculum', 'News', 'Gradebooks', 'Cloud Portals'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Naming rules
+    |--------------------------------------------------------------------------
+    |
+    | How tags and definition names become namespaces and class names, where
+    | iSAMS's own words would read badly or repeat themselves.
+    |
+    */
+
+    // Area names that don't read well as PHP names.
+    'areaNames' => [
+        'HR' => 'HumanResources',
+    ],
+
+    // Leading words dropped from a tag's resource name when choosing its namespace.
+    'areaNouns' => [
+        'Students' => ['Students', 'Student'],
+        'Admissions' => ['Admissions', 'Applicants', 'Applicant'],
+        'Medical Centre' => ['Medical'],
+        'Wellbeing Manager' => ['Pastoral'],
+        'School' => ['School'],
+        'Bulletin' => ['Bulletin'],
+        'Gradebooks' => ['Gradebook'],
+        'Registration' => ['Registration'],
+        'Student Registers' => ['Student', 'Registers'],
+        'Exclusions' => ['Exclusion'],
+        'Timetable' => ['Timetable'],
+        'News' => ['News', 'Public'],
+        'Curriculum' => ['Public'],
+        'Other Schools' => ['Other'],
+    ],
+
+    // Words iSAMS adds to an area's names without meaning, left out of namespaces and class names.
+    'noiseWords' => [
+        'Cloud Portals' => ['Portals'],
+        'Gradebooks' => ['Structure'],
+    ],
+
+    // Tag segments iSAMS uses as placeholders, left out of namespaces.
+    'ignoredTagSegments' => ['Undefined'],
+
+    // Words that are the same singular and plural.
+    'uncountable' => ['Alumni', 'Staff', 'News', 'Homework', 'Information', 'Data', 'Metadata'],
+
+    // iSAMS module (second segment of a definition name) => model namespace.
+    'modules' => [
+        'Pupils' => 'Students',
+        'HR' => 'HumanResources',
+        'Pastoral' => 'WellbeingManager',
+        'Markbooks' => 'Gradebooks',
+        'Registers' => 'StudentRegisters',
+        'PortalManagement' => 'CloudPortals',
+        'Web' => 'Common',
+    ],
+
+    // Models whose iSAMS name is misleading, by definition: the class name before its kind suffix.
+    'models' => [
+        'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessions' => 'DetentionSession',
+        'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessionStudents' => 'DetentionSessionStudent',
+        'iSAMS.Registration.AppServices.Objects.Public.Resources.Put.Collections.UpdateStudentAttendanceSelfRegistrationRegisterCollection' => 'SelfRegistrationRegisters',
+    ],
+
+    // Enums whose generated name (module\\name) reads badly: the better name.
+    'enums' => [
+        'Gradebooks\\Type' => 'MembershipType',
+        'Gradebooks\\GradebookStructureOrderedItemStructureItemType' => 'StructureItemType',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Corrections to the spec
+    |--------------------------------------------------------------------------
+    |
+    | Where iSAMS answers differently from what its spec says, found by the sandbox
+    | checks and listed in ISAMS-API-DIFFERENCES.md. An operation's response and
+    | required corrections are settings in operations, below.
+    |
+    */
+
+    // Fields iSAMS sends that its spec's definitions leave out (found by the sandbox checks; see ISAMS-API-DIFFERENCES.md).
+    'properties' => [
+        'iSAMS.MedicalCentre.Entities.Public.Resources.Get.MedicalVaccinationType' => ['deleted' => ['type' => 'boolean']],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Operations
+    |--------------------------------------------------------------------------
+    |
+    | Settings for an operation, by its operationId ("v2:{operationId}" for an
+    | operation only in v2), grouped by area. Each may hold:
+    |
+    |   class        the request class name, where the one built from the verb and the tag reads badly
+    |   method       the resource method name, where the one built from the class name is ambiguous
+    |   response     what iSAMS really answers, where the spec is wrong: a shape name such as 'file',
+    |                ['definition' => D] for one record of D, or ['list' => D, 'key' => K, 'paged' => bool]
+    |                for a list of D under key K
+    |   required     query parameters iSAMS requires that the spec marks optional
+    |   cacheable    true for a GET whose answer rarely changes
+    |   safe         false for a GET that makes iSAMS do something, so it is never retried or cached
+    |   paginatable  true or false to force paging on or off
+    |   multipart    formData part => definition, where the spec gives the part no schema
+    |   handwritten  a request class written by hand, kept instead of generating one
+    |   skip         why the operation is not generated
+    |
+    | A skipped operation has no other settings; a hand-written request reads only
+    | method and response.
+    |
+    */
 
     'operations' => [
         // Where iSAMS answers differently from its spec (found by the sandbox checks; see ISAMS-API-DIFFERENCES.md)
@@ -405,69 +526,15 @@ return [
         'PaymentStatus_UpdateParentPortalMultiplePaymentStatusGetnetStatusAsyncByGetnetpaymentdetails' => $paymentWebhook,
     ],
 
-    // Models whose iSAMS name is misleading, by definition: the class name before its kind suffix.
-    'models' => [
-        'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessions' => 'DetentionSession',
-        'iSAMS.Discipline.AppServices.Objects.Resources.Get.DetentionSessionStudents' => 'DetentionSessionStudent',
-        'iSAMS.Registration.AppServices.Objects.Public.Resources.Put.Collections.UpdateStudentAttendanceSelfRegistrationRegisterCollection' => 'SelfRegistrationRegisters',
-    ],
-
-    // Enums whose generated name (module\\name) reads badly: the better name.
-    'enums' => [
-        'Gradebooks\\Type' => 'MembershipType',
-        'Gradebooks\\GradebookStructureOrderedItemStructureItemType' => 'StructureItemType',
-    ],
-
-    // Words iSAMS adds to an area's names without meaning, left out of namespaces and class names.
-    'noiseWords' => [
-        'Cloud Portals' => ['Portals'],
-        'Gradebooks' => ['Structure'],
-    ],
-
-    // Tag segments iSAMS uses as placeholders, left out of namespaces.
-    'ignoredTagSegments' => ['Undefined'],
-
-    // Words that are the same singular and plural.
-    'uncountable' => ['Alumni', 'Staff', 'News', 'Homework', 'Information', 'Data', 'Metadata'],
-
-    // Leading words dropped from a tag's resource name when choosing its namespace.
-    'areaNouns' => [
-        'Students' => ['Students', 'Student'],
-        'Admissions' => ['Admissions', 'Applicants', 'Applicant'],
-        'Medical Centre' => ['Medical'],
-        'Wellbeing Manager' => ['Pastoral'],
-        'School' => ['School'],
-        'Bulletin' => ['Bulletin'],
-        'Gradebooks' => ['Gradebook'],
-        'Registration' => ['Registration'],
-        'Student Registers' => ['Student', 'Registers'],
-        'Exclusions' => ['Exclusion'],
-        'Timetable' => ['Timetable'],
-        'News' => ['News', 'Public'],
-        'Curriculum' => ['Public'],
-        'Other Schools' => ['Other'],
-    ],
-
-    // Area names that don't read well as PHP names.
-    'areaNames' => [
-        'HR' => 'HumanResources',
-    ],
-
-    // iSAMS module (second segment of a definition name) => model namespace.
-    'modules' => [
-        'Pupils' => 'Students',
-        'HR' => 'HumanResources',
-        'Pastoral' => 'WellbeingManager',
-        'Markbooks' => 'Gradebooks',
-        'Registers' => 'StudentRegisters',
-        'PortalManagement' => 'CloudPortals',
-        'Web' => 'Common',
-    ],
-
-    // Fields iSAMS sends that its spec's definitions leave out (found by the sandbox checks; see ISAMS-API-DIFFERENCES.md).
-    'properties' => [
-        'iSAMS.MedicalCentre.Entities.Public.Resources.Get.MedicalVaccinationType' => ['deleted' => ['type' => 'boolean']],
-    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Batch API
+    |--------------------------------------------------------------------------
+    |
+    | Names for the Batch API's calls and models, generated from
+    | generator/batch/nodes.php.
+    |
+    */
 
     // Batch API calls are named from the method: without Get, a leading All, or the whole group name repeated at the
     // start (School_GetSchoolTerms is school()->terms()). These read better named by hand.
