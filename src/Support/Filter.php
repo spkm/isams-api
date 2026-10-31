@@ -10,6 +10,8 @@ final class Filter implements Stringable
 {
     private const OPERATORS = ['eq', 'ne', 'gt', 'ge', 'lt', 'le'];
 
+    private const LARAVEL_OPERATORS = ['=' => 'eq', '!=' => 'ne', '<>' => 'ne', '>' => 'gt', '>=' => 'ge', '<' => 'lt', '<=' => 'le'];
+
     /** @var list<string> */
     private array $clauses = [];
 
@@ -20,9 +22,11 @@ final class Filter implements Stringable
 
     public function and(string $property, string $operator, mixed $value): static
     {
-        if (! in_array($operator, self::OPERATORS, true)) {
-            throw new InvalidArgumentException('iSAMS filters only support eq, ne, gt, ge, lt and le, not "'.$operator.'".');
+        if (! in_array($operator, self::OPERATORS, true) && ! isset(self::LARAVEL_OPERATORS[$operator])) {
+            throw new InvalidArgumentException('iSAMS filters only support =, !=, <>, >, >=, < and <=, or eq, ne, gt, ge, lt and le, not "'.$operator.'".');
         }
+
+        $operator = self::LARAVEL_OPERATORS[$operator] ?? $operator;
 
         $this->clauses[] = ucfirst($property).' '.$operator.' '.$this->format($value);
 

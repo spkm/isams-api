@@ -134,7 +134,7 @@ use spkm\IsamsApi\Data\Teaching\SubjectForCreate;
 $subjects = Isams::teaching()->subjects()->all();          // Collection of Subject models
 $subject = Isams::teaching()->subjects()->get(7);          // a Subject
 $created = Isams::teaching()->subjects()->create(new SubjectForCreate(code: 'MA', name: 'Mathematics'));
-$created->id;                                              // Created: the new record's id and location
+$created->id;                                              // '42': the new id from iSAMS's Location header (also ->location)
 $photo = Isams::students()->photos()->getCurrent('100001'); // File: contents, MIME type and filename
 Isams::teaching()->sets()->removeStudent(setId: 34, schoolId: '100001'); // true, as Eloquent's delete() returns
 Isams::systemConfiguration()->list()->contactTypes()->all();
@@ -233,13 +233,16 @@ As with resources, each page is fetched only when the loop reaches it.
 use spkm\IsamsApi\Support\Filter;
 use spkm\IsamsApi\Support\JsonPatch;
 
-$filter = Filter::where('surname', 'eq', "O'Brien")->and('enrolmentDate', 'ge', now()->subYear());
+$filter = Filter::where('surname', '=', "O'Brien")->and('enrolmentDate', '>=', today()->subYear());
+// Surname eq 'O''Brien' and EnrolmentDate ge datetime'2025-10-31'
 
 $patch = JsonPatch::make()->replace('/preferredName', 'Alex');
 ```
 
-`Filter` produces iSAMS's OData `$filter` syntax (only `eq`, `ne`, `gt`, `ge`, `lt` and `le` are supported) and can be
-passed wherever a request takes a `filter`. iSAMS's PATCH endpoints take a `JsonPatch`.
+`Filter` produces iSAMS's OData `$filter` syntax and can be passed wherever a request takes a `filter`. It takes
+Laravel's comparison operators (`=`, `!=` or `<>`, `>`, `>=`, `<` and `<=`) and turns them into iSAMS's, or iSAMS's own
+(`eq`, `ne`, `gt`, `ge`, `lt` and `le`). iSAMS supports no others, so `like` and `in` throw. iSAMS's PATCH endpoints
+take a `JsonPatch`.
 
 ### Endpoints iSAMS adds later
 

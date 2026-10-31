@@ -41,6 +41,18 @@ it('keeps the time in a filter date when it has one', function () {
     expect((string) Filter::where('LastUpdated', 'gt', CarbonImmutable::parse('2026-10-30 09:15:00')))->toBe("LastUpdated gt datetime'2026-10-30T09:15:00'");
 });
 
+it('turns Laravel\'s comparison operators into iSAMS\'s', function (string $laravel, string $isams) {
+    expect((string) Filter::where('TutorEmployeeId', $laravel, 38))->toBe("TutorEmployeeId {$isams} 38");
+})->with([
+    'equals' => ['=', 'eq'],
+    'not equals' => ['!=', 'ne'],
+    'not equals, the SQL way' => ['<>', 'ne'],
+    'greater than' => ['>', 'gt'],
+    'greater than or equal' => ['>=', 'ge'],
+    'less than' => ['<', 'lt'],
+    'less than or equal' => ['<=', 'le'],
+]);
+
 it('refuses a filter operator iSAMS does not support', function () {
     Filter::where('Surname', 'like', 'Smith');
-})->throws(InvalidArgumentException::class, 'iSAMS filters only support eq, ne, gt, ge, lt and le');
+})->throws(InvalidArgumentException::class, 'iSAMS filters only support =, !=, <>, >, >=, < and <=, or eq, ne, gt, ge, lt and le, not "like"');
