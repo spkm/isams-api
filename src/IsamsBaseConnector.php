@@ -3,6 +3,7 @@
 namespace spkm\IsamsApi;
 
 use DateTimeImmutable;
+use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -64,16 +65,11 @@ abstract class IsamsBaseConnector extends Connector
         if (CircuitBreaker::enabled()) {
             $this->watchForOutages(CircuitBreaker::for($baseUrl));
         }
-
-        $authenticator = $this->getCachedAccessToken();
-        $this->authenticate($authenticator);
     }
 
     public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
     {
-        if (! $request instanceof GetClientCredentialsTokenRequest && $this->tokenExpiresWithinAMinute()) {
-            $this->authenticate($this->getCachedAccessToken());
-        }
+        $this->ensureAuthenticated($request);
 
         $response = parent::send($request, $mockClient, $handleRetry);
 
@@ -85,6 +81,29 @@ abstract class IsamsBaseConnector extends Connector
         }
 
         return $response;
+    }
+
+    public function sendAsync(Request $request, ?MockClient $mockClient = null): PromiseInterface
+    {
+        $this->ensureAuthenticated($request);
+
+        return parent::sendAsync($request, $mockClient);
+    }
+
+    /**
+     * Fetches a token (from the cache, or from iSAMS) before the connector's first request, and a new one once the token
+     * it holds is a minute from expiring, as a connector in a long-running worker needs. Building a connector never
+     * contacts iSAMS.
+     */
+    private function ensureAuthenticated(Request $request): void
+    {
+        if ($request instanceof GetClientCredentialsTokenRequest) {
+            return;
+        }
+
+        if ($this->getAuthenticator() === null || $this->tokenExpiresWithinAMinute()) {
+            $this->authenticate($this->getCachedAccessToken());
+        }
     }
 
     public function handleRetry(FatalRequestException|RequestException $exception, Request $request): bool
@@ -156,11 +175,13 @@ abstract class IsamsBaseConnector extends Connector
         return $expiresAt !== null && $expiresAt->getTimestamp() - 60 <= Config::now()->getTimestamp();
     }
 
+    /**
+     * The token's cache key: one per school, client and set of scopes, hashed so that a Batch API key, which iSAMS takes
+     * as the client id, never appears in the cache.
+     */
     private function getCacheKey(): string
     {
-        $scopes = $this->oauthConfig()->getDefaultScopes();
-
-        return 'isams-api.token.'.$this->oauthConfig()->getClientId().($scopes === ['restapi'] ? '' : '.'.implode('+', $scopes));
+        return 'isams-api.token.'.sha1($this->baseUrl.'|'.$this->oauthConfig()->getClientId().'|'.implode(' ', $this->oauthConfig()->getDefaultScopes()));
     }
 
     private function cacheAccessToken(): AccessTokenAuthenticator

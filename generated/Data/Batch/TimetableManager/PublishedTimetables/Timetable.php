@@ -9,6 +9,9 @@ namespace spkm\IsamsApi\Data\Batch\TimetableManager\PublishedTimetables;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use spkm\IsamsApi\Batch\BatchData;
+use spkm\IsamsApi\Data\Batch\TimetableManager\StaffMeeting;
+use spkm\IsamsApi\Data\Batch\TimetableManager\Tutorial;
+use spkm\IsamsApi\Data\Batch\TimetableManager\YearSchedule;
 
 readonly class Timetable extends BatchData
 {

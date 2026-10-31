@@ -26,6 +26,10 @@ final class Filter implements Stringable
             throw new InvalidArgumentException('iSAMS filters only support =, !=, <>, >, >=, < and <=, or eq, ne, gt, ge, lt and le, not "'.$operator.'".');
         }
 
+        if (preg_match('#^[A-Za-z_]\w*(/[A-Za-z_]\w*)*$#', $property) !== 1) {
+            throw new InvalidArgumentException('"'.$property.'" is not an iSAMS property name.');
+        }
+
         $operator = self::LARAVEL_OPERATORS[$operator] ?? $operator;
 
         $this->clauses[] = ucfirst($property).' '.$operator.' '.$this->format($value);

@@ -9,6 +9,7 @@ namespace spkm\IsamsApi\Data\Batch\PupilManager\Contacts;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use spkm\IsamsApi\Batch\BatchData;
+use spkm\IsamsApi\Data\Batch\PupilManager\CustomField;
 
 readonly class Contact extends BatchData
 {

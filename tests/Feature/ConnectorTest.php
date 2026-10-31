@@ -7,17 +7,30 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use spkm\IsamsApi\Exceptions\UnauthorizedException;
+use spkm\IsamsApi\IsamsConnector;
 use spkm\IsamsApi\Requests\Students\GetStudentRequest;
 use spkm\IsamsApi\Tests\Fixtures\ExampleRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
-it('asks iSAMS for a client credentials token as soon as it is built', function () {
-    $isams = FakeIsams::respondWith();
+/**
+ * Fakes iSAMS answering the token request and any ExampleRequest.
+ */
+function fakeIsamsAnsweringExamples(): MockClient
+{
+    return FakeIsams::respondWith([ExampleRequest::class => MockResponse::make(['ok' => true])]);
+}
 
-    FakeIsams::connector('client-id');
+it('asks iSAMS for a client credentials token before its first request, not when it is built', function () {
+    $isams = fakeIsamsAnsweringExamples();
+
+    $connector = FakeIsams::connector('client-id');
+    $isams->assertNothingSent();
+
+    $connector->send(new ExampleRequest);
 
     $tokenRequest = FakeIsams::received($isams, GetClientCredentialsTokenRequest::class);
-    expect($tokenRequest->getMethod()->value)->toBe('POST')
+    expect($isams->getRecordedResponses()[0]->getRequest())->toBeInstanceOf(GetClientCredentialsTokenRequest::class)
+        ->and($tokenRequest->getMethod()->value)->toBe('POST')
         ->and($tokenRequest->getUrl())->toBe('https://isams.example.test/auth/connect/token')
         ->and($tokenRequest->query()->all())->toBe(['grant_type' => 'client_credentials'])
         ->and($tokenRequest->body()->all())->toBe([
@@ -29,9 +42,9 @@ it('asks iSAMS for a client credentials token as soon as it is built', function 
 });
 
 it('asks for the scopes it was built with, separated by spaces', function () {
-    $isams = FakeIsams::respondWith();
+    $isams = fakeIsamsAnsweringExamples();
 
-    FakeIsams::connector(scopes: ['apiv1', 'restapi']);
+    FakeIsams::connector(scopes: ['apiv1', 'restapi'])->send(new ExampleRequest);
 
     expect(FakeIsams::received($isams, GetClientCredentialsTokenRequest::class)->body()->get('scope'))->toBe('apiv1 restapi');
 });
@@ -49,12 +62,12 @@ it('sends requests to iSAMS with the bearer token and its default headers', func
     ]);
 });
 
-it('keeps the token in the cache under its client id as encrypted JSON, not a serialised object', function () {
-    FakeIsams::respondWith();
+it('keeps the token in the cache under its school, client id and scopes as encrypted JSON, not a serialised object', function () {
+    fakeIsamsAnsweringExamples();
 
-    FakeIsams::connector('client-id');
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
 
-    $cached = Cache::get('isams-api.token.client-id');
+    $cached = Cache::get(FakeIsams::tokenCacheKey());
     expect($cached)->toBeString()->not->toContain('fake-token')
         ->and(json_decode(Crypt::decryptString($cached), true))->toHaveKey('access_token', 'fake-token');
 });
@@ -70,36 +83,54 @@ it('ignores a token cached by earlier versions and asks iSAMS for a new one', fu
 });
 
 it('reuses the cached token when built again with the same client id', function () {
-    $isams = FakeIsams::respondWith();
+    $isams = fakeIsamsAnsweringExamples();
 
-    FakeIsams::connector('client-id');
-    FakeIsams::connector('client-id');
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
 
-    $isams->assertSentCount(1);
+    $isams->assertSentCount(1, GetClientCredentialsTokenRequest::class);
 });
 
 it('asks for a separate token for each client id', function () {
-    $isams = FakeIsams::respondWith();
+    $isams = fakeIsamsAnsweringExamples();
 
-    FakeIsams::connector('first-client');
-    FakeIsams::connector('second-client');
+    FakeIsams::connector('first-client')->send(new ExampleRequest);
+    FakeIsams::connector('second-client')->send(new ExampleRequest);
 
-    $isams->assertSentCount(2);
+    $isams->assertSentCount(2, GetClientCredentialsTokenRequest::class);
+});
+
+it('asks for a separate token for the same client id at another school', function () {
+    $isams = fakeIsamsAnsweringExamples();
+
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
+    (new IsamsConnector('client-id', 'client-secret', 'https://prep.example.test'))->send(new ExampleRequest);
+
+    $isams->assertSentCount(2, GetClientCredentialsTokenRequest::class);
+});
+
+it('never puts the client id, which for the Batch API is its key, in the token\'s cache key', function () {
+    fakeIsamsAnsweringExamples();
+
+    FakeIsams::connector('MADE-UP-BATCH-KEY')->send(new ExampleRequest);
+
+    expect(Cache::has(FakeIsams::tokenCacheKey('MADE-UP-BATCH-KEY')))->toBeTrue()
+        ->and(FakeIsams::tokenCacheKey('MADE-UP-BATCH-KEY'))->not->toContain('MADE-UP-BATCH-KEY');
 });
 
 it('asks for a new token once the cached one is a minute from expiring', function () {
     FakeIsams::syncSaloonClockWithLaravel();
     $this->freezeTime();
-    $isams = FakeIsams::respondWith();
-    FakeIsams::connector();
+    $isams = fakeIsamsAnsweringExamples();
+    FakeIsams::connector()->send(new ExampleRequest);
 
     $this->travel(58)->minutes();
-    FakeIsams::connector();
-    $isams->assertSentCount(1);
+    FakeIsams::connector()->send(new ExampleRequest);
+    $isams->assertSentCount(1, GetClientCredentialsTokenRequest::class);
 
     $this->travel(1)->minutes();
-    FakeIsams::connector();
-    $isams->assertSentCount(2);
+    FakeIsams::connector()->send(new ExampleRequest);
+    $isams->assertSentCount(2, GetClientCredentialsTokenRequest::class);
 });
 
 it('fetches a new token before sending once the one it holds is a minute from expiring, as a long-running worker needs', function () {
@@ -113,6 +144,7 @@ it('fetches a new token before sending once the one it holds is a minute from ex
         ExampleRequest::class => MockResponse::make(['ok' => true]),
     ]);
     $connector = FakeIsams::connector();
+    $connector->send(new ExampleRequest);
 
     $this->travel(58)->minutes();
     $connector->send(new ExampleRequest);
@@ -125,28 +157,33 @@ it('fetches a new token before sending once the one it holds is a minute from ex
     expect($response->getPendingRequest()->headers()->get('Authorization'))->toBe('Bearer token-2');
 });
 
-it('cannot be built when iSAMS refuses its credentials, saying so, and caches nothing', function () {
+it('fails its first request when iSAMS refuses its credentials, saying so, and caches nothing', function () {
     MockClient::global([GetClientCredentialsTokenRequest::class => MockResponse::make(['error' => 'invalid_client'], 401)]);
 
-    expect(fn () => FakeIsams::connector('client-id'))->toThrow(UnauthorizedException::class)
-        ->and(Cache::has('isams-api.token.client-id'))->toBeFalse();
+    $connector = FakeIsams::connector('client-id');
+
+    expect(fn () => $connector->send(new ExampleRequest))->toThrow(UnauthorizedException::class)
+        ->and(Cache::has(FakeIsams::tokenCacheKey()))->toBeFalse();
 });
 
 it('uses a token that has no expiry without caching it', function () {
-    $isams = MockClient::global([GetClientCredentialsTokenRequest::class => MockResponse::make(['access_token' => 'fake-token', 'token_type' => 'Bearer'])]);
+    $isams = MockClient::global([
+        GetClientCredentialsTokenRequest::class => MockResponse::make(['access_token' => 'fake-token', 'token_type' => 'Bearer']),
+        ExampleRequest::class => MockResponse::make(['ok' => true]),
+    ]);
 
-    FakeIsams::connector('client-id');
-    FakeIsams::connector('client-id');
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
 
-    $isams->assertSentCount(2);
-    expect(Cache::has('isams-api.token.client-id'))->toBeFalse();
+    $isams->assertSentCount(2, GetClientCredentialsTokenRequest::class);
+    expect(Cache::has(FakeIsams::tokenCacheKey()))->toBeFalse();
 });
 
 it('asks for a new token when the cached entry is unreadable', function () {
-    Cache::put('isams-api.token.client-id', Crypt::encryptString('{"unexpected":true}'), now()->addHour());
-    $isams = FakeIsams::respondWith();
+    Cache::put(FakeIsams::tokenCacheKey(), Crypt::encryptString('{"unexpected":true}'), now()->addHour());
+    $isams = fakeIsamsAnsweringExamples();
 
-    FakeIsams::connector('client-id');
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
 
-    $isams->assertSentCount(1);
+    $isams->assertSentCount(1, GetClientCredentialsTokenRequest::class);
 });

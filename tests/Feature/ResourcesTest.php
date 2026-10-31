@@ -166,3 +166,23 @@ it('throws a server error with no iSAMS message when iSAMS sends an error page i
                 ->and($exception->getMessage())->toBe('iSAMS responded 503 to GET /api/teaching/subjects/7 with an HTML error page');
         });
 });
+
+it('throws a server error when iSAMS answers a success with a page that is not JSON', function (string $requestClass, Closure $call, string $path) {
+    FakeIsams::respondWith([$requestClass => MockResponse::make('<html><head><title>Maintenance</title></head><body>Back soon</body></html>', 200, ['Content-Type' => 'text/html'])]);
+
+    expect(fn () => $call(FakeIsams::connector()))
+        ->toThrow(ServerErrorException::class, "iSAMS responded 200 to GET $path with an HTML page instead of JSON ('Maintenance')");
+})->with([
+    'one record' => [GetSubjectRequest::class, fn ($isams) => $isams->teaching()->subjects()->get(7), '/api/teaching/subjects/7'],
+    'one record through dto()' => [GetSubjectRequest::class, fn ($isams) => $isams->send(new GetSubjectRequest(7))->dto(), '/api/teaching/subjects/7'],
+    'a list' => [GetSubjectsRequest::class, fn ($isams) => $isams->teaching()->subjects()->all(), '/api/teaching/subjects'],
+    'a page of a paged list' => [GetStudentsRequest::class, fn ($isams) => $isams->students()->all()->all(), '/api/students'],
+    'a page through the paginator' => [GetStudentsRequest::class, fn ($isams) => $isams->paginate(new GetStudentsRequest)->collect()->all(), '/api/students'],
+]);
+
+it('says when a success has a body that is neither JSON nor HTML', function () {
+    FakeIsams::respondWith([GetSubjectRequest::class => MockResponse::make('OK', 200, ['Content-Type' => 'text/plain'])]);
+
+    expect(fn () => FakeIsams::connector()->teaching()->subjects()->get(7))
+        ->toThrow(ServerErrorException::class, 'iSAMS responded 200 to GET /api/teaching/subjects/7 with a body that is not JSON');
+});

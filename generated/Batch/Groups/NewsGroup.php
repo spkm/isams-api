@@ -9,31 +9,32 @@ namespace spkm\IsamsApi\Batch\Groups;
 use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\NewsManager\Categories\Category;
+use spkm\IsamsApi\Data\Batch\NewsManager\NewsItem;
 
 class NewsGroup extends BatchGroup
 {
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\NewsManager\ActiveNews\NewsItem>
+     * @return LazyCollection<int, NewsItem>
      */
     public function active(): LazyCollection
     {
-        return $this->run('News_GetActiveNews', \spkm\IsamsApi\Data\Batch\NewsManager\ActiveNews\NewsItem::class);
+        return $this->run('News_GetActiveNews', NewsItem::class);
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\NewsManager\ArchivedNews\NewsItem>
+     * @return LazyCollection<int, NewsItem>
      */
     public function archived(): LazyCollection
     {
-        return $this->run('News_GetArchivedNews', \spkm\IsamsApi\Data\Batch\NewsManager\ArchivedNews\NewsItem::class);
+        return $this->run('News_GetArchivedNews', NewsItem::class);
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\NewsManager\FutureNews\NewsItem>
+     * @return LazyCollection<int, NewsItem>
      */
     public function future(): LazyCollection
     {
-        return $this->run('News_GetFutureNews', \spkm\IsamsApi\Data\Batch\NewsManager\FutureNews\NewsItem::class);
+        return $this->run('News_GetFutureNews', NewsItem::class);
     }
 
     /**

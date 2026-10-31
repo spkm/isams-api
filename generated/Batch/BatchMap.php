@@ -14,45 +14,21 @@ final class BatchMap
     /** @var array<string, array<string, array{entity: string, model: class-string<\spkm\IsamsApi\Batch\BatchData>|null}>> */
     public const ROOTS = [
         'AgencyManager' => [
-            'ActiveAgencies' => [
-                'entity' => 'Agency',
-                'model' => 'spkm\IsamsApi\Data\Batch\AgencyManager\ActiveAgencies\Agency',
-            ],
-            'InactiveAgencies' => [
-                'entity' => 'Agency',
-                'model' => 'spkm\IsamsApi\Data\Batch\AgencyManager\InactiveAgencies\Agency',
-            ],
+            'ActiveAgencies' => ['entity' => 'Agency', 'model' => 'spkm\IsamsApi\Data\Batch\AgencyManager\Agency'],
+            'InactiveAgencies' => ['entity' => 'Agency', 'model' => 'spkm\IsamsApi\Data\Batch\AgencyManager\Agency'],
         ],
         'CalendarManager' => [
             'Categories' => [
                 'entity' => 'Category',
                 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Categories\Category',
             ],
-            'Events' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Events\Event'],
-            'EventsNextMonth' => [
-                'entity' => 'Event',
-                'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextMonth\Event',
-            ],
-            'EventsNextWeek' => [
-                'entity' => 'Event',
-                'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextWeek\Event',
-            ],
-            'EventsNextYear' => [
-                'entity' => 'Event',
-                'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\EventsNextYear\Event',
-            ],
-            'EventsThisMonth' => [
-                'entity' => 'Event',
-                'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisMonth\Event',
-            ],
-            'EventsThisWeek' => [
-                'entity' => 'Event',
-                'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisWeek\Event',
-            ],
-            'EventsThisYear' => [
-                'entity' => 'Event',
-                'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\EventsThisYear\Event',
-            ],
+            'Events' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Event'],
+            'EventsNextMonth' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Event'],
+            'EventsNextWeek' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Event'],
+            'EventsNextYear' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Event'],
+            'EventsThisMonth' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Event'],
+            'EventsThisWeek' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Event'],
+            'EventsThisYear' => ['entity' => 'Event', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Event'],
             'Types' => ['entity' => 'Type', 'model' => 'spkm\IsamsApi\Data\Batch\CalendarManager\Types\Type'],
         ],
         'ControlPanel' => [
@@ -79,26 +55,17 @@ final class BatchMap
             ],
             'Agencies' => ['entity' => 'Agency', 'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\Agencies\Agency'],
             'CoverStaff' => ['entity' => 'Teacher', 'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\CoverStaff\Teacher'],
-            'EventReasons' => [
-                'entity' => 'Reason',
-                'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\EventReasons\Reason',
-            ],
+            'EventReasons' => ['entity' => 'Reason', 'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\Reason'],
             'LessonSuspensions' => [
                 'entity' => 'LessonSuspension',
                 'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\LessonSuspensions\LessonSuspension',
             ],
-            'RoomClosureReasons' => [
-                'entity' => 'Reason',
-                'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\RoomClosureReasons\Reason',
-            ],
+            'RoomClosureReasons' => ['entity' => 'Reason', 'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\Reason'],
             'RoomClosures' => [
                 'entity' => 'RoomClosure',
                 'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\RoomClosures\RoomClosure',
             ],
-            'UnavailableReasons' => [
-                'entity' => 'Reason',
-                'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\UnavailableReasons\Reason',
-            ],
+            'UnavailableReasons' => ['entity' => 'Reason', 'model' => 'spkm\IsamsApi\Data\Batch\CoverManager\Reason'],
         ],
         'CurriculumManager' => [
             'Blocks' => ['entity' => 'Block', 'model' => 'spkm\IsamsApi\Data\Batch\CurriculumManager\Blocks\Block'],
@@ -207,32 +174,29 @@ final class BatchMap
             'Types' => ['entity' => 'Type', 'model' => 'spkm\IsamsApi\Data\Batch\CurriculumManager\Types\Type'],
         ],
         'DailyBulletin' => [
-            'Bulletins' => ['entity' => 'Bulletin', 'model' => 'spkm\IsamsApi\Data\Batch\DailyBulletin\Bulletins\Bulletin'],
+            'Bulletins' => ['entity' => 'Bulletin', 'model' => 'spkm\IsamsApi\Data\Batch\DailyBulletin\Bulletin'],
             'Categories' => [
                 'entity' => 'Category',
                 'model' => 'spkm\IsamsApi\Data\Batch\DailyBulletin\Categories\Category',
             ],
             'TodaysDailyBulletins' => [
                 'entity' => 'Bulletin',
-                'model' => 'spkm\IsamsApi\Data\Batch\DailyBulletin\TodaysDailyBulletins\Bulletin',
+                'model' => 'spkm\IsamsApi\Data\Batch\DailyBulletin\Bulletin',
             ],
             'TomorrowsDailyBulletins' => [
                 'entity' => 'Bulletin',
-                'model' => 'spkm\IsamsApi\Data\Batch\DailyBulletin\TomorrowsDailyBulletins\Bulletin',
+                'model' => 'spkm\IsamsApi\Data\Batch\DailyBulletin\Bulletin',
             ],
         ],
         'DisciplineManager' => [
-            'Detentions' => [
-                'entity' => 'Session',
-                'model' => 'spkm\IsamsApi\Data\Batch\DisciplineManager\Detentions\Session',
-            ],
+            'Detentions' => ['entity' => 'Session', 'model' => 'spkm\IsamsApi\Data\Batch\DisciplineManager\Session'],
             'DetentionsThisMonth' => [
                 'entity' => 'Session',
-                'model' => 'spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisMonth\Session',
+                'model' => 'spkm\IsamsApi\Data\Batch\DisciplineManager\Session',
             ],
             'DetentionsThisTerm' => [
                 'entity' => 'Session',
-                'model' => 'spkm\IsamsApi\Data\Batch\DisciplineManager\DetentionsThisTerm\Session',
+                'model' => 'spkm\IsamsApi\Data\Batch\DisciplineManager\Session',
             ],
         ],
         'EstateManager' => [
@@ -286,13 +250,10 @@ final class BatchMap
             ],
         ],
         'NewsManager' => [
-            'ActiveNews' => ['entity' => 'NewsItem', 'model' => 'spkm\IsamsApi\Data\Batch\NewsManager\ActiveNews\NewsItem'],
-            'ArchivedNews' => [
-                'entity' => 'NewsItem',
-                'model' => 'spkm\IsamsApi\Data\Batch\NewsManager\ArchivedNews\NewsItem',
-            ],
+            'ActiveNews' => ['entity' => 'NewsItem', 'model' => 'spkm\IsamsApi\Data\Batch\NewsManager\NewsItem'],
+            'ArchivedNews' => ['entity' => 'NewsItem', 'model' => 'spkm\IsamsApi\Data\Batch\NewsManager\NewsItem'],
             'Categories' => ['entity' => 'Category', 'model' => 'spkm\IsamsApi\Data\Batch\NewsManager\Categories\Category'],
-            'FutureNews' => ['entity' => 'NewsItem', 'model' => 'spkm\IsamsApi\Data\Batch\NewsManager\FutureNews\NewsItem'],
+            'FutureNews' => ['entity' => 'NewsItem', 'model' => 'spkm\IsamsApi\Data\Batch\NewsManager\NewsItem'],
         ],
         'OffGames' => [
             'OffGamesList' => [
@@ -416,14 +377,8 @@ final class BatchMap
             'SEN' => ['entity' => 'Register', 'model' => 'spkm\IsamsApi\Data\Batch\SENManager\SEN\Register'],
         ],
         'SchoolManager' => [
-            'AcademicHouses' => [
-                'entity' => 'House',
-                'model' => 'spkm\IsamsApi\Data\Batch\SchoolManager\AcademicHouses\House',
-            ],
-            'BoardingHouses' => [
-                'entity' => 'House',
-                'model' => 'spkm\IsamsApi\Data\Batch\SchoolManager\BoardingHouses\House',
-            ],
+            'AcademicHouses' => ['entity' => 'House', 'model' => 'spkm\IsamsApi\Data\Batch\SchoolManager\House'],
+            'BoardingHouses' => ['entity' => 'House', 'model' => 'spkm\IsamsApi\Data\Batch\SchoolManager\House'],
             'Forms' => ['entity' => 'Form', 'model' => 'spkm\IsamsApi\Data\Batch\SchoolManager\Forms\Form'],
             'PastoralTutors' => [
                 'entity' => 'StaffMember',
@@ -463,15 +418,15 @@ final class BatchMap
         'TimetableManager' => [
             'ArchivedTimetables' => [
                 'entity' => 'Timetable',
-                'model' => 'spkm\IsamsApi\Data\Batch\TimetableManager\ArchivedTimetables\Timetable',
+                'model' => 'spkm\IsamsApi\Data\Batch\TimetableManager\Timetable',
             ],
             'DevelopmentTimetables' => [
                 'entity' => 'Timetable',
-                'model' => 'spkm\IsamsApi\Data\Batch\TimetableManager\DevelopmentTimetables\Timetable',
+                'model' => 'spkm\IsamsApi\Data\Batch\TimetableManager\Timetable',
             ],
             'PreliminaryTimetables' => [
                 'entity' => 'Timetable',
-                'model' => 'spkm\IsamsApi\Data\Batch\TimetableManager\PreliminaryTimetables\Timetable',
+                'model' => 'spkm\IsamsApi\Data\Batch\TimetableManager\Timetable',
             ],
             'PrepTimetable' => [
                 'entity' => 'PrepTimetable',

@@ -22,9 +22,4 @@ class IsamsApiServiceProvider extends PackageServiceProvider
             return new IsamsService;
         });
     }
-
-    public function provides()
-    {
-        return ['isams'];
-    }
 }

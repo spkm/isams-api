@@ -23,20 +23,21 @@ class CircuitBreaker
         return Cache::get($this->key('open_until'), 0) > now()->getTimestamp();
     }
 
+    /**
+     * Counts a failure, opening the circuit once there have been enough within the window (or straight away when it has
+     * just closed after tripping). The count is atomic, so workers failing at the same moment are all counted.
+     */
     public function recordFailure(): void
     {
-        $failures = Cache::get($this->key('failures'), 0) + 1;
+        $key = $this->key('failures');
+        $failures = Cache::add($key, 1, (int) config('isams-api.circuit_breaker.window_seconds', 60)) ? 1 : (int) Cache::increment($key);
 
         if (Cache::has($this->key('tripped')) || $failures >= (int) config('isams-api.circuit_breaker.failures', 5)) {
             $cooldown = (int) config('isams-api.circuit_breaker.cooldown_seconds', 60);
             Cache::put($this->key('open_until'), now()->addSeconds($cooldown)->getTimestamp(), $cooldown);
             Cache::put($this->key('tripped'), true, $cooldown * 10);
-            Cache::forget($this->key('failures'));
-
-            return;
+            Cache::forget($key);
         }
-
-        Cache::put($this->key('failures'), $failures, (int) config('isams-api.circuit_breaker.window_seconds', 60));
     }
 
     public function recordSuccess(): void

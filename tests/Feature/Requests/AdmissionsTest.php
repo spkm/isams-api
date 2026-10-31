@@ -71,7 +71,7 @@ it('serves admissions reference lists from the cache once caching is on, but not
     config(['isams-api.cache.enabled' => true]);
     $isams = FakeIsams::respondWith([
         GetEnquiryTypesRequest::class => MockResponse::make(['enquiryTypes' => []]),
-        GetApplicantsRequest::class => MockResponse::make(['applicants' => []]),
+        GetApplicantsRequest::class => MockResponse::make(['applicants' => [], 'totalPages' => 0]),
     ]);
     $admissions = FakeIsams::connector()->admissions();
 

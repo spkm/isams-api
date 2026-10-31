@@ -1,10 +1,5 @@
 parameters:
 	ignoreErrors:
-		-
-			message: '#^Method spkm\\IsamsApi\\IsamsApiServiceProvider\:\:provides\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/IsamsApiServiceProvider.php
 
 		-
 			message: '#^Match expression does not handle remaining value\: string$#'

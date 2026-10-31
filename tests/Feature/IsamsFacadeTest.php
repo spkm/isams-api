@@ -53,6 +53,12 @@ it('refuses a method the connector does not have', function () {
     expect(fn () => Isams::doesNotExist())->toThrow(BadMethodCallException::class, 'Method doesNotExist does not exist.');
 });
 
+it('refuses a connector method that is not public', function () {
+    FakeIsams::respondWith();
+
+    expect(fn () => Isams::defaultHeaders())->toThrow(BadMethodCallException::class, 'Method defaultHeaders does not exist.');
+});
+
 it('cannot use the default connection until its client id, secret and base URL are configured, naming the missing setting', function (array $config, string $missing) {
     config(['isams-api.client_id' => 'client-id', 'isams-api.client_secret' => 'client-secret', 'isams-api.base_url' => FakeIsams::BASE_URL, ...$config]);
 

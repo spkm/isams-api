@@ -8,8 +8,8 @@ use spkm\IsamsApi\Batch\BatchFilters;
 use spkm\IsamsApi\Batch\BatchPhotosRequest;
 use spkm\IsamsApi\Batch\BatchRequest;
 use spkm\IsamsApi\Batch\IsamsBatchConnector;
-use spkm\IsamsApi\Data\Batch\CalendarManager\Events\Event;
-use spkm\IsamsApi\Data\Batch\CalendarManager\Events\Type;
+use spkm\IsamsApi\Data\Batch\CalendarManager\Event;
+use spkm\IsamsApi\Data\Batch\CalendarManager\EventType;
 use spkm\IsamsApi\Facades\Isams;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
 
@@ -45,9 +45,9 @@ it('fetches a token for the batch key itself, with the Batch API scope, and send
 it('keeps a separate token for each batch key', function () {
     $isams = FakeIsams::respondWith([BatchRequest::class => MockResponse::make(['iSAMS' => []])]);
 
-    batchConnector('FIRST-KEY');
-    batchConnector('SECOND-KEY');
-    batchConnector('FIRST-KEY');
+    batchConnector('FIRST-KEY')->send(new BatchRequest);
+    batchConnector('SECOND-KEY')->send(new BatchRequest);
+    batchConnector('FIRST-KEY')->send(new BatchRequest);
 
     expect(collect($isams->getRecordedResponses())->filter(fn ($response) => $response->getRequest() instanceof GetClientCredentialsTokenRequest))->toHaveCount(2);
 });
@@ -123,7 +123,7 @@ it('reads nested lists as collections of models, whether iSAMS sends one item or
     $events = batchConnector()->send(new BatchRequest)->dto()->models('CalendarManager', 'Events');
 
     expect($events[0]->types->map->typeId->all())->toBe([3, 2])
-        ->and($events[1]->types->first())->toBeInstanceOf(Type::class)
+        ->and($events[1]->types->first())->toBeInstanceOf(EventType::class)
         ->and($events[1]->types->first()->id)->toBe(7392)
         ->and($events[2]->types)->toBeEmpty();
 });
@@ -188,6 +188,15 @@ it('throws a BatchApiException with just the status when iSAMS sends no error me
     expect(fn () => batchConnector()->send(new BatchRequest)->dto())
         ->toThrow(BatchApiException::class, 'iSAMS Batch API responded 502');
 });
+
+it('throws a BatchApiException when iSAMS answers a success with a body that is not JSON', function (Closure $call) {
+    FakeIsams::respondWith([BatchRequest::class => MockResponse::make('<html><body>Back soon</body></html>', 200, ['Content-Type' => 'text/html'])]);
+
+    expect(fn () => $call(batchConnector()))->toThrow(BatchApiException::class, 'iSAMS Batch API responded 200 with a body that is not JSON');
+})->with([
+    'through dto()' => [fn (IsamsBatchConnector $isams) => $isams->send(new BatchRequest)->dto()],
+    'through a call' => [fn (IsamsBatchConnector $isams) => $isams->calendar()->categories()->all()],
+]);
 
 it('downloads the current students\' photos and reads each one by the student\'s id', function () {
     $zip = tempnam(sys_get_temp_dir(), 'photos');

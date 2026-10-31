@@ -57,6 +57,27 @@ Code written for version 1 keeps working, apart from the PHP and Laravel minimum
   that, `Isams::batch()` does not.
 - The config file is published with `php artisan isams-api:install`, or `vendor:publish --tag=isams-api-config`.
 
+### Changes in 2.0.1
+
+2.0.1 settles some of 2.0.0's names and behaviour:
+
+- Batch API records that several root nodes share have one model, `Data\Batch\{Module}\{Node}`, instead of a copy per
+  root node: `CalendarManager\Event` (holding `CalendarManager\EventType`), `DisciplineManager\Session` and `Pupil`,
+  `NewsManager\NewsItem`, `File` and `Bookmark`, `DailyBulletin\Bulletin`, `File`, `LinkedCategory`, `LinkedDivision`
+  and `LinkedYear`, `TimetableManager\Timetable`, `Period`, `Pupil`, `Schedule`, `StaffMeeting`, `Teacher`, `Tutorial`
+  and `YearSchedule` (the published timetables keep their own `Timetable` and `Schedule`, since their schedules differ),
+  `AgencyManager\Agency`, `Branch`, `Contact`, `Pupil` and `Visit`, `SchoolManager\House`, `CoverManager\Reason` and
+  `PupilManager\CustomField`. Change any `use` of the old classes under a root node's namespace.
+- A connector fetches its token before its first request instead of when it is built, so building one never contacts
+  iSAMS, and refused credentials throw from the first request.
+- Tokens are cached under a key per school, client and scopes, so tokens cached by 2.0.0 are not reused.
+- A success whose body isn't JSON, such as a proxy's or maintenance page, throws a `ServerErrorException` (a
+  `BatchApiException` from the Batch API) instead of PHP's `JsonException`.
+- Paging through a response without `totalPages` throws an `UnexpectedValueException` instead of stopping after the
+  first page.
+- A downloaded `File`'s `filename` never includes a directory from iSAMS's `Content-Disposition` header, and `Filter`
+  refuses a property name that isn't one.
+
 ## Installation
 
 ```bash
@@ -118,8 +139,9 @@ use spkm\IsamsApi\IsamsConnector;
 $isams = new IsamsConnector($clientId, $clientSecret, $baseUrl);
 ```
 
-The connector fetches an access token from iSAMS and caches it, encrypted, until shortly before it expires. A connector
-that outlives its token, as one in a queue worker does, fetches a new one before its next request.
+The connector fetches an access token from iSAMS before its first request and caches it, encrypted, until shortly
+before it expires; building a connector never contacts iSAMS. A connector that outlives its token, as one in a queue
+worker does, fetches a new one before its next request.
 
 ### Resources
 
@@ -182,6 +204,7 @@ statuses you are likely to handle differently:
 | 401, or a refused token request | `UnauthorizedException` | iSAMS rejected the credentials, or the scopes asked for |
 | 403, or 401 saying a permission is required | `MissingPermissionException` | the API client's permission for that area is too low |
 | 408, 5xx | `ServerErrorException` | iSAMS timed out or failed; quote the `trackingNumber()` to iSAMS support |
+| 2xx with a body that isn't JSON | `ServerErrorException` | something other than iSAMS answered, such as a maintenance page |
 | anything else, such as 301 ("exists but not associated") | `IsamsApiException` | |
 
 Each has iSAMS's `isamsMessage()` and `trackingNumber()`, the status from `getStatus()` and the failed response from
@@ -225,7 +248,8 @@ foreach (Isams::paginate(new GetStudentsRequest)->dtos() as $student) {
 }
 ```
 
-As with resources, each page is fetched only when the loop reaches it.
+As with resources, each page is fetched only when the loop reaches it. A response without `totalPages` isn't a paged
+list, so paging through one throws an `UnexpectedValueException`: send the request instead.
 
 ### Filtering and updating
 
@@ -241,8 +265,9 @@ $patch = JsonPatch::make()->replace('/preferredName', 'Alex');
 
 `Filter` produces iSAMS's OData `$filter` syntax and can be passed wherever a request takes a `filter`. It takes
 Laravel's comparison operators (`=`, `!=` or `<>`, `>`, `>=`, `<` and `<=`) and turns them into iSAMS's, or iSAMS's own
-(`eq`, `ne`, `gt`, `ge`, `lt` and `le`). iSAMS supports no others, so `like` and `in` throw. iSAMS's PATCH endpoints
-take a `JsonPatch`.
+(`eq`, `ne`, `gt`, `ge`, `lt` and `le`). iSAMS supports no others, so `like` and `in` throw. Values are escaped, but
+property names are not values: a name must be letters, digits and underscores (with `/` for a nested property), and
+anything else throws, so never build one from user input. iSAMS's PATCH endpoints take a `JsonPatch`.
 
 ### Endpoints iSAMS adds later
 
@@ -334,10 +359,12 @@ $everything = Isams::batch()->send(new BatchRequest)->dto(); // every method all
 Running every method at once only works for a key whose methods need no filters: iSAMS refuses the whole request
 (`FiltersRequiredException`) if any allocated method requires one, such as `Calendar_GetEvents`.
 
-`method()` returns a collection of models (`Data\Batch\{Module}\{RootNode}\{Node}`); `models($module, $rootNode)`
-does the same by node name, and `get($module, $rootNode)` returns plain arrays for anything the package has no model
-for. A filter's module and element names are the ones iSAMS documents for filters, which can differ from the
-method's (for example `Pupil_GetPassports` is filtered under `StudentManager`); the one-call methods use them for you.
+`method()` returns a collection of models: `Data\Batch\{Module}\{Node}` for records several root nodes share, such as
+the calendar's events this week, this month and so on, otherwise `Data\Batch\{Module}\{RootNode}\{Node}`.
+`models($module, $rootNode)` does the same by node name, and `get($module, $rootNode)` returns plain arrays for
+anything the package has no model for. A filter's module and element names are the ones iSAMS documents for filters,
+which can differ from the method's (for example `Pupil_GetPassports` is filtered under `StudentManager`); the one-call
+methods use them for you.
 `cachedSecondsAgo()` says whether iSAMS served the response from its cache. A failed request's `dto()` throws a
 `BatchApiException` with iSAMS's error name, title and description; its `isPermissionError()` is true when the key is
 unknown, revoked or not allocated the methods asked for.
@@ -442,6 +469,7 @@ Most requests and models are generated from iSAMS's API spec, pinned in `generat
 `generated/`: change `generator/overrides.php` (or the generator) and run `composer generate`.
 `composer generate:check` fails if the generated code is out of date. The Batch API models are generated from
 `generator/batch/nodes.php`, the node lists from iSAMS's Batch API documentation.
+[generator/README.md](generator/README.md) explains how the generator works, what each override does and how to add one.
 
 ## Security
 

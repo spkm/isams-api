@@ -62,7 +62,7 @@ it('serves conduct and register reference lists from the cache once caching is o
     config(['isams-api.cache.enabled' => true]);
     $isams = FakeIsams::respondWith([
         GetModuleTypesRequest::class => MockResponse::make(['moduleTypes' => []]),
-        GetStudentRegistersRequest::class => MockResponse::make(['registers' => []]),
+        GetStudentRegistersRequest::class => MockResponse::make(['registers' => [], 'totalPages' => 0]),
         GetExclusionCancellationReasonsRequest::class => MockResponse::make([]),
         GetRewardsRequest::class => MockResponse::make(['rewards' => []]),
     ]);

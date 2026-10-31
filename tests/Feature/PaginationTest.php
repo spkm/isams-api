@@ -1,7 +1,10 @@
 <?php
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Saloon\Http\Faking\MockResponse;
+use Saloon\Http\OAuth2\GetClientCredentialsTokenRequest;
 use spkm\IsamsApi\IsamsConnector;
+use spkm\IsamsApi\Requests\ConfigurablePaginatedRequest;
 use spkm\IsamsApi\Requests\Students\GetStudentsRequest;
 use spkm\IsamsApi\Requests\Teaching\GetSubjectsRequest;
 use spkm\IsamsApi\Tests\Helpers\FakeIsams;
@@ -48,6 +51,19 @@ it('asks for 100 records a page', function () {
     expect(FakeIsams::queriesReceived($isams, GetStudentsRequest::class))->each->toHaveKey('pageSize', 100);
 });
 
+it('pages asynchronously too, fetching its token before the first page and asking for every page iSAMS reports', function () {
+    $isams = FakeIsams::respondWith(threePagesOfStudents());
+
+    $pages = FakeIsams::connector()->paginate(new GetStudentsRequest)->async()->collect()
+        ->map(fn (PromiseInterface $page) => $page->wait())
+        ->all();
+
+    expect($isams->getRecordedResponses()[0]->getRequest())->toBeInstanceOf(GetClientCredentialsTokenRequest::class)
+        ->and($pages)->toHaveCount(3)
+        ->and($pages)->each(fn ($page) => $page->getPendingRequest()->headers()->get('Authorization')->toBe('Bearer fake-token'))
+        ->and(array_column(FakeIsams::queriesReceived($isams, GetStudentsRequest::class), 'page'))->toBe([1, 2, 3]);
+});
+
 it('stops once it has asked for as many pages as iSAMS reports', function () {
     $isams = FakeIsams::respondWith(threePagesOfStudents());
 
@@ -90,6 +106,13 @@ it('says which list is missing when a page doesn\'t have it, rather than failing
     'through a resource' => [fn (IsamsConnector $isams) => $isams->students()->all()],
     'through the paginator' => [fn (IsamsConnector $isams) => $isams->paginate(new GetStudentsRequest)->dtos()],
 ]);
+
+it('says when a response is not a paged list, rather than stopping silently after its first page', function () {
+    FakeIsams::respondWith([ConfigurablePaginatedRequest::class => MockResponse::make(['customGroups' => [['id' => 3]]])]);
+
+    expect(fn () => FakeIsams::connector()->paginateEndpoint('/api/students/customgroups', 'customGroups')->collect()->all())
+        ->toThrow(UnexpectedValueException::class, "iSAMS's response to GET /api/students/customgroups has no totalPages, so it is not a paged list: send the request instead of paging through it.");
+});
 
 it('keeps the request\'s expand and filter on every page, but uses its own page size', function () {
     $isams = FakeIsams::respondWith(threePagesOfStudents());

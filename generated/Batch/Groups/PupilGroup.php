@@ -9,6 +9,7 @@ namespace spkm\IsamsApi\Batch\Groups;
 use Illuminate\Support\LazyCollection;
 use spkm\IsamsApi\Batch\BatchGroup;
 use spkm\IsamsApi\Data\Batch\PupilManager\CustomGroupCategory\Category;
+use spkm\IsamsApi\Data\Batch\PupilManager\CustomPupilGroupMembershipItems\CustomPupilGroupMembershipItem;
 use spkm\IsamsApi\Data\Batch\PupilManager\CustomPupilGroups\CustomPupilGroup;
 
 class PupilGroup extends BatchGroup
@@ -94,20 +95,20 @@ class PupilGroup extends BatchGroup
     }
 
     /**
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\PupilManager\CustomPupilGroupMembershipItems\CustomPupilGroupMembershipItem>
+     * @return LazyCollection<int, CustomPupilGroupMembershipItem>
      */
     public function customPupilGroupMembership(): LazyCollection
     {
-        return $this->run('Pupil_GetCustomPupilGroupMembership', \spkm\IsamsApi\Data\Batch\PupilManager\CustomPupilGroupMembershipItems\CustomPupilGroupMembershipItem::class);
+        return $this->run('Pupil_GetCustomPupilGroupMembership', CustomPupilGroupMembershipItem::class);
     }
 
     /**
      * @param  list<int|string>  $systemStatusesToInclude
-     * @return LazyCollection<int, \spkm\IsamsApi\Data\Batch\PupilManager\CustomPupilGroupMembershipItems\CustomPupilGroupMembershipItem>
+     * @return LazyCollection<int, CustomPupilGroupMembershipItem>
      */
     public function customPupilGroupMembershipFiltered(array $systemStatusesToInclude): LazyCollection
     {
-        return $this->run('Pupil_GetCustomPupilGroupMembershipFiltered', \spkm\IsamsApi\Data\Batch\PupilManager\CustomPupilGroupMembershipItems\CustomPupilGroupMembershipItem::class, ['module' => 'StudentManager', 'element' => 'CustomPupilGroupMembershipFiltered', 'attributes' => ['SystemStatusesToInclude' => $systemStatusesToInclude], 'required' => true]);
+        return $this->run('Pupil_GetCustomPupilGroupMembershipFiltered', CustomPupilGroupMembershipItem::class, ['module' => 'StudentManager', 'element' => 'CustomPupilGroupMembershipFiltered', 'attributes' => ['SystemStatusesToInclude' => $systemStatusesToInclude], 'required' => true]);
     }
 
     /**

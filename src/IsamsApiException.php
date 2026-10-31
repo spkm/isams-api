@@ -61,7 +61,11 @@ class IsamsApiException extends RequestException
         $page = self::htmlTitle($response);
 
         if ($page !== null) {
-            return $text.' with an HTML error page'.($page !== '' ? " ('$page')" : '').($response->status() === 500 ? "; iSAMS sends one for a path it doesn't have, among other faults" : '');
+            return $text.' with an HTML '.($response->successful() ? 'page instead of JSON' : 'error page').($page !== '' ? " ('$page')" : '').($response->status() === 500 ? "; iSAMS sends one for a path it doesn't have, among other faults" : '');
+        }
+
+        if ($response->successful() && $response->body() !== '' && ! json_validate($response->body())) {
+            return $text.' with a body that is not JSON';
         }
 
         $message = self::field($response, 'message');

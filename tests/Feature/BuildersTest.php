@@ -56,3 +56,15 @@ it('turns Laravel\'s comparison operators into iSAMS\'s', function (string $lara
 it('refuses a filter operator iSAMS does not support', function () {
     Filter::where('Surname', 'like', 'Smith');
 })->throws(InvalidArgumentException::class, 'iSAMS filters only support =, !=, <>, >, >=, < and <=, or eq, ne, gt, ge, lt and le, not "like"');
+
+it('refuses a filter property that is not a property name, so a value can never change the filter', function (string $property) {
+    Filter::where($property, '=', 'Smith');
+})->throws(InvalidArgumentException::class, 'is not an iSAMS property name.')->with([
+    'a second clause' => ["Surname eq 'x' or Forename"],
+    'a space' => ['Surname '],
+    'empty' => [''],
+]);
+
+it('accepts a nested property path', function () {
+    expect((string) Filter::where('address/town', 'eq', 'Cranford'))->toBe("Address/town eq 'Cranford'");
+});
