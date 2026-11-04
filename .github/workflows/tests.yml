@@ -46,6 +46,8 @@ jobs:
         with:
           php-version: '8.5'
           coverage: pcov
+          # pcov only records ./src by default; the generator is tested and counted too.
+          ini-values: pcov.directory=.
       - run: composer update --prefer-dist --no-interaction
       - run: composer validate --strict --no-check-lock
       - run: composer generate:check
