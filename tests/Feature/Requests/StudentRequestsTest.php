@@ -20,11 +20,11 @@ it('gets each student resource from its iSAMS endpoint', function (Request $requ
         ->and($sent->getUrl())->toBe($url)
         ->and($sent->query()->all())->toBe([]);
 })->with([
-    'every student' => [new GetStudentsRequest, 'https://isams.example.test/api/students'],
-    'one student' => [new GetStudentRequest('100001'), 'https://isams.example.test/api/students/100001'],
-    'student system statuses' => [new GetStudentSystemStatusesRequest, 'https://isams.example.test/api/students/systemstatuses'],
-    'a student\'s current photo' => [new GetCurrentPhotoBySchoolidRequest('100001'), 'https://isams.example.test/api/students/100001/photos/current'],
-    'one of a student\'s photos' => [new GetPhotosBySchoolidPhotoidRequest('100001', 7), 'https://isams.example.test/api/students/100001/photos/7'],
+    'every student' => [fn () => new GetStudentsRequest, 'https://isams.example.test/api/students'],
+    'one student' => [fn () => new GetStudentRequest('100001'), 'https://isams.example.test/api/students/100001'],
+    'student system statuses' => [fn () => new GetStudentSystemStatusesRequest, 'https://isams.example.test/api/students/systemstatuses'],
+    'a student\'s current photo' => [fn () => new GetCurrentPhotoBySchoolidRequest('100001'), 'https://isams.example.test/api/students/100001/photos/current'],
+    'one of a student\'s photos' => [fn () => new GetPhotosBySchoolidPhotoidRequest('100001', 7), 'https://isams.example.test/api/students/100001/photos/7'],
 ]);
 
 it('asks for every student with only the page, page size, expansions and filter it was given', function () {

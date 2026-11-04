@@ -269,3 +269,67 @@ it('returns no records for a root node iSAMS sends empty', function () {
 
     expect(batchConnector()->send(new BatchRequest)->dto()->models('CalendarManager', 'Events'))->toBeEmpty();
 });
+
+it('reads the error iSAMS sends as JSON', function () {
+    FakeIsams::respondWith([BatchRequest::class => MockResponse::make(['Message' => ['MessageId' => 'InvalidApiKey', 'Title' => 'Invalid API Key']], 401)]);
+
+    expect(fn () => batchConnector()->send(new BatchRequest)->dto())
+        ->toThrow(fn (BatchApiException $exception) => expect($exception->getMessage())->toBe('iSAMS Batch API responded 401: InvalidApiKey: Invalid API Key')
+            ->and($exception->isPermissionError())->toBeTrue());
+});
+
+it('refuses a filter name iSAMS could not read as an XML element', function (string $module, string $method, string $attribute) {
+    expect(fn () => BatchFilters::make()->filter($module, $method, [$attribute => 'x']))
+        ->toThrow(InvalidArgumentException::class, 'is not a Batch API filter name.');
+})->with([
+    'a module' => ['Calendar Manager', 'Events', 'StartDate'],
+    'a method' => ['Calendar', '<Events>', 'StartDate'],
+    'an attribute' => ['Calendar', 'Events', 'Start Date'],
+]);
+
+it('writes filters as their XML when used as a string', function () {
+    $filters = BatchFilters::make()->methods('Calendar_GetEvents');
+
+    expect((string) $filters)->toBe($filters->toXml());
+});
+
+it('gives the whole decoded response as an array', function () {
+    FakeIsams::respondWith([BatchRequest::class => MockResponse::make(batchEvents([['@Id' => '1']]))]);
+
+    expect(batchConnector()->send(new BatchRequest)->dto()->toArray())->toBe(batchEvents([['@Id' => '1']]));
+});
+
+it('throws a BatchApiException when iSAMS refuses a photos download', function () {
+    FakeIsams::respondWith([BatchPhotosRequest::class => MockResponse::make('<Message><MessageId>MethodsNotAllocatedToKeyException</MessageId></Message>', 403, ['Content-Type' => 'application/xml'])]);
+
+    expect(fn () => batchConnector()->send(BatchPhotosRequest::students())->dto())
+        ->toThrow(BatchApiException::class, 'iSAMS Batch API responded 403: MethodsNotAllocatedToKeyException');
+});
+
+it('refuses to read photos from a download that is not a zip', function () {
+    FakeIsams::respondWith([BatchPhotosRequest::class => MockResponse::make('not a zip', 200, ['Content-Type' => 'application/zip'])]);
+
+    $photos = batchConnector()->send(BatchPhotosRequest::students())->dto();
+
+    expect(fn () => iterator_to_array($photos->photos()))->toThrow(RuntimeException::class, 'iSAMS did not send a readable zip of photos.');
+});
+
+it('saves the photos zip as iSAMS sent it', function () {
+    FakeIsams::respondWith([BatchPhotosRequest::class => MockResponse::make('made-up zip', 200, ['Content-Type' => 'application/zip'])]);
+    $path = tempnam(sys_get_temp_dir(), 'photos');
+
+    batchConnector()->send(BatchPhotosRequest::students())->dto()->save($path);
+
+    expect(file_get_contents($path))->toBe('made-up zip');
+    unlink($path);
+});
+
+it('explains which setting a configured batch key is missing', function (array $key, ?string $baseUrl, string $message) {
+    config(['isams-api.base_url' => $baseUrl, 'isams-api.batch_keys.timetable' => $key]);
+
+    expect(fn () => Isams::batch('timetable'))->toThrow(InvalidArgumentException::class, $message);
+})->with([
+    'its api key' => [['client_secret' => 'secret'], FakeIsams::BASE_URL, 'The iSAMS batch key "timetable" needs a api_key.'],
+    'its client secret' => [['api_key' => 'KEY', 'client_secret' => ''], FakeIsams::BASE_URL, 'The iSAMS batch key "timetable" needs a client_secret.'],
+    'the school\'s base url' => [['api_key' => 'KEY', 'client_secret' => 'secret'], null, 'The iSAMS batch key "timetable" needs its school\'s base_url in isams-api.base_url.'],
+]);

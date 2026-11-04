@@ -187,3 +187,12 @@ it('asks for a new token when the cached entry is unreadable', function () {
 
     $isams->assertSentCount(1, GetClientCredentialsTokenRequest::class);
 });
+
+it('asks for a new token when the cached entry cannot be decrypted', function () {
+    Cache::put(FakeIsams::tokenCacheKey(), 'not encrypted with this app\'s key', now()->addHour());
+    $isams = fakeIsamsAnsweringExamples();
+
+    FakeIsams::connector('client-id')->send(new ExampleRequest);
+
+    $isams->assertSentCount(1, GetClientCredentialsTokenRequest::class);
+});

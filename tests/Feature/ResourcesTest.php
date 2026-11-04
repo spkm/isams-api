@@ -186,3 +186,13 @@ it('says when a success has a body that is neither JSON nor HTML', function () {
     expect(fn () => FakeIsams::connector()->teaching()->subjects()->get(7))
         ->toThrow(ServerErrorException::class, 'iSAMS responded 200 to GET /api/teaching/subjects/7 with a body that is not JSON');
 });
+
+it('saves a download to a path', function () {
+    FakeIsams::respondWith([GetCurrentStudentPhotoRequest::class => MockResponse::make('made-up image bytes', headers: ['Content-Type' => 'image/png'])]);
+    $path = tempnam(sys_get_temp_dir(), 'photo');
+
+    FakeIsams::connector()->students()->photos()->getCurrent('100001')->save($path);
+
+    expect(file_get_contents($path))->toBe('made-up image bytes');
+    unlink($path);
+});

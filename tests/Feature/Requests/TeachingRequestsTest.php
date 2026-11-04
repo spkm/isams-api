@@ -17,10 +17,10 @@ it('gets each teaching resource from its iSAMS endpoint', function (Request $req
         ->and($sent->getUrl())->toBe($url)
         ->and($sent->query()->all())->toBe([]);
 })->with([
-    'every subject' => [new GetSubjectsRequest, 'https://isams.example.test/api/teaching/subjects'],
-    'one subject' => [new GetSubjectByIdRequest(12), 'https://isams.example.test/api/teaching/subjects/12'],
-    'a subject\'s teaching departments' => [new GetSubjectTeachingDepartmentsBySubjectidRequest(12), 'https://isams.example.test/api/teaching/subjects/12/departments'],
-    'every teaching set' => [new GetTeachingSetsRequest, 'https://isams.example.test/api/teaching/sets'],
-    'the students in a set' => [new GetStudentsInSetBySetidRequest(34), 'https://isams.example.test/api/teaching/sets/34/setList'],
-    'curriculum subject codes' => [new GetCurriculumSubjectCodesRequest, 'https://isams.example.test/api/teaching/curriculumsubjectcodes'],
+    'every subject' => [fn () => new GetSubjectsRequest, 'https://isams.example.test/api/teaching/subjects'],
+    'one subject' => [fn () => new GetSubjectByIdRequest(12), 'https://isams.example.test/api/teaching/subjects/12'],
+    'a subject\'s teaching departments' => [fn () => new GetSubjectTeachingDepartmentsBySubjectidRequest(12), 'https://isams.example.test/api/teaching/subjects/12/departments'],
+    'every teaching set' => [fn () => new GetTeachingSetsRequest, 'https://isams.example.test/api/teaching/sets'],
+    'the students in a set' => [fn () => new GetStudentsInSetBySetidRequest(34), 'https://isams.example.test/api/teaching/sets/34/setList'],
+    'curriculum subject codes' => [fn () => new GetCurriculumSubjectCodesRequest, 'https://isams.example.test/api/teaching/curriculumsubjectcodes'],
 ]);
