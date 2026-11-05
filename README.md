@@ -473,7 +473,7 @@ Most requests and models are generated from iSAMS's API spec, pinned in `generat
 
 ## Security
 
-If you discover any security related issues, please email hello@spkmitchell.co.uk instead of using the issue tracker.
+If you discover a security issue, please don't open a public issue. [Report it privately](https://github.com/spkm/isams-api/security/advisories/new) through GitHub instead. See [SECURITY.md](SECURITY.md) for details.
 
 ## Credits
 
